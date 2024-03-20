@@ -1,0 +1,190 @@
+﻿<Window x:Class="Portal.Kiosco.Properties.Views.Cartelera"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
+        mc:Ignorable="d"
+        Title="Cartelera" Height="1080" Width="1920"
+        WindowStyle="None" 
+        WindowState="Maximized" 
+        >
+    <Window.Resources>
+        <Style x:Key="MyButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80" />
+                    <RowDefinition />
+                    <RowDefinition Height="100" />
+                </Grid.RowDefinitions>
+
+                <!--Row Navbar Superior -->
+                <Border Grid.Row="0" Background="#ED1C24" CornerRadius="20">
+                    <Border Background="#ED1C24" Height="80" VerticalAlignment="Top">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <!-- logo -->
+                            <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="47" Width="116" HorizontalAlignment="Left" Margin="60,0,0,0" Stretch="Fill" />
+
+                        </Grid>
+                    </Border>
+                </Border>
+
+                <!-- Centro -->
+                <Border Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <!-- Botones (Sin Login)-->
+                        <Border Grid.Row="0" Visibility="Hidden">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- label izquierda -->
+                                <Label Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Selecciona tu pelicula" FontFamily="Poppins SemiBold" FontSize="37"></Label>
+
+                                <Border Grid.Column="1" BorderBrush="#ED1C24" BorderThickness="3" CornerRadius="10" Height="70" Width="400"  VerticalAlignment="Center" HorizontalAlignment="Center"  Background="Transparent">
+                                    <Grid>
+                                        <Label Content="En cartelera" FontFamily="Poppins SemiBold" FontSize="45" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+                                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\checkcircle.png" HorizontalAlignment="Left"  Margin="20,0,0,0"  Height="50"/>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="2" Height="60" Background="#FFA900" BorderThickness="1" CornerRadius="10" VerticalAlignment="Center" Margin="300,0,0,0" HorizontalAlignment="Left" Width="350">
+                                    <Button FontFamily="Poppins SemiBold" FontSize="30" Foreground="Black"  Background="Transparent" Content="Soy CineFan" Height="60" Width="350" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" Click="Button_Click" BorderThickness="0"/>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+
+                        <!--Botones (Logueado)-->
+                        <Border Grid.Row="0" Visibility="Visible">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="500"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="500"/>
+                                </Grid.ColumnDefinitions>
+
+                                
+                                <Border Grid.Column="0" VerticalAlignment="Top">
+                                    <WrapPanel >
+                                        <Label Margin="25,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontFamily="Poppins Regular" FontSize="28">¡Hola</Label>
+
+                                        <Label    FontFamily="Poppins SemiBold" FontSize="30">Victoria
+                                        </Label>
+                                        <Label VerticalContentAlignment="Center" Content="!"  FontFamily="Poppins Regular" FontSize="28" Padding="0" ></Label>
+
+                                    </WrapPanel>
+                                </Border>
+                                <Label Margin="30,0,0,0"  Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Selecciona tu pelicula" FontFamily="Poppins Regular" FontSize="21"></Label>
+                                <Label  Margin="30,0,0,30" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Cartelera" FontFamily="Poppins SemiBold" FontSize="25"></Label>
+
+                                <Border Grid.Column="1">
+                                    <Grid>
+                                        <!-- Seleccionado -->
+                                        <Border Margin="40,0,0,0" BorderBrush="#ED1C24" BorderThickness="3" CornerRadius="10" Height="70" Width="300"  VerticalAlignment="Center" HorizontalAlignment="Left"  Background="Transparent">
+                                            <Grid>
+                                                <Label Content="En cartelera" FontFamily="Poppins SemiBold" FontSize="30" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+                                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\checkcircle.png" HorizontalAlignment="Left"  Margin="20,0,0,0"  Height="50"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border HorizontalAlignment="Center" Margin="60,0,0,0">
+                                            <Button Content="Proximamente" Height="70" FontFamily="Poppins SemiBold" FontSize="30" Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}"></Button>
+                                        </Border>
+
+                                        <Border HorizontalAlignment="Right" Margin="0,0,100,0">
+                                            <Button Content="Pre-Venta" Height="70" FontFamily="Poppins SemiBold" FontSize="30" Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}"></Button>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="2" Height="60" Background="#FFA900" BorderThickness="1" CornerRadius="10" VerticalAlignment="Center" Margin="160,0,0,0" HorizontalAlignment="Left" Width="350">
+                                    <Button Name="btnSoyCineFans" FontFamily="Poppins SemiBold" FontSize="30" Foreground="Black"  Background="Transparent" Content="Soy CineFans" Height="60" Width="350" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" BorderThickness="0" Click="btnSoyCineFans_Click" Style="{StaticResource MyButton}"/>
+                                </Border>
+
+
+
+                            </Grid>
+                        </Border>
+ 
+                          <Border Grid.Row="1"  >
+                            <ScrollViewer>
+                                <WrapPanel x:Name="ContenedorPeliculas">
+                                    
+                                </WrapPanel>
+                            </ScrollViewer>
+
+                        </Border>
+                        
+                    </Grid>
+                </Border>
+                <!-- Navbar Inferior -->
+                <Border Background="#2C2828" Grid.Row="2" CornerRadius="10" Height="100" />
+
+                <Border Grid.Row="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!--Inicio-->
+                        <Image Grid.Column="0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\home-kL6.png" Height="60" VerticalAlignment="Top"/>
+                        <Label Grid.Column="0" Content="Inicio" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+                        <!--Carrito-->
+                        <Image Grid.Column="1" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\shoppingcart-TR8.png" Height="60" VerticalAlignment="Top"/>
+                        <Label Grid.Column="1" Content="Carrito" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+
+                        <!--Salida-->
+                        <Button Width="60" Cursor="Hand" Grid.Column="3" Name="btnSalir" Height="60" VerticalAlignment="Top" Margin="6,0,-6,0" Click="btnSalir_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logout-b8S.png"
+                                    Stretch="Uniform" />
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Label Grid.Column="3" Content="Salir" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,263 @@
+﻿<Window x:Class="Portal.Kiosco.Datos_Membresía_CineFans"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Portal.Kiosco"
+        mc:Ignorable="d"
+        Background="#2C2828"
+        WindowStyle="None"
+          WindowState="Maximized" 
+        Title="Datos_Membresía_CineFans" Height="1080" Width="1920">
+    <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="250*" />
+                <RowDefinition Height="306*" />
+                <RowDefinition Height="60*" />
+            </Grid.RowDefinitions>
+
+            <!--Row Navbar Superior -->
+            <Border Grid.Row="0" Background="#ED1C24" CornerRadius="20">
+                <Border Background="#ED1C24" Height="80" VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="400"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="400"/>
+                            <ColumnDefinition Width="61"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- BtnAtras -->
+                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\icon-tfg.png" Grid.Column="0" Width="40" Height="47" />
+                        <!-- logo -->
+                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Grid.Column="1" Height="47" Width="116" HorizontalAlignment="Left" Stretch="Fill"/>
+                        <!-- Titulo -->
+                        <Label Grid.Row="0" Grid.Column="2" Content="CineFan" HorizontalAlignment="Center" FontFamily="Poppins SemiBold" Foreground="White" FontSize="32" VerticalAlignment="Center" />
+                        <!-- Labels -->
+                        <Border Grid.Column="3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <!--Label Superior-->
+                                <Label Grid.Row="0" Content="C.C Carnaval" FontFamily="Poppins SemiBold" Foreground="White" FontSize="13" Height="27" Margin="307,9,-5,0" Grid.RowSpan="2" VerticalAlignment="Top" />
+
+                                <!--Label Medio-->
+                                <Label Content="Soledad atlantico, calle 30" FontFamily="Poppins Reguar" Foreground="White" FontSize="11" Margin="251,0,-5,26" Grid.RowSpan="2" Grid.Row="1" />
+
+                                <!--Label Inferior-->
+                                <Label Grid.Row="1" Content="miércoles, 8 de febrero de 2023- 4:57 p.m." FontFamily="Poppins Reguar" Foreground="White" FontSize="10" Height="27" Margin="187,0,-3,7" Grid.RowSpan="2" VerticalAlignment="Bottom"  />
+
+                            </Grid>
+                        </Border>
+
+                        <!-- Imagen derecha -->
+                        <Border Grid.Column="4" Width="47" Height="48" CornerRadius="20" BorderThickness="0" VerticalAlignment="Center">
+                            <Border.OpacityMask>
+                                <VisualBrush Stretch="Fill">
+                                    <VisualBrush.Visual>
+                                        <Rectangle RadiusX="0.1" RadiusY="0.1" Width="1" Height="1" Fill="#000000"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.OpacityMask>
+                            <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\descarga-2-wVp.png"  Stretch="Fill" Width="47" Height="48" />
+                        </Border>
+                    </Grid>
+                </Border>
+            </Border>
+
+            <!-- Informacion usuario -->
+            <Border Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition />
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Seccion Info-->
+                    <Border Grid.Row="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="254"/>
+                                <ColumnDefinition Width="615"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Imagen Usuario -->
+                            <Border Grid.Column="1" Width="200" Height="200" CornerRadius="20" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <Border.OpacityMask>
+                                    <VisualBrush Stretch="Fill">
+                                        <VisualBrush.Visual>
+                                            <Rectangle RadiusX="0.1" RadiusY="0.1" Width="1" Height="1" Fill="#000000"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Border.OpacityMask>
+                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\rectangle-751-bg.png"  Stretch="Fill"  />
+                            </Border>
+
+                            <!-- Labels -->
+                            <Border Grid.Column="2" Padding="2,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Nombre -->
+                                    <Label Grid.Row="0" Name="lblNombre" Content="nombre," FontFamily="Poppins SemiBold" FontSize="32" Foreground="White" VerticalAlignment="Bottom" Margin="10,0,0,0"/>
+
+                                    <!-- Bienvenida -->
+                                    <Label Grid.Row="1" Content="¡Bienvenido(a) a Cinefans de Procinal!" FontFamily="Poppins SemiBold" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,79" Grid.RowSpan="2"/>
+
+                                    <!-- lvl Actual -->
+                                    <Border Grid.Row="2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition  Width="260"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <!-- Label -->
+                                            <Label Padding="18,0,0,0" Grid.Column="0" Content="Tu nivel actual es" FontFamily="Poppins SemiBold" FontSize="26" Foreground="White" VerticalAlignment="Top" Grid.RowSpan="2"/>
+
+                                            <!-- Nivel Actual -->
+                                            <Border Grid.Column="1" BorderBrush="#ED1C24" BorderThickness="3" CornerRadius="10" Height="40" Width="80"  VerticalAlignment="Top" HorizontalAlignment="Left"  Background="Transparent" Grid.ColumnSpan="2">
+                                                <Label Name="lblNivel"  Content="123" FontFamily="Poppins SemiBold" FontSize="23" Padding="0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </Border>
+
+                                        </Grid>
+                                    </Border>
+
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <!--Prox lvl-->
+                    <Border Grid.Row="2">
+                        <Border Width="600" CornerRadius="10" Background="#FF3E3C3C" Height="50" Margin="0,0,160,0">
+                            <Label Name="lblPuntosSiguenteLvl" Content="Pronto alcanzarás tu siguiente nivel , 124" FontFamily="Poppins SemiBold" FontSize="24" VerticalContentAlignment="Center" Foreground="White" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Info Visitas - Cashback -->
+            <Border Grid.Row="2" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition  Height="2" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <!-- CashBack -->
+                    <Border Grid.Row="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <!--label-->
+                            <Label Content="Cashback disponible" FontFamily="Poppins SemiBold" FontSize="26" Foreground="Black" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Bottom"/>
+
+                            <!-- Dinero CashBack -->
+                            <Border Grid.Row="1" BorderBrush="#ED1C24" BorderThickness="3" CornerRadius="10" Height="40" Width="160"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="4,7" Background="Transparent">
+                                <Label Name="lblCash" Content="$150.000" FontFamily="Poppins SemiBold" FontSize="23" Padding="0" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            </Border>
+
+                        </Grid>
+                    </Border>
+
+                    <!-- Linea -->
+                    <Border Width="1000" BorderThickness="2" BorderBrush="Black" Grid.ColumnSpan="2" Margin="0,149,0,0" Grid.RowSpan="2" Height="2"/>
+
+                    <!-- Visitas -->
+                    <Border Grid.Row="3">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="90"/>
+                            </Grid.RowDefinitions>
+
+                            <Border >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Label  Content="Visitas Acumuladas" FontFamily="Poppins SemiBold" FontSize="20" Foreground="Black" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Bottom"/>
+
+                                    <Border Grid.Row="1" BorderBrush="#ED1C24" BorderThickness="3" CornerRadius="10" Height="40" Width="160"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="4,7" Background="Transparent">
+                                        <Label Name="lblVisitaAcumulada" Content="3 de 12" FontFamily="Poppins SemiBold" FontSize="23" Padding="0" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+
+                                    <Label Content="Te faltan 9 visitas para subir tu nivel" FontFamily="Poppins Light" FontSize="20" Foreground="Black" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom"/>
+                                </Grid>
+                            </Border>
+
+                        </Grid>
+
+
+
+                    </Border>
+
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <!--Inicio-->
+                    <Image Grid.Column="0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\home-kL6.png" Height="60" VerticalAlignment="Top"/>
+                    <Label Grid.Column="0" Content="Inicio" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+                    <!--Carrito-->
+                    <Image Grid.Column="1" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\shoppingcart-TR8.png" Height="60" VerticalAlignment="Top"/>
+                    <Label Grid.Column="1" Content="Carrito" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+                    <!-- BtnContinuar -->
+                    <Border Grid.Column="2" Height="60" Width="250" Background="#FFA900" BorderThickness="1" CornerRadius="10" VerticalAlignment="Center">
+                        <Grid>
+                            <Button FontFamily="Poppins SemiBold" FontSize="20" Foreground="Black"  Background="Transparent" Content="Continuar" Height="60" Width="250" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" Click="Button_Click" BorderThickness="0"/>
+                            <Image Margin="20,0,0,0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\arrowrightalt-3xJ.png" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                        </Grid>
+                    </Border>
+
+                    <!--Salida-->
+                    <Button Grid.Column="3" 
+                        Name="btnSalir" 
+                        Height="60" 
+                        VerticalAlignment="Top" 
+                        Margin="6,0,-6,0" Click="btnSalir_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logout-b8S.png"
+                                    Stretch="Uniform" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Grid.Column="3" Content="Salir" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

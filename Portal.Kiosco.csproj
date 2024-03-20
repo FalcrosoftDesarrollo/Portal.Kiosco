@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="arrowrightalt-3xJ.png" />
+    <None Remove="boletas-removebg-preview-1-Pgr.png" />
+    <None Remove="butaca-de-cine-1-1-sbc.png" />
+    <None Remove="close-jUi.png" />
+    <None Remove="descarga-2-wVp.png" />
+    <None Remove="home-kL6.png" />
+    <None Remove="icon-tfg.png" />
+    <None Remove="logoS.png" />
+    <None Remove="logout-b8S.png" />
+    <None Remove="qrcodescanner.png" />
+    <None Remove="rectangle-751-bg.png" />
+    <None Remove="shoppingcart-TR8.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\APIPortalWebMed.Entities\APIPortalWebMed.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Properties\Resources\arrowrightalt-3xJ.png" />
+    <Resource Include="Properties\Resources\butaca-de-cine-1-1-sbc.png" />
+    <Resource Include="Properties\Resources\descarga-2-wVp.png" />
+    <Resource Include="Properties\Resources\home-kL6.png" />
+    <Resource Include="Properties\Resources\icon-tfg.png" />
+    <Resource Include="Properties\Resources\logoS.png" />
+    <Resource Include="Properties\Resources\logout-b8S.png" />
+    <Resource Include="Properties\Resources\qrcodescanner.png" />
+    <Resource Include="Properties\Resources\rectangle-751-bg.png" />
+    <Resource Include="Properties\Resources\shoppingcart-TR8.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
