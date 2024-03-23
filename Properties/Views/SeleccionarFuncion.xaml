@@ -379,7 +379,7 @@
                         <!-- BtnContinuar -->
                         <Border Grid.Column="2" Height="60" Width="250" Background="#FFA900" BorderThickness="1" CornerRadius="10" VerticalAlignment="Center">
                             <Grid>
-                                <Button FontFamily="Poppins SemiBold" FontSize="20" Foreground="Black"  Background="Transparent" Content="Continuar" Height="60" Width="250" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" Click="Button_Click" BorderThickness="0"/>
+                                <Button FontFamily="Poppins SemiBold" FontSize="20" Foreground="Black"  Background="Transparent" Content="Continuar" Height="60" Width="250" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" BorderThickness="0"/>
                                 <Image Margin="20,0,0,0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\arrowrightalt-3xJ.png" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                             </Grid>
@@ -390,7 +390,7 @@
                         Name="btnSalir" 
                         Height="60" 
                         VerticalAlignment="Top" 
-                        Margin="6,0,-6,0" Click="btnSalir_Click">
+                        Margin="6,0,-6,0" >
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logout-b8S.png"

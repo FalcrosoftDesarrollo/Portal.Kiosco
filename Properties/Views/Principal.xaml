@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
         Title="Principal" Height="1080" Width="1920"
-        Background="Transparent"
-        AllowsTransparency="True"
+        Background="White"
         WindowState="Maximized"
         WindowStyle="None"
         >
@@ -34,164 +33,44 @@
     <Border>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="80" />
+                <RowDefinition />
                 <RowDefinition  />
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="#ED1C24" Height="80" CornerRadius="20" Grid.RowSpan="2" VerticalAlignment="Top" Panel.ZIndex="99">
-                <Border Background="#ED1C24" Height="82" VerticalAlignment="Top">
-                    <Grid Cursor="">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <!-- logo -->
-                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="47" Width="116" HorizontalAlignment="Left" Margin="60,0,0,0" Stretch="Fill" />
 
-                    </Grid>
-                </Border>
-            </Border>
-
-            <Border Grid.Row="1" Padding="0">
+            <Border Grid.Row="0" Width="847" Height="253" VerticalAlignment="Bottom">
                 <Grid>
-                    <!-- Peliculas -->
-                    <Border Grid.ColumnSpan="2">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="1.2*"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <!--Preventa (Izquierda)-->
-                            <Border Grid.Column="0">
-                                <Grid>
-                                    <!--Opacidad en blanco-->
-                                    <Border Background="White" Panel.ZIndex="4" Opacity="0.4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Titulo -->
+                    <Label VerticalAlignment="Top" FontSize="48" FontFamily="Myanmar Khyay" Content="¿Qué quieres hacer hoy?" HorizontalContentAlignment="Center"/>
 
-                                    </Border>
-                                    <!--Titulo-->
-                                    <Border Height="100" VerticalAlignment="Top" Background="#FFF368D4" Panel.ZIndex="2" Opacity="0.6">
-                                        <Grid>
-                                            <Label Content="Preventa" FontFamily="Poppins SemiBold" FontSize="50" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                            <Border Width="80" HorizontalAlignment="Left" Margin="45,0,0,0" Height="2" BorderThickness="2" Background="White" BorderBrush="White"/>
-                                            <Border Width="80" HorizontalAlignment="Right" Margin="0,0,45,0" Height="2" BorderThickness="2" Background="White" BorderBrush="White"/>
-                                        </Grid>
-                                    </Border>
-                                    <!-- Imagen -->
-                                    <Border>
-                                        <Border.Background>
-                                            <ImageBrush ImageSource="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\kungFuPanda.png" ></ImageBrush>
-                                        </Border.Background>
-                                    </Border>
-                                </Grid>
-                            </Border>
-                            <!--Cartelera (Medio)-->
-                            <Border Grid.Column="1">
-                                <Grid>
-                                    <!--Titulo-->
-                                    <Border Height="100" VerticalAlignment="Top" Background="#FFF368D4" Panel.ZIndex="2">
-                                        <Grid>
-                                            <Label Content="Cartelera" FontFamily="Poppins SemiBold" FontSize="50" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                            <Border Width="80" HorizontalAlignment="Center" Margin="0,0,350,0" Height="2" BorderThickness="2" Background="White" BorderBrush="White"/>
-                                            <Border Width="80" HorizontalAlignment="Center" Margin="350,0,0,0" Height="2" BorderThickness="2" Background="White" BorderBrush="White"/>
-                                        </Grid>
-                                    </Border>
-                                    <!-- Imagen -->
-                                    <Border>
-                                        <Border.Background>
-                                            <ImageBrush ImageSource="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\Oppenheimer.png" ></ImageBrush>
-                                        </Border.Background>
-                                    </Border>
-                                </Grid>
-                            </Border>
-                            <!--Estreno (Derecha)-->
-                            <Border Grid.Column="2">
-                                <Grid>
-                                    <!--Opacidad en blanco-->
-                                    <Border Background="White" Panel.ZIndex="4" Opacity="0.4">
-
-                                    </Border>
-                                    <!--Titulo-->
-                                    <Border Height="100" VerticalAlignment="Top" Background="#FFF368D4" Panel.ZIndex="2" Opacity="0.6">
-                                        <Grid>
-                                            <Label Content="Estreno" FontFamily="Poppins SemiBold" FontSize="50" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                            <Border Width="80" HorizontalAlignment="Left" Margin="45,0,0,0" Height="2" BorderThickness="2" Background="White" BorderBrush="White"/>
-                                            <Border Width="80" HorizontalAlignment="Right" Margin="0,0,45,0" Height="2" BorderThickness="2" Background="White" BorderBrush="White"/>
-                                        </Grid>
-                                    </Border>
-                                    <!-- Imagen -->
-                                    <Border>
-                                        <Border.Background>
-                                            <ImageBrush ImageSource="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\kungFuPanda.png" ></ImageBrush>
-                                        </Border.Background>
-                                    </Border>
-                                </Grid>
-                            </Border>
-                        </Grid>
+                    <!--Boton Boletas-->
+                    <Border Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="350" Height="80" Background="#F30613" CornerRadius="10">
+                        <Button Background="Transparent" BorderThickness="0" Content="COMPRAR BOLETAS" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="350" Height="80" Style="{StaticResource MyButton}"/>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                        </Border.Effect>
                     </Border>
-
-                    <!-- Botones -->
-                    <Grid>
-                        <Border>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="40"/>
-                                </Grid.RowDefinitions>
-
-                                <Border  Grid.Row="0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <!-- BtnBoleteria -->
-                                        <Border Grid.Column="0" Height="200" Width="600" Background="#2C2828" CornerRadius="20">
-                                            <Grid>
-                                                <Button Content="Boleteria" Name="btnBoleteria" Foreground="White" FontSize="50" FontFamily="Poppins SemiBold" Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}" Click="btnBoleteria_Click" >
-
-                                                </Button>
-                                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\boletas-removebg-preview-1.png" HorizontalAlignment="Left" />
-                                            </Grid>
-                                        </Border>
-                                        <!-- BtnConfiteria -->
-                                        <Border Grid.Column="1" Height="200" Width="600" Background="#2C2828" CornerRadius="20">
-                                            <Grid>
-                                                <Button Content="Confiteria" Foreground="White" FontSize="50" FontFamily="Poppins SemiBold" Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}">
-
-                                                </Button>
-                                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\confiteria-removebg-preview-1.png" HorizontalAlignment="Right" />
-                                            </Grid>
-                                        </Border>
-
-                                    </Grid>
-                                </Border>
-
-                                <!--BtnVerMas-->
-                                <Border Grid.Row="1" VerticalAlignment="Bottom" Width="200" >
-                                    <Grid>
-                                        <Button  Content="     Ver más" Width="200" Background="#ED1C24" Opacity="0.8" FontSize="20" FontFamily="Poppins SemiBold" Foreground="White"  Style="{StaticResource MyButton}">
-
-                                        </Button>
-                                        <Image Cursor="Hand" Margin="40,0,0,0" HorizontalAlignment="Left" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\keyboardarrowright.png"  >
-                                            <Image.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform/>
-                                                    <SkewTransform/>
-                                                    <!--Arriba-->
-                                                    <!--<RotateTransform Angle="270"/>-->
-                                                    <!--Abajo-->
-                                                    <RotateTransform Angle="90"/>
-                                                </TransformGroup>
-                                            </Image.RenderTransform>
-                                        </Image>
-                                    </Grid>
-                                </Border>
-
-                            </Grid>
-                        </Border>
-
-                    </Grid>
+                    
+                    <!--Boton Confiteria-->
+                    <!--Boton Boletas-->
+                    <Border Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="350" Height="80" Background="#F30613" CornerRadius="10">
+                        <Button Background="Transparent" BorderThickness="0" Content="COMPRAR CONFITERÍA" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="350" Height="80" Style="{StaticResource MyButton}"/>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                        </Border.Effect>
+                    </Border>
+                    
                 </Grid>
             </Border>
+
+            <Border Grid.Row="1">
+                <Image Width="212.55" Height="85.29" Stretch="Fill" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logo-procinal1.png" VerticalAlignment="Top" Margin="0,197,0,0"/>
+            </Border>
+            
         </Grid>
     </Border>
 </Window>
