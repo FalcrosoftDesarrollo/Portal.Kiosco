@@ -43,12 +43,15 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="232"/>
                             <ColumnDefinition  Width="441"/>
                         </Grid.ColumnDefinitions>
                         <!-- logo -->
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
+                        <Label Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+
+                        
 
                         <!--Boton Salir-->
                         <Border Grid.Column="2" Width="159" Height="80" HorizontalAlignment="Right"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
@@ -86,87 +89,12 @@
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="157"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <!-- Botones (Sin Login)-->
-                        <Border Grid.Row="0" Visibility="Hidden">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                        <Label Content="¿Qué quieres ver?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48"/>
 
-                                <!-- label izquierda -->
-                                <Label Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Selecciona tu pelicula" FontFamily="Poppins SemiBold" FontSize="37"></Label>
-
-                                <Border Grid.Column="1" BorderBrush="#ED1C24" BorderThickness="3" CornerRadius="10" Height="70" Width="400"  VerticalAlignment="Center" HorizontalAlignment="Center"  Background="Transparent">
-                                    <Grid>
-                                        <Label Content="En cartelera" FontFamily="Poppins SemiBold" FontSize="45" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-                                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\checkcircle.png" HorizontalAlignment="Left"  Margin="20,0,0,0"  Height="50"/>
-                                    </Grid>
-                                </Border>
-
-                                <Border Grid.Column="2" Height="60" Background="#FFA900" BorderThickness="1" CornerRadius="10" VerticalAlignment="Center" Margin="300,0,0,0" HorizontalAlignment="Left" Width="350">
-                                    <Button FontFamily="Poppins SemiBold" FontSize="30" Foreground="Black"  Background="Transparent" Content="Soy CineFan" Height="60" Width="350" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" Click="Button_Click" BorderThickness="0"/>
-                                </Border>
-
-                            </Grid>
-                        </Border>
-
-                        <!--Botones (Logueado)-->
-                        <Border Grid.Row="0" Visibility="Visible">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="500"/>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="500"/>
-                                </Grid.ColumnDefinitions>
-
-
-                                <Border Grid.Column="0" VerticalAlignment="Top">
-                                    <WrapPanel >
-                                        <Label Margin="25,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontFamily="Poppins Regular" FontSize="28">¡Hola</Label>
-
-                                        <Label    FontFamily="Poppins SemiBold" FontSize="30">Victoria
-                                        </Label>
-                                        <Label VerticalContentAlignment="Center" Content="!"  FontFamily="Poppins Regular" FontSize="28" Padding="0" ></Label>
-
-                                    </WrapPanel>
-                                </Border>
-                                <Label Margin="30,0,0,0"  Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Selecciona tu pelicula" FontFamily="Poppins Regular" FontSize="21"></Label>
-                                <Label  Margin="30,0,0,30" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Cartelera" FontFamily="Poppins SemiBold" FontSize="25"></Label>
-
-                                <Border Grid.Column="1">
-                                    <Grid>
-                                        <!-- Seleccionado -->
-                                        <Border Margin="40,0,0,0" BorderBrush="#ED1C24" BorderThickness="3" CornerRadius="10" Height="70" Width="300"  VerticalAlignment="Center" HorizontalAlignment="Left"  Background="Transparent">
-                                            <Grid>
-                                                <Label Content="En cartelera" FontFamily="Poppins SemiBold" FontSize="30" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-                                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\checkcircle.png" HorizontalAlignment="Left"  Margin="20,0,0,0"  Height="50"/>
-                                            </Grid>
-                                        </Border>
-
-                                        <Border HorizontalAlignment="Center" Margin="60,0,0,0">
-                                            <Button Content="Proximamente" Height="70" FontFamily="Poppins SemiBold" FontSize="30" Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}"></Button>
-                                        </Border>
-
-                                        <Border HorizontalAlignment="Right" Margin="0,0,100,0">
-                                            <Button Content="Pre-Venta" Height="70" FontFamily="Poppins SemiBold" FontSize="30" Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}"></Button>
-                                        </Border>
-                                    </Grid>
-                                </Border>
-
-                                <Border Grid.Column="2" Height="60" Background="#FFA900" BorderThickness="1" CornerRadius="10" VerticalAlignment="Center" Margin="160,0,0,0" HorizontalAlignment="Left" Width="350">
-                                    <Button Name="btnSoyCineFans" FontFamily="Poppins SemiBold" FontSize="30" Foreground="Black"  Background="Transparent" Content="Soy CineFans" Height="60" Width="350" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" BorderThickness="0" Click="btnSoyCineFans_Click" Style="{StaticResource MyButton}"/>
-                                </Border>
-
-
-
-                            </Grid>
-                        </Border>
 
                         <Border Grid.Row="1"  >
                             <ScrollViewer>

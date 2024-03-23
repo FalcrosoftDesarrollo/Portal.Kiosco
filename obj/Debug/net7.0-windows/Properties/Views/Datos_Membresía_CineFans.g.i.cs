@@ -101,7 +101,8 @@ namespace Portal.Kiosco {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;component/properties/views/datos_membres%c3%ada_cinefans.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;V1.0.0.0;component/properties/views/datos_membres%c3%ada_cinefans." +
+                    "xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Properties\Views\Datos_Membresía_CineFans.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
