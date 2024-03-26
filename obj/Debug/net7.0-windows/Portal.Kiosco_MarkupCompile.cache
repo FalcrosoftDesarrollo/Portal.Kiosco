@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\App.xaml
-14-749824392
+15176707119
 
-18-390510250
-2111371500112
-Properties\Views\AutentificacionEnDosPasos.xaml;Properties\Views\Cartelera.xaml;Properties\Views\ComoCompra.xaml;Properties\Views\ConsultaCineFans.xaml;Properties\Views\Datos_Membresía_CineFans.xaml;Properties\Views\ErrorGeneral.xaml;Properties\Views\IngresoDeDocumento.xaml;Properties\Views\IngresoDePassword.xaml;Properties\Views\MetodoDePago.xaml;Properties\Views\Modal_Crispetas.xaml;Properties\Views\Principal.xaml;Properties\Views\Scanear_documento.xaml;Properties\Views\SeleccionarFuncion.xaml;Properties\Views\ValidacionDocumento.xaml;
+20-709505968
+2051900940659
+Properties\Views\AutentificacionEnDosPasos.xaml;Properties\Views\Cartelera.xaml;Properties\Views\ComoCompra.xaml;Properties\Views\ConsultaCineFans.xaml;Properties\Views\Datos_Membresía_CineFans.xaml;Properties\Views\ErrorGeneral.xaml;Properties\Views\IngresoDeDocumento.xaml;Properties\Views\IngresoDePassword.xaml;Properties\Views\MetodoDePago.xaml;Properties\Views\Modal_Crispetas.xaml;Properties\Views\Principal.xaml;Properties\Views\Scanear_documento.xaml;Properties\Views\SeleccionarFuncion.xaml;Properties\Views\transicion.xaml;Properties\Views\ValidacionDocumento.xaml;
 
 False
 

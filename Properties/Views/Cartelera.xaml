@@ -28,7 +28,35 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <ScrollContentPresenter/>
+                            <ScrollBar x:Name="PART_VerticalScrollBar" 
+                               Width="20" 
+                               Background="Red"
+                               BorderBrush="Transparent" 
+                               BorderThickness="0"
+                               HorizontalAlignment="Right" 
+                               Margin="0,2,0,2" 
+                               IsTabStop="False" 
+                               Maximum="{TemplateBinding ScrollableHeight}" 
+                               Minimum="0" 
+                               Orientation="Vertical" 
+                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                               Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                               ViewportSize="{TemplateBinding ViewportHeight}" />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
+
     <Grid>
         <Border>
             <Grid>
@@ -51,11 +79,11 @@
 
                         <Label Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                        
+
 
                         <!--Boton Salir-->
                         <Border Grid.Column="2" Width="159" Height="80" HorizontalAlignment="Right"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <Button Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
                                 <TextBlock TextAlignment="Center">
                                     SALIR
                                 </TextBlock>
@@ -70,7 +98,7 @@
 
                         <!--Boton ver mis datos-->
                         <Border Grid.Column="3" Width="369" Height="80" HorizontalAlignment="Right" Background="White" CornerRadius="10" Margin="0,0,58,0">
-                            <Button Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
+                            <Button Click="btnSoyCineFans_Click"  Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
                                 <TextBlock TextAlignment="Center">
                                     VER MIS DATOS CINE FANS
                                 </TextBlock>
@@ -97,11 +125,17 @@
 
 
                         <Border Grid.Row="1"  >
-                            <ScrollViewer>
+                            <ScrollViewer Style="{StaticResource CustomScrollViewerStyle}" PanningMode="Both" 
+              PreviewMouseDown="ScrollViewer_PreviewMouseDown" 
+              PreviewMouseUp="ScrollViewer_PreviewMouseUp"
+              PreviewTouchDown="ScrollViewer_PreviewTouchDown"
+              PreviewTouchUp="ScrollViewer_PreviewTouchUp"
+              PreviewMouseMove="ScrollViewer_PreviewMouseMove">
                                 <WrapPanel x:Name="ContenedorPeliculas">
 
                                 </WrapPanel>
                             </ScrollViewer>
+
 
                         </Border>
 
@@ -111,3 +145,4 @@
         </Border>
     </Grid>
 </Window>
+

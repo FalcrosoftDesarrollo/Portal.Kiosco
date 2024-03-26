@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Portal.Kiosco.Properties.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -33,6 +35,41 @@ namespace Portal.Kiosco
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnIngresaDocumento_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void TextDocumento_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.Key == Key.Enter)
+                {
+                    var openWindow = new IngresoDePassword();
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    await Task.Delay(300);
+                    this.Visibility = Visibility.Collapsed;
+                    openWindow.Background = Brushes.White;
+                    openWindow.Show();
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    App.DatosCineFans.Documento = TextDocumento.Text;
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorWindow = new ErrorGeneral();
+                errorWindow.Owner = this;
+                errorWindow.Closed += (s, args) =>
+                {
+                    this.Visibility = Visibility.Visible;
+                };
+                errorWindow.ShowDialog();
+            }
         }
     }
 }

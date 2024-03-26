@@ -34,6 +34,9 @@
     <Compile Update="Properties\Views\SeleccionarFuncion.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Properties\Views\transicion.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Properties\Views\ComoCompra.xaml">
@@ -61,6 +64,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\SeleccionarFuncion.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\transicion.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

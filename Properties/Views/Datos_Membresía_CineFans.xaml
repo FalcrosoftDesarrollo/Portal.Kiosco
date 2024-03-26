@@ -9,76 +9,123 @@
         WindowStyle="None"
           WindowState="Maximized" 
         Title="Datos_Membresía_CineFans" Height="1080" Width="1920">
+
+
+    <Window.Resources>
+        <Style x:Key="MyButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <ScrollContentPresenter/>
+                            <ScrollBar x:Name="PART_VerticalScrollBar" 
+                               Width="20" 
+                               Background="Red"
+                               BorderBrush="Transparent" 
+                               BorderThickness="0"
+                               HorizontalAlignment="Right" 
+                               Margin="0,2,0,2" 
+                               IsTabStop="False" 
+                               Maximum="{TemplateBinding ScrollableHeight}" 
+                               Minimum="0" 
+                               Orientation="Vertical" 
+                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                               Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                               ViewportSize="{TemplateBinding ViewportHeight}" />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Border>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="80" />
+                <RowDefinition Height="140" />
                 <RowDefinition Height="250*" />
                 <RowDefinition Height="306*" />
-                <RowDefinition Height="60*" />
+         
             </Grid.RowDefinitions>
+ 
 
             <!--Row Navbar Superior -->
-            <Border Grid.Row="0" Background="#ED1C24" CornerRadius="20">
-                <Border Background="#ED1C24" Height="80" VerticalAlignment="Top">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"/>
-                            <ColumnDefinition Width="400"/>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="400"/>
-                            <ColumnDefinition Width="61"/>
-                        </Grid.ColumnDefinitions>
-                        <!-- BtnAtras -->
-                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\icon-tfg.png" Grid.Column="0" Width="40" Height="47" />
-                        <!-- logo -->
-                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Grid.Column="1" Height="47" Width="116" HorizontalAlignment="Left" Stretch="Fill"/>
-                        <!-- Titulo -->
-                        <Label Grid.Row="0" Grid.Column="2" Content="CineFan" HorizontalAlignment="Center" FontFamily="Poppins SemiBold" Foreground="White" FontSize="32" VerticalAlignment="Center" />
-                        <!-- Labels -->
-                        <Border Grid.Column="3">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+            <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="232"/>
+                        <ColumnDefinition  Width="441"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- logo -->
+                    <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
-                                <!--Label Superior-->
-                                <Label Grid.Row="0" Content="C.C Carnaval" FontFamily="Poppins SemiBold" Foreground="White" FontSize="13" Height="27" Margin="307,9,-5,0" Grid.RowSpan="2" VerticalAlignment="Top" />
+                    <Label Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                                <!--Label Medio-->
-                                <Label Content="Soledad atlantico, calle 30" FontFamily="Poppins Reguar" Foreground="White" FontSize="11" Margin="251,0,-5,26" Grid.RowSpan="2" Grid.Row="1" />
 
-                                <!--Label Inferior-->
-                                <Label Grid.Row="1" Content="miércoles, 8 de febrero de 2023- 4:57 p.m." FontFamily="Poppins Reguar" Foreground="White" FontSize="10" Height="27" Margin="187,0,-3,7" Grid.RowSpan="2" VerticalAlignment="Bottom"  />
 
-                            </Grid>
-                        </Border>
+                    <!--Boton Salir-->
+                    <Border Grid.Column="2" Width="159" Height="80" HorizontalAlignment="Right"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                        <Button Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <TextBlock TextAlignment="Center">
+                                    SALIR
+                            </TextBlock>
+                            <Button.Effect>
+                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                            </Button.Effect>
+                        </Button>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                        </Border.Effect>
+                    </Border>
 
-                        <!-- Imagen derecha -->
-                        <Border Grid.Column="4" Width="47" Height="48" CornerRadius="20" BorderThickness="0" VerticalAlignment="Center">
-                            <Border.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Rectangle RadiusX="0.1" RadiusY="0.1" Width="1" Height="1" Fill="#000000"/>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Border.OpacityMask>
-                            <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\descarga-2-wVp.png"  Stretch="Fill" Width="47" Height="48" />
-                        </Border>
-                    </Grid>
-                </Border>
+                    <!--Boton ver mis datos-->
+                    <Border Grid.Column="3" Width="369" Height="80" HorizontalAlignment="Right" Background="White" CornerRadius="10" Margin="0,0,58,0">
+                        <Button   Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
+                            <TextBlock TextAlignment="Center">
+                                    VER MIS DATOS CINE FANS
+                            </TextBlock>
+                            <Button.Effect>
+                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                            </Button.Effect>
+                        </Button>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                        </Border.Effect>
+                    </Border>
+                </Grid>
             </Border>
+
 
             <!-- Informacion usuario -->
             <Border Grid.Row="1">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="140" />
                         <RowDefinition />
-                        <RowDefinition Height="80"/>
                     </Grid.RowDefinitions>
+
+                   
 
                     <!--Seccion Info-->
                     <Border Grid.Row="1">
@@ -142,7 +189,7 @@
                     <!--Prox lvl-->
                     <Border Grid.Row="2">
                         <Border Width="600" CornerRadius="10" Background="#FF3E3C3C" Height="50" Margin="0,0,160,0">
-                            <Label Name="lblPuntosSiguenteLvl" Content="Pronto alcanzarás tu siguiente nivel , 124" FontFamily="Poppins SemiBold" FontSize="24" VerticalContentAlignment="Center" Foreground="White" HorizontalAlignment="Center"/>
+                            <Label Name="lblPuntosSiguenteLvl" Content="Pronto alcanzarás tu siguiente nivel , 124" FontFamily="Poppins SemiBold" FontSize="24" VerticalContentAlignment="Center" Foreground="White" HorizontalAlignment="Left" Margin="79,0,0,0"/>
                         </Border>
                     </Border>
                 </Grid>
@@ -214,49 +261,7 @@
                 </Grid>
             </Border>
 
-            <Border Grid.Row="3">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <!--Inicio-->
-                    <Image Grid.Column="0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\home-kL6.png" Height="60" VerticalAlignment="Top"/>
-                    <Label Grid.Column="0" Content="Inicio" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-
-                    <!--Carrito-->
-                    <Image Grid.Column="1" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\shoppingcart-TR8.png" Height="60" VerticalAlignment="Top"/>
-                    <Label Grid.Column="1" Content="Carrito" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-
-                    <!-- BtnContinuar -->
-                    <Border Grid.Column="2" Height="60" Width="250" Background="#FFA900" BorderThickness="1" CornerRadius="10" VerticalAlignment="Center">
-                        <Grid>
-                            <Button FontFamily="Poppins SemiBold" FontSize="20" Foreground="Black"  Background="Transparent" Content="Continuar" Height="60" Width="250" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-1,0" Click="Button_Click" BorderThickness="0"/>
-                            <Image Margin="20,0,0,0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\arrowrightalt-3xJ.png" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-
-                        </Grid>
-                    </Border>
-
-                    <!--Salida-->
-                    <Button Grid.Column="3" 
-                        Name="btnSalir" 
-                        Height="60" 
-                        VerticalAlignment="Top" 
-                        Margin="6,0,-6,0" Click="btnSalir_Click">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logout-b8S.png"
-                                    Stretch="Uniform" />
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-                    <Label Grid.Column="3" Content="Salir" FontFamily="Poppins Light" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-
-                </Grid>
-            </Border>
+        
 
         </Grid>
     </Border>

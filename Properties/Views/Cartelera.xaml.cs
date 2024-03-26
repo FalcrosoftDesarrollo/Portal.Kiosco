@@ -12,10 +12,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -38,12 +38,12 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
-        public string ObtenerValorDeConfiguracion(string clave)
-        {
-            // Leer el valor de configuración usando la clave proporcionada
-            string valor = ConfigurationManager.AppSettings[clave];
+       
 
-            // Retornar el valor encontrado
+
+        public string ObtenerValorDeConfiguracion(string clave)
+        { 
+            string valor = ConfigurationManager.AppSettings[clave];
             return valor;
         }
 
@@ -54,17 +54,11 @@ namespace Portal.Kiosco.Properties.Views
             string rutaXml = "https://scorecoorp.procinal.com/mobilecomjson//nuevaweb/variable41CARTELERA310_7163.xml";
 
             try
-            {
-                // Cargar el XML desde el archivo
+            { 
                 XDocument xmlDocument = XDocument.Load(rutaXml);
-
-                // Obtener los elementos de película
                 var peliculas = xmlDocument.Descendants("pelicula");
-
                 int fila = 0;
                 int columna = 0;
-
-                // Iterar sobre cada elemento de película y crear objetos Pelicula
                 foreach (var pelicula in peliculas)
                 {
                     if (pelicula.Attribute("tipo")?.Value == "Normal")
@@ -99,12 +93,10 @@ namespace Portal.Kiosco.Properties.Views
                             //                ?.ToList(),
                         };
 
-
-                        // Crear un nuevo borde para la imagen de la película
                         Border nuevoBorde = new Border
                         {
-                            CornerRadius = new CornerRadius(20),
-                            Margin = new Thickness(30),
+                            Name = "P" + nuevaPelicula.Id.ToString(), // Asignar el Id como el Name del Border
+                            Margin = new Thickness(55),
                             BorderThickness = new Thickness(0),
                             VerticalAlignment = VerticalAlignment.Center,
                             HorizontalAlignment = HorizontalAlignment.Right,
@@ -122,25 +114,49 @@ namespace Portal.Kiosco.Properties.Views
                             }
                         };
 
-                        // Crear una nueva imagen para la película
                         Image nuevaImagen = new Image
                         {
                             Source = new BitmapImage(new Uri(nuevaPelicula.Imagen)),
                             Stretch = Stretch.Fill,
                         };
 
-                        // Agregar la imagen al borde
-                        nuevoBorde.Child = nuevaImagen;
+                        Button imagenButton = new Button
+                        {
+                            Content = nuevaImagen, // Colocar la imagen dentro del contenido del botón
+                            Background = Brushes.Transparent, // Fondo transparente para que solo se vea la imagen
+                            BorderThickness = new Thickness(0), // Eliminar el borde del botón
+                            Padding = new Thickness(0) // Eliminar el relleno del botón
+                        };
 
-                        nuevoBorde.Width = 380;
-                        nuevoBorde.Height = 380;
-                       
-                        // Agregar el borde al contenedor de películas (Grid)
+                        // Agregar evento Click al botón
+                        imagenButton.Click += async (sender, e) =>
+                        {
+                            // Llenar App.Pelicula.Id con el Id de la película al hacer clic
+                            App.Pelicula.Id = nuevaPelicula.Id.ToString();
+
+                            // Navegar a la siguiente pantalla (SeleccionFuncion)
+                            var openWindow = new SeleccionarFuncion();
+                            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                            await Task.Delay(300);
+                            this.Visibility = Visibility.Collapsed;
+                            openWindow.Background = Brushes.White;
+                            openWindow.Show();
+                            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                        };
+
+                        // Agregar el botón al contenedor de películas
+                        nuevoBorde.Child = imagenButton;
+
+                        nuevoBorde.Width = 360;
+                        nuevoBorde.Height = 500;
+
                         Grid.SetRow(nuevoBorde, fila);
                         Grid.SetColumn(nuevoBorde, columna);
                         ContenedorPeliculas.Children.Add(nuevoBorde);
 
-                        // Incrementar la columna y fila
+
                         columna++;
                         if (columna >= 4) // cambiar 4 por el número de columnas deseado
                         {
@@ -159,34 +175,69 @@ namespace Portal.Kiosco.Properties.Views
         }
 
 
-        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            var openWindow = new ComoCompra();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
-        private void btnSoyCineFans_Click(object sender, RoutedEventArgs e)
+        private async void btnSoyCineFans_Click(object sender, RoutedEventArgs e)
         {
-            if (App.IsUserAuthenticated)
+            App.IsCinefans = true;
+            var openWindow = new Datos_Membresía_CineFans();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        }
+
+        private bool isDragging = false;
+
+        private void ScrollViewer_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = true;
+        }
+
+        private void ScrollViewer_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = false;
+        }
+
+        private void ScrollViewer_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            isDragging = true;
+        }
+
+        private void ScrollViewer_PreviewTouchUp(object sender, TouchEventArgs e)
+        {
+            isDragging = false;
+        }
+
+        private void ScrollViewer_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
             {
-                var datosMembresiaWindow = new Datos_Membresía_CineFans();
-                datosMembresiaWindow.Owner = this;
-                datosMembresiaWindow.Closed += (s, args) =>
-                {
-                    this.Visibility = Visibility.Visible;
-                };
-                datosMembresiaWindow.ShowDialog();
-            }
-            else
-            {
-                var scanerWindow = new IngresoDeDocumento();
-                scanerWindow.Owner = this;
-                scanerWindow.Closed += (s, args) =>
-                {
-                    this.Visibility = Visibility.Visible;
-                };
-                scanerWindow.ShowDialog();
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+                Point currentPoint = e.GetPosition(scrollViewer);
+
+                if (currentPoint.Y < 0)
+                    scrollViewer.LineUp();
+                else if (currentPoint.Y > scrollViewer.ActualHeight)
+                    scrollViewer.LineDown();
             }
         }
+
 
     }
 }

@@ -18,8 +18,9 @@ using System.Windows;
 using System.Windows.Controls;
 using APIPortalWebMed.Entities;
 using Newtonsoft.Json;
-using Mysqlx;
+ 
 using Portal.Kiosco.Properties.Views;
+using APIPortalKiosco.Entities;
 
 namespace Portal.Kiosco
 {

@@ -185,8 +185,8 @@
                                                         <!--Mes-->
                                                         <Label Content="Febrero" Margin="30,0,0,0" FontFamily="Poppins SemiBold" FontSize="30" />
                                                         <!--Fechas-->
-                                                        <WrapPanel Height="120" VerticalAlignment="Bottom" >
-                                                            <Border Margin="20,30,10,0" Height="50" Width="150" Background="#E5E5E5" CornerRadius="10">
+                                                        <WrapPanel Height="120"  VerticalAlignment="Bottom" x:Name="ContenedorHorarios" >
+                                                            <!--<Border Margin="20,30,10,0" Height="50" Width="150" Background="#E5E5E5" CornerRadius="10">
                                                                 <Label Content="miércoles, 8" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Poppins Regular" FontSize="20" />
                                                             </Border>
                                                             <Border Margin="20,30,10,0" Height="50" Width="150" Background="#E5E5E5" CornerRadius="10">
@@ -197,10 +197,10 @@
                                                             </Border>
                                                             <Border Margin="20,30,10,0" Height="50" Width="150" Background="#E5E5E5" CornerRadius="10">
                                                                 <Label Content="sábado, 11" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Poppins Regular" FontSize="20" />
-                                                            </Border>
-                                                            <Button Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}" Margin="20,30,10,0" Height="50" Width="50">
+                                                            </Border>-->
+                                                            <!--<Button Background="Transparent" BorderThickness="0" Style="{StaticResource MyButton}" Margin="20,30,10,0" Height="50" Width="50">
                                                                 <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\navigatenext.png"  VerticalAlignment="Center" />
-                                                            </Button>
+                                                            </Button>-->
                                                             
                                                         </WrapPanel>
                                                     </Grid>

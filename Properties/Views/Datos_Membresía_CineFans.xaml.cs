@@ -24,9 +24,9 @@ namespace Portal.Kiosco
         {
             InitializeComponent();
             var cineFansData = App.DatosCineFans;
-            lblNombre.Content = cineFansData.Nombre;
-            lblNivel.Content = cineFansData.Nivel;
-            lblPuntosSiguenteLvl.Content = $"Pronto alcanzarás tu siguiente nivel, {cineFansData.Nivel + 1}";
+            //lblNombre.Content = cineFansData.Nombre;
+            //lblNivel.Content = cineFansData.Nivel;
+            //lblPuntosSiguenteLvl.Content = $"Pronto alcanzarás tu siguiente nivel, {cineFansData.Nivel + 1}";
 
         }
 
