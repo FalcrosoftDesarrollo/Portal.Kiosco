@@ -1,0 +1,341 @@
+﻿<Page x:Class="Portal.Kiosco.Properties.Views.Frame7"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
+        mc:Ignorable="d"
+        Title="Sala" Height="1080" Width="1920"
+        Background="White"
+ 
+        >
+    <Page.Resources>
+        <Style x:Key="MyButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <ScrollContentPresenter/>
+                            <ScrollBar x:Name="PART_VerticalScrollBar" 
+                               Width="20" 
+                               Background="Red"
+                               BorderBrush="Transparent" 
+                               BorderThickness="0"
+                               HorizontalAlignment="Right" 
+                               Margin="0,2,0,2" 
+                               IsTabStop="False" 
+                               Maximum="{TemplateBinding ScrollableHeight}" 
+                               Minimum="0" 
+                               Orientation="Vertical" 
+                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                               Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                               ViewportSize="{TemplateBinding ViewportHeight}" />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Border>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="140" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!--Row Navbar Superior -->
+                <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="232"/>
+                            <ColumnDefinition  Width="441"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- logo -->
+                        <Image Source="C:\SOURCES\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
+
+                        <Label Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+
+
+
+                        <!--Boton Salir-->
+                        <Border Grid.Column="2" Width="159" Height="80" HorizontalAlignment="Right"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                                <TextBlock TextAlignment="Center">
+                                    SALIR
+                                </TextBlock>
+                                <Button.Effect>
+                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                </Button.Effect>
+                            </Button>
+                            <Border.Effect>
+                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <!--Boton ver mis datos-->
+                        <Border Grid.Column="3" Width="369" Height="80" HorizontalAlignment="Right" Background="White" CornerRadius="10" Margin="0,0,58,0">
+                            <Button Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
+                                <TextBlock TextAlignment="Center">
+                                    VER MIS DATOS CINE FANS
+                                </TextBlock>
+                                <Button.Effect>
+                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                </Button.Effect>
+                            </Button>
+                            <Border.Effect>
+                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Centro -->
+                <Border Grid.Row="1">
+                    <Grid>
+                        <Grid.Resources>
+                            <!-- Define styles for the seat buttons -->
+                            <Style x:Key="SeatButtonStyle" TargetType="Button">
+                                <Setter Property="Width" Value="54"/>
+                                <Setter Property="Height" Value="54"/>
+                                <Setter Property="Margin" Value="1"/>
+                            </Style>
+                            <Style x:Key="AvailableSeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Style>
+                            <Style x:Key="SelectedSeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                                <Setter Property="Background" Value="CornflowerBlue"/>
+                            </Style>
+                            <Style x:Key="OccupiedSeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                                <Setter Property="Background" Value="Red"/>
+                            </Style>
+                            <Style x:Key="ReducedMobilitySeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </Style>
+
+                        </Grid.Resources>
+
+                        <!-- Define the rows and columns for the seat layout -->
+                        <UniformGrid Rows="9" Columns="16" Height="550" Margin="666,223,273,167">
+                            <!-- The buttons representing the seats will be generated here -->
+                            <!-- You can use data binding or manually place the buttons -->
+                            <!-- Example of manually placing buttons -->
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"/>
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+
+                            <!-- ... other buttons ... -->
+                            <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource ReducedMobilitySeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource ReducedMobilitySeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource ReducedMobilitySeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource ReducedMobilitySeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource ReducedMobilitySeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource ReducedMobilitySeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+
+                            <Button Content="A1" Style="{StaticResource OccupiedSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource OccupiedSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+
+                            <!-- ... other buttons ... -->
+                            <!-- ... more buttons to fill the grid ... -->
+                        </UniformGrid>
+                        <Border Width="180" Height="80" Background="#F30613" CornerRadius="10" Margin="1488,0,0,40" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                            </Border.Effect>
+                            <Button Background="Transparent" BorderThickness="0" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Height="80" Style="{StaticResource MyButton}" Cursor="" Width="180" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="90,0,0,0"/>
+                        </Border>
+
+                        <!--Boton Confiteria-->
+                        <!--Boton Boletas-->
+                        <Border VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="180" Height="80" Background="#F30613" CornerRadius="10" Margin="0,0,39,40">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+                        <Button Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Height="80" Style="{StaticResource MyButton}" Margin="1701,820,39,40"/>
+                        <Button Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Style="{StaticResource MyButton}" Cursor="Hand" Margin="1488,820,252,40"/>
+                        <Label Content="¿Dónde te quieres sentar? " HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48" Margin="666,38,626,837" FontWeight="Bold" Width="628" Height="65"/>
+                        <Label Content="PANTALLA" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="15"  FontWeight="Bold" Margin="666,137,273,752" Background="#FFD9D9D9" Height="51" VerticalAlignment="Bottom"/>
+                        <Label Content="SILLAS" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="199,233,1553,665" Background="WhiteSmoke" Height="42" Width="168"/>
+                        <Label Content="PRECIO" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="386,233,1366,665" Background="WhiteSmoke" Height="42" Width="168"/>
+                        <Label Content="A1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="199,301,1548,597" Background="{x:Null}" Height="42" BorderThickness="0,0,0,2" BorderBrush="Black"/>
+                        <Label Content="A1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="199,364,1539,534" Background="{x:Null}" Height="42" BorderThickness="0,0,0,2" BorderBrush="Black"/>
+                        <Label Content="$13.600" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="372,301,1366,597" Background="{x:Null}" Height="42" BorderThickness="0,0,0,2" BorderBrush="Black"/>
+                        <Label Content="$13.600" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="372,364,1366,534" Background="{x:Null}" Height="42" BorderThickness="0,0,0,2" BorderBrush="Black"/>
+                        <Label Content="TOTAL" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="20"  FontWeight="Bold" Margin="235,430,1548,460" Background="#FFD9D9D9" Height="50" Grid.RowSpan="1" Grid.ColumnSpan="1" Width="137.5"/>
+                        <Label Content="$27.200" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="20"  FontWeight="Bold" Margin="372,430,1410,460" Background="#FFD9D9D9" Height="50" Grid.RowSpan="1" Grid.ColumnSpan="1" Width="137.5"/>
+                        <Label Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="666,820,1215,81" Background="#FFD9D9D9" Height="39" Width="39" RenderTransformOrigin="2.199,7.762"/>
+                        <Label Content="DISPONIBLE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay"  FontWeight="Bold" Margin="661,864,0,0" Background="{x:Null}" Height="25" Width="79" RenderTransformOrigin="0.649,0.429" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <Label Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="793,821,1088,80" Background="Red" Height="39" Width="39" RenderTransformOrigin="2.199,7.762"/>
+                        <Label Content="SELECCIONADO" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay"  FontWeight="Bold" Margin="787,864,0,0" Background="{x:Null}" Height="25" Width="99" RenderTransformOrigin="0.649,0.429" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <Label Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="914,821,967,80" Background="#FFFFF500" Height="39" Width="39" RenderTransformOrigin="2.199,7.762"/>
+                        <Label Content="OCUPADO" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay"  FontWeight="Bold" Margin="907,864,0,0" Background="{x:Null}" Height="25" Width="68" RenderTransformOrigin="0.649,0.429" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <Label Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="16"  FontWeight="Bold" Margin="1039,821,842,80" Background="#FF0084FF" Height="39" Width="39" RenderTransformOrigin="2.199,7.762"/>
+                        <Label Content="MOVILIDAD REDUCIDA" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay"  FontWeight="Bold" Margin="1032,864,0,0" Background="{x:Null}" Height="25" Width="142" RenderTransformOrigin="0.649,0.429" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+
+
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
+
