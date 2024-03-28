@@ -32,7 +32,7 @@
     <Border>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="170.29"/>
+                <RowDefinition Height="169.29"/>
                 <RowDefinition Height="240"/>
                 <RowDefinition Height="123"/>
                 <RowDefinition />

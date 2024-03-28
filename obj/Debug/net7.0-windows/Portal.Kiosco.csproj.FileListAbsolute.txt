@@ -171,3 +171,10 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\sv\Xceed.Wpf.Avalo
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\zh-Hans\Xceed.Wpf.AvalonDock.NET5.resources.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\transicion.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\transicion.baml
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Frame10.g.cs
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Frame11.g.cs
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Frame12.g.cs
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Frame13.g.cs
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Frame7.g.cs
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Frame8.g.cs
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Frame9.g.cs
