@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\App.xaml
-23-2088251135
+251419374907
 
-30117862743
+32-957521125
 204312043617
-Properties\Views\AutentificacionEnDosPasos.xaml;Properties\Views\Cartelera.xaml;Properties\Views\ComoCompra.xaml;Properties\Views\ConsultaCineFans.xaml;Properties\Views\Datos_Membresía_CineFans.xaml;Properties\Views\ErrorGeneral.xaml;Properties\Views\Frame10.xaml;Properties\Views\Frame11.xaml;Properties\Views\Frame12.xaml;Properties\Views\Frame13.xaml;Properties\Views\Frame6.xaml;Properties\Views\Frame7.xaml;Properties\Views\Frame8.xaml;Properties\Views\Frame9.xaml;Properties\Views\IngresoDeDocumento.xaml;Properties\Views\IngresoDePassword.xaml;Properties\Views\MetodoDePago.xaml;Properties\Views\Modal_Crispetas.xaml;Properties\Views\Principal.xaml;Properties\Views\Scanear_documento.xaml;Properties\Views\SeleccionarFuncion.xaml;Properties\Views\transicion.xaml;Properties\Views\ValidacionDocumento.xaml;
+Properties\Views\AutentificacionEnDosPasos.xaml;Properties\Views\Cartelera.xaml;Properties\Views\ComoCompra.xaml;Properties\Views\ConsultaCineFans.xaml;Properties\Views\Datos_Membresía_CineFans.xaml;Properties\Views\ErrorGeneral.xaml;Properties\Views\Frame10.xaml;Properties\Views\Frame11.xaml;Properties\Views\Frame13.xaml;Properties\Views\Frame14.xaml;Properties\Views\Frame15.xaml;Properties\Views\Frame16.xaml;Properties\Views\Frame6.xaml;Properties\Views\Frame7.xaml;Properties\Views\Frame8.xaml;Properties\Views\Frame9.xaml;Properties\Views\IngresoDeDocumento.xaml;Properties\Views\IngresoDePassword.xaml;Properties\Views\MetodoDePago.xaml;Properties\Views\Modal_Crispetas.xaml;Properties\Views\Principal.xaml;Properties\Views\Scanear_documento.xaml;Properties\Views\SeleccionarFuncion.xaml;Properties\Views\transicion.xaml;Properties\Views\ValidacionDocumento.xaml;
 
-False
+True
 

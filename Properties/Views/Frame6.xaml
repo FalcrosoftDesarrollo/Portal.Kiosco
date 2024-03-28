@@ -277,7 +277,6 @@
                                                                 <WrapPanel Grid.Column="0">
 
                                                                     <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-
                                                                         <Button   Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}" Click="Button_Click"/>
                                                                     </Border>
                                                                     
