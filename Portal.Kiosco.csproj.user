@@ -16,7 +16,10 @@
     <Compile Update="Properties\Views\ErrorGeneral.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Properties\Views\Frame17.xaml.cs">
+    <Compile Update="Properties\Views\CorreoTecladoFlotante.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Views\LayoutAsientos.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Views\IngresoDePassword.xaml.cs">
@@ -51,7 +54,10 @@
     <Page Update="Properties\Views\ErrorGeneral.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Properties\Views\Frame17.xaml">
+    <Page Update="Properties\Views\CorreoTecladoFlotante.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\LayoutAsientos.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\IngresoDePassword.xaml">

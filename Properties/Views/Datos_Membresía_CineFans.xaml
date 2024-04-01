@@ -64,9 +64,9 @@
                 <RowDefinition Height="140" />
                 <RowDefinition Height="250*" />
                 <RowDefinition Height="306*" />
-         
+
             </Grid.RowDefinitions>
- 
+
 
             <!--Row Navbar Superior -->
             <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
@@ -125,7 +125,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                   
+
 
                     <!--Seccion Info-->
                     <Border Grid.Row="1">
@@ -261,7 +261,7 @@
                 </Grid>
             </Border>
 
-        
+
 
         </Grid>
     </Border>

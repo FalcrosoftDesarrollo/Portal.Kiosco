@@ -60,7 +60,7 @@
 
                         </Grid>
                     </Border>
-                    
+
                     <Border Grid.Column="1" Grid.Row="3">
                         <Label Grid.Row="0"  FontSize="16" FontFamily="Poppins Regular" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" >
                             <TextBlock >
@@ -70,7 +70,7 @@
                             </TextBlock>
                         </Label>
                     </Border>
-                    
+
                 </Grid>
             </Border>
         </Grid>
