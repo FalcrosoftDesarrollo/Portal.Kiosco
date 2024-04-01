@@ -11,5 +11,10 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
         }
+
+        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

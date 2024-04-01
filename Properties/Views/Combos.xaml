@@ -87,7 +87,7 @@
 
                         <!--Boton Salir-->
                         <Border Grid.Column="2" Width="159" Height="80" HorizontalAlignment="Right"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
                                 <TextBlock TextAlignment="Center">
                     SALIR
                                 </TextBlock>
@@ -102,7 +102,7 @@
 
                         <!--Boton ver mis datos-->
                         <Border Grid.Column="3" Width="369" Height="80" HorizontalAlignment="Right" Background="White" CornerRadius="10" Margin="0,0,58,0">
-                            <Button Click="btnSoyCineFans_Click"  Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
+                            <Button Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
                                 <TextBlock TextAlignment="Center">
                     VER MIS DATOS CINE FANS
                                 </TextBlock>
