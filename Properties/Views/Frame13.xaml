@@ -150,24 +150,112 @@
                                             <ColumnDefinition Width="43"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="1" Height="59">
-                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <Border Grid.Column="1" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                         </Border>
-                                        
-                                        <Border Grid.Column="3" Height="59">
-                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+
+                                        <Border Grid.Column="3" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                         </Border>
-                                        
-                                        <Border Grid.Column="5" Height="59">
-                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="TOTAL" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                                        <Border Grid.Column="5" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="TOTAL" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                         </Border>
-                                        
-                                        
-                                        
+
+
+
                                     </Grid>
                                 </Border>
+                                <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="Black">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="98"/>
+                                            <ColumnDefinition Width="439"/>
+                                            <ColumnDefinition Width="105"/>
+                                            <ColumnDefinition Width="185"/>
+                                            <ColumnDefinition Width="21"/>
+                                            <ColumnDefinition Width="195"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="1" >
+                                            <Label Content="Boletas &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center"></Label>    
+                                        </Border>
+                                        <Border Grid.Column="3">
+                                            <Label Height="37" Content="$13.600" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                        <Border Grid.Column="5">
+                                            <Label Height="37" Content="2" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                        <Border Grid.Column="7">
+                                            <Label Height="37" Content="$27.200" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                    </Grid>
+                                    
+                                    
+                                </Border>
+                                <Border Grid.Row="2" BorderThickness="0 0 0 1" BorderBrush="Black">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="28"/>
+                                            <ColumnDefinition Width="98"/>
+                                            <ColumnDefinition Width="441"/>
+                                            <ColumnDefinition Width="105"/>
+                                            <ColumnDefinition Width="185"/>
+                                            <ColumnDefinition Width="21"/>
+                                            <ColumnDefinition Width="195"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="1">
+                                            <Label Content="Gafas &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center"></Label>
+                                        </Border>
+                                        <Border Grid.Column="3">
+                                            <Label Height="37" Content="$13.600" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                        <Border Grid.Column="5">
+                                            <Label Height="37" Content="2" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                        <Border Grid.Column="7">
+                                            <Label Height="37" Content="$6.000" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                    </Grid>
 
-                                <Label Grid.Row="4" FontSize="32" FontFamily="Myanmar Khyay" Content="TOTAL A PAGAR: $170.800" Height="42" Width="439" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,0" />
+
+                                </Border>
+                                <Border Grid.Row="3" BorderThickness="0 0 0 1" BorderBrush="Black">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="28"/>
+                                            <ColumnDefinition Width="143"/>
+                                            <ColumnDefinition Width="396"/>
+                                            <ColumnDefinition Width="105"/>
+                                            <ColumnDefinition Width="185"/>
+                                            <ColumnDefinition Width="21"/>
+                                            <ColumnDefinition Width="195"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="1">
+                                            <Label Content="Alimentos &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center"></Label>
+                                        </Border>
+                                        <Border Grid.Column="3">
+                                            <Label Height="37" Content="$13.600" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                        <Border Grid.Column="5">
+                                            <Label Height="37" Content="2" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                        <Border Grid.Column="7">
+                                            <Label Height="37" Content="$137.600" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                        </Border>
+                                    </Grid>
+
+
+                                </Border>
+                                
+                                <Label Grid.Row="4" FontSize="32" FontFamily="Myanmar Khyay" Content="TOTAL A PAGAR: $170.800" Height="42" Width="439"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,0" />
 
                             </Grid>
                         </Border>

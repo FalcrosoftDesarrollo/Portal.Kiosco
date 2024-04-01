@@ -16,6 +16,9 @@
     <Compile Update="Properties\Views\ErrorGeneral.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Properties\Views\Frame17.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Views\IngresoDePassword.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -46,6 +49,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\ErrorGeneral.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\Frame17.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\IngresoDePassword.xaml">
