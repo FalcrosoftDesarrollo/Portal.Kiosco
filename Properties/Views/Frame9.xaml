@@ -69,23 +69,27 @@
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="247" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="232"/>
                             <ColumnDefinition  Width="441"/>
                         </Grid.ColumnDefinitions>
                         <!-- logo -->
-                        <Image Source="C:\SOURCES\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
+                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
-                        <Label Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="4" BorderBrush="White"  CornerRadius="100" Background="Transparent">
+                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="24" FontFamily="inter regular" Content="15:00"/>
+                        </Border>
+
+                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
 
 
                         <!--Boton Salir-->
                         <Border Grid.Column="2" Width="159" Height="80" HorizontalAlignment="Right"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <Button Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
                                 <TextBlock TextAlignment="Center">
-                                    SALIR
+                    SALIR
                                 </TextBlock>
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
@@ -98,9 +102,9 @@
 
                         <!--Boton ver mis datos-->
                         <Border Grid.Column="3" Width="369" Height="80" HorizontalAlignment="Right" Background="White" CornerRadius="10" Margin="0,0,58,0">
-                            <Button Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
+                            <Button Click="btnSoyCineFans_Click"  Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="369" Height="80" Style="{StaticResource MyButton}">
                                 <TextBlock TextAlignment="Center">
-                                    VER MIS DATOS CINE FANS
+                    VER MIS DATOS CINE FANS
                                 </TextBlock>
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
@@ -112,50 +116,50 @@
                         </Border>
                     </Grid>
                 </Border>
-                <Label Content="Tu pelicula necesita gafas 3D " HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48" Margin="612,108,612,767" FontWeight="Bold" Height="65" Grid.Row="1" Width="696"/>
-                <Label Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48" Margin="612,217,612,658" FontWeight="Bold" Height="132" Grid.Row="1" Width="238"/>
-                <Label Content="PRECIO" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="32"  FontWeight="Bold" Margin="537,391,1109,480" Background="WhiteSmoke" Height="69" Grid.Row="1" Width="274"/>
-                <Label Content="TOTAL" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="32"  FontWeight="Bold" Margin="1107,391,539,480" Background="WhiteSmoke" Height="69" Grid.Row="1" Width="274"/>
-                <Label Content="CANTIDAD" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="32"  FontWeight="Bold" Margin="823,391,823,480" Background="WhiteSmoke" Height="69" Grid.Row="1" Width="274" />
-                <Button Margin="679,590,679,270" Grid.Row="1" Width="562" Height="80">
-                    <Label Content="Traje las gafas, omitir este paso" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="20"  FontWeight="Bold" Background="#FFD9D9D9" Foreground="Red" Height="36" Width="514"/>
-                </Button>
-                <Label Content="$6.000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="32"  FontWeight="Bold" Margin="1107,470,539,401" Background="{x:Null}" Height="69" Grid.Row="1" Width="274" Foreground="Red"/>
-                <Button Margin="835,470,0,0" Grid.Row="1" Width="61" Background="#FFF30613" Foreground="White" FontFamily="Myanmar Khyay" FontSize="64" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="61">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="100"/>
-                        </Style>
-                    </Button.Resources>
-                    <Label Content="-" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="64"  FontWeight="Bold" Background="{x:Null}" Foreground="White" RenderTransformOrigin="1.582,2.246" Height="68" Width="37"/>
-                </Button>
-                <Label Content="$3.000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="32"  FontWeight="Bold" Margin="556,470,1090,401" Background="{x:Null}" Height="69" Grid.Row="1" Width="274" Foreground="Red"/>
-                <Button Margin="1017,470,0,0" Grid.Row="1" Width="62" Background="#FFF30613" Foreground="White" FontFamily="Myanmar Khyay" FontSize="64" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-13.18,-0.77" Height="61">
-                    <Button.Resources>
-                        <Style TargetType = "Border">
-                            <Setter Property="CornerRadius" Value="100"/>
-                        </Style>
-                    </Button.Resources>
-                    <Label Content="+" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="64"  FontWeight="Bold" Background="{x:Null}" Foreground="White" RenderTransformOrigin="1.582,2.246" Height="61" Width="50"/>
-                </Button>
-                <Label Content="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="32"  FontWeight="Bold" Margin="946,483,946,414" Background="{x:Null}" Height="43" Grid.Row="1" Foreground="Black"/>
-                <Button Margin="1508,724,232,136" Grid.Row="1" Width="180" Height="80" Foreground="#FFE61414" Background="Red">
-                    <Button.Resources>
-                        <Style TargetType= "Border">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                    <Label Content="VOLVER" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="24" Background="{x:Null}" Height="36" Width="170" Foreground="White"/>
-                </Button>
-                <Button Margin="1711,724,29,136" Grid.Row="1" Width="180" Height="80" Foreground="#FFE61414" Background="Red">
-                    <Button.Resources>
-                        <Style TargetType= "{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                    <Label Content="SIGUIENTE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="24" Background="{x:Null}" Height="36" Width="170" Foreground="White"/>
-                </Button>
-                <!-- Centro -->
+                <Border Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="129"/>
+                            <RowDefinition Height="354"/>
+                            <RowDefinition Height="130"/>
+                            <RowDefinition Height="104"/>
+                        </Grid.RowDefinitions>
+
+
+                        <Border Grid.Row="1">
+                            <Grid>
+                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\group4.png" Width="329" Height="260" VerticalAlignment="Bottom"></Image>
+                                <Label FontFamily="Myanmar Khyay" Content="¿Quieres algo para comer?" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" CornerRadius="10">
+                            <Border Width="350" Height="80" VerticalAlignment="Bottom" CornerRadius="10">
+                                <Button Background="#f30613" Foreground="White" Content="SI, QUIERO COMPRAR" FontFamily="Myanmar Khyay" FontSize="28">
+                                    <Button.Effect>
+                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                    </Button.Effect>
+                                </Button>
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                </Border.Effect>
+                            </Border>
+                            
+                        </Border>
+                        <Border Grid.Row="3">
+                            <Border Width="304" Height="80" VerticalAlignment="Bottom" CornerRadius="10">
+                                <Button Background="#d9d9d9" Foreground="#f30613" Content="No, omitir" FontFamily="Myanmar Khyay" FontSize="24" >
+                                    <Button.Effect>
+                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                    </Button.Effect>
+                                </Button>
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                </Border.Effect>
+                            </Border>
+                           
+                        </Border>
+                    </Grid>
+                </Border>
             </Grid>
         </Border>
     </Grid>
