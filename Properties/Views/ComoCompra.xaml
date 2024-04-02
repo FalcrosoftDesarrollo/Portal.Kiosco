@@ -36,9 +36,11 @@
                 <RowDefinition />
                 <RowDefinition  />
             </Grid.RowDefinitions>
-
+            <Grid>
+                <Button Content="Iniciar Timer" Click="IniciarTimer_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            </Grid>
             <Border Width="160" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="White" BorderBrush="#F30613" BorderThickness="1" CornerRadius="10" Margin="0,40,40,0">
-                <Button Content="VOLVER" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
+                <Button Click="btnVolverComoCompra_Click" Name="btnVolverComoCompra" Content="VOLVER" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}" >
                     <Button.Effect>
                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                     </Button.Effect>
@@ -61,16 +63,14 @@
 
                     <!--Boton Boletas-->
                     <Border Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="400" Height="150" Background="#F30613" CornerRadius="10">
-                        
                         <Grid>
                             <Button Click="btnCinefans_Click" Name="btnCinefans" Background="Transparent" BorderThickness="0" Width="400" Height="150" Style="{StaticResource MyButton}">
-
+                                <TextBlock Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" TextAlignment="Center" VerticalAlignment="Center">
+                                    COMPRAR 
+                                    <LineBreak/>
+                                    COMO CINE FANS
+                                </TextBlock>
                             </Button>
-                            <TextBlock Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" TextAlignment="Center" VerticalAlignment="Center">
-                                COMPRAR 
-                                <LineBreak/>
-                                COMO CINE FANS
-                            </TextBlock>
                         </Grid>
                         <Border.Effect>
                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
@@ -82,13 +82,13 @@
 
                         <Grid>
                             <Button Click="btnCinefans_Click" Name="btnInvitado" Background="Transparent" BorderThickness="0" Width="400" Height="150" Style="{StaticResource MyButton}">
-
+                                <TextBlock Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" TextAlignment="Center" VerticalAlignment="Center">
+                                    COMPRAR 
+                                    <LineBreak/>
+                                    COMO INVITADO
+                                </TextBlock>
                             </Button>
-                            <TextBlock Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" TextAlignment="Center" VerticalAlignment="Center">
-                                COMPRAR 
-                                <LineBreak/>
-                                COMO INVITADO
-                            </TextBlock>
+                            
                         </Grid>
                         <Border.Effect>
                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>

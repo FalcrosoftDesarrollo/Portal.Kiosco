@@ -17,14 +17,9 @@ namespace Portal.Kiosco
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void btnSalir_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+            
         }
     }
 }
