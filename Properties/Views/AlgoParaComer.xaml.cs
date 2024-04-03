@@ -16,5 +16,19 @@ namespace Portal.Kiosco.Properties.Views
         {
 
         }
+
+        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            Gafas3D w = new Gafas3D();
+            this.Close();
+            w.ShowDialog();
+        }
+
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            Combos w = new Combos();
+            this.Close();
+            w.ShowDialog();
+        }
     }
 }

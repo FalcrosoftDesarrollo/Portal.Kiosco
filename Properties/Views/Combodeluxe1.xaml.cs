@@ -11,5 +11,19 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
         }
+
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            ResumenCompra w = new ResumenCompra();
+            this.Close();
+            w.ShowDialog();
+        }
+
+        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            AlgoParaComer w = new AlgoParaComer();
+            this.Close();
+            w.ShowDialog();
+        }
     }
 }

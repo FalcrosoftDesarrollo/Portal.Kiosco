@@ -12,5 +12,18 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
         }
 
+        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            Cartelera w = new Cartelera();
+            this.Close();
+            w.ShowDialog();
+        }
+
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            LayoutAsientos w = new LayoutAsientos();
+            this.Close();
+            w.ShowDialog();
+        }
     }
 }

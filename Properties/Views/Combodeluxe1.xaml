@@ -58,12 +58,15 @@
 
     <Grid>
         <Border>
+            
             <Grid RenderTransformOrigin="0.108,0.669">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="140" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
+                
+                
                 <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
@@ -118,6 +121,8 @@
                             <RowDefinition Height="526"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
+                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,300,0" Click="btnVolver_Click" />
+                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
 
                         <Border Grid.Row="0">
                             <Label Height="65" Width="465" Content="Combo Deluxe 1" FontFamily="Myanmar Khyay" FontSize="48" HorizontalContentAlignment="Center"/>

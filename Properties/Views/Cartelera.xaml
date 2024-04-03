@@ -65,6 +65,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
+                
                 <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
@@ -120,6 +121,9 @@
                             <RowDefinition Height="157"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
+
+                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,300,0" Click="btnVolver_Click"/>
+                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,50,0" Click="btnSiguiente_Click"/>
 
                         <Label Content="¿Qué quieres ver?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48"/>
 

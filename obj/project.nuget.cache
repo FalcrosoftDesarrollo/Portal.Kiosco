@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "eyYqISs6LhPl3W+wWL2X2Y0lga3DTEjRmdsUoEu/ocZ4EH80Pv9J5eQkBPAWl6AlN6+WMNmmc89Go/0hj/vSiQ==",
+  "dgSpecHash": "yTbfAm6tDA1fMratzjRGbWIh22Df6cYtwEgIJerr4zqdFHKFtCIaDrsonCUUUP3so2NvNsKsmmIl6osJn5l9sw==",
   "success": true,
   "projectFilePath": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Portal.Kiosco.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Antoine\\.nuget\\packages\\extended.wpf.toolkit\\4.6.0\\extended.wpf.toolkit.4.6.0.nupkg.sha512",
-    "C:\\Users\\Antoine\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\usuario\\.nuget\\packages\\extended.wpf.toolkit\\4.6.0\\extended.wpf.toolkit.4.6.0.nupkg.sha512",
+    "C:\\Users\\usuario\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

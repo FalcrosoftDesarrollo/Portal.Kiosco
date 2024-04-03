@@ -117,6 +117,7 @@
                 </Border>
                 <Border Grid.Row="1">
                     <Grid>
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="129"/>
                             <RowDefinition Height="260"/>
@@ -130,6 +131,8 @@
                             <RowDefinition Height="80"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
+                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,300,0" Click="btnVolver_Click" />
+                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
 
                         <Border Grid.Row="1">
                             <Grid>

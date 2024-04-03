@@ -230,6 +230,18 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
+        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            Scanear_documento w = new Scanear_documento();
+            this.Close();
+            w.ShowDialog();
+        }
 
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            PreventaGhostbusters w = new PreventaGhostbusters();
+            this.Close();
+            w.ShowDialog();
+        }
     }
 }

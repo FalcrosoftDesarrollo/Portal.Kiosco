@@ -62,5 +62,19 @@ namespace Portal.Kiosco
                 errorWindow.ShowDialog();
             }
         }
+
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            Cartelera w = new Cartelera();
+            this.Close();
+            w.ShowDialog();
+        }
+
+        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            ComoCompra w = new ComoCompra();
+            this.Close();
+            w.ShowDialog();
+        }
     }
 }

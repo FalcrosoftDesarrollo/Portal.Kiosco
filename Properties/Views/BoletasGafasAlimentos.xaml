@@ -156,8 +156,17 @@
                             </WrapPanel>
                         </Border>
 
+                        <Border Grid.Column="1">
+                            <Grid>
+                                <Button x:Name="btnVolver" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" Margin="-72,20,300,0" Click="btnVolver_Click" />
+                                <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
+
+                            </Grid>
+                        </Border>
+
                         <Border Grid.Column="1" Width="374" Height="197" VerticalAlignment="Bottom" Margin="0,0,54,55">
                             <Grid>
+
                                 <Border Width="180" Height="80" Background="#F30613" VerticalAlignment="Bottom" HorizontalAlignment="Left" CornerRadius="10">
                                     <Button Content="IMPRIMIR" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
                                         <Button.Effect>

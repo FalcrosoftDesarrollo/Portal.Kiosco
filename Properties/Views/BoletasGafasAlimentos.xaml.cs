@@ -71,5 +71,18 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            CorreoTecladoFlotante w = new CorreoTecladoFlotante();
+            this.Close();
+            w.ShowDialog();
+        }
+
+        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            InstruccionesDatafono w = new InstruccionesDatafono();
+            this.Close();
+            w.ShowDialog();
+        }
     }
 }

@@ -158,7 +158,7 @@
                                         </Grid.RowDefinitions>
 
                                         <Label FontSize="32" Content="¿Cuándo la quieres ver?" FontFamily="Myanmar Khyay" Grid.Row="0"/>
-
+                                        
                                         <WrapPanel Grid.Row="1" VerticalAlignment="Center" Width="971" HorizontalAlignment="Left">
                                             <Border Width="115" Height="60" Background="#F30613" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
                                                 <Button Content="jue 21" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
@@ -545,6 +545,14 @@
                                     </Grid>
                                 </Border>
 
+                                <Border Grid.Column="2">
+                                    <Grid>
+                                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,300,0" Click="btnVolver_Click" />
+                                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
+
+                                    </Grid>
+                                </Border>
+                                
                                 <Border Grid.Column="2" Width="374" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,54,55">
                                     <Grid>
                                         <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">

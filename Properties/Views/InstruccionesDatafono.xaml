@@ -125,6 +125,10 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
+                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,300,0" Click="btnVolver_Click" />
+                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
+
+
                         <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Width="721" Height="130" TextAlignment="Center"><Run Text="Completa tu pago siguiendo"/><LineBreak/><Run Text="las ins"/><Run Language="es-es" Text="tr"/><Run Text="ucciones del datafono"/></TextBlock>
 
                         <Border Grid.Row="2" Width="570" Height="543" Background="#F5F5F5" VerticalAlignment="Top" Margin="0,35,0,0" CornerRadius="10">

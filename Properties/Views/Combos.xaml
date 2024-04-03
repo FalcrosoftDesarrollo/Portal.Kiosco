@@ -408,10 +408,10 @@
                                         <Border>
                                             <Grid Width="374" HorizontalAlignment="Right">
                                                 <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                                    <Button Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
+                                                    <Button x:Name="btnVolver" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28" Click="btnVolver_Click"/>
                                                 </Border>
                                                 <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                                    <Button Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
+                                                    <Button x:Name="btnSiguiente" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28" Click="btnSiguiente_Click"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
