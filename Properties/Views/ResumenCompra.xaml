@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="ResumenCompra" Height="1080" Width="1920"
         Background="White"
+        WindowStyle="None" 
+        WindowState="Maximized" 
  
         >
     <Window.Resources>
@@ -125,8 +127,12 @@
                             <RowDefinition Height="176"/>
                             <RowDefinition Height="72"/>
                         </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" FontSize="48" FontFamily="Myanmar Khyay" Content="Resumen de tu compra" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,300,0" Click="btnVolver_Click"/>
+                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,50,0" Click="btnSiguiente_Click"/>
+                        <Border Height="65" Width="566" VerticalAlignment="Bottom">
+                            <Label Grid.Row="0" FontSize="48" FontFamily="Myanmar Khyay" Content="Resumen de tu compra" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Border>
+                        
 
                         <Border Grid.Row="2" Width="1266" Height="413">
                             <Grid>

@@ -23,15 +23,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             CargarPeliculasDesdeXml();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-       
-
+        }    
 
         public string ObtenerValorDeConfiguracion(string clave)
         { 

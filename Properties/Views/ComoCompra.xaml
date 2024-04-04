@@ -36,9 +36,6 @@
                 <RowDefinition />
                 <RowDefinition  />
             </Grid.RowDefinitions>
-            <Grid>
-                <Button Content="Iniciar Timer" Click="IniciarTimer_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            </Grid>
             <Border Width="160" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="White" BorderBrush="#F30613" BorderThickness="1" CornerRadius="10" Margin="0,40,40,0">
                 <Button Click="btnVolverComoCompra_Click" Name="btnVolverComoCompra" Content="VOLVER" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}" >
                     <Button.Effect>

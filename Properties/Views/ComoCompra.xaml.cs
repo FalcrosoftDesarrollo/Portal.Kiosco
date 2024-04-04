@@ -18,12 +18,12 @@ namespace Portal.Kiosco.Properties.Views
         public ComoCompra()
         {
             InitializeComponent();
-            contador = 10; // 15 minutos en segundos
+            //contador = 10; // 15 minutos en segundos
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            //timer = new DispatcherTimer();
+            //timer.Interval = TimeSpan.FromSeconds(1);
+            //timer.Tick += Timer_Tick;
+            //timer.Start();
         }
 
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
@@ -67,23 +67,23 @@ namespace Portal.Kiosco.Properties.Views
             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
-        private async void Timer_Tick(object sender, EventArgs e)
-        {
-            contador--;
-            if (contador == 0)
-            {
-                timer.Stop();
-                var openWindow=new Principal();
-                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                await Task.Delay(300);
-                this.Visibility = Visibility.Collapsed;
-                openWindow.Background = Brushes.White;
-                openWindow.Show();
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-            }
-        }
+        //private async void Timer_Tick(object sender, EventArgs e)
+        //{
+        //    contador--;
+        //    if (contador == 0)
+        //    {
+        //        timer.Stop();
+        //        var openWindow=new Principal();
+        //        DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+        //        this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+        //        await Task.Delay(300);
+        //        this.Visibility = Visibility.Collapsed;
+        //        openWindow.Background = Brushes.White;
+        //        openWindow.Show();
+        //        DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+        //        openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        //    }
+        //}
     }
 
      

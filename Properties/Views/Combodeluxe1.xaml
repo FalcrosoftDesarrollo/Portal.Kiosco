@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="Combodeluxe1" Height="1080" Width="1920"
         Background="White"
+        WindowStyle="None" 
+        WindowState="Maximized" 
         >
     <Window.Resources>
         <Style x:Key="MyButton" TargetType="Button">

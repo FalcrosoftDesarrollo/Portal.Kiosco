@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="AlgoParaComer" Height="1080" Width="1920"
         Background="White"
+        WindowStyle="None" 
+        WindowState="Maximized" 
  
         >
     <Window.Resources>

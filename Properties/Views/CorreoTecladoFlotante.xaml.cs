@@ -78,6 +78,7 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
+
         private void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             BoletasGafasAlimentos w = new BoletasGafasAlimentos();
