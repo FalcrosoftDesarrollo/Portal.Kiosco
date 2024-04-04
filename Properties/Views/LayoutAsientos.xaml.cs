@@ -14,7 +14,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            PreventaGhostbusters w = new PreventaGhostbusters();
+            SeleccionarFuncion w = new SeleccionarFuncion();
             this.Close();
             w.ShowDialog();
         }

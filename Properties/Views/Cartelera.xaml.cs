@@ -231,7 +231,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            PreventaGhostbusters w = new PreventaGhostbusters();
+            SeleccionarFuncion w = new SeleccionarFuncion();
             this.Close();
             w.ShowDialog();
         }

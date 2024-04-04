@@ -10,9 +10,6 @@
     <Compile Update="Properties\Views\ComoCompra.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Properties\Views\Datos_Membresía_CineFans.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Properties\Views\ErrorGeneral.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -37,18 +34,12 @@
     <Compile Update="Properties\Views\Scanear_documento.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Properties\Views\SeleccionarFuncion.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Properties\Views\transicion.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Properties\Views\ComoCompra.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Properties\Views\Datos_Membresía_CineFans.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\ErrorGeneral.xaml">
@@ -73,9 +64,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\Scanear_documento.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Properties\Views\SeleccionarFuncion.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\transicion.xaml">
