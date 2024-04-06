@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
@@ -35,7 +36,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             string teatro = ObtenerValorDeConfiguracion("TeaDefault");
             // Ruta del archivo XML
-            string rutaXml = "https://scorecoorp.procinal.com/mobilecomjson//nuevaweb/variable41CARTELERA310_7163.xml";
+            string rutaXml = "https://scorecoorp.procinal.com/mobilecomjson//nuevaweb/variableCARTELERA.aspx?teatro=310";
 
             try
             { 
@@ -158,24 +159,10 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
+        
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new ComoCompra();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-        }
-
-        private async void btnSoyCineFans_Click(object sender, RoutedEventArgs e)
-        {
-            App.IsCinefans = true;
-            var openWindow = new Datos_Membresía_CineFans();
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);

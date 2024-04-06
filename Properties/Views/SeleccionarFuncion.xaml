@@ -146,77 +146,8 @@
 
                                         <Label FontSize="32" Content="¿Cuándo la quieres ver?" FontFamily="Myanmar Khyay" Grid.Row="0"/>
                                         
-                                        <WrapPanel Grid.Row="1" VerticalAlignment="Center" Width="971" HorizontalAlignment="Left">
-                                            <Border Width="115" Height="60" Background="#F30613" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
-                                                <Button Content="jue 21" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
-                                                    <Button.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                    </Button.Effect>
-                                                </Button>
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                </Border.Effect>
-                                            </Border>
-                                            <Border Width="115" Height="60" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
-                                                <Button Content="vie 22" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
-                                                    <Button.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                    </Button.Effect>
-                                                </Button>
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                </Border.Effect>
-                                            </Border>
-                                            <Border Width="115" Height="60" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
-                                                <Button Content="sab 23" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
-                                                    <Button.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                    </Button.Effect>
-                                                </Button>
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                </Border.Effect>
-                                            </Border>
-                                            <Border Width="115" Height="60" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
-                                                <Button Content="dom 24" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
-                                                    <Button.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                    </Button.Effect>
-                                                </Button>
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                </Border.Effect>
-                                            </Border>
-                                            <Border Width="115" Height="60" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
-                                                <Button Content="lun 25" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
-                                                    <Button.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                    </Button.Effect>
-                                                </Button>
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                </Border.Effect>
-                                            </Border>
-                                            <Border Width="115" Height="60" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
-                                                <Button Content="mar 26" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
-                                                    <Button.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                    </Button.Effect>
-                                                </Button>
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                </Border.Effect>
-                                            </Border>
-                                            <Border Width="115" Height="60" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Center" CornerRadius="10" Margin="0,0,6,0">
-                                                <Button Content="mier 27" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}">
-                                                    <Button.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                    </Button.Effect>
-                                                </Button>
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                </Border.Effect>
-                                            </Border>
+                                        <WrapPanel Grid.Row="1" VerticalAlignment="Center" Width="971" HorizontalAlignment="Left" x:Name="ContenedorFechas">
+                                            
                                         </WrapPanel>
 
                                         <WrapPanel Grid.Row="2" VerticalAlignment="Center" Height="41">
