@@ -192,36 +192,12 @@
                                                                     <ColumnDefinition Width="122" />
                                                                 </Grid.ColumnDefinitions>
 
-                                                                <WrapPanel Grid.Column="0">
+                                                                <WrapPanel Grid.Column="0" x:Name="ButtonWrapPanel">
 
                                                                     <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
                                                                         <Button Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
                                                                     </Border>
-                                                                    
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="2:00 p.m." Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                
-                                                                    
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button Background="Transparent"  Content="4:30 p.m." Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                
-                                                                    
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="7:00 p.m." Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                
-                                                                    
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="9:30 p.m." Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                
-                                                                    
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                
+
                                                                 </WrapPanel>
                                                                 <WrapPanel Grid.Column="1">
                                                                     <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
@@ -318,14 +294,14 @@
                                                                         <Button Background="Transparent" BorderThickness="0" Content="General &#x0a;     3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}" HorizontalContentAlignment="Center"/>
                                                                     </Border>
                                                                     <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="6:40 p.m." Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
+                                                                        <Button  Background="Transparent" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
                                                                     </Border>
+                                                                    
 
-
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="0" Background="#F30613">
-                                                                        <Button  Background="Transparent"  Content="8:30 p.m." Foreground="White" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
+                                                                   
+                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
+                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
                                                                     </Border>
-
 
                                                                     <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
                                                                         <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>

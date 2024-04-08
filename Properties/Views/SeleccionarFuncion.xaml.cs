@@ -17,6 +17,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             CargarFechasDesdeXml();
+            CargarHorariosDesdeXml();
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -57,12 +58,25 @@ namespace Portal.Kiosco.Properties.Views
                         // Agregar la fecha única al conjunto
                         HashSet<string> fechas = new HashSet<string>();
                         fechas.Add(fechaFormateada);
+                        Button btn = new Button();
+                        Border border = new Border();
+                        btn.MouseEnter += (sender, e) =>
+                        {
+                            btn.Foreground = Brushes.Red; // Cambiar el color al hacer hover
+                            
+                        };
+
+                        // Suscribirse al evento MouseLeave para volver al color original al salir del hover
+                        btn.MouseLeave += (sender, e) =>
+                        {
+                            btn.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+                        };
                         foreach (string fecha in fechas)
                         {
                             
 
                             // Crear un nuevo botón
-                            Button btn = new Button();
+                           
                             btn.Content = fecha;
                             btn.Background = Brushes.Transparent;
                             btn.BorderThickness = new Thickness(0);
@@ -80,7 +94,7 @@ namespace Portal.Kiosco.Properties.Views
                             btn.Effect = shadowEffect;
 
                             // Crear un contenedor (Border) para el botón
-                            Border border = new Border();
+                            
                             border.Width = 115;
                             border.Height = 60;
                             border.Background = Brushes.White;
@@ -105,20 +119,73 @@ namespace Portal.Kiosco.Properties.Views
                                 border.BorderThickness = new Thickness(1);
                             }
 
-                            // Agregar efecto de sombra al contenedor (Border)
-                            DropShadowEffect borderShadowEffect = new DropShadowEffect();
-                            borderShadowEffect.Color = Colors.Gray;
-                            borderShadowEffect.Direction = 270;
-                            borderShadowEffect.ShadowDepth = 2;
-                            borderShadowEffect.Opacity = 0.5;
-                            border.Effect = borderShadowEffect;
-
                             // Agregar el contenedor al WrapPanel
                             ContenedorFechas.Children.Add(border); // Suponiendo que el WrapPanel se llama "ContenedorPeliculas"
+
+                            
                         }
+
+                        
                     }
                 }
             }
         }
+
+        private void CargarHorariosDesdeXml()
+        {
+            XDocument doc = XDocument.Load("https://scorecoorp.procinal.com/mobilecomjson//nuevaweb/variable41CARTELERA_TEA_PEL_FEC310_6318.xml");
+         
+            foreach (var pelicula in doc.Descendants("Peliculas"))
+            {
+                
+                string ultimaActualizacion = pelicula.Attribute("UltimaActualizacion")?.Value;
+                string[] partes = ultimaActualizacion.Split(' ');
+
+                // Asignar la fecha a una variable
+                string fecha = partes[0];
+
+                // Separar la hora y los minutos, ignorando los segundos
+                string[] tiempoPartes = partes[1].Split(':');
+                string hora = tiempoPartes[0];
+                string minuto = tiempoPartes[1];
+                string amPm = partes[2]; // AM o PM
+
+                string horaFormateada = $"{hora}:{minuto} {amPm}";
+
+                // Agregar la fecha única al conjunto
+                HashSet<string> horas = new HashSet<string>();
+                horas.Add(horaFormateada);
+
+                foreach(string horasBtn in horas)
+                {
+
+                    Button btn = new Button();
+                    btn.Content = horasBtn;
+                    btn.Width = 115;
+                    btn.Height = 46;
+                    btn.FontFamily = new FontFamily("Myanmar Khyay");
+                    btn.FontSize = 14;
+                    btn.Style = FindResource("MyButton") as Style; // Puedes cambiar "MyButton" por el nombre correcto del estilo
+                    btn.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+
+                    Border border = new Border();
+                    border.Width = 115;
+                    border.Height = 46;
+                    border.Background = Brushes.White;
+                    border.CornerRadius = new CornerRadius(5);
+                    border.Margin = new Thickness(0, 0, 6, 7);
+                    border.BorderThickness = new Thickness(1);
+                    border.BorderBrush = Brushes.Black;
+                    border.Child = btn;
+
+                    // Agregamos el botón con borde al WrapPanel
+                    ButtonWrapPanel.Children.Add(border);
+                }
+
+               
+            }
+        }
+           
+        }
     }
-}
+
