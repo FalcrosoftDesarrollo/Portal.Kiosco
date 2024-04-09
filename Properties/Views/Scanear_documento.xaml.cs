@@ -39,16 +39,32 @@ namespace Portal.Kiosco
             {
                 if (e.Key == Key.Enter)
                 {
-                    var openWindow = new IngresoDePassword();
-                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                    await Task.Delay(300);
-                    this.Visibility = Visibility.Collapsed;
-                    openWindow.Background = Brushes.White;
-                    openWindow.Show();
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-                    App.DatosCineFans.Documento = TextDocumento.Text;
+                    if (App.IsBoleteriaConfiteria == false)
+                    {
+                        var openWindow = new Cartelera();
+                        DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                        this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                        await Task.Delay(300);
+                        this.Visibility = Visibility.Collapsed;
+                        openWindow.Background = Brushes.White;
+                        openWindow.Show();
+                        DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                        openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                        App.DatosCineFans.Documento = TextDocumento.Text;
+                    }
+                    else
+                    {
+                        var openWindow = new Combos();
+                        DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                        this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                        await Task.Delay(300);
+                        this.Visibility = Visibility.Collapsed;
+                        openWindow.Background = Brushes.White;
+                        openWindow.Show();
+                        DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                        openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                        App.DatosCineFans.Documento = TextDocumento.Text;
+                    }
                 }
             }
             catch (Exception ex)

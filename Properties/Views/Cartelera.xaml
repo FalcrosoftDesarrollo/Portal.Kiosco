@@ -88,7 +88,7 @@
 
                         <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <Button x:Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
                                 <TextBlock TextAlignment="Center">
                     SALIR
                                 </TextBlock>
@@ -109,25 +109,24 @@
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="157"/>
+                            <RowDefinition Height="152"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,300,0" Click="btnVolver_Click"/>
-                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,50,0" Click="btnSiguiente_Click"/>
+                        
                         <Border Height="65" Width="430">
                             <Label Content="¿Qué quieres ver?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48"/>
                         </Border>
                         
 
 
-                        <Border Grid.Row="1"  >
+                        <Border Grid.Row="1" Width="1800" >
                             <ScrollViewer Style="{StaticResource CustomScrollViewerStyle}" PanningMode="Both" 
                               PreviewMouseDown="ScrollViewer_PreviewMouseDown" 
                               PreviewMouseUp="ScrollViewer_PreviewMouseUp"
                               PreviewTouchDown="ScrollViewer_PreviewTouchDown"
                               PreviewTouchUp="ScrollViewer_PreviewTouchUp"
-                              PreviewMouseMove="ScrollViewer_PreviewMouseMove">     
+                              PreviewMouseMove="ScrollViewer_PreviewMouseMove" Margin="0,-27,0,0">     
                                 <WrapPanel x:Name="ContenedorPeliculas">
 
                                 </WrapPanel>

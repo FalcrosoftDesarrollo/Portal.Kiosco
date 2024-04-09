@@ -12,12 +12,10 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\Antoine\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Antoine\\.nuget\\packages",
-      "D:\\MVS\\MVS shared components, tools and SKDs\\NuGetPackages"
+      "C:\\Users\\stron\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\stron\\.nuget\\packages"
     ],
     "configProperties": {
-      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": true,
       "Microsoft.NETCore.DotNetHostPolicy.SetAppPaths": true
     }
   }

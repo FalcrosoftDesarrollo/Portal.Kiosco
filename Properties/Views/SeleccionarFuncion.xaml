@@ -86,7 +86,7 @@
 
                         <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
                                 <TextBlock TextAlignment="Center">
                                     SALIR
                                 </TextBlock>
@@ -99,7 +99,7 @@
                             </Border.Effect>
                         </Border>
 
-                        
+
                     </Grid>
                 </Border>
 
@@ -127,11 +127,10 @@
 
                                 <Border Grid.Row="0" Grid.Column="1"  Width="360" Height="500" VerticalAlignment="Bottom" Margin="0,50,0,0">
                                     <Grid>
-                                        <Image Width="360" Height="500" Stretch="Fill"  Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\cazafantasmas.jpg"/>
-                                        <Border Height="56" VerticalAlignment="Top" Background="#F30613">
+                                        <Image Width="360" Height="500" Stretch="Fill" Name="imgPelicula"/>
+                                        <!--<Border Height="56" VerticalAlignment="Top" Background="#F30613">
                                             <Label  Foreground="White" FontFamily="Myanmar Khyay" FontSize="32" Content="PREVENTA" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                                        </Border>
-
+                                        </Border>-->
                                     </Grid>
                                 </Border>
 
@@ -145,251 +144,144 @@
                                         </Grid.RowDefinitions>
 
                                         <Label FontSize="32" Content="¿Cuándo la quieres ver?" FontFamily="Myanmar Khyay" Grid.Row="0"/>
-                                        
+
                                         <WrapPanel Grid.Row="1" VerticalAlignment="Center" Width="971" HorizontalAlignment="Left" x:Name="ContenedorFechas">
-                                            
+
                                         </WrapPanel>
 
                                         <WrapPanel Grid.Row="2" VerticalAlignment="Center" Height="41">
-                                            <Border Width="840" Height="40" CornerRadius="20" Background="#F5F5F5">
+                                            <Border Width="840" Height="10" CornerRadius="20" Background="#F5F5F5">
                                                 <Border Height="40" Width="283" HorizontalAlignment="Right" Margin="0,0,25,0" Background="#D9D9D9">
-                                                    
+
                                                 </Border>
                                             </Border>
 
                                             <Button Width="135" Height="23" Background="Transparent" FontFamily="Myanmar Khyay" BorderThickness="0" FontSize="14" Content="Ver más fechas">
-                                                
+
                                             </Button>
                                         </WrapPanel>
-                                        
-                                        <Border Grid.Row="3" Width="980" HorizontalAlignment="Left">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition  Width="15" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-
-                                                <Border Grid.Column="0">
-                                                    <Grid>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="65"/>
-                                                            <RowDefinition />
-                                                        </Grid.RowDefinitions>
-
-                                                        <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
-                                                            <Label FontSize="32" Content="2D" FontFamily="Myanmar Khyay"  Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
-
-                                                        </Border>
-                                                        
-
-                                                        <Border Grid.Row="1">
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="122" />
-                                                                    <ColumnDefinition  Width="122"/>
-                                                                    <ColumnDefinition  Width="122"/>
-                                                                    <ColumnDefinition Width="122" />
-                                                                </Grid.ColumnDefinitions>
-
-                                                                <WrapPanel Grid.Column="0" x:Name="ButtonWrapPanel">
-
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                        <Button Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-
-                                                                </WrapPanel>
-                                                                <WrapPanel Grid.Column="1">
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                        <Button Background="Transparent" BorderThickness="0" Content="Supernova" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,0" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                
-                                                                </WrapPanel>
-                                                                <WrapPanel Grid.Column="2">
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                        <Button Background="Transparent" BorderThickness="0" Content="Black Star" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,0" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    
-                                                                </WrapPanel>
-                                                                <WrapPanel Grid.Column="3">
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
-                                                                        <Button Background="Transparent" BorderThickness="0" Content="4DX" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,0" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    
-                                                                </WrapPanel>
-
-                                                            </Grid>
-                                                        </Border>
-                                                    </Grid>
-                                                </Border>
-
-                                                <Border Grid.Column="2">
-                                                    <Grid>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="65"/>
-                                                            <RowDefinition />
-                                                        </Grid.RowDefinitions>
-                                                        <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
-                                                            <Label FontSize="32" Content="3D" FontFamily="Myanmar Khyay" Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
-                                                        </Border>
-                                                        
-                                                        <Border Grid.Row="1">
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="122" />
-                                                                    <ColumnDefinition  Width="122"/>
-                                                                    <ColumnDefinition  Width="122"/>
-                                                                    <ColumnDefinition Width="122" />
-                                                                </Grid.ColumnDefinitions>
-
-                                                                <WrapPanel Grid.Column="0">
-
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                        <Button Background="Transparent" BorderThickness="0" Content="General &#x0a;     3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}" HorizontalContentAlignment="Center"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    
-
-                                                                   
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
+                                         
+                                            <Border Grid.Row="3" Width="980" HorizontalAlignment="Left">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition  Width="15" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
 
 
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
+                                                    <Border Grid.Column="0">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="65"/>
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+
+                                                            <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
+                                                                <Label FontSize="32" Content="2D" FontFamily="Myanmar Khyay"  Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
+
+                                                            </Border>
 
 
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
+                                                            <Border Grid.Row="1">
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="122" />
+                                                                        <ColumnDefinition  Width="122"/>
+                                                                        <ColumnDefinition  Width="122"/>
+                                                                        <ColumnDefinition Width="122" />
+                                                                    </Grid.ColumnDefinitions>
 
-                                                                </WrapPanel>
-                                                                <WrapPanel Grid.Column="1">
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                        <Button   Background="Transparent" BorderThickness="0" Content="Supernova &#x0a;         3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,0" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
+                                                                    <WrapPanel Grid.Column="0" x:Name="ContenedorHorasGeneral">
 
-                                                                </WrapPanel>
-                                                                <WrapPanel Grid.Column="2">
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                        <Button Background="Transparent" BorderThickness="0" Content="Black Star &#x0a;        3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,6,0" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                        </Border>
 
-                                                                </WrapPanel>
-                                                                <WrapPanel Grid.Column="3">
-                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
-                                                                        <Button Background="Transparent" BorderThickness="0" Content="4DX - 3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,7" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
-                                                                    <Border Width="115" Height="46" CornerRadius="5" Margin="0,0,0,0" BorderThickness="1" BorderBrush="Black">
-                                                                        <Button  Background="Transparent"  Content="" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="16" Style="{StaticResource MyButton}"/>
-                                                                    </Border>
+                                                                    </WrapPanel>
+                                                                    <WrapPanel Grid.Column="1" x:Name="ContenedorHorasSupernova">
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="Supernova" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}" />
+                                                                        </Border>
 
-                                                                </WrapPanel>
 
-                                                            </Grid>
-                                                        </Border>
-                                                    </Grid>
-                                                </Border>
+                                                                    </WrapPanel>
+                                                                    <WrapPanel Grid.Column="2" x:Name="ContenedorHorasBlackStar">
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                        </Border>
+                                                                     
+                                                                    </WrapPanel>
+                                                                    <WrapPanel Grid.Column="3" x:Name="ContenedorHoras4DX">
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                        </Border>
+                                                                       
+                                                                    </WrapPanel>
 
-                                            </Grid>
-                                        </Border>
-                                        
+                                                                </Grid>
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <Border Grid.Column="2">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="65"/>
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
+                                                                <Label FontSize="32" Content="3D" FontFamily="Myanmar Khyay" Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
+                                                            </Border>
+
+                                                            <Border Grid.Row="1">
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="122" />
+                                                                        <ColumnDefinition  Width="122"/>
+                                                                        <ColumnDefinition  Width="122"/>
+                                                                        <ColumnDefinition Width="122" />
+                                                                    </Grid.ColumnDefinitions>
+
+
+                                                                    <WrapPanel Grid.Column="0"  x:Name="ContenedorHoras3D">
+
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="General &#x0a;     3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}" HorizontalContentAlignment="Center"/>
+                                                                        </Border>
+                                                                       
+
+                                                                    </WrapPanel>
+
+                                                                    <WrapPanel Grid.Column="1" x:Name="ContenedorHoras3DSuperNova">
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                            <Button   Background="Transparent" BorderThickness="0" Content="Supernova &#x0a;         3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                        </Border>
+                                                                        
+
+                                                                    </WrapPanel>
+                                                                    <WrapPanel Grid.Column="2" x:Name="ContenedorHoras3DBlackStar">
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star &#x0a;        3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                        </Border>
+                                                                        
+
+                                                                    </WrapPanel>
+                                                                    <WrapPanel Grid.Column="3" x:Name="ContenedorHoras3D4DX">
+                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX - 3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                        </Border>
+                                                                       
+                                                                    </WrapPanel>
+
+                                                                </Grid>
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+
+                                                </Grid>
+                                            </Border>
+                                         
                                     </Grid>
                                 </Border>
 
@@ -402,7 +294,7 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Border Grid.Column="1">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -414,19 +306,19 @@
                                         <Border Grid.Row="0" Margin="31,0,0,0">
                                             <WrapPanel>
                                                 <TextBlock >
-                                                            <Label FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " Width="800" Height="43"/>
+                                                            <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " Width="800" Height="43"/>
                                                             <LineBreak/>
-                                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
+                                                            <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
                                                             <LineBreak/>
-                                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="Clasificación: 7 años" Height="38"/>
+                                                            <Label Name="lblClasificacion" FontFamily="Myanmar Khyay" FontSize="24" Content="Clasificación: 7 años" Height="38"/>
                                                             <LineBreak/>
-                                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="Género: Aventura, Comedia, Fantasía" Height="38"/>
+                                                            <Label Name="lblGenero" FontFamily="Myanmar Khyay" FontSize="24" Content="Género: Aventura, Comedia, Fantasía" Height="38"/>
                                                 </TextBlock>
 
                                             </WrapPanel>
                                         </Border>
-                                        
-                                        <Border Grid.Row="2" Width="835" Height="120" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613">
+
+                                        <Border Visibility="Hidden" Grid.Row="2" Width="835" Height="120" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613">
                                             <WrapPanel Height="100" VerticalAlignment="Top">
                                                 <Image Height="62" Width="74" Margin="25,18"  Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\advertencia.png"/>
                                                 <TextBlock Width="705" FontFamily="Inter Mixed" FontSize="20" Foreground="White" VerticalAlignment="Center">
@@ -440,14 +332,9 @@
                                 </Border>
 
                                 <Border Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Grid>
-                                        
-                                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,300,0" Click="btnVolver_Click" />
-                                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
-
-                                    </Grid>
+                                    <Grid/>
                                 </Border>
-                                
+
                                 <!--<Border Grid.Column="2" Width="374" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,54,55">
                                     <Grid>
                                         <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">

@@ -57,6 +57,17 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="AvailableSeat" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <!-- Agregar más propiedades de estilo según sea necesario -->
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -139,11 +150,7 @@
                                 <RowDefinition/>
                                 <RowDefinition Height="55"/>
                             </Grid.RowDefinitions>
-
-                            <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,300,0" Click="btnVolver_Click" />
-                            <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,50,0" Click="btnSiguiente_Click"/>
-
-
+ 
                             <Border>
 
                                 <Label Content="¿Dónde te quieres sentar?" FontFamily="Myanmar Khyay" FontSize="48" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
@@ -240,7 +247,7 @@
                                         </Grid>
                                     </Border>
                                     <Border Grid.Column="3">
-                                        <UniformGrid Rows="9" Columns="16">
+                                        <UniformGrid Name="ContenedorSala" Rows="9" Columns="16">
                                             <!-- The buttons representing the seats will be generated here -->
                                             <!-- You can use data binding or manually place the buttons -->
                                             <!-- Example of manually placing buttons -->
@@ -483,11 +490,11 @@
                                     <Border Grid.Column="9" Width="374" Height="80" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-7,0,0" Grid.RowSpan="3">
                                         <Grid>
                                             <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                                <Button Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
+                                                <Button Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                             </Border>
 
                                             <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                                <Button Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
+                                                <Button Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                             </Border>
                                         </Grid>
                                     </Border>

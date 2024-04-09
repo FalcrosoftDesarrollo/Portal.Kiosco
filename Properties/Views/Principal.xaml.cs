@@ -14,6 +14,7 @@ namespace Portal.Kiosco.Properties.Views
         public Principal()
         {
             InitializeComponent();
+            App.IsFecha = false;
         }
 
 

@@ -1,7 +1,9 @@
-﻿using APIPortalWebMed.Entities;
+﻿using APIPortalKiosco.Entities;
+using APIPortalWebMed.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,64 +26,131 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             CargarPeliculasDesdeXml();
-        }    
+        }
 
         public string ObtenerValorDeConfiguracion(string clave)
-        { 
+        {
             string valor = ConfigurationManager.AppSettings[clave];
             return valor;
         }
 
+        //private void CargarPeliculasDesdeXml()
+        //{
+        //    try
+        //    {
+        //        int fila = 0;
+        //        int columna = 0;
+        //        Dictionary<string, bool> titulosProcesados = new Dictionary<string, bool>();
+
+        //        foreach (var pelicula in App.Peliculas)
+        //        {
+        //            // Verificar si el título original ya ha sido procesado
+        //            if (!titulosProcesados.ContainsKey(pelicula.TituloOriginal))
+        //            {
+        //                titulosProcesados[pelicula.TituloOriginal] = true;
+
+        //                var nuevoBorde = new Border
+        //                {
+        //                    Name = "P" + pelicula.Id.ToString(), // Asignar el Id como el Name del Border
+        //                    Margin = new Thickness(40),
+        //                    BorderThickness = new Thickness(0),
+        //                    VerticalAlignment = VerticalAlignment.Center,
+        //                    HorizontalAlignment = HorizontalAlignment.Right,
+        //                    OpacityMask = new VisualBrush
+        //                    {
+        //                        Stretch = Stretch.Fill,
+        //                        Visual = new Rectangle
+        //                        {
+        //                            RadiusX = 0,
+        //                            RadiusY = 0,
+        //                            Width = 1,
+        //                            Height = 1,
+        //                            Fill = Brushes.Black
+        //                        }
+        //                    }
+        //                };
+
+        //                // Verificar si la película es de tipo "Preventa"
+        //                if (pelicula.Tipo == "Preventa")
+        //                {
+        //                    // Crear el borde y el letrero para las películas de tipo "Preventa"
+        //                    Border preventaBorder = new Border
+        //                    {
+        //                        Height = 56,
+        //                        VerticalAlignment = VerticalAlignment.Top,
+        //                        Background = Brushes.Red
+        //                    };
+
+        //                    Label preventaLabel = new Label
+        //                    {
+        //                        Foreground = Brushes.White,
+        //                        FontFamily = new FontFamily("Myanmar Khyay"),
+        //                        FontSize = 32,
+        //                        Content = "PREVENTA",
+        //                        HorizontalContentAlignment = HorizontalAlignment.Center,
+        //                        VerticalContentAlignment = VerticalAlignment.Center
+        //                    };
+
+        //                    preventaBorder.Child = preventaLabel;
+        //                    nuevoBorde.Child = preventaBorder;
+        //                }
+
+        //                // Agregar la imagen de la película
+        //                Image nuevaImagen = new Image
+        //                {
+        //                    Width = 360,
+        //                    Height = 500,
+        //                    Stretch = Stretch.Fill,
+        //                    Source = new BitmapImage(new Uri(pelicula.Imagen))
+        //                };
+
+        //                // Agregar la imagen al contenedor
+        //                nuevoBorde.Child = nuevaImagen;
+
+        //                // Configurar la posición en la cuadrícula
+        //                Grid.SetRow(nuevoBorde, fila);
+        //                Grid.SetColumn(nuevoBorde, columna);
+
+        //                // Agregar el contenedor a la cuadrícula
+        //                ContenedorPeliculas.Children.Add(nuevoBorde);
+
+        //                // Incrementar las columnas y filas
+        //                columna++;
+        //                if (columna >= 4) // cambiar 4 por el número de columnas deseado
+        //                {
+        //                    columna = 0;
+        //                    fila++;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Error al cargar películas desde el archivo XML: " + ex.Message);
+        //    }
+        //}
+
+
         private void CargarPeliculasDesdeXml()
         {
-            string teatro = ObtenerValorDeConfiguracion("TeaDefault");
-            // Ruta del archivo XML
-            string rutaXml = "https://scorecoorp.procinal.com/mobilecomjson//nuevaweb/variableCARTELERA.aspx?teatro=310";
-
             try
-            { 
-                XDocument xmlDocument = XDocument.Load(rutaXml);
-                var peliculas = xmlDocument.Descendants("pelicula");
+            {
                 int fila = 0;
                 int columna = 0;
-                foreach (var pelicula in peliculas)
-                {
-                    if (pelicula.Attribute("tipo")?.Value == "Normal")
-                    {
-                        Pelicula nuevaPelicula = new Pelicula
-                        {
-                            Id = pelicula.Attribute("id")?.Value,
-                            Nombre = pelicula.Attribute("nombre")?.Value,
-                            Tipo = pelicula.Attribute("tipo")?.Value,
-                            Sinopsis = pelicula.Element("sinopsis")?.Value,
-                            TituloOriginal = pelicula.Element("data")?.Attribute("TituloOriginal")?.Value,
-                            Imagen = pelicula.Element("data")?.Attribute("Imagen")?.Value,
-                            RutaCartelera = pelicula.Element("data")?.Attribute("RutaCartelera")?.Value,
-                            Censura = pelicula.Element("data")?.Attribute("Censura")?.Value,
-                            Idioma = pelicula.Element("data")?.Attribute("idioma")?.Value,
-                            Genero = pelicula.Element("data")?.Attribute("genero")?.Value,
-                            Pais = pelicula.Element("data")?.Attribute("pais")?.Value,
-                            Duracion = pelicula.Element("data")?.Attribute("duracion")?.Value,
-                            Medio = pelicula.Element("data")?.Attribute("medio")?.Value,
-                            Formato = pelicula.Element("data")?.Attribute("formato")?.Value,
-                            Version = pelicula.Element("data")?.Attribute("versión")?.Value,
-                            Trailer1 = pelicula.Element("data")?.Attribute("trailer1")?.Value,
-                            Trailer2 = pelicula.Element("data")?.Attribute("trailer2")?.Value,
-                            //FechaEstreno = pelicula.Element("data")?.Attribute("fechaEstreno")?.Value,
-                            Reparto = pelicula.Element("data")?.Attribute("reparto")?.Value,
-                            Director = pelicula.Element("data")?.Attribute("director")?.Value,
-                            Distribuidor = pelicula.Element("data")?.Attribute("distribuidor")?.Value,
-                            Habilitado = Convert.ToBoolean(pelicula.Element("data")?.Attribute("Habilitado")?.Value),
-                            //DiasDisponibles = pelicula.Element("DiasDisponiblesTodosCinemas")
-                            //                ?.Elements("dia")
-                            //                ?.Select(d => DateTime.ParseExact(d.Attribute("fecha")?.Value, "ddd, MMM dd yyyy", CultureInfo.InvariantCulture))
-                            //                ?.ToList(),
-                        };
+                Dictionary<string, bool> titulosProcesados = new Dictionary<string, bool>();
 
-                        Border nuevoBorde = new Border
+                foreach (var pelicula in App.Peliculas)
+                {
+                    // Verificar si el título original ya ha sido procesado
+                    if (!titulosProcesados.ContainsKey(pelicula.TituloOriginal))
+                    {
+                        titulosProcesados[pelicula.TituloOriginal] = true;
+
+                        // Crear el contenedor para la película
+                        var nuevoBorde = new Border
                         {
-                            Name = "P" + nuevaPelicula.Id.ToString(), // Asignar el Id como el Name del Border
-                            Margin = new Thickness(55),
+                            Name = "P" + pelicula.Id.ToString(),
+                            Margin = new Thickness(40),
                             BorderThickness = new Thickness(0),
                             VerticalAlignment = VerticalAlignment.Center,
                             HorizontalAlignment = HorizontalAlignment.Right,
@@ -90,8 +159,8 @@ namespace Portal.Kiosco.Properties.Views
                                 Stretch = Stretch.Fill,
                                 Visual = new Rectangle
                                 {
-                                    RadiusX = 0.1,
-                                    RadiusY = 0.1,
+                                    RadiusX = 0,
+                                    RadiusY = 0,
                                     Width = 1,
                                     Height = 1,
                                     Fill = Brushes.Black
@@ -99,25 +168,59 @@ namespace Portal.Kiosco.Properties.Views
                             }
                         };
 
+                        // Crear un grid para contener la imagen y el borde superior rojo
+                        var grid = new Grid();
+
+                        // Agregar la imagen de la película al grid
                         Image nuevaImagen = new Image
                         {
-                            Source = new BitmapImage(new Uri(nuevaPelicula.Imagen)),
+                            Width = 360,
+                            Height = 444, // Altura ajustada para dar espacio al borde superior rojo
                             Stretch = Stretch.Fill,
+                            Source = new BitmapImage(new Uri(pelicula.Imagen))
                         };
+                        grid.Children.Add(nuevaImagen);
 
-                        Button imagenButton = new Button
+                        // Verificar si la película es de tipo "Preventa"
+                        if (pelicula.Tipo == "Preventa")
                         {
-                            Content = nuevaImagen, // Colocar la imagen dentro del contenido del botón
-                            Background = Brushes.Transparent, // Fondo transparente para que solo se vea la imagen
-                            BorderThickness = new Thickness(0), // Eliminar el borde del botón
-                            Padding = new Thickness(0) // Eliminar el relleno del botón
-                        };
+                            // Crear el borde superior rojo con el texto "PREVENTA"
+                            Border preventaBorder = new Border
+                            {
+                                Height = 56,
+                                VerticalAlignment = VerticalAlignment.Top,
+                                Background = Brushes.Red
+                            };
 
-                        // Agregar evento Click al botón
-                        imagenButton.Click += async (sender, e) =>
+                            Label preventaLabel = new Label
+                            {
+                                Foreground = Brushes.White,
+                                FontFamily = new FontFamily("Myanmar Khyay"),
+                                FontSize = 32,
+                                Content = "PREVENTA",
+                                HorizontalContentAlignment = HorizontalAlignment.Center,
+                                VerticalContentAlignment = VerticalAlignment.Center
+                            };
+
+                            preventaBorder.Child = preventaLabel;
+                            grid.Children.Add(preventaBorder);
+                        }
+
+                        // Agregar el grid como contenido del borde
+                        nuevoBorde.Child = grid;
+
+                        // Configurar el evento Click para abrir la pantalla SeleccionarFuncion
+                        nuevoBorde.MouseLeftButtonUp += async (sender, e) =>
                         {
                             // Llenar App.Pelicula.Id con el Id de la película al hacer clic
-                            App.Pelicula.Id = nuevaPelicula.Id.ToString();
+                            App.Pelicula.Id = pelicula.Id.ToString();
+                            App.Pelicula.TituloOriginal = pelicula.TituloOriginal.ToString();
+                            App.Pelicula.Imagen = pelicula.Imagen;
+                            App.Pelicula.Nombre = pelicula.Nombre;
+                            App.Pelicula.Duracion = pelicula.Duracion;
+                            App.Pelicula.Genero = pelicula.Genero;
+                            App.Pelicula.Censura = pelicula.Censura;
+                            
 
                             // Navegar a la siguiente pantalla (SeleccionFuncion)
                             var openWindow = new SeleccionarFuncion();
@@ -131,25 +234,20 @@ namespace Portal.Kiosco.Properties.Views
                             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                         };
 
-                        // Agregar el botón al contenedor de películas
-                        nuevoBorde.Child = imagenButton;
-
-                        nuevoBorde.Width = 360;
-                        nuevoBorde.Height = 500;
-
+                        // Configurar la posición en la cuadrícula
                         Grid.SetRow(nuevoBorde, fila);
                         Grid.SetColumn(nuevoBorde, columna);
+
+                        // Agregar el contenedor a la cuadrícula
                         ContenedorPeliculas.Children.Add(nuevoBorde);
 
-
+                        // Incrementar las columnas y filas
                         columna++;
                         if (columna >= 4) // cambiar 4 por el número de columnas deseado
                         {
                             columna = 0;
                             fila++;
                         }
-
-                        Peliculas.Add(nuevaPelicula);
                     }
                 }
             }
@@ -159,10 +257,11 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-        
+
+
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new ComoCompra();
+            var openWindow = new Principal();
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);

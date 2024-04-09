@@ -1,7 +1,11 @@
-﻿using System.Printing;
+﻿using System;
+using System.Printing;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -83,6 +87,19 @@ namespace Portal.Kiosco.Properties.Views
             InstruccionesDatafono w = new InstruccionesDatafono();
             this.Close();
             w.ShowDialog();
+        }
+
+        private async void btnSalir_Click(object sender, RoutedEventArgs e)
+        {
+            var openWindow = new Principal();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }
