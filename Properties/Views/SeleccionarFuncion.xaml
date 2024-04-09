@@ -77,7 +77,7 @@
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="4" BorderBrush="White"  CornerRadius="100" Background="Transparent">
-                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="24" FontFamily="inter regular" Content="15:00"/>
+                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="24" FontFamily="inter regular" Content="{Binding TiempoRestanteGlobal}"/>
                         </Border>
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
@@ -335,21 +335,22 @@
                                     <Grid/>
                                 </Border>
 
-                                <!--<Border Grid.Column="2" Width="374" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,54,55">
+                                <Border Grid.Column="2" Width="374" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,54,55">
                                     <Grid>
-                                        <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                            <Button Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28">
+                                        <Border  Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
+                                            <Button x:Name="btnVolver" Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28">
 
                                             </Button>
                                         </Border>
 
                                         <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                            <Button Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28">
+                                            <Button x:Name="btnSiguiente" Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28">
 
                                             </Button>
                                         </Border>
+                                    
                                     </Grid>
-                                </Border>-->
+                                </Border>
                             </Grid>
                         </Border>
 

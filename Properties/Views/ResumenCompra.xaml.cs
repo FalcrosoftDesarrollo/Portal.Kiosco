@@ -14,6 +14,7 @@ namespace Portal.Kiosco.Properties.Views
         public ResumenCompra()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)

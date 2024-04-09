@@ -10,6 +10,10 @@
         "name": "Microsoft.WindowsDesktop.App",
         "version": "7.0.0"
       }
-    ]
+    ],
+    "configProperties": {
+      "Windows.ApplicationModel.DataTransfer.DragDrop.ExternalSupport": true,
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": true
+    }
   }
 }

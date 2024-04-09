@@ -29,6 +29,7 @@ namespace Portal.Kiosco.Properties.Views
         public SeleccionarFuncion()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
             CargarFechasDesdeXml();
             imgPelicula.Source = new BitmapImage(new Uri(App.Pelicula.Imagen));
             lblClasificacion.Content = "Clasificación: " + App.Pelicula.Censura;

@@ -220,7 +220,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\V
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.g.resources
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.Properties.Resources.resources
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.csproj.GenerateResource.cache
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.GeneratedMSBuildEditorConfig.editorconfig
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.AssemblyInfoInputs.cache
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.AssemblyInfo.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.csproj.CoreCompileInputs.cache
@@ -230,3 +229,19 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\refint\Portal.Kios
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.pdb
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.genruntimeconfig.cache
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\ref\Portal.Kiosco.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.sourcelink.json
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\System.Runtime.InteropServices.WindowsRuntime.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Diagnostics.Eventing.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Fonts.Fluent.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Foundation.Logging.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Foundation.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.Composition.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.Dispatching.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.FluentTheme.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.FluentTheme.v1.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.FluentTheme.v2.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.Toolkit.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Xaml.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.d-bfalse.GeneratedMSBuildEditorConfig.editorconfig

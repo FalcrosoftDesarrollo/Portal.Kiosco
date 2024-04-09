@@ -26,6 +26,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             CargarPeliculasDesdeXml();
+            DataContext = ((App)Application.Current);
         }
 
         public string ObtenerValorDeConfiguracion(string clave)

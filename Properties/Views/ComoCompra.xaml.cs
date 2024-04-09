@@ -13,17 +13,9 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class ComoCompra : Window
     {
-        private DispatcherTimer timer;
-        private int contador;
         public ComoCompra()
         {
             InitializeComponent();
-            //contador = 10; // 15 minutos en segundos
-
-            //timer = new DispatcherTimer();
-            //timer.Interval = TimeSpan.FromSeconds(1);
-            //timer.Tick += Timer_Tick;
-            //timer.Start();
         }
 
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
@@ -73,7 +65,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
-var openWindow = new Principal();
+            var openWindow = new Principal();
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);

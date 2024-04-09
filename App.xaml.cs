@@ -10,13 +10,19 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Xml;
 using static Org.BouncyCastle.Math.EC.ECCurve;
+using Portal.Kiosco.Properties.Views;
+using System.Windows.Threading;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Media.Animation;
+using System.Windows.Media;
 
 namespace Portal.Kiosco
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application, INotifyPropertyChanged
     {
         public static bool IsUserAuthenticated { get; set; }
         public static CineFansData DatosCineFans { get; set; }
@@ -28,12 +34,23 @@ namespace Portal.Kiosco
         public static string idCine { get; set; }
         public static string ScoreServices { get; set; }
         public static bool IsFecha = false;
+        public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
-
+        private string _tiempoRestanteGlobal;
+        public string TiempoRestanteGlobal
+        {
+            get { return _tiempoRestanteGlobal; }
+            set
+            {
+                _tiempoRestanteGlobal = value;
+                OnPropertyChanged(nameof(TiempoRestanteGlobal));
+            }
+        }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            IniciarContadorGlobal();
             DatosCineFans = new CineFansData();
             Peliculas = new List<Pelicula>();
             Pelicula = new Pelicula();
@@ -51,6 +68,40 @@ namespace Portal.Kiosco
                 ScoreServices = appSettingsSection["ScoreServices"].ToString();
                 Peliculas = ObtenerPeliculas(carteleraXML, idCine);
             }
+        }
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void IniciarContadorGlobal()
+        {
+            TimeSpan tiempoRestante = TimeSpan.FromMinutes(15);
+            TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
+
+            DispatcherTimer contadorGlobalTimer = new DispatcherTimer();
+            contadorGlobalTimer.Tick += (sender, e) =>
+            {
+                if (tiempoRestante > TimeSpan.Zero)
+                {
+                    tiempoRestante = tiempoRestante.Subtract(TimeSpan.FromSeconds(1));
+                    TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
+                }
+                else
+                {
+                    contadorGlobalTimer.Stop();
+                    var openWindow = new Principal();
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                    Application.Current.MainWindow.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+                    openWindow.Background = Brushes.White;
+                    openWindow.Show();
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                }
+            };
+            contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
+            contadorGlobalTimer.Start();
         }
 
         private string DiaMes(string pr_daynum, string pr_flag)

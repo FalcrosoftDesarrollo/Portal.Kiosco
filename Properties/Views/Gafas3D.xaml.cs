@@ -10,6 +10,7 @@ namespace Portal.Kiosco.Properties.Views
         public Gafas3D()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)

@@ -10,6 +10,7 @@ namespace Portal.Kiosco.Properties.Views
         public PagoCashback()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
