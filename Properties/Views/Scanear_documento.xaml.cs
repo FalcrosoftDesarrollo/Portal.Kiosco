@@ -28,9 +28,17 @@ namespace Portal.Kiosco
             this.Close();
         }
 
-        private void btnIngresaDocumento_Click(object sender, RoutedEventArgs e)
+        private async void btnIngresaDocumento_Click(object sender, RoutedEventArgs e)
         {
-
+            var openWindow = new Cartelera();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private async void TextDocumento_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -79,18 +87,21 @@ namespace Portal.Kiosco
             }
         }
 
-        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
-            Cartelera w = new Cartelera();
-            this.Close();
-            w.ShowDialog();
+            var openWindow = new ComoCompra();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
-        private void btnVolver_Click(object sender, RoutedEventArgs e)
-        {
-            ComoCompra w = new ComoCompra();
-            this.Close();
-            w.ShowDialog();
-        }
+
+
+
     }
 }

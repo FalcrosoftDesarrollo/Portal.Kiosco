@@ -144,53 +144,56 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="143"/>
-                                <RowDefinition Height="133"/>
-                                <RowDefinition Height="486"/>
+                                <!--<RowDefinition Height="133"/>-->
+                                <RowDefinition Height="609"/>
                                 <RowDefinition Height="34"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="55"/>
+                                <RowDefinition Height="89"/>
                             </Grid.RowDefinitions>
- 
-                            <Border>
 
-                                <Label Content="¿Dónde te quieres sentar?" FontFamily="Myanmar Khyay" FontSize="48" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                            </Border>
 
-                            <Border Grid.Row="1" >
+
+                            <Border Grid.Row="0" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="651"/>
+                                        <ColumnDefinition Width="530"/>
+                                        <ColumnDefinition Width="121"/>
                                         <ColumnDefinition/>
-                                        <ColumnDefinition Width="288"/>
+                                        <ColumnDefinition Width="54"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="1" Background="#D9D9D9" Height="68">
-                                        <Label FontFamily="Myanmar Khyay" FontSize="40" Content="PANTALLA" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="2" Background="#D9D9D9" Height="100" CornerRadius="200,200, 0 ,0" Margin="0,32,0,33" BorderThickness="10,30,10,0" BorderBrush="Black">
+                                        <Label FontFamily="Myanmar Khyay" FontSize="32" Content="P A N T A L L A" HorizontalAlignment="Center" />
                                     </Border>
 
                                 </Grid>
 
                             </Border>
-                            <Border Grid.Row="2">
+                            <Border Grid.Row="1">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="200"/>
                                         <ColumnDefinition Width="353"/>
                                         <ColumnDefinition Width="98"/>
-                                        <ColumnDefinition Width="981"/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="1215"/>
+
                                     </Grid.ColumnDefinitions>
 
                                     <Border Grid.Column="1">
                                         <Grid>
                                             <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
                                                 <RowDefinition Height="42"/>
                                                 <RowDefinition Height="53"/>
                                                 <RowDefinition Height="53"/>
                                                 <RowDefinition Height="123"/>
                                                 <RowDefinition/>
+
                                             </Grid.RowDefinitions>
-                                            <Border>
-                                                <Grid>
+                                            <Border Grid.Row="0">
+
+                                                <Label Content="¿Dónde te quieres sentar?" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                            </Border>
+                                            <Border Grid.Row="1">
+                                                <Grid VerticalAlignment="Center">
                                                     <Border CornerRadius="10" Background="#F5F5F5" Width="167" Height="42" HorizontalAlignment="Left">
                                                         <Label FontFamily="Myanmar Khyay" FontSize="16" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                                     </Border>
@@ -199,27 +202,6 @@
                                                     </Border>
                                                 </Grid>
                                             </Border>
-                                            <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="Black">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="69"/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition Width="50"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <Border Grid.Column="1">
-                                                        <Grid>
-                                                            <Border HorizontalAlignment="Left">
-                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="A1" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                                                            </Border>
-                                                            <Border HorizontalAlignment="Right">
-                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="$13.600" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                                                            </Border>
-                                                        </Grid>
-                                                    </Border>
-                                                </Grid>
-                                            </Border>
-
                                             <Border Grid.Row="2" BorderThickness="0 0 0 1" BorderBrush="Black">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -241,7 +223,28 @@
                                                 </Grid>
                                             </Border>
 
-                                            <Border Grid.Row="3" CornerRadius="10" Background="#d9d9d9" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="350" Height="80">
+                                            <Border Grid.Row="3" BorderThickness="0 0 0 1" BorderBrush="Black">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="69"/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="50"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Border Grid.Column="1">
+                                                        <Grid>
+                                                            <Border HorizontalAlignment="Left">
+                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="A1" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                                            </Border>
+                                                            <Border HorizontalAlignment="Right">
+                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="$13.600" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="4" CornerRadius="10" Background="#d9d9d9" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="350" Height="80">
                                                 <Label FontFamily="Myanmar Khyay" FontSize="30" Content="TOTAL: $27.200" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                             </Border>
                                         </Grid>
@@ -251,13 +254,15 @@
                                             <!-- The buttons representing the seats will be generated here -->
                                             <!-- You can use data binding or manually place the buttons -->
                                             <!-- Example of manually placing buttons -->
-                                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"/>
+                                            <!--<Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"/>
                                             <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
                                             <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
                                             <Button Content="A1" Style="{StaticResource AvailableSeat}"  FontWeight="Bold" />
                                             <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold"  />
 
+                                            -->
                                             <!-- ... other buttons ... -->
+                                            <!--
                                             <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
                                             <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
                                             <Button Content="A1" Style="{StaticResource SelectedSeat}" FontWeight="Bold"  />
@@ -397,7 +402,7 @@
                                             <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
                                             <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
                                             <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
-                                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />
+                                            <Button Content="A1" Style="{StaticResource AvailableSeat}" FontWeight="Bold" />-->
 
                                             <!-- ... other buttons ... -->
                                             <!-- ... more buttons to fill the grid ... -->
@@ -407,7 +412,7 @@
 
 
                             </Border>
-                            <Border Grid.Row="4">
+                            <Border Grid.Row="3">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="0*"/>
@@ -510,4 +515,3 @@
         </Border>
     </Grid>
 </Window>
-

@@ -291,7 +291,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="240"/>
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="1200" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
@@ -306,7 +306,7 @@
                                         <Border Grid.Row="0" Margin="31,0,0,0">
                                             <WrapPanel>
                                                 <TextBlock >
-                                                            <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " Width="800" Height="43"/>
+                                                            <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " Width="1200" Height="43"/>
                                                             <LineBreak/>
                                                             <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
                                                             <LineBreak/>
@@ -318,7 +318,7 @@
                                             </WrapPanel>
                                         </Border>
 
-                                        <Border Visibility="Hidden" Grid.Row="2" Width="835" Height="120" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613">
+                                        <Border Grid.Row="2" Width="835" Height="120" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613">
                                             <WrapPanel Height="100" VerticalAlignment="Top">
                                                 <Image Height="62" Width="74" Margin="25,18"  Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\advertencia.png"/>
                                                 <TextBlock Width="705" FontFamily="Inter Mixed" FontSize="20" Foreground="White" VerticalAlignment="Center">
