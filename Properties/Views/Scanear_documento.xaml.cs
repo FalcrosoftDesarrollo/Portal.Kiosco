@@ -47,6 +47,8 @@ namespace Portal.Kiosco
             {
                 if (e.Key == Key.Enter)
                 {
+
+
                     if (App.IsBoleteriaConfiteria == false)
                     {
                         var openWindow = new Cartelera();

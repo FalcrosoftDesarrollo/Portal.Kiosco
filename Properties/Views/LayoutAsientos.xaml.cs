@@ -252,7 +252,7 @@ namespace Portal.Kiosco.Properties.Views
                                     break;
                                 case "R":
                                     button.Background = System.Windows.Media.Brushes.Yellow;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Yellow;
+                                    button.BorderBrush = System.Windows.Media.Brushes.Gray;
                                     break;
                                 case "O":
                                     button.Background = System.Windows.Media.Brushes.Black;
