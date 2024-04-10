@@ -191,13 +191,13 @@ namespace Portal.Kiosco.Properties.Views
             border.Margin = new Thickness(0, 0, 6, 0); // Ajustar márgenes según necesidad
             border.Child = btn;
 
-            if (App.IsFecha == true)
+            if (App.IsFecha == false)
             {
                 btn.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 border.Background = Brushes.White;
                 border.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 border.BorderThickness = new Thickness(1);
-                App.Pelicula.FechaSel = btn.Name.Substring(3);
+                App.Pelicula.FechaSel = fecunv;
             }
             else
             {

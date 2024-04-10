@@ -117,7 +117,7 @@ namespace Portal.Kiosco.Properties.Views
             ob_datsal.Tercero = "2";
 
             ob_datsal.Correo = "pol@scoreprojects.net";
-            ob_datsal.FechaFuncion = App.Pelicula.FechaSel;
+            ob_datsal.FechaFuncion = App.Pelicula.FechaSel.Substring(3);
 
             string idFuncion = App.Pelicula.HoraSel;
             string miliar = App.Peliculas.SelectMany(p => p.DiasDisponibles)
