@@ -27,8 +27,8 @@ build_property.RuntimeIdentifier =
 build_property.UnoRuntimeIdentifier = 
 build_property.UnoHotReloadMode = 
 build_property.SolutionFileName = Portal.Kiosco.sln
-build_property.LangName = es-ES
-build_property.LangID = 3082
+build_property.LangName = en-US
+build_property.LangID = 1033
 build_property.SolutionDir = C:\FALCROSOFT\PROCINAL\Portal.Kiosco\
 build_property.SolutionExt = .sln
 build_property.UseHostCompilerIfAvailable = false
@@ -65,8 +65,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.ProjectDir = C:\FALCROSOFT\PROCINAL\Portal.Kiosco\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
 
 [C:/FALCROSOFT/PROCINAL/Portal.Kiosco/Properties/Views/AlgoParaComer.xaml]
 build_metadata.AdditionalFiles.SourceItemGroup = Page

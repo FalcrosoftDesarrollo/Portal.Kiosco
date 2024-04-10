@@ -318,7 +318,7 @@
                                             </WrapPanel>
                                         </Border>
 
-                                        <Border Grid.Row="2" Width="835" Height="120" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613">
+                                        <Border Grid.Row="2" Visibility="Hidden" Width="835" Height="120" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613">
                                             <WrapPanel Height="100" VerticalAlignment="Top">
                                                 <Image Height="62" Width="74" Margin="25,18"  Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\advertencia.png"/>
                                                 <TextBlock Width="705" FontFamily="Inter Mixed" FontSize="20" Foreground="White" VerticalAlignment="Center">
@@ -343,7 +343,7 @@
                                             </Button>
                                         </Border>
 
-                                        <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
+                                        <Border Width="180" Name="borSiguente"  Visibility="Hidden"  Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
                                             <Button x:Name="btnSiguiente" Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28">
 
                                             </Button>
