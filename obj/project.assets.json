@@ -3722,7 +3722,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\stron\\.nuget\\packages\\": {}
+    "C:\\Users\\Antoine\\.nuget\\packages\\": {},
+    "D:\\MVS\\MVS shared components, tools and SKDs\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
@@ -3730,11 +3731,15 @@
       "projectUniqueName": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Portal.Kiosco.csproj",
       "projectName": "Portal.Kiosco",
       "projectPath": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Portal.Kiosco.csproj",
-      "packagesPath": "C:\\Users\\stron\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\Antoine\\.nuget\\packages\\",
       "outputPath": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\MVS\\MVS shared components, tools and SKDs\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\stron\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Antoine\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3742,6 +3747,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {},
         "https://waltnuget.azurewebsites.net/nuget": {}
       },
@@ -3801,7 +3807,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -3810,7 +3816,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Nancy 1.4.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "El paquete \"Nancy 1.4.1\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net7.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
       "libraryId": "Nancy",
       "targetGraphs": [
         "net7.0-windows7.0"
@@ -3820,7 +3826,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Nancy.Serialization.JsonNet 1.4.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "El paquete \"Nancy.Serialization.JsonNet 1.4.1\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net7.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
       "libraryId": "Nancy.Serialization.JsonNet",
       "targetGraphs": [
         "net7.0-windows7.0"

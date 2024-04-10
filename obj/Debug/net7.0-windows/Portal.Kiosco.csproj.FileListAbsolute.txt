@@ -244,3 +244,4 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Xaml.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.d-bfalse.GeneratedMSBuildEditorConfig.editorconfig
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.sourcelink.json

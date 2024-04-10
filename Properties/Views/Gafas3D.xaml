@@ -118,8 +118,8 @@
                             <RowDefinition Height="80"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,300,0" Click="btnVolver_Click" />
-                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
+
+                        
 
                         <Border Grid.Row="1">
                             <Grid>
@@ -142,7 +142,7 @@
                         </Border>
                         <Border Grid.Row="5" Width="696" HorizontalAlignment="Center">
                             <Grid>
-                                <Border Width="114" Height="43" HorizontalAlignment="Left">
+                                <Border Width="125" Height="43" HorizontalAlignment="Left">
                                     <Label FontFamily="Myanmar Khyay" FontSize="32" Content="$3.000" Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                                 </Border>
                                 <Border HorizontalAlignment="Center" Width="217">
@@ -175,7 +175,7 @@
                                     </Grid>
 
                                 </Border>
-                                <Border Width="114" Height="43" HorizontalAlignment="Right">
+                                <Border Width="125" Height="43" HorizontalAlignment="Right">
                                     <Label FontFamily="Myanmar Khyay" FontSize="32" Content="$6.000" Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                 </Border>
                             </Grid>
@@ -197,11 +197,11 @@
                             <Border Width="374" Height="80" HorizontalAlignment="Right" Margin="0,0,54,0">
                                 <Grid>
                                     <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                        <Button Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
+                                        <Button x:Name="btnVolver" Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                     </Border>
 
                                     <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                        <Button Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
+                                        <Button x:Name="btnSiguiente" Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                     </Border>
                                 </Grid>
                             </Border>
