@@ -39,7 +39,7 @@
                                 <RowDefinition  />
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Height="60" FontSize="16" FontFamily="Poppins Regular" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                <TextBlock >
+                                <TextBlock>
                                     Hemos enviado un código de autenticación a tu
                                     <LineBreak/>
                                     celular registrado.
