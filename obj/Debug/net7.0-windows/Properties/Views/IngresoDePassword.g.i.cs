@@ -70,7 +70,7 @@ namespace Portal.Kiosco {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;V1.0.0.0;component/properties/views/ingresodepassword.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;component/properties/views/ingresodepassword.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Properties\Views\IngresoDePassword.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
