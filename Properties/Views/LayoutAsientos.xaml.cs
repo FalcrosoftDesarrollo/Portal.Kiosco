@@ -407,7 +407,9 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
+        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        {
 
-
+        }
     }
 }
