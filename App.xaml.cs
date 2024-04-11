@@ -299,7 +299,7 @@ namespace Portal.Kiosco
         public static async Task OpenWindow(string windowName)
         {
             // Crea una instancia de la ventana especificada
-            var window = (Window)Activator.CreateInstance(Type.GetType("Portal.Kiosco." + windowName));
+            var window = new PagoCashback();
 
             // Configura la animación de desvanecimiento para la ventana actual
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));

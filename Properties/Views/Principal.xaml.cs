@@ -6,9 +6,6 @@ using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Principal.xaml
-    /// </summary>
     public partial class Principal : Window
     {
         public Principal()

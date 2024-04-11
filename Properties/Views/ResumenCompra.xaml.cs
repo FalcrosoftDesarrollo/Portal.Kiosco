@@ -1,14 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+﻿using System.Windows;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Frame13.xaml
-    /// </summary>
     public partial class ResumenCompra : Window
     {
         public ResumenCompra()

@@ -1,26 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Internal;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Effects;
 using System.Windows.Media;
-using System.Xml.Linq;
-using APIPortalKiosco.Entities;
-using System.Windows.Media.Imaging;
-using System.Threading.Tasks;
 using System.Windows.Media.Animation;
-using System.Linq;
-using System.Globalization;
-using System.Windows.Markup;
-using System.Windows.Automation.Peers;
-using APIPortalWebMed.Entities;
-using Microsoft.EntityFrameworkCore.Internal;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Imaging;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Frame6.xaml
-    /// </summary>
     public partial class SeleccionarFuncion : Window
     {
         //private Dictionary<string, List<string>> horasPorFecha = new Dictionary<string, List<string>>();
@@ -170,7 +162,6 @@ namespace Portal.Kiosco.Properties.Views
             btn.Foreground = Brushes.White;
             btn.FontFamily = new FontFamily("Myanmar Khyay");
             btn.FontSize = 20;
-           // btn.Style = FindResource("MyButton") as Style; // Puedes cambiar "MyButton" por el nombre correcto del estilo
 
             // Agregar efecto de sombra al botón
             DropShadowEffect shadowEffect = new DropShadowEffect();
@@ -180,15 +171,13 @@ namespace Portal.Kiosco.Properties.Views
             shadowEffect.Opacity = 0.5;
             btn.Effect = shadowEffect;
 
-            // Crear un contenedor (Border) para el botón
-
             border.Width = 115;
             border.Height = 60;
             border.Background = Brushes.White;
-            border.BorderBrush = Brushes.Red; // Cambiar por el color de borde deseado
+            border.BorderBrush = Brushes.Red;
             border.BorderThickness = new Thickness(1);
             border.CornerRadius = new CornerRadius(10);
-            border.Margin = new Thickness(0, 0, 6, 0); // Ajustar márgenes según necesidad
+            border.Margin = new Thickness(0, 0, 6, 0); 
             border.Child = btn;
 
             if (App.IsFecha == false)
@@ -405,4 +394,3 @@ namespace Portal.Kiosco.Properties.Views
         }
     }
 }
-

@@ -17,6 +17,8 @@ namespace Portal.Kiosco.Properties.Views
         public BoletasGafasAlimentos()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
+
         }
 
         private void btnImprimir_Click(object sender, RoutedEventArgs e)
