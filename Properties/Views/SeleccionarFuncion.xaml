@@ -10,17 +10,17 @@
         WindowState="Maximized" 
         >
     <Window.Resources>
-        <Style x:Key="MyButton" TargetType="Button">
+       <Style TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger Property="IsMouseOver" Value="false">
                                 <Setter Property="Opacity" Value="0.8" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -32,7 +32,7 @@
         <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <ControlTemplate >
                         <Grid>
                             <ScrollContentPresenter/>
                             <ScrollBar x:Name="PART_VerticalScrollBar" 
@@ -43,12 +43,10 @@
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
                                IsTabStop="False" 
-                               Maximum="{TemplateBinding ScrollableHeight}" 
+                               
                                Minimum="0" 
                                Orientation="Vertical" 
-                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
-                               Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                               ViewportSize="{TemplateBinding ViewportHeight}" />
+                             />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -77,18 +75,18 @@
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="4" BorderBrush="White"  CornerRadius="100" Background="Transparent">
-                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="24" FontFamily="inter regular" Content="{Binding TiempoRestanteGlobal}"/>
+                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="24" FontFamily="inter regular" />
                         </Border>
 
-                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
 
 
                         <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-                                    SALIR
+                                  <Run Text="SALIR"></Run>
                                 </TextBlock>
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
@@ -195,26 +193,26 @@
                                                                     <WrapPanel Grid.Column="0" x:Name="ContenedorHorasGeneral">
 
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
                                                                         </Border>
 
                                                                     </WrapPanel>
                                                                     <WrapPanel Grid.Column="1" x:Name="ContenedorHorasSupernova">
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="Supernova" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}" />
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="Supernova" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14"  />
                                                                         </Border>
 
 
                                                                     </WrapPanel>
                                                                     <WrapPanel Grid.Column="2" x:Name="ContenedorHorasBlackStar">
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
                                                                         </Border>
                                                                      
                                                                     </WrapPanel>
                                                                     <WrapPanel Grid.Column="3" x:Name="ContenedorHoras4DX">
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
                                                                         </Border>
                                                                        
                                                                     </WrapPanel>
@@ -247,7 +245,7 @@
                                                                     <WrapPanel Grid.Column="0"  x:Name="ContenedorHoras3D">
 
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="General &#x0a;     3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}" HorizontalContentAlignment="Center"/>
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="General &#x0a;     3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14"  HorizontalContentAlignment="Center"/>
                                                                         </Border>
                                                                        
 
@@ -255,21 +253,21 @@
 
                                                                     <WrapPanel Grid.Column="1" x:Name="ContenedorHoras3DSuperNova">
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button   Background="Transparent" BorderThickness="0" Content="Supernova &#x0a;         3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                            <Button   Background="Transparent" BorderThickness="0" Content="Supernova &#x0a;         3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
                                                                         </Border>
                                                                         
 
                                                                     </WrapPanel>
                                                                     <WrapPanel Grid.Column="2" x:Name="ContenedorHoras3DBlackStar">
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star &#x0a;        3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star &#x0a;        3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
                                                                         </Border>
                                                                         
 
                                                                     </WrapPanel>
                                                                     <WrapPanel Grid.Column="3" x:Name="ContenedorHoras3D4DX">
                                                                         <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX - 3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" Style="{StaticResource MyButton}"/>
+                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX - 3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
                                                                         </Border>
                                                                        
                                                                     </WrapPanel>

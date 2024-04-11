@@ -27,6 +27,7 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
             CargarPeliculasDesdeXml();
             DataContext = ((App)Application.Current);
+            App.IsFecha = false;
         }
 
         public string ObtenerValorDeConfiguracion(string clave)
@@ -34,104 +35,7 @@ namespace Portal.Kiosco.Properties.Views
             string valor = ConfigurationManager.AppSettings[clave];
             return valor;
         }
-
-        //private void CargarPeliculasDesdeXml()
-        //{
-        //    try
-        //    {
-        //        int fila = 0;
-        //        int columna = 0;
-        //        Dictionary<string, bool> titulosProcesados = new Dictionary<string, bool>();
-
-        //        foreach (var pelicula in App.Peliculas)
-        //        {
-        //            // Verificar si el título original ya ha sido procesado
-        //            if (!titulosProcesados.ContainsKey(pelicula.TituloOriginal))
-        //            {
-        //                titulosProcesados[pelicula.TituloOriginal] = true;
-
-        //                var nuevoBorde = new Border
-        //                {
-        //                    Name = "P" + pelicula.Id.ToString(), // Asignar el Id como el Name del Border
-        //                    Margin = new Thickness(40),
-        //                    BorderThickness = new Thickness(0),
-        //                    VerticalAlignment = VerticalAlignment.Center,
-        //                    HorizontalAlignment = HorizontalAlignment.Right,
-        //                    OpacityMask = new VisualBrush
-        //                    {
-        //                        Stretch = Stretch.Fill,
-        //                        Visual = new Rectangle
-        //                        {
-        //                            RadiusX = 0,
-        //                            RadiusY = 0,
-        //                            Width = 1,
-        //                            Height = 1,
-        //                            Fill = Brushes.Black
-        //                        }
-        //                    }
-        //                };
-
-        //                // Verificar si la película es de tipo "Preventa"
-        //                if (pelicula.Tipo == "Preventa")
-        //                {
-        //                    // Crear el borde y el letrero para las películas de tipo "Preventa"
-        //                    Border preventaBorder = new Border
-        //                    {
-        //                        Height = 56,
-        //                        VerticalAlignment = VerticalAlignment.Top,
-        //                        Background = Brushes.Red
-        //                    };
-
-        //                    Label preventaLabel = new Label
-        //                    {
-        //                        Foreground = Brushes.White,
-        //                        FontFamily = new FontFamily("Myanmar Khyay"),
-        //                        FontSize = 32,
-        //                        Content = "PREVENTA",
-        //                        HorizontalContentAlignment = HorizontalAlignment.Center,
-        //                        VerticalContentAlignment = VerticalAlignment.Center
-        //                    };
-
-        //                    preventaBorder.Child = preventaLabel;
-        //                    nuevoBorde.Child = preventaBorder;
-        //                }
-
-        //                // Agregar la imagen de la película
-        //                Image nuevaImagen = new Image
-        //                {
-        //                    Width = 360,
-        //                    Height = 500,
-        //                    Stretch = Stretch.Fill,
-        //                    Source = new BitmapImage(new Uri(pelicula.Imagen))
-        //                };
-
-        //                // Agregar la imagen al contenedor
-        //                nuevoBorde.Child = nuevaImagen;
-
-        //                // Configurar la posición en la cuadrícula
-        //                Grid.SetRow(nuevoBorde, fila);
-        //                Grid.SetColumn(nuevoBorde, columna);
-
-        //                // Agregar el contenedor a la cuadrícula
-        //                ContenedorPeliculas.Children.Add(nuevoBorde);
-
-        //                // Incrementar las columnas y filas
-        //                columna++;
-        //                if (columna >= 4) // cambiar 4 por el número de columnas deseado
-        //                {
-        //                    columna = 0;
-        //                    fila++;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Error al cargar películas desde el archivo XML: " + ex.Message);
-        //    }
-        //}
-
-
+ 
         private void CargarPeliculasDesdeXml()
         {
             try
@@ -140,7 +44,7 @@ namespace Portal.Kiosco.Properties.Views
                 int columna = 0;
                 Dictionary<string, bool> titulosProcesados = new Dictionary<string, bool>();
 
-                foreach (var pelicula in App.Peliculas)
+                foreach (var pelicula in App.Peliculas.OrderByDescending(p => p.Tipo))
                 {
                     // Verificar si el título original ya ha sido procesado
                     if (!titulosProcesados.ContainsKey(pelicula.TituloOriginal))
@@ -258,19 +162,9 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
-
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            await App.OpenWindow("Principal");
         }
 
         private bool isDragging = false;

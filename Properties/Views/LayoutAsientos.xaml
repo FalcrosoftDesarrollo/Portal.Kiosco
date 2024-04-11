@@ -12,17 +12,17 @@
  
         >
     <Window.Resources>
-        <Style x:Key="MyButton" TargetType="Button">
+        <Style TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger Property="IsMouseOver" Value="false">
                                 <Setter Property="Opacity" Value="0.8" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -30,11 +30,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <ControlTemplate >
                         <Grid>
                             <ScrollContentPresenter/>
                             <ScrollBar x:Name="PART_VerticalScrollBar" 
@@ -45,12 +44,12 @@
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
                                IsTabStop="False" 
-                               Maximum="{TemplateBinding ScrollableHeight}" 
+                               
                                Minimum="0" 
                                Orientation="Vertical" 
-                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
-                               Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                               ViewportSize="{TemplateBinding ViewportHeight}" />
+                               
+                               
+                              />
 
                         </Grid>
                     </ControlTemplate>
@@ -91,18 +90,19 @@
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="4" BorderBrush="White"  CornerRadius="100" Background="Transparent">
-                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="24" FontFamily="inter regular" Content="12:08"/>
+                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding TiempoRestanteGlobal}" Name="lbltemporizador" FontSize="24" FontFamily="inter regular" />
+
                         </Border>
 
-                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA DANIEL!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
 
 
                         <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159" Style="{StaticResource MyButton}" >
+                            <Button Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-                    SALIR
+                    <Run Text="SALIR"></Run>
                                 </TextBlock>
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
@@ -127,16 +127,16 @@
                                 <Setter Property="Height" Value="54"/>
                                 <Setter Property="Margin" Value="1"/>
                             </Style>
-                            <Style x:Key="AvailableSeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                            <Style x:Key="AvailableSeat"  TargetType="Button">
                                 <Setter Property="Background" Value="LightGray"/>
                             </Style>
-                            <Style x:Key="SelectedSeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                            <Style x:Key="SelectedSeat"  TargetType="Button">
                                 <Setter Property="Background" Value="CornflowerBlue"/>
                             </Style>
-                            <Style x:Key="OccupiedSeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                            <Style x:Key="OccupiedSeat"  TargetType="Button">
                                 <Setter Property="Background" Value="Red"/>
                             </Style>
-                            <Style x:Key="ReducedMobilitySeat" BasedOn="{StaticResource SeatButtonStyle}" TargetType="Button">
+                            <Style x:Key="ReducedMobilitySeat"  TargetType="Button">
                                 <Setter Property="Background" Value="Yellow"/>
                             </Style>
 
@@ -156,7 +156,7 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="530"/>
-                                        <ColumnDefinition Width="121"/>
+                                        <ColumnDefinition Width="0"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="54"/>
                                     </Grid.ColumnDefinitions>
@@ -170,21 +170,21 @@
                             <Border Grid.Row="1">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="100"/>
+
                                         <ColumnDefinition Width="353"/>
-                                        <ColumnDefinition Width="98"/>
-                                        <ColumnDefinition Width="1215"/>
+                                        <ColumnDefinition Width="54"/>
+                                        <ColumnDefinition Width="1300"/>
 
                                     </Grid.ColumnDefinitions>
 
                                     <Border Grid.Column="1">
-                                        <Grid>
+                                        <Grid Margin="0,0,0,0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="50"/>
-                                                <RowDefinition Height="42"/>
-                                                <RowDefinition Height="53"/>
-                                                <RowDefinition Height="53"/>
-                                                <RowDefinition Height="123"/>
+                                               
+                                                <RowDefinition Height="30"/>
+                                                <RowDefinition Height="450" />
                                                 <RowDefinition/>
 
                                             </Grid.RowDefinitions>
@@ -192,60 +192,27 @@
 
                                                 <Label Content="¿Dónde te quieres sentar?" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                                             </Border>
+                                             
                                             <Border Grid.Row="1">
-                                                <Grid VerticalAlignment="Center">
-                                                    <Border CornerRadius="10" Background="#F5F5F5" Width="167" Height="42" HorizontalAlignment="Left">
-                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                                <UniformGrid Columns="2" VerticalAlignment="Center">
+                                                    <Border CornerRadius="10" Background="#F5F5F5">
+                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </Border>
-                                                    <Border CornerRadius="10" Background="#F5F5F5" Width="168" Height="42" HorizontalAlignment="Right">
-                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                                    <Border CornerRadius="10" Background="#F5F5F5">
+                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </Border>
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="2" BorderThickness="0 0 0 1" BorderBrush="Black">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="69"/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition Width="50"/>
-                                                    </Grid.ColumnDefinitions>
+                                                </UniformGrid>
 
-                                                    <Border Grid.Column="1">
-                                                        <Grid>
-                                                            <Border HorizontalAlignment="Left">
-                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="A1" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                                                            </Border>
-                                                            <Border HorizontalAlignment="Right">
-                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="$13.600" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                                                            </Border>
-                                                        </Grid>
-                                                    </Border>
-                                                </Grid>
                                             </Border>
 
-                                            <Border Grid.Row="3" BorderThickness="0 0 0 1" BorderBrush="Black">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="69"/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition Width="50"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <Border Grid.Column="1">
-                                                        <Grid>
-                                                            <Border HorizontalAlignment="Left">
-                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="A1" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                                                            </Border>
-                                                            <Border HorizontalAlignment="Right">
-                                                                <Label FontFamily="Myanmar Khyay" FontSize="16" Content="$13.600" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                                                            </Border>
-                                                        </Grid>
-                                                    </Border>
-                                                </Grid>
+                                            <Border Grid.Row="2">
+                                                <UniformGrid Name="ContenedorBoletas"   Columns="2" VerticalAlignment="Top">
+                                                    
+                                                </UniformGrid>
                                             </Border>
-
                                             <Border Grid.Row="4" CornerRadius="10" Background="#d9d9d9" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="350" Height="80">
-                                                <Label FontFamily="Myanmar Khyay" FontSize="30" Content="TOTAL: $27.200" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                                <Label FontFamily="Myanmar Khyay" Name="lblTotal" FontSize="30" Content="TOTAL: $0" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                                
                                             </Border>
                                         </Grid>
                                     </Border>

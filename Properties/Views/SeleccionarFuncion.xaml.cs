@@ -68,7 +68,7 @@ namespace Portal.Kiosco.Properties.Views
                         {
                             CrearBotonFecha($"{fechas.fecham}", "btn" + fechas.fecunv);
                             fechasProcesadas.Add(fechas.fecunv);
-                            App.IsFecha = true;
+                           
                         }
 
                         foreach (var hora in fechas.horafun.OrderBy(h => DateTime.ParseExact(h.horario, "h:mm tt", CultureInfo.InvariantCulture)))
@@ -170,7 +170,7 @@ namespace Portal.Kiosco.Properties.Views
             btn.Foreground = Brushes.White;
             btn.FontFamily = new FontFamily("Myanmar Khyay");
             btn.FontSize = 20;
-            btn.Style = FindResource("MyButton") as Style; // Puedes cambiar "MyButton" por el nombre correcto del estilo
+           // btn.Style = FindResource("MyButton") as Style; // Puedes cambiar "MyButton" por el nombre correcto del estilo
 
             // Agregar efecto de sombra al botón
             DropShadowEffect shadowEffect = new DropShadowEffect();
@@ -193,16 +193,19 @@ namespace Portal.Kiosco.Properties.Views
 
             if (App.IsFecha == false)
             {
+                btn.Foreground = Brushes.White;
+                border.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+                App.Pelicula.FechaSel = fecunv;
+                App.IsFecha = true;
+            }
+            
+            else
+            {
                 btn.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 border.Background = Brushes.White;
                 border.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 border.BorderThickness = new Thickness(1);
-                App.Pelicula.FechaSel = fecunv;
-            }
-            else
-            {
-                btn.Foreground = Brushes.White;
-                border.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+               
             }
 
             btn.Click += (sender, e) =>
@@ -241,12 +244,12 @@ namespace Portal.Kiosco.Properties.Views
                         // Verificar si el botón es el que recibió el clic
                         if (child == sender)
                         {
-                            child.Foreground = Brushes.White;
-                            child.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+                            child.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);  
+                            child.Background = Brushes.White;
                         }
                         else
                         {
-                            child.Foreground = Brushes.Black; // Establece el color de texto deseado
+                            child.Foreground = Brushes.Red; // Establece el color de texto deseado
                             child.Background = Brushes.White; // Restaura el color de fondo por defecto
                         }
                     }
@@ -272,7 +275,7 @@ namespace Portal.Kiosco.Properties.Views
             nuevoBoton.FontSize = 14;
 
             // Aplicar el mismo estilo que el botón estático
-            nuevoBoton.Style = FindResource("MyButton") as Style;
+            //nuevoBoton.Style = FindResource("MyButton") as Style;
 
             nuevoBoton.HorizontalContentAlignment = HorizontalAlignment.Center;
 
@@ -299,7 +302,7 @@ namespace Portal.Kiosco.Properties.Views
             btn.Height = 46;
             btn.FontFamily = new FontFamily("Myanmar Khyay");
             btn.FontSize = 14;
-            btn.Style = FindResource("MyButton") as Style; // Puedes cambiar "MyButton" por el nombre correcto del estilo
+            //btn.Style = FindResource("MyButton") as Style; // Puedes cambiar "MyButton" por el nombre correcto del estilo
             btn.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
 
 

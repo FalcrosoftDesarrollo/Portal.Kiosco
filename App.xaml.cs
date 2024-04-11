@@ -16,7 +16,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
-
+using Portal.Kiosco;
 namespace Portal.Kiosco
 {
     /// <summary>
@@ -33,7 +33,7 @@ namespace Portal.Kiosco
         public static XDocument carteleraXML { get; set; }
         public static string idCine { get; set; }
         public static string ScoreServices { get; set; }
-        public static bool IsFecha = false;
+        public static bool IsFecha = true;
         public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
         private string _tiempoRestanteGlobal;
@@ -73,6 +73,7 @@ namespace Portal.Kiosco
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public event EventHandler<string> TiempoRestanteActualizado;
 
         private void IniciarContadorGlobal()
         {
@@ -103,6 +104,8 @@ namespace Portal.Kiosco
             contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
             contadorGlobalTimer.Start();
         }
+
+     
 
         private string DiaMes(string pr_daynum, string pr_flag)
         {
@@ -293,6 +296,27 @@ namespace Portal.Kiosco
             return peliculas;
         }
 
+        public static async Task OpenWindow(string windowName)
+        {
+            // Crea una instancia de la ventana especificada
+            var window = (Window)Activator.CreateInstance(Type.GetType("Portal.Kiosco." + windowName));
+
+            // Configura la animación de desvanecimiento para la ventana actual
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            window.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+
+            // Espera un corto tiempo antes de ocultar la ventana actual
+            await Task.Delay(300);
+            window.Visibility = Visibility.Collapsed;
+
+            // Configura el fondo de la nueva ventana y la muestra
+            window.Background = Brushes.White;
+            window.Show();
+
+            // Configura la animación de desvanecimiento para la nueva ventana
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            window.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        }
 
     }
 

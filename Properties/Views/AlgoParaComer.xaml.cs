@@ -18,15 +18,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            await App.OpenWindow("Principal");
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -36,11 +28,24 @@ namespace Portal.Kiosco.Properties.Views
             w.ShowDialog();
         }
 
-        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            Combos w = new Combos();
-            this.Close();
-            w.ShowDialog();
+            await App.OpenWindow("Combos");
+        }
+
+        private async void btnCombos_Click(object sender, RoutedEventArgs e)
+        {   
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void btnResumen_Click(object sender, RoutedEventArgs e)
+        {
+            await App.OpenWindow("Combos");
         }
     }
 }

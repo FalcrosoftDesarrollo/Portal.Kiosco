@@ -39,15 +39,38 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Gafas3D();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
+
+            if (lblTotal.Content == "TOTAL: $0") {
+                MessageBox.Show("UPS! Aun no ha seleccionado ninguna hubicación");
+                return;
+            }
+
+            if (pelicula != null && pelicula.Formato != null && pelicula.Formato.Contains("3D"))
+            {
+                var openWindow = new Gafas3D();
+                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                await Task.Delay(300);
+                this.Visibility = Visibility.Collapsed;
+                openWindow.Background = Brushes.White;
+                openWindow.Show();
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            }
+            else
+            {
+                var openWindow = new ResumenCompra();
+                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                await Task.Delay(300);
+                this.Visibility = Visibility.Collapsed;
+                openWindow.Background = Brushes.White;
+                openWindow.Show();
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            }
+
         }
 
         public void GenerarSala()
@@ -208,6 +231,9 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
+        private int sillasSeleccionadas = 0;
+        private string[] sillasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
+
         private void AgregarUbicacionAlWrapPanel(BolVenta bolVenta)
         {
             Ubicaciones[,] ubicaciones = bolVenta.MapaSala;
@@ -224,71 +250,164 @@ namespace Portal.Kiosco.Properties.Views
                     button.Content = lc_valmos;
                     button.Name = lc_values;
 
+                    // Suscribe el evento Click al botón
+                    button.Click += Button_Click;
+
+                    // Definir un nuevo estilo
+                    button.Style = (Style)FindResource("AvailableSeat");
+
+                    Border border = new Border();
+                    border.CornerRadius = new CornerRadius(5);
+                    border.Margin = new Thickness(0, 0, 1, 1);
+                    border.BorderThickness = new Thickness(1);
+
                     switch (ubicacion.TipoSilla.ToLower())
                     {
                         case "pasillo":
-                            // Establecer estilo para pasillo
                             button.Background = System.Windows.Media.Brushes.White;
                             button.BorderBrush = System.Windows.Media.Brushes.White;
                             button.Visibility = Visibility.Hidden;
                             break;
                         case "discapacitado":
-                            // Establecer estilo para silla de discapacitado
                             button.Background = System.Windows.Media.Brushes.LightSkyBlue;
                             button.BorderBrush = System.Windows.Media.Brushes.LightSkyBlue;
-                            button.Foreground = System.Windows.Media.Brushes.White;
+                            button.Foreground = System.Windows.Media.Brushes.Black;
                             break;
                         default:
-                            // Establecer estilos para otros tipos de sillas
                             switch (ubicacion.EstadoSilla)
                             {
                                 case "S":
-                                    button.Background = System.Windows.Media.Brushes.White;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Gray;
+                                    button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
+                                    button.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
+                                    button.Foreground = System.Windows.Media.Brushes.Black;
                                     break;
                                 case "B":
-                                    button.Background = System.Windows.Media.Brushes.Gray;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Black;
-                                    break;
                                 case "R":
-                                    button.Background = System.Windows.Media.Brushes.Yellow;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Gray;
-                                    break;
                                 case "O":
-                                    button.Background = System.Windows.Media.Brushes.Black;
-                                    button.BorderBrush = System.Windows.Media.Brushes.White;
+                                    button.Background = System.Windows.Media.Brushes.Yellow;
+                                    button.BorderBrush = System.Windows.Media.Brushes.Yellow;
+                                    button.Foreground = System.Windows.Media.Brushes.Black;
                                     break;
                                 case "X":
                                     button.Background = System.Windows.Media.Brushes.Green;
-                                    button.BorderBrush = System.Windows.Media.Brushes.White;
+                                    button.BorderBrush = System.Windows.Media.Brushes.Green;
+                                    button.Foreground = System.Windows.Media.Brushes.Black;
                                     break;
                                 default:
                                     button.Background = System.Windows.Media.Brushes.Red;
-                                    button.Foreground = System.Windows.Media.Brushes.White;
+                                    button.BorderBrush = System.Windows.Media.Brushes.Red;
+                                    button.Foreground = System.Windows.Media.Brushes.Black;
                                     break;
                             }
                             break;
                     }
 
-                    // Definir un nuevo estilo
-                    button.Style = (Style)FindResource("AvailableSeat");
-
-
-                    Border border = new Border();
-                    //border.Background = Brushes.White;
-                    border.CornerRadius = new CornerRadius(5);
-                    border.Margin = new Thickness(0, 0, 1, 1);
-                    border.BorderThickness = new Thickness(1);
-                    //border.BorderBrush = Brushes.LightGray;
                     border.Child = button;
 
                     ContenedorSala.Rows = bolVenta.FilSala;
-
                     ContenedorSala.Columns = bolVenta.ColSala;
                     ContenedorSala.Children.Add(border);
                 }
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (button != null)
+            {
+                string silla = button.Content.ToString();
+
+                // Verifica si la silla ya está seleccionada
+                if (sillasSeleccionadasArray.Contains(silla))
+                {
+                    // Si la silla ya está seleccionada, la elimina de la selección
+
+                    // Encuentra el índice de la silla seleccionada en el arreglo
+                    int index = Array.IndexOf(sillasSeleccionadasArray, silla);
+
+                    // Elimina la silla seleccionada del arreglo
+                    sillasSeleccionadasArray[index] = null;
+
+                    // Cambia el color del botón a su estado original
+                    button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
+
+                    // Decrementa el contador de sillas seleccionadas
+                    sillasSeleccionadas--;
+                }
+                else if (sillasSeleccionadas < 10)
+                {
+                    // Si la silla no está seleccionada y el límite de selección no ha sido alcanzado
+
+                    // Encuentra el primer índice vacío en el arreglo de sillas seleccionadas
+                    int index = Array.IndexOf(sillasSeleccionadasArray, null);
+
+                    // Almacena el contenido del botón en el arreglo de sillas seleccionadas
+                    sillasSeleccionadasArray[index] = silla;
+
+                    // Cambia el color del botón a rojo
+                    button.Background = Brushes.Red;
+
+                    // Incrementa el contador de sillas seleccionadas
+                    sillasSeleccionadas++;
+                }
+                else
+                {
+                    // Si el límite de selección de sillas ha sido alcanzado, muestra un mensaje de error
+                    MessageBox.Show("Solo se pueden seleccionar hasta 10 sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                // Actualiza el contenido del UniformGrid con las sillas seleccionadas
+                ActualizarInterfazSillasSeleccionadas();
+            }
+        }
+
+        private void ActualizarInterfazSillasSeleccionadas()
+        {
+            // Borra todos los elementos existentes en el UniformGrid
+            ContenedorBoletas.Children.Clear();
+
+            // Recorre el arreglo de sillas seleccionadas y agrega cada una al UniformGrid
+            for (int i = 0; i < sillasSeleccionadasArray.Length; i++)
+            {
+                string silla = sillasSeleccionadasArray[i];
+
+                if (silla != null)
+                {
+                    // Crea un nuevo Label para la silla
+                    Label labelSilla = new Label();
+                    labelSilla.Content = silla;
+                    labelSilla.FontFamily = new FontFamily("Myanmar Khyay");
+                    labelSilla.FontSize = 16;
+                    labelSilla.VerticalAlignment = VerticalAlignment.Center;
+                    labelSilla.HorizontalAlignment = HorizontalAlignment.Center;
+
+                    // Crea un nuevo Label para la cantidad (siempre será 1)
+                    Label labelCantidad = new Label();
+                    labelCantidad.Content = "1"; // La cantidad siempre será 1
+                    labelCantidad.FontFamily = new FontFamily("Myanmar Khyay");
+                    labelCantidad.FontSize = 16;
+                    labelCantidad.VerticalAlignment = VerticalAlignment.Center;
+                    labelCantidad.HorizontalAlignment = HorizontalAlignment.Center;
+
+                    // Agrega los Labels al UniformGrid
+                    ContenedorBoletas.Children.Add(labelSilla);
+                    ContenedorBoletas.Children.Add(labelCantidad);
+                }
+            }
+
+            // Muestra el total actualizado
+            if (sillasSeleccionadas == 0)
+            {
+                lblTotal.Content = "TOTAL: $0";
+            }
+            else { lblTotal.Content = "TOTAL: $" + sillasSeleccionadas; }
+
+
+        }
+
+
 
     }
 }

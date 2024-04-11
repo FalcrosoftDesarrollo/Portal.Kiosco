@@ -10,17 +10,17 @@
         WindowState="Maximized" >
 
     <Window.Resources>
-        <Style x:Key="MyButton" TargetType="Button">
+        <Style TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger Property="IsMouseOver" Value="false">
                                 <Setter Property="Opacity" Value="0.8" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -41,9 +41,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
+                        <Border 
+                    
+                   
                     CornerRadius="5">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
@@ -66,7 +66,7 @@
         <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <ControlTemplate >
                         <Grid>
                             <ScrollContentPresenter/>
                             <ScrollBar x:Name="PART_VerticalScrollBar" 
@@ -77,12 +77,12 @@
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
                                IsTabStop="False" 
-                               Maximum="{TemplateBinding ScrollableHeight}" 
+                               
                                Minimum="0" 
                                Orientation="Vertical" 
-                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
-                               Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                               ViewportSize="{TemplateBinding ViewportHeight}" />
+                               
+                               
+                              />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -157,71 +157,71 @@
                                     <UniformGrid Rows="5" Columns="10" HorizontalAlignment="Center" VerticalAlignment="Center">
 
                                         <!-- Primera fila -->
-                                        <Button Content="@" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="-" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="_" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="." Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
+                                        <Button Content="@"  Click="KeyButton_Click" />
+                                        <Button Content="-"  Click="KeyButton_Click" />
+                                        <Button Content="_"  Click="KeyButton_Click" />
+                                        <Button Content="."  Click="KeyButton_Click" />
+                                        <Button Content=""  Click="KeyButton_Click" />
+                                        <Button Content=""  Click="KeyButton_Click" />
+                                        <Button Content=""  Click="KeyButton_Click" />
+                                        <Button Content=""  Click="KeyButton_Click" />
+                                        <Button Content=""  Click="KeyButton_Click" />
+                                        <Button Content=""  Click="KeyButton_Click" />
 
                                         <!-- Segunda fila -->
-                                        <Button Content="1" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="2" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="3" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="4" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="5" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="6" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="7" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="8" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="9" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="0" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
+                                        <Button Content="1"  Click="KeyButton_Click" />
+                                        <Button Content="2"  Click="KeyButton_Click" />
+                                        <Button Content="3"  Click="KeyButton_Click" />
+                                        <Button Content="4"  Click="KeyButton_Click" />
+                                        <Button Content="5"  Click="KeyButton_Click" />
+                                        <Button Content="6"  Click="KeyButton_Click" />
+                                        <Button Content="7"  Click="KeyButton_Click" />
+                                        <Button Content="8"  Click="KeyButton_Click" />
+                                        <Button Content="9"  Click="KeyButton_Click" />
+                                        <Button Content="0"  Click="KeyButton_Click" />
 
                                         <!-- Segunda fila -->
-                                        <Button Content="Q" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="W" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="E" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="R" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="T" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="Y" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="U" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="I" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="O" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="P" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
+                                        <Button Content="Q"  Click="KeyButton_Click" />
+                                        <Button Content="W"  Click="KeyButton_Click" />
+                                        <Button Content="E"  Click="KeyButton_Click" />
+                                        <Button Content="R"  Click="KeyButton_Click" />
+                                        <Button Content="T"  Click="KeyButton_Click" />
+                                        <Button Content="Y"  Click="KeyButton_Click" />
+                                        <Button Content="U"  Click="KeyButton_Click" />
+                                        <Button Content="I"  Click="KeyButton_Click" />
+                                        <Button Content="O"  Click="KeyButton_Click" />
+                                        <Button Content="P"  Click="KeyButton_Click" />
 
                                         <!-- Tercera fila -->
-                                        <Button Content="A" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="S" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="D" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="F" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="G" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="H" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="J" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="K" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="L" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
+                                        <Button Content="A"  Click="KeyButton_Click" />
+                                        <Button Content="S"  Click="KeyButton_Click" />
+                                        <Button Content="D"  Click="KeyButton_Click" />
+                                        <Button Content="F"  Click="KeyButton_Click" />
+                                        <Button Content="G"  Click="KeyButton_Click" />
+                                        <Button Content="H"  Click="KeyButton_Click" />
+                                        <Button Content="J"  Click="KeyButton_Click" />
+                                        <Button Content="K"  Click="KeyButton_Click" />
+                                        <Button Content="L"  Click="KeyButton_Click" />
 
                                         <!-- Cuarta fila -->
-                                        <Button Content="Shift" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="Z" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="X" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="C" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="V" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="B" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="N" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="M" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="Del" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="Space" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
-                                        <Button Content="Enter" Style="{StaticResource KeyButton}" Click="KeyButton_Click" />
+                                        <Button Content="Shift"  Click="KeyButton_Click" />
+                                        <Button Content="Z"  Click="KeyButton_Click" />
+                                        <Button Content="X"  Click="KeyButton_Click" />
+                                        <Button Content="C"  Click="KeyButton_Click" />
+                                        <Button Content="V"  Click="KeyButton_Click" />
+                                        <Button Content="B"  Click="KeyButton_Click" />
+                                        <Button Content="N"  Click="KeyButton_Click" />
+                                        <Button Content="M"  Click="KeyButton_Click" />
+                                        <Button Content="Del"  Click="KeyButton_Click" />
+                                        <Button Content="Space"  Click="KeyButton_Click" />
+                                        <Button Content="Enter"  Click="KeyButton_Click" />
                                     </UniformGrid>
                                 </Border>
                                 <Border Grid.Column="3" Height="197" VerticalAlignment="Bottom">
                                     <Grid>
 
                                         <Border Width="180" Height="80" Background="#F30613" VerticalAlignment="Bottom" HorizontalAlignment="Right" CornerRadius="10">
-                                            <Button Content="ENVIAR" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"  Style="{StaticResource MyButton}" Margin="0,0,10,0">
+                                            <Button Content="ENVIAR" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"   Margin="0,0,10,0">
                                                 <Button.Effect>
                                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                 </Button.Effect>

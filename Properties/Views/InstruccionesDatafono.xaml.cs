@@ -22,9 +22,9 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            PagoCashback w = new PagoCashback();
-            this.Close();
-            w.ShowDialog();
+            //PagoCashback w = new PagoCashback();
+            //this.Close();
+            //w.ShowDialog();
         }
     }
 }
