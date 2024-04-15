@@ -57,9 +57,10 @@
             </TextBlock>
 
             <TextBox x:Name="TextDocumento" Background="Transparent" BorderBrush="Transparent" FontSize="20" Margin="4,4,1524,134" 
-         PreviewKeyDown="TextDocumento_PreviewKeyDown">
+          >
                 <TextBox.Style>
                     <Style TargetType="TextBox">
+                        <Setter Property="Foreground" Value="White"></Setter> 
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="BorderBrush" Value="Transparent"/>
                         <Style.Triggers>

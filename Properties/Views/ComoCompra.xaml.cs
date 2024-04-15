@@ -16,6 +16,8 @@ namespace Portal.Kiosco.Properties.Views
         public ComoCompra()
         {
             InitializeComponent();
+            App.ob_diclst = new System.Collections.Generic.Dictionary<string, string>();
+            App.IsFecha = false;
         }
 
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
@@ -28,6 +30,7 @@ namespace Portal.Kiosco.Properties.Views
             this.Visibility = Visibility.Collapsed;
             openWindow.Background = Brushes.White;
             openWindow.Show();
+            this.Close();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
@@ -45,6 +48,7 @@ namespace Portal.Kiosco.Properties.Views
                 this.Visibility = Visibility.Collapsed;
                 openWindow.Background = Brushes.White;
                 openWindow.Show();
+                this.Close();
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
                 openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             }
@@ -58,6 +62,7 @@ namespace Portal.Kiosco.Properties.Views
                 this.Visibility = Visibility.Collapsed;
                 openWindow.Background = Brushes.White;
                 openWindow.Show();
+                this.Close();
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
                 openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             }
@@ -72,6 +77,7 @@ namespace Portal.Kiosco.Properties.Views
             this.Visibility = Visibility.Collapsed;
             openWindow.Background = Brushes.White;
             openWindow.Show();
+            this.Close();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }

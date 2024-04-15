@@ -15,6 +15,14 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             DataContext = ((App)Application.Current);
+            if (App.ob_diclst.Count > 0)
+            {
+                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+            }
+            else
+            {
+                lblnombre.Content = "!HOLA INVITADO";
+            }
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -40,6 +48,7 @@ namespace Portal.Kiosco.Properties.Views
             this.Visibility = Visibility.Collapsed;
             openWindow.Background = Brushes.White;
             openWindow.Show();
+            this.Close();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }

@@ -18,6 +18,14 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             DataContext = ((App)Application.Current);
+            if (App.ob_diclst.Count > 0)
+            {
+                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+            }
+            else
+            {
+                lblnombre.Content = "!HOLA INVITADO";
+            }
 
         }
 
@@ -97,11 +105,28 @@ namespace Portal.Kiosco.Properties.Views
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);
+            this.Close();
             this.Visibility = Visibility.Collapsed;
             openWindow.Background = Brushes.White;
             openWindow.Show();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
+
+        private async void btnEnviar_Click(object sender, RoutedEventArgs e)
+        {
+            var openWindow = new CorreoTecladoFlotante();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Close();
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        }
+
+       
     }
 }

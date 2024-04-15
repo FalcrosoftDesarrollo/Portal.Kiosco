@@ -11,6 +11,7 @@ namespace Portal.Kiosco
         public ConsultaCineFans()
         {
             InitializeComponent();
+
         }
 
 

@@ -32,11 +32,18 @@ namespace Portal.Kiosco
         public static Pelicula Pelicula = new Pelicula();
         public static XDocument carteleraXML { get; set; }
         public static string idCine { get; set; }
+        public static string PuntoVenta { get; set; }
+        public static string ValorTercero { get; set; }
         public static string ScoreServices { get; set; }
+        public static string CantProductos { get; set; }
+        
         public static bool IsFecha = true;
+        
+        public static Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
         public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
         private string _tiempoRestanteGlobal;
+
         public string TiempoRestanteGlobal
         {
             get { return _tiempoRestanteGlobal; }
@@ -65,6 +72,9 @@ namespace Portal.Kiosco
                 var appSettingsSection = appSettings["MyConfig"];
 
                 idCine = appSettingsSection["TeaDefault"].ToString();
+                PuntoVenta = appSettingsSection["PuntoVenta"].ToString();
+                ValorTercero = appSettingsSection["ValorTercero"].ToString();
+                CantProductos = appSettingsSection["CantProductos"].ToString();
                 ScoreServices = appSettingsSection["ScoreServices"].ToString();
                 Peliculas = ObtenerPeliculas(carteleraXML, idCine);
             }
@@ -321,3 +331,4 @@ namespace Portal.Kiosco
     }
 
 }
+

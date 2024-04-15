@@ -2,8 +2,10 @@
 using Newtonsoft.Json;
 using Portal.Kiosco.Helpers;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -15,47 +17,40 @@ namespace Portal.Kiosco.Properties.Views
         public CorreoTecladoFlotante()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
         }
 
         private async void btnObtenerDatos_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var _apiService = new ApiService();
-                string documento = App.DatosCineFans.Documento;
-                string correoelectronico = TextCorreoElectronico.Text;
-                string datosCineFans = await _apiService.ObtenerDatosCineFans(documento, correoelectronico);
-
-                if (!string.IsNullOrEmpty(datosCineFans))
+                if (string.IsNullOrWhiteSpace(TextCorreoElectronico.Text))
                 {
-                    App.IsUserAuthenticated = true;
-
-                    App.DatosCineFans = JsonConvert.DeserializeObject<CineFansData>(datosCineFans); ;
-
-                    this.Close();
+                    MessageBox.Show("!Ups, aún falta ingresar el correo electrónico!", "Notificación", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else
+
+                string email = TextCorreoElectronico.Text;
+                if (!IsValidEmail(email))
                 {
-                    var errorWindow = new ErrorGeneral();
-                    errorWindow.Owner = this;
-                    errorWindow.Closed += (s, args) =>
-                    {
-                        this.Visibility = Visibility.Visible;
-                    };
-                    errorWindow.ShowDialog();
+                    MessageBox.Show("El correo electrónico ingresado no es válido.", "Notificación", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
+
             }
             catch (Exception ex)
             {
-                var errorWindow = new ErrorGeneral();
-                errorWindow.Owner = this;
-                errorWindow.Closed += (s, args) =>
-                {
-                    this.Visibility = Visibility.Visible;
-                };
-                errorWindow.ShowDialog();
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private bool IsValidEmail(string email)
+        {
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            Regex regex = new Regex(pattern);
+            return regex.IsMatch(email);
+        }
+
 
         private void KeyButton_Click(object sender, RoutedEventArgs e)
         {

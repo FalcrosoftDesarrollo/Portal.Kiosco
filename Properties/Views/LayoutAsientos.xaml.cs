@@ -22,6 +22,14 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             GenerarSala();
+            if (App.ob_diclst.Count > 0)
+            {
+                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+            }
+            else
+            {
+                lblnombre.Content = "!HOLA INVITADO";
+            }
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -354,7 +362,6 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    // Si el límite de selección de sillas ha sido alcanzado, muestra un mensaje de error
                     MessageBox.Show("Solo se pueden seleccionar hasta 10 sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
@@ -403,13 +410,20 @@ namespace Portal.Kiosco.Properties.Views
                 lblTotal.Content = "TOTAL: $0";
             }
             else { lblTotal.Content = "TOTAL: $" + sillasSeleccionadas; }
-
-
         }
 
-        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-
+            var openWindow = new Principal();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
+            this.Close();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }

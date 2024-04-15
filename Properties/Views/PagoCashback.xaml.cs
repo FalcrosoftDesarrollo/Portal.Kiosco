@@ -7,6 +7,14 @@ namespace Portal.Kiosco.Properties.Views
         public PagoCashback()
         {
             InitializeComponent();
+            if (App.ob_diclst.Count > 0)
+            {
+                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+            }
+            else
+            {
+                lblnombre.Content = "!HOLA INVITADO";
+            }
             DataContext = ((App)Application.Current);
         }
 

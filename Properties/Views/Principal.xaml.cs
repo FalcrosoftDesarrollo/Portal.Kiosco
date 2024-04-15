@@ -25,6 +25,7 @@ namespace Portal.Kiosco.Properties.Views
             this.Visibility = Visibility.Collapsed;
             comoComprarWindow.Background = Brushes.White;
             comoComprarWindow.Show();
+            this.Close();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             comoComprarWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
@@ -39,6 +40,7 @@ namespace Portal.Kiosco.Properties.Views
             this.Visibility = Visibility.Collapsed;
             comoComprarWindow.Background = Brushes.White;
             comoComprarWindow.Show();
+            this.Close();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             comoComprarWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }

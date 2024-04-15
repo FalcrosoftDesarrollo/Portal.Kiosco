@@ -48,13 +48,7 @@ namespace Portal.Kiosco
             }
             catch (Exception ex)
             {
-                var errorWindow = new ErrorGeneral();
-                errorWindow.Owner = this;
-                errorWindow.Closed += (s, args) =>
-                {
-                    this.Visibility = Visibility.Visible;
-                };
-                errorWindow.ShowDialog();
+                System.Windows.MessageBox.Show(ex.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

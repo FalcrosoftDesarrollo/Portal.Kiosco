@@ -28,7 +28,14 @@ namespace Portal.Kiosco.Properties.Views
             lblNombre.Content = App.Pelicula.Nombre;
             lblDuracion.Content = "Duración: " + App.Pelicula.Duracion + " min";
             lblGenero.Content = "Genero: " + App.Pelicula.Genero;
-
+            if (App.ob_diclst.Count > 0)
+            {
+                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+            }
+            else
+            {
+                lblnombre.Content = "!HOLA INVITADO";
+            }
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -389,6 +396,7 @@ namespace Portal.Kiosco.Properties.Views
             this.Visibility = Visibility.Collapsed;
             comoComprarWindow.Background = Brushes.White;
             comoComprarWindow.Show();
+            this.Close();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             comoComprarWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
