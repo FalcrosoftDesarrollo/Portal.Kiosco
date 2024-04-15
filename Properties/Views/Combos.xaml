@@ -180,11 +180,12 @@
 
                         <Border Grid.Row="1">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width ="165"/>
-                                    <ColumnDefinition Width="157*"/>
-                                    <ColumnDefinition Width="38"/>
-                                </Grid.ColumnDefinitions>
+                                <!--<Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>-->
 
                                 <WrapPanel x:Name="imagenes" Grid.Column="1" Grid.ColumnSpan="2">
                                     <Border>
@@ -227,8 +228,8 @@
                                                             </Border>
                                                         </Grid>
 
-                                                    </Border>-->
-                                                <!--</Grid>
+                                                    </Border>
+                                                </Grid>
                                             </Border>-->
                                         </Grid>
                                     </Border>

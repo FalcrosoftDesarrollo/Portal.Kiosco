@@ -45,6 +45,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             CombosConsult();
         }
+
         //private void MinusButton_Click(object sender, RoutedEventArgs e)
         //{
         //    int currentValue = int.Parse(countLabel.Content.ToString());
@@ -52,6 +53,12 @@ namespace Portal.Kiosco.Properties.Views
         //    {
         //        countLabel.Content = (currentValue - 1).ToString();
         //    }
+        //}
+
+        //private void PlusButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int currentValue = int.Parse(countLabel.Content.ToString());
+        //    countLabel.Content = (currentValue + 1).ToString();
         //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -73,11 +80,7 @@ namespace Portal.Kiosco.Properties.Views
             clickedButton.Foreground = new SolidColorBrush(Colors.White);
             clickedButton.Background = new SolidColorBrush(Colors.Red);
         }
-        //private void PlusButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    int currentValue = int.Parse(countLabel.Content.ToString());
-        //    countLabel.Content = (currentValue + 1).ToString();
-        //}
+        
         public void CombosConsult(string pr_secpro = "", string pr_swtven = "", string pr_tiplog = "", string pr_tbview = "", string Teatro = "0", string Ciudad = "0") {
 
             #region VARIABLES LOCALES
@@ -276,6 +279,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     Image imagen = new Image();
                     imagen.Source = new BitmapImage(new Uri(lc_auximg));
+                    imagen.Width = 270;
                     imagenes.Children.Add(imagen);
 
                 }
