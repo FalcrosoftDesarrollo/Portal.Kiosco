@@ -11,6 +11,11 @@ using static Org.BouncyCastle.Math.EC.ECCurve;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
+using System.IO;
+using Image = System.Windows.Controls.Image;
+using System.Windows.Media.Imaging;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -19,9 +24,16 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class Combos : Window
     {
+
+        private IConfiguration configuration;
+
         public Combos()
         {
             InitializeComponent();
+            
+
+            // Cargar la configuración desde appsettings.json
+            
             DataContext = ((App)Application.Current);
             if (App.ob_diclst.Count > 0)
             {
@@ -33,8 +45,40 @@ namespace Portal.Kiosco.Properties.Views
             }
             CombosConsult();
         }
+        //private void MinusButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int currentValue = int.Parse(countLabel.Content.ToString());
+        //    if (currentValue > 0)
+        //    {
+        //        countLabel.Content = (currentValue - 1).ToString();
+        //    }
+        //}
 
-        public void CombosConsult(string pr_secpro="", string pr_swtven = "", string pr_tiplog = "", string pr_tbview = "", string Teatro = "0", string Ciudad = "0") {
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Restaurar todos los botones a su estado original
+            combosBorder.Background = new SolidColorBrush(Colors.LightGray);
+            alimentosBorder.Background = new SolidColorBrush(Colors.LightGray);
+            bebidasBorder.Background = new SolidColorBrush(Colors.LightGray);
+            snacksBorder.Background = new SolidColorBrush(Colors.LightGray);
+            combosButton.Foreground = new SolidColorBrush(Colors.Black);
+            alimentosButton.Foreground = new SolidColorBrush(Colors.Black);
+            bebidasButton.Foreground = new SolidColorBrush(Colors.Black);
+            snacksButton.Foreground = new SolidColorBrush(Colors.Black);
+
+            // Obtener el botón que se hizo clic
+            System.Windows.Controls.Button clickedButton = sender as System.Windows.Controls.Button;
+
+            // Cambiar el color del botón clicado a rojo con texto blanco
+            clickedButton.Foreground = new SolidColorBrush(Colors.White);
+            clickedButton.Background = new SolidColorBrush(Colors.Red);
+        }
+        //private void PlusButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int currentValue = int.Parse(countLabel.Content.ToString());
+        //    countLabel.Content = (currentValue + 1).ToString();
+        //}
+        public void CombosConsult(string pr_secpro = "", string pr_swtven = "", string pr_tiplog = "", string pr_tbview = "", string Teatro = "0", string Ciudad = "0") {
 
             #region VARIABLES LOCALES
             string lc_result = string.Empty;
@@ -61,60 +105,11 @@ namespace Portal.Kiosco.Properties.Views
                 if (pr_tbview == null)
                     pr_tbview = "";
 
-                //Inicializar valores de entrada
-                //ViewBag.pr_secpro = pr_secpro;
-                //ViewBag.pr_swtven = pr_swtven;
-                //ViewBag.pr_tiplog = pr_tiplog;
-                //ViewBag.pr_tbview = pr_tbview;
-
-                ////Session carrito de compras
-                //Session.Remove("pr_tbview");
-                //Session.SetString("pr_tbview", pr_tbview);
-                //Session.Remove("pr_secpro");
-                //Session.SetString("pr_secpro", pr_secpro);
-                //Session.Remove("pr_swtven");
-                //Session.SetString("pr_swtven", pr_swtven);
-                //Session.Remove("pr_tiplog");
-                //Session.SetString("pr_tiplog", pr_tiplog);
-
-                //URLPortal(config);
-
-                //Validar ciudad y teatro desde web externa
                 if (Teatro != "0")
-                    //Selteatros(Teatro);
 
-                //ListCarrito();
-
-                //Inicializar variables
-                //ViewBag.ListaM = null;
-                //ViewBag.alertS = false;
-                //ViewBag.CantidadProductos = config.Value.CantProductos;
-                //ViewBag.UrlRetailImg = config.Value.UrlRetailImg;
-                //ViewBag.ClientFrecnt = Session.GetString("ClienteFrecuente");
-                //ViewBag.Tipo = pr_tiplog;
-
-                //ViewBag.Teatro = Session.GetString("TeatroNombre");
-                //ViewBag.Correo = Session.GetString("Usuario");
-                //ViewBag.Nombre = Session.GetString("Nombre");
-                //ViewBag.Apellido = Session.GetString("Apellido");
-                //ViewBag.Telefono = Session.GetString("Telefoho");
-                //ViewBag.KeyTeatro = Session.GetString("Teatro");
-
-                //ViewBag.CombosWeb = null;
-                //ViewBag.AlimentosWeb = null;
-                //ViewBag.BebidassWeb = null;
-                //ViewBag.SnacksWeb = null;
-
-                //if (Session.GetString("Secuencia") != null)
-                //    ViewBag.Secuencia = Session.GetString("Secuencia");
-                //else
-                //    ViewBag.Secuencia = pr_secpro;
-
-                //ViewBag.SwitchVenta = pr_swtven;
-
-                #region SERVICIO SCOPRE
-                //Asignar valores PRE
-                ob_scopre.Punto = Convert.ToInt32(App.PuntoVenta);
+                    #region SERVICIO SCOPRE
+                    //Asignar valores PRE
+                    ob_scopre.Punto = Convert.ToInt32(App.PuntoVenta);
                 ob_scopre.Teatro = Convert.ToInt32(App.idCine);
                 ob_scopre.Tercero = App.ValorTercero;
 
@@ -133,7 +128,7 @@ namespace Portal.Kiosco.Properties.Views
                 else
                     lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
 
-             ;
+                ;
 
                 //Validar respuesta
                 if (lc_result.Substring(0, 1) == "0")
@@ -189,7 +184,7 @@ namespace Portal.Kiosco.Properties.Views
                                         break;
 
                                     case "ALIMENTOS WEB":
-                                        int lc_cntali = AlimentosWeb.Count ;
+                                        int lc_cntali = AlimentosWeb.Count;
 
                                         AlimentosWeb.Add(item);
                                         AlimentosWeb[lc_cntali].OrdenView = pantallas.Orden;
@@ -198,7 +193,7 @@ namespace Portal.Kiosco.Properties.Views
                                         break;
 
                                     case "BEBIDAS WEB":
-                                        int lc_cntbeb = BebidasWeb.Count ;
+                                        int lc_cntbeb = BebidasWeb.Count;
 
                                         BebidasWeb.Add(item);
                                         BebidasWeb[lc_cntbeb].OrdenView = pantallas.Orden;
@@ -207,7 +202,7 @@ namespace Portal.Kiosco.Properties.Views
                                         break;
 
                                     case "SNACKS WEB":
-                                        int lc_cntsnk = SnacksWeb.Count ;
+                                        int lc_cntsnk = SnacksWeb.Count;
 
                                         SnacksWeb.Add(item);
                                         SnacksWeb[lc_cntsnk].OrdenView = pantallas.Orden;
@@ -236,23 +231,59 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    lc_result = lc_result.Replace("1-", ""); 
+                    lc_result = lc_result.Replace("1-", "");
                 }
                 #endregion
-                 
+
             }
             catch (Exception lc_syserr)
             {
-               
+
             }
 
         }
-         
-        public void CrearCombosYbebidas(List<Producto> productos) { 
-        
-        
+
+
+
+
+
+
+
+
+        public void CrearCombosYbebidas(List<Producto> productos) {
+            
+            string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\appsettings.json";
+
+            // Cargar la configuración desde el archivo appsettings.json
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile(appSettingsPath, optional: true, reloadOnChange: true);
+
+            configuration = builder.Build();
+
+            var myConfigSection = configuration.GetSection("MyConfig");
+
+            // Obtener la URL de las imágenes desde la configuración
+            string urlRetailImg = myConfigSection["UrlRetailImg"];
+
+            if (productos != null)
+            {
+                foreach (var item in productos)
+                {
+                   
+                    string lc_auxcod = item.Codigo.ToString();
+                    string lc_auximg = string.Concat(urlRetailImg, lc_auxcod.Substring(0, lc_auxcod.Length - 2), ".jpg");
+
+
+                    Image imagen = new Image();
+                    imagen.Source = new BitmapImage(new Uri(lc_auximg));
+                    imagenes.Children.Add(imagen);
+
+                }
+
+            }
+
         }
-         
+
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             Combodeluxe1 w = new Combodeluxe1();

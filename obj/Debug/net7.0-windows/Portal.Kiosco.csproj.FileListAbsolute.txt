@@ -241,3 +241,12 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Xaml.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.d-bfalse.GeneratedMSBuildEditorConfig.editorconfig
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\App.baml
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.sourcelink.json
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Configuration.Json.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\System.Text.Encodings.Web.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\System.Text.Json.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\browser\lib\net7.0\System.Text.Encodings.Web.dll
