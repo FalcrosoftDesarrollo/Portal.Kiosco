@@ -30,6 +30,45 @@
             </Setter>
         </Style>
 
+
+        <Style  TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <!-- Esfera -->
+                            <Ellipse x:Name="RadioEllipse"
+                                 Width="40"
+                                 Height="40"
+                                 Fill="White"
+                                 Stroke="LightGray"
+                                 StrokeThickness="1" 
+                                 HorizontalAlignment="Left"/>
+                            <!-- Texto -->
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="70,15,0,20"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Trigger para cambiar el color de la esfera cuando el RadioButton está seleccionado -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="RadioEllipse" Property="Fill" Value="Red"/>
+                            </Trigger>
+                            <!-- Trigger para cambiar el color de la esfera cuando el RadioButton no está seleccionado -->
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="RadioEllipse" Property="Fill" Value="LightGray"/>
+                            </Trigger>
+                            <!-- Trigger para cambiar el color del borde cuando el mouse está sobre el RadioButton -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="RadioEllipse" Property="Stroke" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
         <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
             <Setter Property="Template">
                 <Setter.Value>
@@ -60,15 +99,15 @@
 
     <Grid>
         <Border>
-            
+
             <Grid RenderTransformOrigin="0.108,0.669">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="140" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                
-                
+
+
                 <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
@@ -111,15 +150,13 @@
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="225"/>
-                            <RowDefinition Height="526"/>
+                            <RowDefinition Height="125"/>
+                            <RowDefinition Height="626"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Button x:Name="btnVolver" Width="200" Height="80" Content="Volver" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,300,0" Click="btnVolver_Click" />
-                        <Button x:Name="btnSiguiente"  Width="200" Height="80" Content="Siguiente" FontSize="32" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0" Click="btnSiguiente_Click" />
-
+                       
                         <Border Grid.Row="0">
-                            <Label Height="65" Width="465" Content="Combo Deluxe 1" FontFamily="Myanmar Khyay" FontSize="48" HorizontalContentAlignment="Center"/>
+                            <Label Height="65" Width="465" Name="lblCombo" Content="Titulo" FontFamily="Myanmar Khyay" FontSize="48" HorizontalContentAlignment="Center"/>
                         </Border>
 
                         <Border Grid.Row="1">
@@ -128,327 +165,78 @@
                                     <ColumnDefinition Width="141"/>
                                     <ColumnDefinition Width="415.69"/>
                                     <ColumnDefinition Width="158.31"/>
-                                    <ColumnDefinition Width="373"/>
-                                    <ColumnDefinition Width="192"/>
-                                    <ColumnDefinition Width="408"/>
+                                    <ColumnDefinition Width="573"/>
+                                    
+                                    <ColumnDefinition Width="508"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
                                 <Border Grid.Column="1">
-                                    <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\rectangle241.png"></Image>
+                                    <Image Name="ImgCombo" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\rectangle241.png"></Image>
                                 </Border>
                                 <Border Grid.Column="3">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="78"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="45"/>
-                                            <RowDefinition Height="78"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="24"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="60"/>
+                                            <RowDefinition Height="160"/>
+                                            <RowDefinition Height="60"/>
+                                            <RowDefinition Height="300"/>
                                         </Grid.RowDefinitions>
 
                                         <Border Grid.Row="0">
-                                            <Label Width="373" Height="46" VerticalAlignment="Top" Content="Elige Perro o Sánduche" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left"/>
+                                            <Label Height="46" VerticalAlignment="Top" Content="Elige Perro o Sánduche" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" Margin="0,0,-66,0"/>
                                         </Border>
-                                        <Border Grid.Row="1">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="169"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
+                                        <Border Grid.Row="1"  >
+                                            <StackPanel Orientation="Vertical" Name="radioComidas" Margin="0,0,-162,0">
+                                                <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
 
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="Perro Caliente" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Row="2">
+                                            <Label Width="367" Height="46" VerticalAlignment="Top" Content="Elige la bebida" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
                                         </Border>
                                         <Border Grid.Row="3">
                                             <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="121"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#d9d9d9" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="Sánduche" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                        <Border Grid.Row="5">
-                                            <Label Width="235" Height="46" VerticalAlignment="Top" Content="Elige la bebida" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
-                                        </Border>
-                                        <Border Grid.Row="6">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="202"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="1 Botella de agua" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                        <Border Grid.Row="8">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="213"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="1 Fuze Tea 400 ml" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                        <Border Grid.Row="10">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="186"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label  Content="1 Gaseosa 22oz" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                        <Border Grid.Row="12">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="142"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="1 Jugo Hit" FontSize="24" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"/>
-                                                </Border>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="197*"/>
+                                                    <RowDefinition Height="3*"/>
+                                                </Grid.RowDefinitions>
+                                                <StackPanel Orientation="Vertical" Margin="0,0,-192,-104" Name="radiobebidas" Grid.RowSpan="2">
+                                                    <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                    <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                    <RadioButton Content="Option 3" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                    <RadioButton Content="Option 3" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                </StackPanel>
                                             </Grid>
                                         </Border>
                                     </Grid>
                                 </Border>
-                                <Border Grid.Column="5">
+                                <Border Grid.Column="4">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="78"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="21"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="23"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="400"/>
+
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
                                         <Border Grid.Row="0">
-                                            <Label Width="159" Height="43" VerticalAlignment="Top" Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
+                                            <Label Width="391" Height="43" VerticalAlignment="Top" Visibility="Hidden" Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
                                         </Border>
                                         <Border Grid.Row="1">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="290"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="Porción tocineta $4.600" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                        <Border Grid.Row="3">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="346"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#d9d9d9" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="Porción queso tajado $4.600" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
+                                            <StackPanel Orientation="Vertical" Visibility="Hidden" Name="radioAdicionales" >
+                                                <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                            </StackPanel>
                                         </Border>
 
-                                        <Border Grid.Row="5">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="344"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
 
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="Porción queso nacho $4.600" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                        <Border Grid.Row="7">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="324"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="Porción guacamole $4.600" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-
-                                        </Border>
-                                        <Border Grid.Row="9">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="25"/>
-                                                    <ColumnDefinition Width="324"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
-                                                    <Button Background="Transparent" BorderThickness="0">
-                                                        <Button.Effect>
-                                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                        </Button.Effect>
-                                                    </Button>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                                    </Border.Effect>
-
-                                                </Border>
-                                                <Border Grid.Column="2">
-                                                    <Label HorizontalAlignment="Left" Content="Porción sour cream $4.600" FontSize="24" VerticalContentAlignment="Top"/>
-                                                </Border>
-                                            </Grid>
-
-                                        </Border>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -460,17 +248,20 @@
                                         <Border Width="350" HorizontalAlignment="Left">
                                             <Grid>
                                                 <Border Width="350" HorizontalAlignment="Left" CornerRadius="10" Background="#D9D9D9">
-                                                    <Button Content="TOTAL: $71.100" FontFamily="Myanmar Khyay" FontSize="32" Background="Transparent" BorderThickness="0"/>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="TOTAL: $" FontFamily="Myanmar Khyay" FontSize="32" Margin="0,0,10,0"/>
+                                                        <Label x:Name="totalLabel" Content="0" FontFamily="Myanmar Khyay" FontSize="32" FontWeight="Bold"/>
+                                                    </StackPanel>
                                                 </Border>
                                             </Grid>
                                         </Border>
                                         <Border>
                                             <Grid Width="374" HorizontalAlignment="Right">
-                                                <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                                    <Button Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
+                                                <Border Width="180" Height="80"  HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
+                                                    <Button Background="Transparent" Click="btnVolver_Click" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                                 </Border>
                                                 <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                                    <Button Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
+                                                    <Button Background="Transparent" BorderThickness="0" Click="btnSiguiente_Click" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                                 </Border>
                                             </Grid>
                                         </Border>

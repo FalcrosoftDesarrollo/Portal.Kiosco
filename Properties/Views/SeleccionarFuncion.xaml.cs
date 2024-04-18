@@ -209,9 +209,9 @@ namespace Portal.Kiosco.Properties.Views
                 if (sender is Button clickedButton)
                 {
                     string buttonName = clickedButton.Name;
+                    clickedButton.Foreground = Brushes.White;
                     App.Pelicula.FechaSel = buttonName;
                 }
-
 
                 ContenedorHoras3D.Children.Clear();
                 ContenedorHorasGeneral.Children.Clear();
@@ -224,32 +224,21 @@ namespace Portal.Kiosco.Properties.Views
 
 
                 // Iterar sobre los elementos hijos del contenedor de horas
-                foreach (var child in ContenedorFechas.Children.OfType<Border>().Select(b => b.Child as Button))
-                {
-                    if (child != null)
-                    {
-                        // Aplicar estilo al botón
-                        child.Width = 115;
-                        child.Height = 60;
-                        child.Background = Brushes.White;
-                        child.BorderBrush = Brushes.Red; // Cambiar por el color de borde deseado
-                        //child.BorderThickness = new Thickness(1);
-                        child.Margin = new Thickness(0, 0, 0, 0); // Ajustar márgenes según necesidad
-                        child.BorderThickness = new Thickness(1);
+                // Obtener el contenedor del botón (el borde)
+                Border buttonBorder = border;
 
-                        // Verificar si el botón es el que recibió el clic
-                        if (child == sender)
-                        {
-                            child.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);  
-                            child.Background = Brushes.White;
-                        }
-                        else
-                        {
-                            child.Foreground = Brushes.Red; // Establece el color de texto deseado
-                            child.Background = Brushes.White; // Restaura el color de fondo por defecto
-                        }
-                    }
+                // Restaurar todos los bordes a su estado original
+                foreach (var child in ContenedorFechas.Children.OfType<Border>())
+                {
+                    child.Background = Brushes.White;
+                    child.BorderBrush = Brushes.Red;
+                   
                 }
+
+                // Cambiar el color del borde del botón clicado a rojo
+                buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+                buttonBorder.BorderBrush = Brushes.White;
+                
 
                 // Llamar a la función para cargar las fechas
                 CargarFechasDesdeSelect(fecunv.Substring(3));

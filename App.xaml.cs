@@ -1,27 +1,20 @@
 ﻿using APIPortalKiosco.Entities;
 using APIPortalWebMed.Entities;
 using Newtonsoft.Json.Linq;
+using Portal.Kiosco.Properties.Views;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Xml.Linq;
-using System.Linq;
-using System.Xml;
-using static Org.BouncyCastle.Math.EC.ECCurve;
-using Portal.Kiosco.Properties.Views;
-using System.Windows.Threading;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Media.Animation;
+using System.Windows;
 using System.Windows.Media;
-using Portal.Kiosco;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
+using System.Xml.Linq;
+
 namespace Portal.Kiosco
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application, INotifyPropertyChanged
     {
         public static bool IsUserAuthenticated { get; set; }
@@ -36,9 +29,21 @@ namespace Portal.Kiosco
         public static string ValorTercero { get; set; }
         public static string ScoreServices { get; set; }
         public static string CantProductos { get; set; }
-        
+        public static string CodigoProducto { get; set; }
+
+        private   List<UIElement> elementosCombos = new List<UIElement>();
+        private   List<UIElement> elementosAlimentos = new List<UIElement>();
+        private   List<UIElement> elementosBebidas = new List<UIElement>();
+        private   List<UIElement> elementosSnack = new List<UIElement>();
+
+        public static List<Producto> CombosWeb = new List<Producto>();
+        public static List<Producto> AlimentosWeb = new List<Producto>();
+        public static List<Producto> BebidasWeb = new List<Producto>();
+        public static List<Producto> SnacksWeb = new List<Producto>();
+        public static List<Producto> ProductosSeleccionados = new List<Producto>();
+
         public static bool IsFecha = true;
-        
+
         public static Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
         public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
@@ -85,7 +90,7 @@ namespace Portal.Kiosco
         }
         public event EventHandler<string> TiempoRestanteActualizado;
 
-        private void IniciarContadorGlobal()
+        private async void IniciarContadorGlobal()
         {
             TimeSpan tiempoRestante = TimeSpan.FromMinutes(15);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
@@ -114,8 +119,6 @@ namespace Portal.Kiosco
             contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
             contadorGlobalTimer.Start();
         }
-
-     
 
         private string DiaMes(string pr_daynum, string pr_flag)
         {
@@ -199,7 +202,6 @@ namespace Portal.Kiosco
             return lc_daystr;
         }
 
-
         public List<Pelicula> ObtenerPeliculas(XDocument carteleraXML, string keyteatro)
         {
             var peliculas = new List<Pelicula>();
@@ -265,7 +267,7 @@ namespace Portal.Kiosco
                                     var salaNodes = salasNode.Descendants("sala");
                                     foreach (var salaNode in salaNodes)
                                     {
-                                       
+
 
                                         var fechaNodes = salaNode.Elements("Fecha");
                                         foreach (var fechaNode in fechaNodes)
@@ -284,7 +286,7 @@ namespace Portal.Kiosco
                                                     numSala = (string)salaNode.Attribute("numeroSala"),
                                                     tipSala = (string)salaNode.Attribute("tipoSala")
 
-                                            };
+                                                };
                                                 fechas.horafun.Add(hora);
                                             }
                                         }
@@ -329,6 +331,5 @@ namespace Portal.Kiosco
         }
 
     }
-
 }
 
