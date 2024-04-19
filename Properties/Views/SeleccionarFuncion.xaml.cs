@@ -149,7 +149,12 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
+        private void btnSelectFecha_Click(object sender, RoutedEventArgs e)
+        {
+            Cartelera w = new Cartelera();
+            this.Close();
+            w.ShowDialog();
+        }
 
         private void CrearBotonFecha(string fecha, string fecunv)
         {
@@ -166,7 +171,7 @@ namespace Portal.Kiosco.Properties.Views
             btn.Content = fechaFormateada;
             btn.Background = Brushes.Transparent;
             btn.BorderThickness = new Thickness(0);
-            btn.Foreground = Brushes.White;
+            btn.Foreground = Brushes.Red;
             btn.FontFamily = new FontFamily("Myanmar Khyay");
             btn.FontSize = 20;
 
@@ -194,14 +199,12 @@ namespace Portal.Kiosco.Properties.Views
                 App.Pelicula.FechaSel = fecunv;
                 App.IsFecha = true;
             }
-            
             else
             {
                 btn.Foreground = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 border.Background = Brushes.White;
                 border.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 border.BorderThickness = new Thickness(1);
-               
             }
 
             btn.Click += (sender, e) =>
@@ -215,35 +218,24 @@ namespace Portal.Kiosco.Properties.Views
 
                 ContenedorHoras3D.Children.Clear();
                 ContenedorHorasGeneral.Children.Clear();
-
-                // Crear y agregar los botones al contenedor de horas
-
-
+                 
                 ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
                 ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
-
-
-                // Iterar sobre los elementos hijos del contenedor de horas
-                // Obtener el contenedor del botón (el borde)
+                 
                 Border buttonBorder = border;
-
-                // Restaurar todos los bordes a su estado original
+                 
                 foreach (var child in ContenedorFechas.Children.OfType<Border>())
                 {
                     child.Background = Brushes.White;
                     child.BorderBrush = Brushes.Red;
-                   
-                }
 
-                // Cambiar el color del borde del botón clicado a rojo
+                }
+                btn.Foreground = Brushes.White; 
                 buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 buttonBorder.BorderBrush = Brushes.White;
-                
 
-                // Llamar a la función para cargar las fechas
                 CargarFechasDesdeSelect(fecunv.Substring(3));
             };
-
 
             ContenedorFechas.Children.Add(border);
         }

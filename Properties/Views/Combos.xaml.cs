@@ -755,7 +755,11 @@ namespace Portal.Kiosco.Properties.Views
             currentValue++;
             countLabel.Content = currentValue.ToString();
             var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)));
-            totalLabel.Content = (Convert.ToDecimal(totalLabel.Content) + precio).ToString();
+
+            string totalString = totalLabel.Content.ToString().Replace("$", "").Replace(".", "").Replace(",", "").Trim(); // Remueve el símbolo de la moneda y cualquier separador de miles
+            decimal totalAnterior = decimal.Parse(totalString);
+            decimal nuevoTotal = totalAnterior + precio;
+            totalLabel.Content = nuevoTotal.ToString("C0");
         }
 
 
@@ -780,8 +784,10 @@ namespace Portal.Kiosco.Properties.Views
                     App.ProductosSeleccionados.Remove(productoAEliminar);
                 }
 
-                totalLabel.Content = (Convert.ToDecimal(totalLabel.Content) - precio).ToString();
-
+                string totalString = totalLabel.Content.ToString().Replace("$", "").Replace(".", "").Replace(",", "").Trim(); // Remueve el símbolo de la moneda y cualquier separador de miles
+                decimal totalAnterior = decimal.Parse(totalString);
+                decimal nuevoTotal = totalAnterior + precio;
+                totalLabel.Content = nuevoTotal.ToString("C0");
             }
         }
 
