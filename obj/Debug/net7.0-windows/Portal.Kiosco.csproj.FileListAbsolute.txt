@@ -243,9 +243,10 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.d-bf
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.AssemblyInfoInputs.cache
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.AssemblyInfo.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.csproj.CoreCompileInputs.cache
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.csproj.CopyComplete
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\refint\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.pdb
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.genruntimeconfig.cache
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\ref\Portal.Kiosco.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.sourcelink.json
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.K.5667AA43.Up2Date

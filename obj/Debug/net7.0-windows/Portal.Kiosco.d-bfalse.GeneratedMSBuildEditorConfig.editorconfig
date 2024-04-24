@@ -65,6 +65,8 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.ProjectDir = C:\FALCROSOFT\PROCINAL\Portal.Kiosco\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
 
 [C:/FALCROSOFT/PROCINAL/Portal.Kiosco/Properties/Views/AlgoParaComer.xaml]
 build_metadata.AdditionalFiles.SourceItemGroup = Page
