@@ -58,12 +58,13 @@
         </Style>
 
         <Style x:Key="AvailableSeat" TargetType="Button">
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Background" Value="LightGray"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="14"/>
+             
             <!-- Agregar más propiedades de estilo según sea necesario -->
         </Style>
 
@@ -181,19 +182,52 @@
                                     <Border Grid.Column="1">
                                         <Grid Margin="0,0,0,0">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="50"/>
-                                               
+                                                <RowDefinition Height="80"/>
+                                                <RowDefinition Height="40"/>
+                                                <RowDefinition Height="40"/>
+                                                <RowDefinition Height="60"/>
+                                                
+
                                                 <RowDefinition Height="30"/>
-                                                <RowDefinition Height="450" />
+                                                <RowDefinition Height="260.5" />
+                                                <RowDefinition Height="105.5"/>
                                                 <RowDefinition/>
 
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0">
+                                                <Grid>
+                                                    <Label Content="Nombre pelicula" Name="lblNombrePelicula" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
+                                            <Border Grid.Row="1">
+                                                <Grid>
+                                                    <Label Content="Funcion Seleccionada" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                                </Grid>
+                                          </Border>
+                                            <Border Grid.Row="2">
+                                                <Grid>
+                                                 
+                                                    <UniformGrid Columns="3" Grid.Row="2" VerticalAlignment="Center">
+                                                        <Border CornerRadius="10" Background="#F5F5F5">
+                                                            <Label  Name="lblFecha" FontFamily="Myanmar Khyay" FontSize="16" Content="Funcion" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        </Border>
+                                                        <Border CornerRadius="10" Background="#F5F5F5">
+                                                            <Label Name="lblHora" FontFamily="Myanmar Khyay" FontSize="16" Content="Hora" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        </Border>
+                                                        <Border CornerRadius="10" Background="#F5F5F5">
+                                                            <Label Name="lblSala" FontFamily="Myanmar Khyay" FontSize="16" Content="Hora" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        </Border>
+                                                    </UniformGrid>
+                                                </Grid>
+
+                                            </Border>
+                                        
+                                            <Border Grid.Row="3">
 
                                                 <Label Content="¿Dónde te quieres sentar?" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                                             </Border>
-                                             
-                                            <Border Grid.Row="1">
+
+                                            <Border Grid.Row="4">
                                                 <UniformGrid Columns="2" VerticalAlignment="Center">
                                                     <Border CornerRadius="10" Background="#F5F5F5">
                                                         <Label FontFamily="Myanmar Khyay" FontSize="16" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -205,14 +239,14 @@
 
                                             </Border>
 
-                                            <Border Grid.Row="2">
+                                            <Border Grid.Row="5" Grid.RowSpan="2">
                                                 <UniformGrid Name="ContenedorBoletas"   Columns="2" VerticalAlignment="Top">
-                                                    
+
                                                 </UniformGrid>
                                             </Border>
-                                            <Border Grid.Row="4" CornerRadius="10" Background="#d9d9d9" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="350" Height="80">
+                                            <Border Grid.Row="6" CornerRadius="10" Background="#d9d9d9" HorizontalAlignment="Center" VerticalAlignment="Center" Width="350" Height="80">
                                                 <Label FontFamily="Myanmar Khyay" Name="lblTotal" FontSize="30" Content="TOTAL: $0" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-                                                
+
                                             </Border>
                                         </Grid>
                                     </Border>

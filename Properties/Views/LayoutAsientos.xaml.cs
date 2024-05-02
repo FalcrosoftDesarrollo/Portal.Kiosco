@@ -20,8 +20,10 @@ namespace Portal.Kiosco.Properties.Views
     {
         public LayoutAsientos()
         {
+            
             InitializeComponent();
             GenerarSala();
+
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -30,6 +32,12 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
+            
+            lblFecha.Content = App.Pelicula.FechaUsuario;
+            lblHora.Content = App.Pelicula.HoraUsuario;
+            lblSala.Content = App.Pelicula.numeroSala;
+            lblNombrePelicula.Content = App.Pelicula.Nombre;
+
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -247,6 +255,11 @@ namespace Portal.Kiosco.Properties.Views
 
         private void AgregarUbicacionAlWrapPanel(BolVenta bolVenta)
         {
+
+            // Crear la plantilla de control personalizada
+           
+
+
             Ubicaciones[,] ubicaciones = bolVenta.MapaSala;
 
             for (int i = 0; i < ubicaciones.GetLength(0); i++)
@@ -261,16 +274,20 @@ namespace Portal.Kiosco.Properties.Views
                     button.Content = lc_valmos;
                     button.Name = lc_values;
 
+
+                    
                     // Suscribe el evento Click al botón
                     button.Click += Button_Click;
 
                     // Definir un nuevo estilo
                     button.Style = (Style)FindResource("AvailableSeat");
-
+                     
                     Border border = new Border();
                     border.CornerRadius = new CornerRadius(5);
                     border.Margin = new Thickness(0, 0, 1, 1);
                     border.BorderThickness = new Thickness(1);
+
+
 
                     switch (ubicacion.TipoSilla.ToLower())
                     {

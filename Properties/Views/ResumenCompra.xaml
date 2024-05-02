@@ -166,13 +166,13 @@
                                 <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="Black">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30"/>
-                                            <ColumnDefinition Width="98"/>
-                                            <ColumnDefinition Width="439"/>
+                                            <ColumnDefinition Width="28"/>
+                                            <ColumnDefinition Width="143"/>
+                                            <ColumnDefinition Width="396"/>
                                             <ColumnDefinition Width="105"/>
                                             <ColumnDefinition Width="185"/>
-                                            <ColumnDefinition Width="21"/>
-                                            <ColumnDefinition Width="195"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="118"/>
                                             <ColumnDefinition Width="110"/>
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
@@ -180,13 +180,13 @@
                                             <Label Content="Boletas &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center" Margin="0,0,-109,0"></Label>
                                         </Border>
                                         <Border Grid.Column="3">
-                                            <Label Height="37"  Content="$13.600" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-60,23"></Label>
+                                            <Label Height="37" Name="lblPrecioBoletas" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-44,23"></Label>
                                         </Border>
                                         <Border Grid.Column="5">
-                                            <Label Height="37" Content="2" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                            <Label Height="37" Name="lblCantidadBoletas" Content="0" FontFamily="Myanmar Khyay" FontSize="24"></Label>
                                         </Border>
                                         <Border Grid.Column="7">
-                                            <Label Height="37" Content="$27.200" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-62,23"></Label>
+                                            <Label Height="37" Name="lblBoletas" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-70,23"></Label>
                                         </Border>
                                     </Grid>
 
@@ -196,26 +196,27 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="28"/>
-                                            <ColumnDefinition Width="98"/>
-                                            <ColumnDefinition Width="441"/>
+                                            <ColumnDefinition Width="143"/>
+                                            <ColumnDefinition Width="396"/>
                                             <ColumnDefinition Width="105"/>
                                             <ColumnDefinition Width="185"/>
-                                            <ColumnDefinition Width="21"/>
-                                            <ColumnDefinition Width="195"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="118"/>
                                             <ColumnDefinition Width="110"/>
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
+                                     
                                         <Border Grid.Column="1">
                                             <Label Content="Gafas &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center" Margin="0,0,-93,0"></Label>
                                         </Border>
                                         <Border Grid.Column="3">
-                                            <Label Height="37" Content="$13.600" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-49,23"></Label>
+                                            <Label Height="37" Name="lblPrecioGafas" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-44,23"></Label>
                                         </Border>
                                         <Border Grid.Column="5">
-                                            <Label Height="37" Content="2" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                            <Label Height="37" Name="lblCantidadGafas" Content="0" FontFamily="Myanmar Khyay" FontSize="24"  ></Label>
                                         </Border>
                                         <Border Grid.Column="7">
-                                            <Label Height="37" Content="$6.000" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-68,23"></Label>
+                                            <Label Height="37" Name="lblGafas" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-70,23"></Label>
                                         </Border>
                                     </Grid>
 
@@ -229,8 +230,8 @@
                                             <ColumnDefinition Width="396"/>
                                             <ColumnDefinition Width="105"/>
                                             <ColumnDefinition Width="185"/>
-                                            <ColumnDefinition Width="21"/>
-                                            <ColumnDefinition Width="195"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="118"/>
                                             <ColumnDefinition Width="110"/>
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
@@ -238,13 +239,13 @@
                                             <Label Content="Alimentos &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center" Margin="0,0,-78,0"></Label>
                                         </Border>
                                         <Border Grid.Column="3">
-                                            <Label Height="37" Content="$13.600" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-44,23"></Label>
+                                            <Label Height="37" Name="lblPrecioAlimento" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-44,23"></Label>
                                         </Border>
                                         <Border Grid.Column="5">
-                                            <Label Height="37" Content="2" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                            <Label Height="37" Name="lblCantidadAlimento" Content="0" FontFamily="Myanmar Khyay" FontSize="24"></Label>
                                         </Border>
                                         <Border Grid.Column="7">
-                                            <Label Height="37" Content="$137.600" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-70,23"></Label>
+                                            <Label Height="37" Name="lblAlimento" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-70,23"></Label>
                                         </Border>
                                     </Grid>
 
