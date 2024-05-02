@@ -14,6 +14,7 @@ namespace Portal.Kiosco.Properties.Views
         public AlgoParaComer()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();

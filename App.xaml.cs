@@ -49,6 +49,7 @@ namespace Portal.Kiosco
         public static bool IsPrimeraCarga = true;
         private string _tiempoRestanteGlobal;
 
+
         public string TiempoRestanteGlobal
         {
             get { return _tiempoRestanteGlobal; }
@@ -88,7 +89,7 @@ namespace Portal.Kiosco
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public event EventHandler<string> TiempoRestanteActualizado;
+        public event EventHandler<double> TiempoRestanteActualizado;
 
         private async void IniciarContadorGlobal()
         {
@@ -102,6 +103,10 @@ namespace Portal.Kiosco
                 {
                     tiempoRestante = tiempoRestante.Subtract(TimeSpan.FromSeconds(1));
                     TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
+                    double totalSeconds = 900; // 15 minutos en segundos
+                    double remainingSeconds = tiempoRestanteGlobal.TotalSeconds;
+                    double percentage = (totalSeconds - remainingSeconds) / totalSeconds;
+                    TiempoRestanteActualizado?.Invoke(this, percentage);
                 }
                 else
                 {
@@ -119,6 +124,7 @@ namespace Portal.Kiosco
             contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
             contadorGlobalTimer.Start();
         }
+
 
         private string DiaMes(string pr_daynum, string pr_flag)
         {

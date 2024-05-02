@@ -205,7 +205,7 @@ namespace Portal.Kiosco.Properties.Views
                 btn.Foreground = Brushes.White;
                 border.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 App.Pelicula.FechaSel = fecunv;
-                App.Pelicula.FechaUsuario = fechaFormateada;
+                //App.Pelicula.FechaUsuario = fechaFormateada;
                 App.IsFecha = true;
             }
 
@@ -415,7 +415,7 @@ namespace Portal.Kiosco.Properties.Views
                 buttonBorder.BorderBrush = Brushes.Red;
                 buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
             }
-            App.Pelicula.HoraUsuario = clickedButton.Content.ToString();
+            //App.Pelicula.HoraUsuario = clickedButton.Content.ToString();
             clickedButton.Foreground = Brushes.White;
             borSiguente.Visibility = Visibility.Visible;
         }
@@ -487,7 +487,7 @@ namespace Portal.Kiosco.Properties.Views
                 buttonBorder.BorderBrush = Brushes.Red;
                 buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
             }
-            App.Pelicula.FechaUsuario = clickedButton.Content.ToString();
+            //App.Pelicula.FechaUsuario = clickedButton.Content.ToString();
             clickedButton.Foreground = Brushes.White;
             CargarFechasDesdeSelect(buttonName.Substring(3));
         }

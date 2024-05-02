@@ -188,7 +188,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\APIPortalKiosco.En
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.csproj.AssemblyReference.cache
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Scanear_documento.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\AlgoParaComer.g.cs
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\AutentificacionEnDosPasos.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\BoletasGafasAlimentos.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Cartelera.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Combodeluxe1.g.cs
@@ -215,7 +214,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco_Mark
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco_MarkupCompile.lref
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\App.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\AlgoParaComer.baml
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\AutentificacionEnDosPasos.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\BoletasGafasAlimentos.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Cartelera.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Combodeluxe1.baml
@@ -249,4 +247,4 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.pdb
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.genruntimeconfig.cache
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\ref\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.sourcelink.json
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.K.5667AA43.Up2Date
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.csproj.CopyComplete

@@ -23,7 +23,7 @@ namespace Portal.Kiosco.Properties.Views
             
             InitializeComponent();
             GenerarSala();
-
+            DataContext = ((App)Application.Current);
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -33,8 +33,8 @@ namespace Portal.Kiosco.Properties.Views
                 lblnombre.Content = "!HOLA INVITADO";
             }
             
-            lblFecha.Content = App.Pelicula.FechaUsuario;
-            lblHora.Content = App.Pelicula.HoraUsuario;
+            //lblFecha.Content = App.Pelicula.FechaUsuario;
+            //lblHora.Content = App.Pelicula.HoraUsuario;
             lblSala.Content = App.Pelicula.numeroSala;
             lblNombrePelicula.Content = App.Pelicula.Nombre;
 
