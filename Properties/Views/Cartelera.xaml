@@ -89,7 +89,7 @@
                                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="100" To="0" Duration="0:0:10" RepeatBehavior="Forever"/>
+                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="100" To="0" Duration="1:0:0" RepeatBehavior="Forever"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>
