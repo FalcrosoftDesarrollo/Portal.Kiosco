@@ -76,8 +76,26 @@
                         <!-- logo -->
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
-                        <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="4" BorderBrush="White"  CornerRadius="100" Background="Transparent">
-                            <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding TiempoRestanteGlobal}" Name="lbltemporizador" FontSize="24" FontFamily="inter regular" />
+                        <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
+                            <Grid>
+                                <Canvas>
+                                    <Path Name="circlePath" Stroke="White" StrokeThickness="4" StrokeDashArray="1,100">
+                                        <Path.Data>
+                                            <EllipseGeometry Center="52,52" RadiusX="50" RadiusY="50"/>
+                                        </Path.Data>
+                                        <Path.Triggers>
+                                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="100" To="0" Duration="1:0:0" RepeatBehavior="Forever"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Path.Triggers>
+                                    </Path>
+                                </Canvas>
+                                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding TiempoRestanteGlobal}" FontSize="24" FontFamily="Inter Regular" />
+                            </Grid>
                         </Border>
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>

@@ -306,7 +306,7 @@
 
                                         <Border Grid.Row="0" Margin="31,0,0,0">
                                             <WrapPanel>
-                                                <TextBlock >
+                                                <TextBlock>
                                                             <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " Width="1200" Height="43"/>
                                                             <LineBreak/>
                                                             <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>

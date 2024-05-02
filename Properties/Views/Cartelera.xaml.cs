@@ -38,36 +38,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-        private void MainWindow_TiempoRestanteActualizado(object sender, string tiempoRestante)
-        {
-            // Actualizar el contenido del temporizador en esta ventana
-            lbltemporizador.Content = tiempoRestante;
-
-            // Calcular el porcentaje de tiempo restante para la animación del círculo
-            double totalSeconds = 900; // 15 minutos en segundos
-            double remainingSeconds = TimeSpan.Parse(tiempoRestante).TotalSeconds;
-            double percentage = remainingSeconds / totalSeconds;
-
-            // Actualizar la animación del círculo
-            UpdateCircleAnimation(percentage);
-        }
-
-        private void UpdateCircleAnimation(double percentage)
-        {
-            // Animar el radio y la opacidad del círculo según el porcentaje de tiempo restante
-            double targetScale = percentage;
-            double targetOpacity = percentage > 0 ? 1 : 0; // Mostrar el círculo solo si hay tiempo restante
-
-            // Animar el radio del círculo (escala en X e Y) y la opacidad
-            DoubleAnimation scaleAnimation = new DoubleAnimation(targetScale, TimeSpan.FromSeconds(0.5));
-            DoubleAnimation opacityAnimation = new DoubleAnimation(targetOpacity, TimeSpan.FromSeconds(0.5));
-
-            // Aplicar las animaciones al círculo y al transformador de escala
-            circle.BeginAnimation(Ellipse.OpacityProperty, opacityAnimation);
-            circleScale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnimation);
-            circleScale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnimation);
-        }
-
         public string ObtenerValorDeConfiguracion(string clave)
         {
             string valor = ConfigurationManager.AppSettings[clave];
