@@ -30,6 +30,8 @@ namespace Portal.Kiosco
         public static string ScoreServices { get; set; }
         public static string CantProductos { get; set; }
         public static string CodigoProducto { get; set; }
+        public static decimal CantidadBoletas { get; set; }
+        public static decimal TotalBoletas { get; set; }
 
         private   List<UIElement> elementosCombos = new List<UIElement>();
         private   List<UIElement> elementosAlimentos = new List<UIElement>();

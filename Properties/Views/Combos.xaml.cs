@@ -43,6 +43,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             App.ProductosSeleccionados.Clear();
             CombosConsult();
+            App.ProductosSeleccionados = new List<Producto>();
         }
 
         private Border clickedBorder;
@@ -760,6 +761,14 @@ namespace Portal.Kiosco.Properties.Views
             decimal totalAnterior = decimal.Parse(totalString);
             decimal nuevoTotal = totalAnterior + precio;
             totalLabel.Content = nuevoTotal.ToString("C0");
+
+
+            string codigo = countLabel.Name.Substring(3);
+            var productoARemover = App.ProductosSeleccionados.FirstOrDefault(prod => prod.Codigo.ToString() == codigo);
+            if (productoARemover != null)
+            {
+                App.ProductosSeleccionados.Remove(productoARemover);
+            }
         }
 
 
@@ -798,18 +807,36 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
+
             if (totalLabel.Content.ToString() != "0")
             {
-                var openWindow = new Combodeluxe1();
-                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                await Task.Delay(300);
-                this.Visibility = Visibility.Collapsed;
-                openWindow.Background = Brushes.White;
-                openWindow.Show();
-                this.Close();
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");
+                if (ProductosSeleccionados != null)
+                {
+                    var openWindow = new Combodeluxe1();
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    await Task.Delay(300);
+                    this.Visibility = Visibility.Collapsed;
+                    openWindow.Background = Brushes.White;
+                    openWindow.Show();
+                    this.Close();
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                }
+                else
+                {
+                    var openWindow = new ResumenCompra();
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    await Task.Delay(300);
+                    this.Visibility = Visibility.Collapsed;
+                    openWindow.Background = Brushes.White;
+                    openWindow.Show();
+                    this.Close();
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                }
             }
             else
             {

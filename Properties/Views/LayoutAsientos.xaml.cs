@@ -20,7 +20,7 @@ namespace Portal.Kiosco.Properties.Views
     {
         public LayoutAsientos()
         {
-            
+
             InitializeComponent();
             GenerarSala();
             DataContext = ((App)Application.Current);
@@ -32,7 +32,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
-            
+
             //lblFecha.Content = App.Pelicula.FechaUsuario;
             //lblHora.Content = App.Pelicula.HoraUsuario;
             lblSala.Content = App.Pelicula.numeroSala;
@@ -58,7 +58,8 @@ namespace Portal.Kiosco.Properties.Views
         {
             var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
 
-            if (lblTotal.Content == "TOTAL: $0") {
+            if (lblTotal.Content == "TOTAL: $0")
+            {
                 MessageBox.Show("UPS! Aun no ha seleccionado ninguna hubicación");
                 return;
             }
@@ -257,7 +258,7 @@ namespace Portal.Kiosco.Properties.Views
         {
 
             // Crear la plantilla de control personalizada
-           
+
 
 
             Ubicaciones[,] ubicaciones = bolVenta.MapaSala;
@@ -275,13 +276,13 @@ namespace Portal.Kiosco.Properties.Views
                     button.Name = lc_values;
 
 
-                    
+
                     // Suscribe el evento Click al botón
                     button.Click += Button_Click;
 
                     // Definir un nuevo estilo
                     button.Style = (Style)FindResource("AvailableSeat");
-                     
+
                     Border border = new Border();
                     border.CornerRadius = new CornerRadius(5);
                     border.Margin = new Thickness(0, 0, 1, 1);
@@ -429,7 +430,10 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblTotal.Content = "TOTAL: $0";
             }
-            else { lblTotal.Content = "TOTAL: $" + sillasSeleccionadas; }
+            else
+            {
+                lblTotal.Content = "TOTAL: $" + sillasSeleccionadas;
+            }
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)

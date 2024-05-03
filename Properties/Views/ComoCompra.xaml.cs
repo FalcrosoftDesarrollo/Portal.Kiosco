@@ -1,4 +1,7 @@
-﻿using System;
+﻿using APIPortalKiosco.Entities;
+using APIPortalWebMed.Entities;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -18,6 +21,7 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
             App.ob_diclst = new System.Collections.Generic.Dictionary<string, string>();
             App.IsFecha = false;
+            App.ProductosSeleccionados = new List<Producto>();
         }
 
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
