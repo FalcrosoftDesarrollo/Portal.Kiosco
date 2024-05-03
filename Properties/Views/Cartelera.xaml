@@ -81,7 +81,7 @@
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
                             <Grid>
                                 <Canvas>
-                                    <Path Name="circlePath" Stroke="White" StrokeThickness="4" StrokeDashArray="1,100">
+                                    <Path Name="circlePath" Stroke="White" StrokeThickness="4" StrokeDashArray="157, 157" StrokeDashOffset="157">
                                         <Path.Data>
                                             <EllipseGeometry Center="52,52" RadiusX="50" RadiusY="50"/>
                                         </Path.Data>
@@ -89,7 +89,7 @@
                                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="100" To="0" Duration="1:0:0" RepeatBehavior="Forever"/>
+                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="157" To="0" Duration="0:0:10" RepeatBehavior="Forever"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>
@@ -98,8 +98,12 @@
                                 </Canvas>
                                 <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding TiempoRestanteGlobal}" FontSize="24" FontFamily="Inter Regular" />
                             </Grid>
-                                                   
                         </Border>
+
+
+
+
+
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 

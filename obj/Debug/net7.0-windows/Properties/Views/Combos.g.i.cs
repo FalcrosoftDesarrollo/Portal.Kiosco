@@ -174,7 +174,7 @@ namespace Portal.Kiosco.Properties.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;V1.0.0.0;component/properties/views/combos.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;component/properties/views/combos.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Properties\Views\Combos.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
