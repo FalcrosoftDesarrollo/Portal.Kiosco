@@ -38,6 +38,9 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
+
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
 
@@ -45,15 +48,16 @@ namespace Portal.Kiosco.Properties.Views
         private void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             Cartelera w = new Cartelera();
-            this.Close();
             w.ShowDialog();
+            this.Close();
+           
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             LayoutAsientos w = new LayoutAsientos();
-            this.Close();
             w.ShowDialog();
+            this.Close();
         }
 
         private void CargarFechasDesdeXml()
@@ -354,6 +358,26 @@ namespace Portal.Kiosco.Properties.Views
                 .Distinct()
                 .ToList();
 
+
+            var pelicula = App.Peliculas;
+
+            var tiposDePeliculas = App.Peliculas
+      .Where(pelicula =>
+          pelicula.TituloOriginal == App.Pelicula.TituloOriginal &&
+          pelicula.DiasDisponibles.Any(diasDisponible =>
+              diasDisponible.horafun.Any(hora =>
+                  hora.idFuncion == buttonName.Substring(3)
+              )
+          )
+      )
+      .Select(pelicula => pelicula.Tipo)
+      .Distinct()
+      .ToList();
+
+            App.TipoSala = tiposDePeliculas.FirstOrDefault();
+
+
+
             App.Pelicula.numeroSala = numSalas.FirstOrDefault();
 
             var peliculaSeleccionada = peliculas.FirstOrDefault();
@@ -495,15 +519,8 @@ namespace Portal.Kiosco.Properties.Views
         {
             App.IsBoleteriaConfiteria = false;
             var comoComprarWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            comoComprarWindow.Background = Brushes.White;
             comoComprarWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            comoComprarWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }

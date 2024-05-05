@@ -59,7 +59,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid  Name="gridPrincipal">
         <Border>
             <Grid>
                 <Grid.RowDefinitions>
@@ -82,7 +82,7 @@
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
                             <Grid>
                                 <Canvas>
-                                    <Path Name="circlePath" Stroke="White" StrokeThickness="4" StrokeDashArray="1,100">
+                                    <Path Name="circlePath" Stroke="LawnGreen" StrokeThickness="4" StrokeDashArray="1,100">
                                         <Path.Data>
                                             <EllipseGeometry Center="52,52" RadiusX="50" RadiusY="50"/>
                                         </Path.Data>
@@ -131,10 +131,10 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="140"/>
                             <RowDefinition Height="15"/>
-                            <RowDefinition Height="450"/>
+                            <RowDefinition Height="550"/>
                             <RowDefinition  Height="60"/>
                             <RowDefinition  Height="30"/>
-                            <RowDefinition Height="176"/>
+                            <RowDefinition Height="90"/>
                             <RowDefinition Height="72"/>
                         </Grid.RowDefinitions>
                         <Border Height="65" VerticalAlignment="Bottom" Margin="647,0,633,0">
@@ -142,7 +142,7 @@
                         </Border>
 
 
-                        <Border Grid.Row="2" Width="1266" Height="413">
+                        <Border Grid.Row="2" Width="1600" Margin="160,4,160,7">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="100"/>
@@ -152,7 +152,8 @@
                                 <Border Grid.Row="0">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="245*" />
+                                            <ColumnDefinition Width="33*"/>
                                             <ColumnDefinition  Width="233"/>
                                             <ColumnDefinition Width="12" />
                                             <ColumnDefinition  Width="234"/>
@@ -161,16 +162,16 @@
                                             <ColumnDefinition Width="43"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="1" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                        <Border Grid.Column="2" Height="59" CornerRadius="10" Background="#F5F5F5" Margin="0,20,0,20">
                                             <Label FontFamily="Myanmar Khyay" FontSize="24" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                         </Border>
 
 
-                                        <Border Grid.Column="3" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                        <Border Grid.Column="4" Height="59" CornerRadius="10" Background="#F5F5F5" Margin="0,20,0,20">
                                             <Label FontFamily="Myanmar Khyay" FontSize="24" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                         </Border>
 
-                                        <Border Grid.Column="5" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                        <Border Grid.Column="6" Height="59" CornerRadius="10" Background="#F5F5F5" Margin="0,20,0,20">
                                             <Label FontFamily="Myanmar Khyay" FontSize="24" Content="TOTAL" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                         </Border>
 
@@ -179,19 +180,32 @@
                                     </Grid>
                                 </Border>
                                 <Border Grid.Row="1">
-                                    <ScrollViewer  PanningMode="Both"  Margin="0,-27,0,0">
-                                        <WrapPanel x:Name="ContenedorResumen" Height="413">
-                                            <!--<Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="Black">
+                                    <Grid  Grid.Row="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="310"/>
+                                        </Grid.RowDefinitions>
+                                        <WrapPanel Grid.Row="0" x:Name="ContenedorBoletas" Height="50" ></WrapPanel>
+
+
+                                        <WrapPanel Grid.Row="1" x:Name="ContenedorGafas"  Height="50" ></WrapPanel>
+
+
+                                        <ScrollViewer Grid.Row="2"  PanningMode="Both" Margin="0,0,0,33">
+                                            <WrapPanel x:Name="ContenedorResumen" >
+
+                                                <!--<Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="Black">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="28"/>
-                                                        <ColumnDefinition Width="143"/>
-                                                        <ColumnDefinition Width="396"/>
+                                                        <ColumnDefinition Width="870"/>
+                                                        <ColumnDefinition Width="0"/>
+                                                        <ColumnDefinition Width="125"/>
                                                         <ColumnDefinition Width="105"/>
-                                                        <ColumnDefinition Width="185"/>
-                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="125"/>
                                                         <ColumnDefinition Width="118"/>
-                                                        <ColumnDefinition Width="110"/>
+                                                        <ColumnDefinition Width="125"/>
                                                         <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
                                                     <Border Grid.Column="1" >
@@ -269,41 +283,47 @@
 
 
                                             </Border>-->
-                                        </WrapPanel>
-                                    </ScrollViewer>
+                                            </WrapPanel>
+                                        </ScrollViewer>
+                                    </Grid>
                                 </Border>
 
 
 
-                                
-                                       
+
+
 
                             </Grid>
                         </Border>
                         <Border Grid.Row="3">
-                           
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1550"/>
-                                    
+
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="4" FontSize="32" FontFamily="Myanmar Khyay" Name="TotalResumen" Content="TOTAL A PAGAR: $170.800" Height="42" Width="439"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,0" />
+                                <Label FontSize="32" FontFamily="Myanmar Khyay" Name="TotalResumen" Content="TOTAL A PAGAR: $170.800" Height="42" Width="587"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-126,0" />
                             </Grid>
                         </Border>
                         <Border Grid.Row="5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="350"/>
-                                    <ColumnDefinition  Width="354"/>
-                                </Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="354"/>
+                                    <ColumnDefinition  Width="154"/>
 
-                                <Border Grid.Column="1" Width="350" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10" Margin="0,0">
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="80"/>
+
+                                </Grid.RowDefinitions>
+
+                                <Border Grid.Column="1" Grid.Row="0" Width="350" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10" Margin="0,0">
                                     <Button Background="Transparent"  Name="btnPagoTarjeta" Click="btnPagoTarjeta_Click" BorderThickness="0" Content="PAGAR CON TARJETA" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White">
 
                                     </Button>
                                 </Border>
-                                <Border Grid.Column="1" Width="350" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
+                                <Border  Width="350" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
                                     <Button Background="Transparent" Name="btnPagarCash" Click="btnPagarCash_Click" BorderThickness="0" Content="PAGAR CON CASHBACK" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White">
 
                                     </Button>

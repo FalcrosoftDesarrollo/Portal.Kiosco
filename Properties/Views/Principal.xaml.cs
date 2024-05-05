@@ -14,7 +14,8 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
             App.IsFecha = false;
             this.KeyDown += Principal_KeyDown; // Manejador de eventos para teclas presionadas
-
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private void Principal_KeyDown(object sender, KeyEventArgs e)
@@ -33,31 +34,17 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnBoleteria_Click(object sender, RoutedEventArgs e)
         {
             App.IsBoleteriaConfiteria = false;
-            var comoComprarWindow = new ComoCompra();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300); 
-            this.Visibility = Visibility.Collapsed;
-            comoComprarWindow.Background = Brushes.White;
-            comoComprarWindow.Show();
+            var openWindow = new ComoCompra();
+            openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            comoComprarWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private async void btnConfiteria_Click(object sender, RoutedEventArgs e)
         {
             App.IsBoleteriaConfiteria = true;
-            var comoComprarWindow = new ComoCompra();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            comoComprarWindow.Background = Brushes.White;
-            comoComprarWindow.Show();
+            var openWindow = new ComoCompra();
+            openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            comoComprarWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }

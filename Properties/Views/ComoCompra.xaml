@@ -30,7 +30,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Border>
+    <Border Name="gridPrincipal">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />

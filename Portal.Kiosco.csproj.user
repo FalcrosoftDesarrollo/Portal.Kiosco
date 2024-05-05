@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Properties\Views\BoletaFactura.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Views\ComoCompra.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -17,9 +20,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Views\LayoutAsientos.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Properties\Views\IngresoDePassword.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Views\Principal.xaml.cs">
@@ -33,6 +33,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Properties\Views\BoletaFactura.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Properties\Views\ComoCompra.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -43,9 +46,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\LayoutAsientos.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Properties\Views\IngresoDePassword.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\Principal.xaml">

@@ -30,6 +30,10 @@ namespace Portal.Kiosco
            var monitorThread = new Thread(MonitorTextChanged);
             monitorThread.IsBackground = true;
             monitorThread.Start();
+
+
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
         private void Scanear_documento_Loaded(object sender, RoutedEventArgs e)
         {
@@ -46,28 +50,14 @@ namespace Portal.Kiosco
             if (App.IsBoleteriaConfiteria == false)
             {
                 var openWindow = new Cartelera();
-                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                await Task.Delay(300);
-                this.Visibility = Visibility.Collapsed;
-                openWindow.Background = Brushes.White;
                 openWindow.Show();
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-                App.DatosCineFans.Documento = TextDocumento.Text;
+                this.Close();
             }
             else
             {
                 var openWindow = new Combos();
-                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                await Task.Delay(300);
-                this.Visibility = Visibility.Collapsed;
-                openWindow.Background = Brushes.White;
-                openWindow.Show();
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-                App.DatosCineFans.Documento = TextDocumento.Text;
+                 openWindow.Show();
+                this.Close();
             }
         }
 
@@ -148,14 +138,8 @@ namespace Portal.Kiosco
         private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new ComoCompra();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            this.Close();
         }
 
         private async void TextDocumento_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -175,30 +159,14 @@ namespace Portal.Kiosco
                 if (!carteleraWindowLoaded && App.IsBoleteriaConfiteria == false)
                 {
                     var openWindow = new Cartelera();
-                    openWindow.Loaded += (sender, e) =>
-                    {
-                        this.Close();
-                        carteleraWindowLoaded = true;
-                    };
-                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                    
-                    openWindow.Background = Brushes.White;
                     openWindow.Show();
-
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    this.Close();
                 }
                 else if (App.IsBoleteriaConfiteria)
                 {
                     var openWindow = new Combos();
-                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                    this.Visibility = Visibility.Collapsed;
-                    openWindow.Background = Brushes.White;
                     openWindow.Show();
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    this.Close();
                 }
             });
         }

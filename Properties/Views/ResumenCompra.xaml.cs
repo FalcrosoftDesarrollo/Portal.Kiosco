@@ -1,6 +1,7 @@
 ﻿using APIPortalKiosco.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,261 +47,149 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+   
         }
 
         private async void btnPagoTarjeta_Click(object sender, RoutedEventArgs e)
         {
 
-            var openWindow = new InstruccionesDatafono();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+            var openWindow = new BoletasGafasAlimentos();
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private async void btnPagarCash_Click(object sender, RoutedEventArgs e)
         {
 
             var openWindow = new PagoCashback();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         public void GenerateResumen()
         {
-            // Crear un nuevo Grid
-            Grid gridBoletas = new Grid();
-
-            // Crear definiciones de columna
-            for (int i = 0; i < 9; i++)
-            {
-                ColumnDefinition columnDefinition = new ColumnDefinition();
-                // Asignar el ancho de la columna según corresponda
-                if (i == 0)
-                    columnDefinition.Width = new GridLength(28);
-                else if (i == 1)
-                    columnDefinition.Width = new GridLength(539);
-                else if (i == 2)
-                    columnDefinition.Width = new GridLength(0);
-                else if (i == 3)
-                    columnDefinition.Width = new GridLength(105);
-                else if (i == 4)
-                    columnDefinition.Width = new GridLength(185);
-                else if (i == 5)
-                    columnDefinition.Width = new GridLength(100);
-                else if (i == 6)
-                    columnDefinition.Width = new GridLength(118);
-                else if (i == 7)
-                    columnDefinition.Width = new GridLength(110);
-                // La última columna no tiene un ancho específico
-
-                gridBoletas.ColumnDefinitions.Add(columnDefinition);
-            }
-
-            // Crear los bordes con etiquetas dentro
-            for (int i = 1; i <= 4; i++)
-            {
-                Border border = new Border();
-                Grid.SetColumn(border, i * 2 - 1); // Colocar el borde en columnas impares (1, 3, 5)
-                Label label = new Label();
-                label.FontFamily = new FontFamily("Myanmar Khyay");
-                label.FontSize = 24;
-                label.VerticalContentAlignment = VerticalAlignment.Center;
-
-                // Configurar contenido y márgenes según corresponda
-                if (i == 1)
-                {
-                    label.Content =  App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre;
-                    label.Margin = new Thickness(0, 0, -78, 0);
-                }
-                else if (i == 2)
-                {
-                    label.Content = "0";
-                    label.Margin = new Thickness(0, 22, -44, 23);
-                }
-                else if (i == 3)
-                {
-                    label.Content = "0";
-                }
-                else if (i == 4)
-                {
-                    label.Content = "0";
-                }
-
-                border.Child = label;
-                gridBoletas.Children.Add(border);
-            }
-
-            // Agregar el Grid a donde corresponda
-            // Supongamos que hay un contenedor llamado "contenedor" en tu ventana XAML
-            ContenedorResumen.Children.Add(gridBoletas);
-
-            // Crear un nuevo Grid
-            Grid gridGafas = new Grid();
-
-            // Crear definiciones de columna
-            for (int i = 0; i < 9; i++)
-            {
-                ColumnDefinition columnDefinition = new ColumnDefinition();
-                // Asignar el ancho de la columna según corresponda
-                if (i == 0)
-                    columnDefinition.Width = new GridLength(28);
-                else if (i == 1)
-                    columnDefinition.Width = new GridLength(539);
-                else if (i == 2)
-                    columnDefinition.Width = new GridLength(0);
-                else if (i == 3)
-                    columnDefinition.Width = new GridLength(105);
-                else if (i == 4)
-                    columnDefinition.Width = new GridLength(185);
-                else if (i == 5)
-                    columnDefinition.Width = new GridLength(100);
-                else if (i == 6)
-                    columnDefinition.Width = new GridLength(118);
-                else if (i == 7)
-                    columnDefinition.Width = new GridLength(110);
-                // La última columna no tiene un ancho específico
-
-                gridGafas.ColumnDefinitions.Add(columnDefinition);
-            }
-
-            // Crear los bordes con etiquetas dentro
-            for (int i = 1; i <= 4; i++)
-            {
-                Border border = new Border();
-                Grid.SetColumn(border, i * 2 - 1); // Colocar el borde en columnas impares (1, 3, 5)
-                Label label = new Label();
-                label.FontFamily = new FontFamily("Myanmar Khyay");
-                label.FontSize = 24;
-                label.VerticalContentAlignment = VerticalAlignment.Center;
-
-                // Configurar contenido y márgenes según corresponda
-                if (i == 1)
-                {
-                    label.Content = "Gafas";
-                    label.Margin = new Thickness(0, 0, -78, 0);
-                }
-                else if (i == 2)
-                {
-
-                    label.Content = "0";
-                    label.Margin = new Thickness(0, 22, -44, 23);
-                }
-                else if (i == 3)
-                {
-                    label.Content = "0";
-                }
-                else if (i == 4)
-                {
-                    label.Content = "0";
-                    total += Convert.ToDecimal(label.Content);
-                }
-
-                border.Child = label;
-                gridGafas.Children.Add(border);
-            }
-
-            // Agregar el Grid a donde corresponda
-            // Supongamos que hay un contenedor llamado "contenedor" en tu ventana XAML
-            ContenedorResumen.Children.Add(gridGafas);
+            // Generar resumen de boletas
+            decimal totalcombos = 0;
+            GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), (App.CantidadBoletas * App.ValorTarifa));
+            totalcombos += (App.CantidadBoletas * App.ValorTarifa);
+            // Generar resumen de gafas
+            GenerateResumenCategoria("Gafas", "Gafas", 0, "0", 0);
+            totalcombos += 0;
+            // Generar resumen de combos
             var combos = App.ProductosSeleccionados;
-            foreach (var combosseleccionados in combos)
+
+            // Agrupar los combos por código
+            var combosAgrupados = combos.GroupBy(c => c.Codigo);
+           
+            foreach (var grupoCombos in combosAgrupados)
             {
+                decimal codigo = grupoCombos.Key;
 
-                // Crear un nuevo Grid
-                Grid grid = new Grid();
-
-                // Crear definiciones de columna
-                for (int i = 0; i < 9; i++)
-                {
-                    ColumnDefinition columnDefinition = new ColumnDefinition();
-                    // Asignar el ancho de la columna según corresponda
-                    if (i == 0)
-                        columnDefinition.Width = new GridLength(28);
-                    else if (i == 1)
-                        columnDefinition.Width = new GridLength(539);
-                    else if (i == 2)
-                        columnDefinition.Width = new GridLength(0);
-                    else if (i == 3)
-                        columnDefinition.Width = new GridLength(105);
-                    else if (i == 4)
-                        columnDefinition.Width = new GridLength(185);
-                    else if (i == 5)
-                        columnDefinition.Width = new GridLength(100);
-                    else if (i == 6)
-                        columnDefinition.Width = new GridLength(118);
-                    else if (i == 7)
-                        columnDefinition.Width = new GridLength(110);
-                    // La última columna no tiene un ancho específico
-
-                    grid.ColumnDefinitions.Add(columnDefinition);
-                }
-
-                // Crear los bordes con etiquetas dentro
-                for (int i = 1; i <= 4; i++)
-                {
-                    Border border = new Border();
-                    Grid.SetColumn(border, i * 2 - 1); // Colocar el borde en columnas impares (1, 3, 5)
-                    Label label = new Label();
-                    label.FontFamily = new FontFamily("Myanmar Khyay");
-                    label.FontSize = 24;
-                    label.VerticalContentAlignment = VerticalAlignment.Center;
-
-                    // Configurar contenido y márgenes según corresponda
-                    if (i == 1)
-                    {
-                        label.Content = buscarNombre(combos, combosseleccionados.Codigo);
-                        label.Margin = new Thickness(0, 0, -78, 0);
-                    }
-                    else if (i == 2)
-                    {
-                        label.Content = buscarprecio(combos, combosseleccionados.Codigo);
-                        label.Margin = new Thickness(0, 22, -44, 23);
-                    }
-                    else if (i == 3)
-                    {
-                        label.Content = "1";
-                    }
-                    else if (i == 4)
-                    {
-                        label.Content = buscarprecio(combos, combosseleccionados.Codigo);
-
-                        total += Convert.ToDecimal(label.Content);
-                    }
-
-                    border.Child = label;
-                    grid.Children.Add(border);
-                }
-
-                // Agregar el Grid a donde corresponda
-                // Supongamos que hay un contenedor llamado "contenedor" en tu ventana XAML
-                ContenedorResumen.Children.Add(grid);
+                // Obtener el nombre, precio y cantidad para el grupo de combos
+                string nombre = buscarNombre(combos, codigo);
+                decimal precio = buscarprecio(combos, codigo);
+                int cantidad = grupoCombos.Count();
+                decimal total = (Convert.ToDecimal(precio) * cantidad);
+                totalcombos += total;
+                // Generar el resumen para el grupo de combos
+                GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
-
-            TotalResumen.Content = "TOTAL A PAGAR: " + total.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
+            // Calcular y mostrar el total
+            TotalResumen.Content = "TOTAL A PAGAR: " + totalcombos.ToString("C", new CultureInfo("es-CO"));
         }
+
+        private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
+        {
+            // Crear un nuevo Grid
+            Grid grid = new Grid();
+
+            // Crear definiciones de columna
+            for (int i = 0; i < 9; i++)
+            {
+                ColumnDefinition columnDefinition = new ColumnDefinition();
+                // Asignar el ancho de la columna según corresponda
+                if (i == 0)
+                    columnDefinition.Width = new GridLength(28);
+                else if (i == 1)
+                    columnDefinition.Width = new GridLength(870);
+                else if (i == 2)
+                    columnDefinition.Width = new GridLength(0);
+                else if (i == 3)
+                    columnDefinition.Width = new GridLength(125);
+                else if (i == 4)
+                    columnDefinition.Width = new GridLength(105);
+                else if (i == 5)
+                    columnDefinition.Width = new GridLength(125);
+                else if (i == 6)
+                    columnDefinition.Width = new GridLength(118);
+                else if (i == 7)
+                    columnDefinition.Width = new GridLength(125);
+                // La última columna no tiene un ancho específico
+
+                grid.ColumnDefinitions.Add(columnDefinition);
+            }
+
+            // Crear los bordes con etiquetas dentro
+            for (int i = 1; i <= 4; i++)
+            {
+                Border border = new Border();
+                Grid.SetColumn(border, i * 2 - 1); // Colocar el borde en columnas impares (1, 3, 5)
+                Label label = new Label();
+                label.FontFamily = new FontFamily("Myanmar Khyay");
+                label.FontSize = 24;
+                label.VerticalContentAlignment = VerticalAlignment.Center;
+                border.BorderBrush = Brushes.Black; // Color de la línea
+            
+
+
+                // Configurar contenido y márgenes según corresponda
+                if (i == 1)
+                {
+                    label.Content = nombre;
+                    label.Margin = new Thickness(0, 0, -78, 0);
+                }
+                else if (i == 2)
+                {
+                    label.Content = valor.ToString("C", new CultureInfo("es-CO")); ;
+                    label.Margin = new Thickness(0, 22, -44, 23);
+                }
+                else if (i == 3)
+                {
+                    label.Content = cantidad;
+                }
+                else if (i == 4)
+                {
+                    label.Content =   total.ToString("C", new CultureInfo("es-CO"));
+                    ;
+                    total += Convert.ToDecimal(total);
+                }
+
+                border.Child = label;
+                grid.Children.Add(border);
+            }
+
+            // Agregar el Grid al contenedor correspondiente
+            switch (categoria)
+            {
+                case "Boletas":
+                    ContenedorBoletas.Children.Add(grid);
+                    break;
+                case "Gafas":
+                    ContenedorGafas.Children.Add(grid);
+                    break;
+                case "Combos":
+                    ContenedorResumen.Children.Add(grid);
+                    break;
+                // Agrega más casos según las categorías que tengas
+                default:
+                    break;
+            }
+        }
+
+
         public string buscarNombre(List<Producto> productos, Decimal Codigo)
         {
             List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal)>();

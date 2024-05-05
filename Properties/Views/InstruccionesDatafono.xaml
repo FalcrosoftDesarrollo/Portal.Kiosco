@@ -46,8 +46,6 @@
                                
                                Minimum="0" 
                                Orientation="Vertical" 
-                               
-                               
                               />
                         </Grid>
                     </ControlTemplate>
@@ -56,7 +54,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Name="gridPrincipal">
         <Border>
             <Grid>
                 <Grid.RowDefinitions>
@@ -79,7 +77,7 @@
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
                             <Grid>
                                 <Canvas>
-                                    <Path Name="circlePath" Stroke="White" StrokeThickness="4" StrokeDashArray="157, 157" StrokeDashOffset="157">
+                                    <Path Name="circlePath" Stroke="LawnGreen" StrokeThickness="4" StrokeDashArray="157, 157" StrokeDashOffset="157">
                                         <Path.Data>
                                             <EllipseGeometry Center="52,52" RadiusX="50" RadiusY="50"/>
                                         </Path.Data>
@@ -129,10 +127,7 @@
                             <RowDefinition Height="130"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-
-
                         <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Width="721" Height="130" TextAlignment="Center"><Run Text="Completa tu pago siguiendo"/><LineBreak/><Run Text="las ins"/><Run Language="es-es" Text="tr"/><Run Text="ucciones del datafono"/></TextBlock>
-
                         <Border Grid.Row="2" Width="570" Height="543" Background="#F5F5F5" VerticalAlignment="Top" Margin="0,35,0,0" CornerRadius="10">
                             <Grid>
                                 <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\datafono.png" Width="178" Height="389" />

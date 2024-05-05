@@ -29,7 +29,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Border>
+    <Border Name="gridPrincipal">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="169.29"/>

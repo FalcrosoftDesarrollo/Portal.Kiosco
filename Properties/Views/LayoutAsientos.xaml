@@ -93,7 +93,7 @@
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
                             <Grid>
                                 <Canvas>
-                                    <Path Name="circlePath" Stroke="White" StrokeThickness="4" StrokeDashArray="1,100">
+                                    <Path Name="circlePath" Stroke="LawnGreen" StrokeThickness="4" StrokeDashArray="1,100">
                                         <Path.Data>
                                             <EllipseGeometry Center="52,52" RadiusX="50" RadiusY="50"/>
                                         </Path.Data>
@@ -160,7 +160,7 @@
                             </Style>
 
                         </Grid.Resources>
-                        <Grid>
+                        <Grid  Name="gridPrincipal">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="143"/>
                                 <!--<RowDefinition Height="133"/>-->
@@ -248,10 +248,10 @@
                                             <Border Grid.Row="4">
                                                 <UniformGrid Columns="2" VerticalAlignment="Center">
                                                     <Border CornerRadius="10" Background="#F5F5F5">
-                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="SILLA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </Border>
                                                     <Border CornerRadius="10" Background="#F5F5F5">
-                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        <Label FontFamily="Myanmar Khyay" FontSize="16" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </Border>
                                                 </UniformGrid>
 

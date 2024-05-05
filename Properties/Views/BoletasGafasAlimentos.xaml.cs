@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APIPortalKiosco.Entities;
+using System;
 using System.Printing;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,13 +28,31 @@ namespace Portal.Kiosco.Properties.Views
                 lblnombre.Content = "!HOLA INVITADO";
             }
 
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
         }
+
+
 
         private void btnImprimir_Click(object sender, RoutedEventArgs e)
         {
-                      
-            PrintDocument();
+            // Crear una instancia de la ventana secundaria
+            Window ventanaSecundaria = new BoletaFactura();
+
+            // Extraer el contenido visual de la ventana secundaria
+            UIElement contenidoVisual = ventanaSecundaria.Content as UIElement;
+
+            // Desconectar el contenido visual de la ventana secundaria
+            ventanaSecundaria.Content = null;
+
+            // Crear una instancia de la clase de impresión y pasarle el contenido visual
+            ImpresionDirectaWPF impresion = new ImpresionDirectaWPF(contenidoVisual);
+
+            // Llamar al método para imprimir directamente el contenido visual
+            impresion.ImprimirDirecto();
         }
+
 
         private void PrintDocument()
         {
@@ -54,8 +73,11 @@ namespace Portal.Kiosco.Properties.Views
                 document.Blocks.Add(new Paragraph(new Run("Cra 50 N 38 A-185, local 04284")));
 
                 // Detalles de la factura
+
+                // App.ProductosSeleccionados
+                var Fecha = DateTime.Now.ToString("dd(MM/yyyy MM:ss:FF"); 
                 document.Blocks.Add(new Paragraph(new Run("Detalle del documento: 328-014-000874403")));
-                document.Blocks.Add(new Paragraph(new Run("Fecha: 26/3/2024 15:44:07")));
+                document.Blocks.Add(new Paragraph(new Run("Fecha: "+ Fecha)));
                 document.Blocks.Add(new Paragraph(new Run("Resolución de facturación:")));
                 document.Blocks.Add(new Paragraph(new Run("18764056988493 del 10/11/2023")));
                 document.Blocks.Add(new Paragraph(new Run("desde PF 748662 hasta PF 2000000")));
@@ -64,6 +86,7 @@ namespace Portal.Kiosco.Properties.Views
                 document.Blocks.Add(new Paragraph(new Run("Factura de Venta: PF 000874403")));
                 document.Blocks.Add(new Paragraph(new Run("Cliente: CONSUMIDOR FINAL")));
                 document.Blocks.Add(new Paragraph(new Run("Cant Producto       Im      Precio     Total")));
+                
                 document.Blocks.Add(new Paragraph(new Run("1    Perro caliente         8.00      $14,900.00      $14,900.00")));
 
                 // Totales y pago
@@ -74,7 +97,7 @@ namespace Portal.Kiosco.Properties.Views
 
                 document.Blocks.Add(new Paragraph(new Run("Valor pagado en:")));
                 document.Blocks.Add(new Paragraph(new Run("Efectivo: $14,900.00")));
-
+                
                 // Especificar características del documento, como margen, orientación, etc.
                 document.PagePadding = new Thickness(50);
                 document.ColumnGap = 0;
@@ -102,29 +125,15 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Close();
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            this.Close();
         }
 
         private async void btnEnviar_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new CorreoTecladoFlotante();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Close();
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            this.Close();
         }
 
        

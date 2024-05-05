@@ -31,7 +31,8 @@ namespace Portal.Kiosco
         public static string CantProductos { get; set; }
         public static string CodigoProducto { get; set; }
         public static decimal CantidadBoletas { get; set; }
-        public static decimal TotalBoletas { get; set; }
+        public static decimal ValorTarifa { get; set; }
+        public static String TipoSala { get; set; }
 
         private   List<UIElement> elementosCombos = new List<UIElement>();
         private   List<UIElement> elementosAlimentos = new List<UIElement>();
@@ -43,7 +44,7 @@ namespace Portal.Kiosco
         public static List<Producto> BebidasWeb = new List<Producto>();
         public static List<Producto> SnacksWeb = new List<Producto>();
         public static List<Producto> ProductosSeleccionados = new List<Producto>();
-
+        public static Dictionary<string, string> FacturaCompra = new Dictionary<string, string>();
         public static bool IsFecha = true;
 
         public static Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
@@ -109,13 +110,8 @@ namespace Portal.Kiosco
                 {
                     contadorGlobalTimer.Stop();
                     var openWindow = new Principal();
-                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                    Application.Current.MainWindow.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                    Application.Current.MainWindow.Visibility = Visibility.Collapsed;
-                    openWindow.Background = Brushes.White;
                     openWindow.Show();
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    Current.MainWindow.Close();
                 }
             };
             contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
@@ -310,27 +306,7 @@ namespace Portal.Kiosco
             return peliculas;
         }
 
-        public static async Task OpenWindow(string windowName)
-        {
-            // Crea una instancia de la ventana especificada
-            var window = new PagoCashback();
-
-            // Configura la animación de desvanecimiento para la ventana actual
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            window.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-
-            // Espera un corto tiempo antes de ocultar la ventana actual
-            await Task.Delay(300);
-            window.Visibility = Visibility.Collapsed;
-
-            // Configura el fondo de la nueva ventana y la muestra
-            window.Background = Brushes.White;
-            window.Show();
-
-            // Configura la animación de desvanecimiento para la nueva ventana
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            window.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-        }
+        
 
     }
 }

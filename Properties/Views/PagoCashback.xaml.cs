@@ -20,6 +20,9 @@ namespace Portal.Kiosco.Properties.Views
                 lblnombre.Content = "!HOLA INVITADO";
             }
             DataContext = ((App)Application.Current);
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -39,15 +42,8 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnCambiar_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new InstruccionesDatafono();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }

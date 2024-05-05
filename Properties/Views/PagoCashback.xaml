@@ -56,7 +56,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Name="gridPrincipal">
         <Border>
             <Grid>
                 <Grid.RowDefinitions>
@@ -79,7 +79,7 @@
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
                             <Grid>
                                 <Canvas>
-                                    <Path Name="circlePath" Stroke="White" StrokeThickness="4" StrokeDashArray="1,100">
+                                    <Path Name="circlePath" Stroke="LawnGreen" StrokeThickness="4" StrokeDashArray="1,100">
                                         <Path.Data>
                                             <EllipseGeometry Center="52,52" RadiusX="50" RadiusY="50"/>
                                         </Path.Data>

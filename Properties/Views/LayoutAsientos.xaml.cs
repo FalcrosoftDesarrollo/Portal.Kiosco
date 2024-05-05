@@ -10,6 +10,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml;
+ 
+
+
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -23,6 +26,7 @@ namespace Portal.Kiosco.Properties.Views
 
             InitializeComponent();
             GenerarSala();
+            ConsultarZona();
             DataContext = ((App)Application.Current);
             if (App.ob_diclst.Count > 0)
             {
@@ -38,20 +42,132 @@ namespace Portal.Kiosco.Properties.Views
             lblSala.Content = App.Pelicula.numeroSala;
             lblNombrePelicula.Content = App.Pelicula.Nombre;
 
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
+        }
+
+
+        public void ConsultarZona()
+        {
+
+
+            int lc_keypel = 0;
+            int lc_auxpel = 0;
+            int lc_keytea = 0;
+            int lc_auxtea = 0;
+            int lc_swtflg = 0;
+            string Variables41TPF = string.Empty;
+            string lc_auxitem = string.Empty;
+            string lc_fecitem = string.Empty;
+            string lc_flgpre = "S";
+            string pr_tippel = "";
+
+            string lc_result = string.Empty;
+            string lc_srvpar = string.Empty;
+
+            DateTime dt_fecpro;
+
+            List<DateCartelera> ob_fechas = new List<DateCartelera>();
+
+            XmlDocument ob_xmldoc = new XmlDocument();
+            Billboard ob_bilmov = new Billboard();
+            General ob_fncgrl = new General();
+
+            APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
+            Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
+            Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
+            List<sala> ob_lisprg = new List<sala>();
+
+
+            //Obtener información de la web
+
+            ob_carprg.Teatro = App.idCine;
+            ob_carprg.tercero = App.ValorTercero;
+            ob_carprg.IdPelicula = App.Pelicula.Id;
+            ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
+            ob_carprg.TpPelicula = App.TipoSala;
+            ob_carprg.FgPelicula = "2";
+            ob_carprg.CfPelicula = "No";
+
+            //Generar y encriptar JSON para servicio PRE
+            lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
+            lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
+            lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
+            lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
+            lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
+            lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
+            lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
+
+            //Encriptar Json
+            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+            //Consumir servicio
+            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+
+            //Validar respuesta
+            if (lc_result.Substring(0, 1) == "0")
+            {
+                //Quitar switch
+                lc_result = lc_result.Replace("0-", "");
+                ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
+                ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
+                var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
+
+
+                if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
+                {
+                    foreach (var itemZonas in Zonas)
+                    {
+                        foreach (var item in ob_lisprg)
+                        {
+                            if (item.hora != null && item.hora.Count > 0)
+                            {
+                                foreach (var item2 in item.hora)
+                                {
+                                    foreach (var item3 in item2.TipoZonaOld)
+                                    {
+                                        if (itemZonas.Value == item3.nombreZona)
+                                        {
+                                            foreach (var item4 in item3.TipoSilla)
+                                            {
+                                                if (item4.Tarifa.Count > 0)
+                                                {
+                                                    foreach (var item5 in item4.Tarifa)
+                                                    {
+                                                        App.ValorTarifa = Convert.ToDecimal(item5.valor);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (item4.nombreTipoSilla != "Discapacitado")
+                                                    {
+                                                        // Código relacionado con la ausencia de tarifas
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // Código relacionado con la falta de datos en ViewBag
+                }
+            }
+
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new SeleccionarFuncion();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+            var openWindow = new Cartelera();
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -258,9 +374,6 @@ namespace Portal.Kiosco.Properties.Views
         {
 
             // Crear la plantilla de control personalizada
-
-
-
             Ubicaciones[,] ubicaciones = bolVenta.MapaSala;
 
             for (int i = 0; i < ubicaciones.GetLength(0); i++)
@@ -413,7 +526,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     // Crea un nuevo Label para la cantidad (siempre será 1)
                     Label labelCantidad = new Label();
-                    labelCantidad.Content = "1"; // La cantidad siempre será 1
+                    labelCantidad.Content = App.ValorTarifa.ToString();
                     labelCantidad.FontFamily = new FontFamily("Myanmar Khyay");
                     labelCantidad.FontSize = 16;
                     labelCantidad.VerticalAlignment = VerticalAlignment.Center;
@@ -432,22 +545,16 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
-                lblTotal.Content = "TOTAL: $" + sillasSeleccionadas;
+                lblTotal.Content = "TOTAL: $" + (sillasSeleccionadas * App.ValorTarifa).ToString();
+                App.CantidadBoletas = Convert.ToDecimal(sillasSeleccionadas);
             }
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }

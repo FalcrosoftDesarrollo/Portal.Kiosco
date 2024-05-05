@@ -1,11 +1,8 @@
-﻿using APIPortalKiosco.Entities;
-using Newtonsoft.Json;
-using Portal.Kiosco.Helpers;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Text.RegularExpressions;
+using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -18,6 +15,8 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             DataContext = ((App)Application.Current);
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private async void btnObtenerDatos_Click(object sender, RoutedEventArgs e)
