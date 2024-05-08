@@ -49,7 +49,7 @@ namespace Portal.Kiosco.Properties.Views
             var openWindow = new Principal();
             openWindow.Show();
             this.Close();
-   
+
         }
 
         private async void btnPagoTarjeta_Click(object sender, RoutedEventArgs e)
@@ -82,7 +82,7 @@ namespace Portal.Kiosco.Properties.Views
 
             // Agrupar los combos por código
             var combosAgrupados = combos.GroupBy(c => c.Codigo);
-           
+
             foreach (var grupoCombos in combosAgrupados)
             {
                 decimal codigo = grupoCombos.Key;
@@ -142,7 +142,7 @@ namespace Portal.Kiosco.Properties.Views
                 label.FontSize = 24;
                 label.VerticalContentAlignment = VerticalAlignment.Center;
                 border.BorderBrush = Brushes.Black; // Color de la línea
-            
+
 
 
                 // Configurar contenido y márgenes según corresponda
@@ -162,7 +162,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else if (i == 4)
                 {
-                    label.Content =   total.ToString("C", new CultureInfo("es-CO"));
+                    label.Content = total.ToString("C", new CultureInfo("es-CO"));
                     ;
                     total += Convert.ToDecimal(total);
                 }
@@ -432,7 +432,6 @@ namespace Portal.Kiosco.Properties.Views
                                         Precios += (itempre.General * itemprer.Cantidad);
                                     };
                                 }
-
                             }
 
                             ob_datpro.Precios = precio_Combo;
@@ -531,10 +530,9 @@ namespace Portal.Kiosco.Properties.Views
                     break;
                 }
             }
-          
+
             return Precios;
 
         }
     }
-
 }

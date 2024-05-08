@@ -1,5 +1,6 @@
 ﻿using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Configuration;
+using Mysqlx;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,12 +42,23 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
-            App.ProductosSeleccionados.Clear();
-            CombosConsult();
-            App.ProductosSeleccionados = new List<Producto>();
 
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            try
+            {
+
+
+                App.ProductosSeleccionados.Clear();
+                CombosConsult();
+                App.ProductosSeleccionados = new List<Producto>();
+
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
 
         private Border clickedBorder;
@@ -113,10 +125,10 @@ namespace Portal.Kiosco.Properties.Views
                             elementosAlimentos.Add(elemento);
                         }
                     }
-                    else 
+                    else
                     {
                         imagenes.Children.Clear();
-                         
+
                         foreach (UIElement elemento in elementosAlimentos)
                         {
                             imagenes.Children.Add(elemento);
@@ -127,7 +139,7 @@ namespace Portal.Kiosco.Properties.Views
                     break;
 
                 case "tabbebidas":
-                     
+
                     if (elementosBebidas.Count == 0)
                     {
                         CrearCombosYbebidas(App.BebidasWeb.OrderBy(o => o.OrdenView).ToList());
@@ -152,7 +164,7 @@ namespace Portal.Kiosco.Properties.Views
                     break;
 
                 case "tabsnacks":
-                   
+
                     if (elementosSnack.Count == 0)
                     {
                         CrearCombosYbebidas(App.SnacksWeb.OrderBy(o => o.OrdenView).ToList());
@@ -344,7 +356,8 @@ namespace Portal.Kiosco.Properties.Views
                         }
 
                         //Validar productos a mostrar combos
-                        if (pr_tbview == "" || pr_tbview == "tab-combos") { 
+                        if (pr_tbview == "" || pr_tbview == "tab-combos")
+                        {
                             CrearCombosYbebidas(App.CombosWeb.OrderBy(o => o.OrdenView).ToList());
                             elementosCombos.Clear();
 
@@ -372,9 +385,9 @@ namespace Portal.Kiosco.Properties.Views
                 #endregion
 
             }
-            catch (Exception lc_syserr)
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message.ToString());
             }
 
         }
@@ -796,7 +809,7 @@ namespace Portal.Kiosco.Properties.Views
                 {
                     string totalString = totalLabel.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
                     decimal totalAnterior = decimal.Parse(totalString);
-                    decimal nuevoTotal = totalAnterior - precio; 
+                    decimal nuevoTotal = totalAnterior - precio;
                     totalLabel.Content = nuevoTotal.ToString("C0");
 
                     if (currentValue == 0)
@@ -822,7 +835,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    var openWindow = new ResumenCompra(); 
+                    var openWindow = new ResumenCompra();
                     openWindow.Show();
                     this.Close();
                 }
@@ -838,7 +851,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             if (App.IsBoleteriaConfiteria == false)
             {
-             
+
                 App.IsCinefans = true;
                 var openWindow = new AlgoParaComer();
                 openWindow.Show();
@@ -846,7 +859,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
-              
+
                 App.IsCinefans = true;
                 var openWindow = new ComoCompra();
                 openWindow.Show();

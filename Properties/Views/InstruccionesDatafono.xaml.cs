@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
+using TEFII_NET;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -29,6 +30,9 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
+
+            var consumo = new TEFII_NET.trx.TEFTransactionManager();
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
