@@ -157,7 +157,7 @@
                         <Border Grid.Row="5" Width="696" HorizontalAlignment="Center">
                             <Grid>
                                 <Border Width="150" Height="43" HorizontalAlignment="Left">
-                                    <Label FontFamily="Myanmar Khyay" FontSize="32" Name="lblPrecio" Content="$3.000" Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                                    <Label FontFamily="Myanmar Khyay" FontSize="32" Name="lblPrecio"  Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                                 </Border>
                                 <Border HorizontalAlignment="Center" Width="217">
                                     <Grid>
@@ -190,7 +190,7 @@
 
                                 </Border>
                                 <Border Width="150" Height="43" HorizontalAlignment="Right">
-                                    <Label FontFamily="Myanmar Khyay" FontSize="32" Name="lblTotal" Content="$6.000" Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                    <Label FontFamily="Myanmar Khyay" FontSize="32" Name="lblTotal" Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                 </Border>
                             </Grid>
                         </Border>

@@ -14,18 +14,18 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using Windows.UI.Xaml.Controls;
 
 namespace Portal.Kiosco.Properties.Views
 {
     public partial class Cartelera : Window
     {
-
         private List<Pelicula> Peliculas = new List<Pelicula>();
-
         public Cartelera()
         {
             InitializeComponent();
             CargarPeliculasDesdeXml();
+            AnimateCircleDrawing();
             DataContext = ((App)Application.Current);
             App.IsFecha = false;
             if (App.ob_diclst.Count > 0)
@@ -39,6 +39,29 @@ namespace Portal.Kiosco.Properties.Views
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
+
+        private void AnimateCircleDrawing()
+        {
+            PathGeometry pathGeometry = new PathGeometry();
+            EllipseGeometry ellipseGeometry = new EllipseGeometry(new Point(100, 100), 50, 50);
+            pathGeometry.AddGeometry(ellipseGeometry);
+
+            // Asignar el PathGeometry al Path
+            circlePath.Data = pathGeometry;
+
+            // Crear una animación de dibujo
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                From = 1,  // Inicia completamente dibujado
+                To = 0,    // Termina sin dibujar
+                Duration = TimeSpan.FromSeconds(2),
+                FillBehavior = FillBehavior.HoldEnd
+            };
+
+            // Asignar la animación al StrokeDashOffset del Path
+            circlePath.BeginAnimation(Shape.StrokeDashOffsetProperty, animation);
+        }
+
 
         public string ObtenerValorDeConfiguracion(string clave)
         {
@@ -62,7 +85,7 @@ namespace Portal.Kiosco.Properties.Views
                         titulosProcesados[pelicula.TituloOriginal] = true;
 
                         // Crear el contenedor para la película
-                        var nuevoBorde = new Border
+                        var nuevoBorde = new System.Windows.Controls.Border
                         {
                             Name = "P" + pelicula.Id.ToString(),
                             Margin = new Thickness(40),
@@ -84,10 +107,10 @@ namespace Portal.Kiosco.Properties.Views
                         };
 
                         // Crear un grid para contener la imagen y el borde superior rojo
-                        var grid = new Grid();
+                        var grid = new System.Windows.Controls.Grid();
 
                         // Agregar la imagen de la película al grid
-                        Image nuevaImagen = new Image
+                        System.Windows.Controls.Image nuevaImagen = new System.Windows.Controls.Image
                         {
                             Width = 360,
                             Height = 444, // Altura ajustada para dar espacio al borde superior rojo
@@ -100,7 +123,7 @@ namespace Portal.Kiosco.Properties.Views
                         if (pelicula.Tipo == "Preventa")
                         {
                             // Crear el borde superior rojo con el texto "PREVENTA"
-                            Border preventaBorder = new Border
+                            System.Windows.Controls.Border preventaBorder = new System.Windows.Controls.Border
                             {
                                 Height = 56,
                                 VerticalAlignment = VerticalAlignment.Top,
@@ -150,8 +173,8 @@ namespace Portal.Kiosco.Properties.Views
                         };
 
                         // Configurar la posición en la cuadrícula
-                        Grid.SetRow(nuevoBorde, fila);
-                        Grid.SetColumn(nuevoBorde, columna);
+                        System.Windows.Controls.Grid.SetRow(nuevoBorde, fila);
+                        System.Windows.Controls.Grid.SetColumn(nuevoBorde, columna);
 
                         // Agregar el contenedor a la cuadrícula
                         ContenedorPeliculas.Children.Add(nuevoBorde);
@@ -174,10 +197,17 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-          
             var openWindow = new Principal();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
         }
 
         private bool isDragging = false;
@@ -206,7 +236,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             if (isDragging)
             {
-                ScrollViewer scrollViewer = sender as ScrollViewer;
+                System.Windows.Controls.ScrollViewer scrollViewer = sender as System.Windows.Controls.ScrollViewer;
                 Point currentPoint = e.GetPosition(scrollViewer);
 
                 if (currentPoint.Y < 0)
@@ -216,18 +246,32 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            Scanear_documento w = new Scanear_documento();
+            var openWindow = new Scanear_documento();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
             this.Close();
-            w.ShowDialog();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
-        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            SeleccionarFuncion w = new SeleccionarFuncion();
+            var openWindow = new SeleccionarFuncion();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
             this.Close();
-            w.ShowDialog();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }

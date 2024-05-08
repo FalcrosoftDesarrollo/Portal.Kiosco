@@ -12,6 +12,7 @@ namespace Portal.Kiosco.Properties.Views
         public Principal()
         {
             InitializeComponent();
+            ((App)Application.Current).ResetearTimer();
             App.IsFecha = false;
             this.KeyDown += Principal_KeyDown; // Manejador de eventos para teclas presionadas
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));

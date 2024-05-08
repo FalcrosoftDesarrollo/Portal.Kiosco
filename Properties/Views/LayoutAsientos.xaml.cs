@@ -71,7 +71,7 @@ namespace Portal.Kiosco.Properties.Views
             List<DateCartelera> ob_fechas = new List<DateCartelera>();
 
             XmlDocument ob_xmldoc = new XmlDocument();
-            Billboard ob_bilmov = new Billboard();
+            //Billboard ob_bilmov = new Billboard();
             General ob_fncgrl = new General();
 
             APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
@@ -111,7 +111,7 @@ namespace Portal.Kiosco.Properties.Views
                 //Quitar switch
                 lc_result = lc_result.Replace("0-", "");
                 ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
                 ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
                 ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
                 var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
@@ -176,7 +176,7 @@ namespace Portal.Kiosco.Properties.Views
 
             if (lblTotal.Content == "TOTAL: $0")
             {
-                MessageBox.Show("UPS! Aun no ha seleccionado ninguna hubicación");
+                MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación");
                 return;
             }
 
@@ -553,8 +553,16 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Principal();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
         }
     }
 }

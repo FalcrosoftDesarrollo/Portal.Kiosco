@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
@@ -73,11 +75,18 @@ namespace Portal.Kiosco.Properties.Views
         }
 
 
-        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            BoletasGafasAlimentos w = new BoletasGafasAlimentos();
+            var openWindow = new BoletasGafasAlimentos();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
             this.Close();
-            w.ShowDialog();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
     }
 }

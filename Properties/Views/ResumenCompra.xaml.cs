@@ -30,11 +30,18 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
-        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            Combodeluxe1 w = new Combodeluxe1();
+            var openWindow = new Combodeluxe1();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
+            openWindow.Show();
             this.Close();
-            w.ShowDialog();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -47,8 +54,15 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Principal();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
 
         }
 
@@ -56,26 +70,39 @@ namespace Portal.Kiosco.Properties.Views
         {
 
             var openWindow = new BoletasGafasAlimentos();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         private async void btnPagarCash_Click(object sender, RoutedEventArgs e)
         {
-
             var openWindow = new PagoCashback();
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+            await Task.Delay(300);
+            this.Visibility = Visibility.Collapsed;
+            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
         public void GenerateResumen()
         {
             // Generar resumen de boletas
             decimal totalcombos = 0;
-            GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), (App.CantidadBoletas * App.ValorTarifa));
+            GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
             // Generar resumen de gafas
-            GenerateResumenCategoria("Gafas", "Gafas", 0, "0", 0);
+            GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario) );
             totalcombos += 0;
             // Generar resumen de combos
             var combos = App.ProductosSeleccionados;
