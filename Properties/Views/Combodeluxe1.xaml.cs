@@ -1,5 +1,6 @@
 ﻿using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class Combodeluxe1 : Window
     {
+        private readonly IOptions<MyConfig> config;
         private IConfiguration configuration;
         private int ContadorProductos = 1;
         private List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal)>();
@@ -362,7 +364,7 @@ namespace Portal.Kiosco.Properties.Views
             if (ContadorProductos > App.ProductosSeleccionados.Count())
             {
 
-                var openWindow = new ResumenCompra();
+                var openWindow = new ResumenCompra(config);
                 DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
                 this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                 await Task.Delay(300);

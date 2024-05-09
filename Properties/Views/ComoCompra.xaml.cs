@@ -82,7 +82,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
         private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Principal();
@@ -98,7 +97,5 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
-    }
-
-     
+    }   
 }
