@@ -12,7 +12,7 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\Antoine\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\stron\\.dotnet\\store\\|arch|\\|tfm|",
       "C:\\Users\\Antoine\\.nuget\\packages",
       "D:\\MVS\\MVS shared components, tools and SKDs\\NuGetPackages"
     ],
