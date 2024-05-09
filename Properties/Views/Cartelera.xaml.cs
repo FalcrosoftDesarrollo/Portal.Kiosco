@@ -1,5 +1,7 @@
-﻿using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Data;
+using APIPortalKiosco.Entities;
 using APIPortalWebMed.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -170,6 +172,8 @@ namespace Portal.Kiosco.Properties.Views
                 Console.WriteLine("Error al cargar películas desde el archivo XML: " + ex.Message);
             }
         }
+
+      
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {

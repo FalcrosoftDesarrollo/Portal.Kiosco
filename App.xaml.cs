@@ -26,8 +26,10 @@ namespace Portal.Kiosco
         public static XDocument carteleraXML { get; set; }
         public static string idCine { get; set; }
         public static string PuntoVenta { get; set; }
+        public static string Secuencia { get; set; }
         public static string ValorTercero { get; set; }
         public static string ScoreServices { get; set; }
+        public static string CantSillasBol { get; set; }
         public static string CantProductos { get; set; }
         public static string CodigoProducto { get; set; }
         public static decimal CantidadBoletas { get; set; }
@@ -36,10 +38,10 @@ namespace Portal.Kiosco
         public static decimal PrecioUnitario { get; set; } = 3000; // Precio unitario de las gafas
         public static decimal CantidadGafas { get; set; } // Lista para almacenar la cantidad de gafas seleccionadas
 
-        private   List<UIElement> elementosCombos = new List<UIElement>();
-        private   List<UIElement> elementosAlimentos = new List<UIElement>();
-        private   List<UIElement> elementosBebidas = new List<UIElement>();
-        private   List<UIElement> elementosSnack = new List<UIElement>();
+        private List<UIElement> elementosCombos = new List<UIElement>();
+        private List<UIElement> elementosAlimentos = new List<UIElement>();
+        private List<UIElement> elementosBebidas = new List<UIElement>();
+        private List<UIElement> elementosSnack = new List<UIElement>();
 
         public static List<Producto> CombosWeb = new List<Producto>();
         public static List<Producto> AlimentosWeb = new List<Producto>();
@@ -54,8 +56,6 @@ namespace Portal.Kiosco
         public static bool IsPrimeraCarga = true;
         private string _tiempoRestanteGlobal;
         private TimeSpan tiempoRestante;
-
-        
 
         public string TiempoRestanteGlobal
         {
@@ -89,6 +89,7 @@ namespace Portal.Kiosco
                 ValorTercero = appSettingsSection["ValorTercero"].ToString();
                 CantProductos = appSettingsSection["CantProductos"].ToString();
                 ScoreServices = appSettingsSection["ScoreServices"].ToString();
+                CantSillasBol = appSettingsSection["CantSillasBol"].ToString();
                 Peliculas = ObtenerPeliculas(carteleraXML, idCine);
             }
         }
@@ -100,7 +101,7 @@ namespace Portal.Kiosco
 
         private void IniciarContadorGlobal()
         {
-            tiempoRestante = TimeSpan.FromMinutes(15);
+            tiempoRestante = TimeSpan.FromMinutes(2);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
 
             DispatcherTimer contadorGlobalTimer = new DispatcherTimer();
@@ -117,13 +118,8 @@ namespace Portal.Kiosco
 
                     // Aquí puedes añadir el código para cambiar de ventana si es necesario
                     var openWindow = new Principal();
-                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                    Application.Current.MainWindow.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                    Application.Current.MainWindow.Visibility = Visibility.Collapsed;
-                    openWindow.Background = Brushes.White;
                     openWindow.Show();
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                
                 }
             };
             contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
@@ -307,8 +303,6 @@ namespace Portal.Kiosco
                                         }
                                     }
                                 }
-
-
                                 pelicula.DiasDisponibles.Add(fechas);
                             }
 
@@ -322,9 +316,5 @@ namespace Portal.Kiosco
 
             return peliculas;
         }
-
-        
-
     }
 }
-

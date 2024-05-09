@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
+﻿using APIPortalKiosco.Entities;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,6 +22,9 @@ namespace Portal.Kiosco.Properties.Views
         //private Dictionary<string, List<string>> horasPorFecha = new Dictionary<string, List<string>>();
         public List<UIElement> elementosConservados3D;
         public List<UIElement> elementosConservadosGeneral;
+        private readonly IOptions<MyConfig> config;
+
+         
         public SeleccionarFuncion()
         {
             InitializeComponent();
@@ -51,26 +56,18 @@ namespace Portal.Kiosco.Properties.Views
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+           
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        
         }
 
-        private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new LayoutAsientos();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+            var openWindow = new LayoutAsientos(config);
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+          
         }
 
         private void CargarFechasDesdeXml()

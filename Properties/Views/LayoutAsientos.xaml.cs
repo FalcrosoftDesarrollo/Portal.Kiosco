@@ -1,4 +1,6 @@
-﻿using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Data;
+using APIPortalKiosco.Entities;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,9 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml;
  
-
-
-
 namespace Portal.Kiosco.Properties.Views
 {
     /// <summary>
@@ -21,10 +20,14 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class LayoutAsientos : Window
     {
-        public LayoutAsientos()
+        private readonly IOptions<MyConfig> config;
+
+        public LayoutAsientos(IOptions<MyConfig> config)
         {
 
             InitializeComponent();
+
+            this.config = config;
             GenerarSala();
             ConsultarZona();
             DataContext = ((App)Application.Current);
@@ -563,6 +566,299 @@ namespace Portal.Kiosco.Properties.Views
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
 
+        }
+
+        public void Room(BolVenta pr_bolvta)
+        {
+            #region VARIABLES LOCALES
+            int lc_idearr = 0;
+            double lc_valtar = 0;
+            string lc_auxitm = string.Empty;
+            string lc_auxtel = string.Empty;
+            string lc_auxsec = string.Empty;
+            string lc_srvpar = string.Empty;
+            string lc_result = string.Empty;
+            string[] ls_lstsel = new string[5];
+
+            string TelefonoEli = string.Empty;
+
+            List<string> ls_lstubi = new List<string>();
+            List<Ubicaciones> ob_ubiprg = new List<Ubicaciones>();
+            Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
+
+            Secuencia ob_secsec = new Secuencia();
+            General ob_fncgrl = new General();
+            #endregion
+
+            try
+            {
+
+                if (App.Secuencia != "")
+                {
+                    lc_auxsec = App.Secuencia.ToString();
+                }
+                else
+                {
+                    #region SERVICIO SCOSEC
+                    //Asignar valores SEC
+                    ob_secsec.Punto = Convert.ToInt32(App.PuntoVenta);
+                    ob_secsec.Teatro = Convert.ToInt32(App.idCine);
+                    ob_secsec.Tercero = App.ValorTercero;
+
+                    //Generar y encriptar JSON para servicio SEC
+                    lc_srvpar = ob_fncgrl.JsonConverter(ob_secsec);
+                    lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
+                    lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
+                    lc_srvpar = lc_srvpar.Replace("punto", "Punto");
+
+                    //Encriptar Json SEC
+                    lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                    //Consumir servicio SEC
+                    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scosec/"), lc_srvpar);
+
+
+                    //Validar respuesta
+                    if (lc_result.Substring(0, 1) == "0")
+                    {
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-", "");
+                        lc_result = lc_result.Replace("[", "");
+                        lc_result = lc_result.Replace("]", "");
+
+                        //Deserializar Json y validar respuesta SEC
+                        ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+
+                        if (ob_diclst.ContainsKey("Validación"))
+                        {
+                            MessageBox.Show(ob_diclst["Validación"].ToString());
+                        }
+                        else
+                        {
+                            lc_auxsec = ob_diclst["Secuencia"].ToString().Substring(0, ob_diclst["Secuencia"].ToString().IndexOf("."));
+                            App.Secuencia = lc_auxsec;
+                        }
+
+                        ob_diclst.Clear();
+                    }
+                    else
+                    {
+                        lc_result = lc_result.Replace("1-", "");
+
+                    }
+                    #endregion
+                }
+
+                #region SERVICIO SCOGRU
+                //Validar secuencia
+                if (lc_auxsec != "0")
+                {
+                    //Asignar valores
+                    pr_bolvta.Funcion = "";
+                    pr_bolvta.Horario = "";
+                    pr_bolvta.message = "";
+                    pr_bolvta.FechaPrg = "";
+                    pr_bolvta.FechaDia = "";
+                    pr_bolvta.ValorTarifa = "";
+                    pr_bolvta.IdTarifa = "";
+                    pr_bolvta.MapaSala = new Ubicaciones[1, 1];
+
+                    pr_bolvta.EmailEli = "";
+                    pr_bolvta.NombreEli = "";
+                    pr_bolvta.ApellidoEli = "";
+                    pr_bolvta.TelefonoEli = "";
+
+                    pr_bolvta.Tipo = "B";
+                    pr_bolvta.NombreTarifa = pr_bolvta.NombreTar;
+                    pr_bolvta.NombrePelicula = pr_bolvta.NombrePel;
+
+                    pr_bolvta.Sala = Convert.ToInt32(pr_bolvta.KeySala);
+                    pr_bolvta.KeySala = pr_bolvta.KeySala;
+                    var telefonodefault = "";
+                    pr_bolvta.Telefono = Convert.ToInt64(telefonodefault);
+
+                    pr_bolvta.Nombre = "";
+                    pr_bolvta.Apellido = "";
+
+                    pr_bolvta.FecProg = pr_bolvta.FecProg;
+                    pr_bolvta.HorProg = pr_bolvta.HorProg;
+                    pr_bolvta.KeyTarifa = pr_bolvta.KeyTarifa;
+                    pr_bolvta.KeyTeatro = App.idCine;
+                    pr_bolvta.KeyPelicula = pr_bolvta.KeyPelicula;
+                    pr_bolvta.KeySecuencia = lc_auxsec;
+
+                    pr_bolvta.Tercero = App.ValorTercero;
+                    pr_bolvta.Secuencia = Convert.ToInt32(lc_auxsec);
+                    pr_bolvta.PuntoVenta = Convert.ToInt32(App.PuntoVenta);
+                    pr_bolvta.IdFuncion = pr_bolvta.HorProg.ToString().Length == 4 ? Convert.ToInt32(pr_bolvta.HorProg.ToString().Substring(0, 2)) : Convert.ToInt32(pr_bolvta.HorProg.ToString().Substring(0, 1));
+
+                    //Obtener ubicaciones de vista
+                    char[] ar_charst = pr_bolvta.SelUbicaciones.ToCharArray();
+                    for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
+                    {
+                        //Concatenar caracteres
+                        lc_auxitm += ar_charst[lc_iditem].ToString();
+
+                        //Obtener parámetro
+                        if (ar_charst[lc_iditem].ToString() == ";")
+                        {
+                            ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
+                            lc_auxitm = string.Empty;
+                        }
+                    }
+
+                    //Cargar ubicaciones al modelo JSON
+                    lc_auxitm = string.Empty;
+                    foreach (var item in ls_lstubi)
+                    {
+                        lc_idearr = 0;
+                        char[] ar_chars2 = item.ToCharArray();
+                        for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                        {
+                            //Concatenar caracteres
+                            lc_auxitm += ar_chars2[lc_iditem].ToString();
+
+                            //Obtener parámetro
+                            if (ar_chars2[lc_iditem].ToString() == "_")
+                            {
+                                ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
+
+                                lc_idearr++;
+                                lc_auxitm = string.Empty;
+                            }
+                        }
+
+                        ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = Convert.ToInt32(pr_bolvta.KeyTarifa), FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
+                    }
+
+                    pr_bolvta.Ubicaciones = ob_ubiprg;
+
+                    if (pr_bolvta.Imagen == null)
+                        pr_bolvta.Imagen = "NA";
+
+                    //Validar cantidad de sillas
+                    if (pr_bolvta.Ubicaciones.Count > Convert.ToInt32(App.CantSillasBol))
+                        MessageBox.Show("Error", "Solo se pueden seleccionar hasta " + App.CantSillasBol + " sillas por transacción." );
+
+                    //Generar y encriptar JSON para servicio
+                    lc_srvpar = ob_fncgrl.JsonConverter(pr_bolvta);
+
+                    lc_srvpar = lc_srvpar.Replace("fila", "Fila");
+                    lc_srvpar = lc_srvpar.Replace("sala", "Sala");
+                    lc_srvpar = lc_srvpar.Replace("nombre", "Nombre");
+                    lc_srvpar = lc_srvpar.Replace("tarifa", "Tarifa");
+                    lc_srvpar = lc_srvpar.Replace("columna", "Columna");
+                    lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
+                    lc_srvpar = lc_srvpar.Replace("keyTeatro", "teatro");
+                    lc_srvpar = lc_srvpar.Replace("apellido", "Apellido");
+                    lc_srvpar = lc_srvpar.Replace("telefono", "Telefono");
+                    lc_srvpar = lc_srvpar.Replace("keyPelicula", "Pelicula");
+                    lc_srvpar = lc_srvpar.Replace("secuencia", "Secuencia");
+                    lc_srvpar = lc_srvpar.Replace("fecProg", "FechaFuncion");
+                    lc_srvpar = lc_srvpar.Replace("\"id\"", "\"IdMessage\"");
+                    lc_srvpar = lc_srvpar.Replace("horProg", "InicioFuncion");
+                    lc_srvpar = lc_srvpar.Replace("idFuncion", "HoraFuncion");
+                    lc_srvpar = lc_srvpar.Replace("puntoVenta", "PuntoVenta");
+                    lc_srvpar = lc_srvpar.Replace("ubicaciones", "Ubicaciones");
+                    lc_srvpar = lc_srvpar.Replace("NombrePelicula", "Descripcion");
+                    
+                    //Encriptar Json GRU
+                    lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                    //Consumir servicio GRU
+                    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scogru/"), lc_srvpar);
+
+
+                    //Validar respuesta GRU
+                    if (lc_result.Substring(0, 1) == "0")
+                    {
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-", "");
+
+                        //Deserializar Json y validar respuesta
+                        Dictionary<string, string>[] ob_result = (Dictionary<string, string>[])JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>[])));
+
+                        //Validar respuesta llave 1
+                        for (int lc_idxiii = 0; lc_idxiii < ob_result.Length; lc_idxiii++)
+                        {
+                            Dictionary<string, string> ob_auxrta = ob_result[lc_idxiii];
+
+                            if (ob_auxrta.ContainsKey("Validación"))
+                            {
+                                MessageBox.Show("");
+                            }
+                            else
+                            {
+                                //Validar respuesta llave 2
+                                if (ob_auxrta.ContainsKey("Respuesta"))
+                                {
+                                    if (ob_auxrta["Respuesta"].ToString() == "Proceso exitoso")
+                                    {
+                                        lc_valtar = Convert.ToDouble(pr_bolvta.NombreTar.Substring(pr_bolvta.NombreTar.IndexOf(";") + 1, pr_bolvta.NombreTar.Length - (pr_bolvta.NombreTar.IndexOf(";") + 1)));
+
+                                        //Inicializar instancia de BD
+                                        using (var context = new DataDB(config))
+                                        {
+                                            //Agregar valores a tabla ReportSales
+                                            TelefonoEli = "";//string.Concat(Session.GetString("Telefono"), ";", Session.GetString("Documento"), "*", Session.GetString("Direccion"));
+                                            var reportSales = new ReportSales
+                                            {
+                                                Secuencia = pr_bolvta.KeySecuencia,
+                                                KeySala = pr_bolvta.KeySala,
+                                                KeyTeatro = App.idCine,
+                                                KeyPelicula = pr_bolvta.KeyPelicula,
+                                                SelUbicaciones = pr_bolvta.SelUbicaciones,
+                                                Precio = (lc_valtar * pr_bolvta.Ubicaciones.Count),
+                                                HorProg = pr_bolvta.HorProg,
+                                                FecProg = pr_bolvta.FecProg,
+                                                EmailEli = "", //Session.GetString("Usuario"),
+                                                NombreEli = "", //Session.GetString("Nombre"),
+                                                ApellidoEli = "", //Session.GetString("Apellido"),
+                                                TelefonoEli = TelefonoEli,
+                                                NombrePel = pr_bolvta.NombrePel,
+                                                NombreFec = pr_bolvta.NombreFec,
+                                                NombreHor = pr_bolvta.NombreHor,
+                                                NombreTar = pr_bolvta.NombreTar,
+                                                KeyTarifa = pr_bolvta.KeyTarifa,
+                                                Transaccion = pr_bolvta.Censura,
+                                                Referencia = pr_bolvta.Imagen,
+                                                FechaCreado = DateTime.Now,
+                                                FechaModificado = DateTime.Now,
+                                                KeyPunto = App.PuntoVenta
+                                            };
+
+                                            //Adicionar y guardar registro a tabla
+                                            context.ReportSales.Add(reportSales);
+                                            context.SaveChanges();
+                                        }
+
+                                        //Paso datos de paso url
+                                    }
+
+                                    else
+                                    {
+                                        MessageBox.Show("Error", ob_auxrta["Respuesta"].ToString());
+                                    }
+                                    }
+                                }
+                            }
+                        }
+                    else
+                        {
+                            lc_result = lc_result.Replace("1-", "");
+
+                        }
+                    }
+                    else
+                    {
+                    }
+                    #endregion
+
+                }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

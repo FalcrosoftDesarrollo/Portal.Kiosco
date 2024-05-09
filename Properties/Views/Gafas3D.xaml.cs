@@ -1,4 +1,5 @@
 ﻿using APIPortalKiosco.Entities;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Portal.Kiosco.Properties.Views
     {
         private const int PrecioUnitario = 3000; // Precio unitario de las gafas
         private int[] cantidadGafas = new int[10]; // Array de tamaño fijo para almacenar la cantidad de gafas seleccionadas
-
+        private readonly IOptions<MyConfig> config;
         private int indiceArray = 0; // Índice para controlar la posición en el array
 
         public Gafas3D()
@@ -31,30 +32,19 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new LayoutAsientos();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+            var openWindow = new LayoutAsientos(config);
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+          
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new AlgoParaComer();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
             openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+          
         }
 
         private int gafasSeleccionadas = 0;
