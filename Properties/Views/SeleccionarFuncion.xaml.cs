@@ -48,8 +48,6 @@ namespace Portal.Kiosco.Properties.Views
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
-
-
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Cartelera();
@@ -66,8 +64,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             var openWindow = new LayoutAsientos(config);
             openWindow.Show();
-            this.Close();
-          
+            this.Close();         
         }
 
         private void CargarFechasDesdeXml()
@@ -111,7 +108,6 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
         }
-
 
         private void CargarFechasDesdeSelect(string fecha)
         {
@@ -181,7 +177,6 @@ namespace Portal.Kiosco.Properties.Views
             openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
-
         private void CrearBotonFecha(string fecha, string fecunv)
         {
             // Separar la fecha en sus partes
@@ -237,7 +232,6 @@ namespace Portal.Kiosco.Properties.Views
             ContenedorFechas.Children.Add(border);
         }
 
-
         public Border CrearBotonFormato(string ContenidoFormato)
         {
             // Crear el nuevo botón
@@ -267,7 +261,6 @@ namespace Portal.Kiosco.Properties.Views
             // Retornar el nuevo botón y su contenedor
             return nuevoBorder;
         }
-
 
         private Border CrearBotonHora(string hora, string idFuncion)
         {
@@ -460,6 +453,7 @@ namespace Portal.Kiosco.Properties.Views
             clickedButton.Foreground = Brushes.White;
             borSiguente.Visibility = Visibility.Visible;
         }
+
         private void btnSeleccionFecha_Click(object sender, RoutedEventArgs e)
         {
             string buttonName = "";
@@ -468,28 +462,19 @@ namespace Portal.Kiosco.Properties.Views
             App.Pelicula.HoraSel = buttonName.Substring(3);
             // Buscar el Border padre del botón
             Border buttonBorder = FindParent<Border>(clickedButton);
-
-
             clickedButton.Foreground = Brushes.White;
             App.Pelicula.FechaSel = buttonName;
-
-
-
             // Limpiar contenedores y cargar nuevas fechas
             ContenedorHoras3D.Children.Clear();
             ContenedorHorasGeneral.Children.Clear();
             ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
             ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
-
             Panel contenedor = ContenedorFechas;
-
-
 
             foreach (var control in contenedor.Children)
             {
                 if (control is Border) // Si el control es un borde
                 {
-
                     Border border = (Border)control;
                     // Verificar si el contenido del borde es un botón
                     if (border.Child is Button)
@@ -532,6 +517,7 @@ namespace Portal.Kiosco.Properties.Views
             clickedButton.Foreground = Brushes.White;
             CargarFechasDesdeSelect(buttonName.Substring(3));
         }
+
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             App.IsBoleteriaConfiteria = false;

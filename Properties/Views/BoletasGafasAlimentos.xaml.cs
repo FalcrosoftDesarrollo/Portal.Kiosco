@@ -1,4 +1,5 @@
 ﻿using APIPortalKiosco.Entities;
+using Microsoft.Extensions.Options;
 using System;
 using System.Printing;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class BoletasGafasAlimentos : Window
     {
+
+        private readonly IOptions<MyConfig> config;
         public BoletasGafasAlimentos()
         {
             InitializeComponent();
@@ -33,8 +36,6 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
-
-
         private void btnImprimir_Click(object sender, RoutedEventArgs e)
         {
             // Crear una instancia de la ventana secundaria
@@ -52,7 +53,6 @@ namespace Portal.Kiosco.Properties.Views
             // Llamar al método para imprimir directamente el contenido visual
             impresion.ImprimirDirecto();
         }
-
 
         private void PrintDocument()
         {
@@ -110,7 +110,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            CorreoTecladoFlotante w = new CorreoTecladoFlotante();
+            CorreoTecladoFlotante w = new CorreoTecladoFlotante(config);
             this.Close();
             w.ShowDialog();
         }
@@ -139,7 +139,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnEnviar_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new CorreoTecladoFlotante();
+            var openWindow = new CorreoTecladoFlotante(config);
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);

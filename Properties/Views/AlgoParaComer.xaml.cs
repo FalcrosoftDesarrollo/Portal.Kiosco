@@ -3,6 +3,8 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
+using Microsoft.Extensions.Options;
+using APIPortalKiosco.Entities;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -11,6 +13,7 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class AlgoParaComer : Window
     {
+        private readonly IOptions<MyConfig> config;
         public AlgoParaComer()
         {
             InitializeComponent();
@@ -92,7 +95,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnResumen_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new ResumenCompra();
+            var openWindow = new ResumenCompra(config);
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);

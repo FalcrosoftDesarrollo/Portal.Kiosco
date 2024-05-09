@@ -92,7 +92,6 @@ namespace Portal.Kiosco.Properties.Views
                     lblCantidad.Content = gafasSeleccionadas;
                 }
 
-
             }
 
             if (gafasSeleccionadas == 0)

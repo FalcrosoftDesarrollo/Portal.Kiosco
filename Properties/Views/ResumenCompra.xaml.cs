@@ -218,21 +218,38 @@ namespace Portal.Kiosco.Properties.Views
                         /* ViewBag.ListR = ob_ordite;*/ //ViewBag.ListCarritoR;
                     }
                       
+                    //ViewBag.ListCarritoB = null;
+                    //ViewBag.ListCarritoR = null;
+
                     if (session/*.GetString("Secuencia")*/ != null)
                     {
                         try
                         {
-                            //Envio de correo Score
+                             
                             var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
                             request.GetResponse();
-                             
+
+                            //Generar Log
+                              
+                            //LogAudit logAudit = new LogAudit(config);
+                            //logSales.Id = Guid.NewGuid().ToString();
+                            //logSales.Fecha = DateTime.Now;
+                            //logSales.Programa = "Pages/Responses";
+                            //logSales.Metodo = "EMAIL";
+                            //logSales.ExceptionMessage = "Envío de correo compra APROBADA: Exitoso";
+                            //logSales.InnerExceptionMessage = "null";
+
+                            //Escribir Log
+                            //logAudit.LogApp(logSales);
                         }
                         catch (Exception)
-                        {
+                        lc_objson = "{\"Punto\":" + Convert.ToInt32(App.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
                             string EnvioCorreo = "Fallo envío de correo compra APROBADA, por favor comunicarse con el teatro.";
-                              
-                        }
-                    }
+
+                            //Generar Log
+                            //LogSales logSales = new LogSales();
+                            //LogAudit logAudit = new LogAudit(config);
+                        lc_jsnrst = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoret/"), lc_srvpar);
                 }
 
                 //Estado Fallido
@@ -243,13 +260,23 @@ namespace Portal.Kiosco.Properties.Views
                     {
                         #region SERVICO SCORET
                         //Json de servicio RET
-                        lc_objson = "{\"Punto\":" + Convert.ToInt32(App.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
+                        lc_objson = "{\"Punto\":" + Convert.ToInt32(config.Value.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
 
                         //Encriptar Json RET
                         lc_srvpar = ob_fncgrl.EncryptStringAES(lc_objson);
 
                         //Consumir servicio RET
-                        lc_jsnrst = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoret/"), lc_srvpar);
+                        lc_jsnrst = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scoret/"), lc_srvpar);
+
+                        //Generar Log
+                        //LogSales logSales = new LogSales();
+                        //LogAudit logAudit = new LogAudit(config);
+                        //logSales.Id = Guid.NewGuid().ToString();
+                        //logSales.Fecha = DateTime.Now;
+                        //logSales.Programa = "Pages/Responses";
+                        //logSales.Metodo = "SCORET";
+                        //logSales.ExceptionMessage = lc_srvpar;
+                        //logSales.InnerExceptionMessage = lc_jsnrst;
 
                          
                         //Validar respuesta
@@ -270,12 +297,12 @@ namespace Portal.Kiosco.Properties.Views
                                 //return View();
                             }
                             else
-                            {
+                             
                                 //Validar respuesta llave 2
                                 if (ob_diclst.ContainsKey("Respuesta"))
                                 {
                                     if (ob_diclst["Respuesta"].ToString() != "Proceso exitoso")
-                                    {
+                             
                                         //ModelState.AddModelError("", ob_diclst["Respuesta"].ToString());
                                         //return View();
                                     }
@@ -297,12 +324,27 @@ namespace Portal.Kiosco.Properties.Views
                             lc_urlcor = lc_urlcor.Replace("compra", "Fallida");
                             var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
                             request.GetResponse();
-                             
+
+                            //Generar Log
+                            //logSales.Id = Guid.NewGuid().ToString();
+                            //logSales.Fecha = DateTime.Now;
+                            //logSales.Programa = "Pages/Responses";
+                            //logSales.Metodo = "EMAIL";
+                            //logSales.ExceptionMessage = "Envío de correo compra RECHAZADA: Exitoso";
+                            //logSales.InnerExceptionMessage = "null";
+
+                            //Escribir Log
+                            //logAudit.LogApp(logSales);
                         }
                         catch (Exception)
-                        {
-                            string EnvioCorreo = "Fallo envío de correo compra RECHAZADA, por favor comunicarse con el teatro.";
-                             
+                { 
+                } 
+                            //logSales.Metodo = "EMAIL";
+                            //logSales.ExceptionMessage = "Fallo envío de correo compra RECHAZADA, por favor comunicarse con el teatro.";
+                            //logSales.InnerExceptionMessage = "null";
+
+                            ////Escribir Log
+                            //logAudit.LogApp(logSales);
                         }
                     }
 
@@ -337,8 +379,23 @@ namespace Portal.Kiosco.Properties.Views
 
                 //Validar y remover sesion invitada
                 if (session/*.GetString("FlagLogin")*/ == "INV")
-                { 
-                } 
+                {
+                    //Session.Remove("Nombre");
+                    //Session.Remove("Passwrd");
+                    //Session.Remove("Usuario");
+                    //Session.Remove("Apellido");
+                    //Session.Remove("Telefono");
+                    //Session.Remove("Direccion");
+                    //Session.Remove("Documento");
+                    //Session.Remove("ClienteFrecuente");
+                    //Session.Remove("FlagLogin");
+                    //ViewBag.ListCarritoR = null;
+                    //ViewBag.ListCarritoB = null;
+                }
+
+                //Quitar secuencia
+                //Session.Remove("Secuencia");
+                //return View();
             }
             catch (Exception lc_syserr)
             {

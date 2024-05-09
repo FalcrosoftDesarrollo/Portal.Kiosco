@@ -1,5 +1,6 @@
 ﻿using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Mysqlx;
 using Newtonsoft.Json;
 using System;
@@ -22,7 +23,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private IConfiguration configuration;
         private int SelectProd = 1;
-
+        private readonly IOptions<MyConfig> config;
         private List<UIElement> elementosCombos = new List<UIElement>();
         private List<UIElement> elementosAlimentos = new List<UIElement>();
         private List<UIElement> elementosBebidas = new List<UIElement>();
@@ -77,8 +78,6 @@ namespace Portal.Kiosco.Properties.Views
 
 
         }
-
-
 
         private Border GetButtonBorder(System.Windows.Controls.Button button)
         {
@@ -202,7 +201,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
         private void RestoreButtonState()
         {
             combosBorder.Background = new SolidColorBrush(Colors.LightGray);
@@ -219,7 +217,6 @@ namespace Portal.Kiosco.Properties.Views
                 clickedBorder.Background = new SolidColorBrush(Colors.LightGray);
             }
         }
-
 
         public void CombosConsult(string pr_secpro = "", string pr_swtven = "", string pr_tiplog = "", string pr_tbview = "", string Teatro = "0", string Ciudad = "0")
         {
@@ -526,8 +523,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
-
         public decimal SelPrecio(int SelectProd, decimal Codigo)
         {
 
@@ -787,7 +782,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -820,7 +814,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
 
@@ -843,7 +836,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    var openWindow = new ResumenCompra();
+                    var openWindow = new ResumenCompra(config);
                     DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
                     this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                     await Task.Delay(300);
