@@ -49,6 +49,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private int gafasSeleccionadas = 0;
         private string[] gafasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
+        private int ultimoIndex = -1;
         private void btnSumar_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -57,34 +58,38 @@ namespace Portal.Kiosco.Properties.Views
             {
                 string nombreBoton = btn.Content.ToString();
 
-                if (nombreBoton == "+")
+                if (nombreBoton == "+" && gafasSeleccionadas < 10)
                 {
-                   if(gafasSeleccionadas < 10)
-                   {
-                        int index = Array.IndexOf(gafasSeleccionadasArray, null);
+                  
+                    int index = Array.IndexOf(gafasSeleccionadasArray, null);
 
-                        // Almacena el contenido del botón en el arreglo de sillas seleccionadas
-                        gafasSeleccionadasArray[index] = nombreBoton;
+                    // Almacena el contenido del botón en el arreglo de sillas seleccionadas
+                    gafasSeleccionadasArray[index] = nombreBoton;
 
-                        // Incrementa el contador de sillas seleccionadas
-                        gafasSeleccionadas++;
-                   }
-                   else
-                   {
+                    // Incrementa el contador de sillas seleccionadas
+                    gafasSeleccionadas++;
+
+                    ultimoIndex = index;
+
+                    lblCantidad.Content = gafasSeleccionadas;
+
+                    if(gafasSeleccionadas == 10)
+                    {
                         MessageBox.Show("Solo se pueden seleccionar hasta 10 GAFAS.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                   }
+                    }
+                   
                 }
-                else if(nombreBoton == "-" && gafasSeleccionadas > 0)
+                else if(nombreBoton == "-" && gafasSeleccionadas > 0 && ultimoIndex >= 0)
                 {
-                    int index = Array.IndexOf(gafasSeleccionadasArray, nombreBoton);
+                    gafasSeleccionadasArray[ultimoIndex] = null;
 
-                    // Elimina la silla seleccionada del arreglo
-                    gafasSeleccionadasArray[index] = null;
-
-                    // Cambia el color del botón a su estado original
-
-                    // Decrementa el contador de sillas seleccionadas
+                    // Decrementa el contador de gafas seleccionadas
                     gafasSeleccionadas--;
+
+                    // Busca el nuevo índice de la última gafa seleccionada
+                    ultimoIndex = Array.LastIndexOf(gafasSeleccionadasArray, "+");
+
+                    lblCantidad.Content = gafasSeleccionadas;
                 }
 
 
@@ -92,7 +97,7 @@ namespace Portal.Kiosco.Properties.Views
 
             if (gafasSeleccionadas == 0)
             {
-                lblTotal.Content = "TOTAL: $0";
+                lblTotal.Content = "$0";
             }
             else
             {
