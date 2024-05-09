@@ -12,7 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml;
- 
+
 namespace Portal.Kiosco.Properties.Views
 {
     /// <summary>
@@ -50,10 +50,8 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
-
         public void ConsultarZona()
         {
-
 
             int lc_keypel = 0;
             int lc_auxpel = 0;
@@ -186,30 +184,15 @@ namespace Portal.Kiosco.Properties.Views
             if (pelicula != null && pelicula.Formato != null /*&& /*pelicula.Formato.Contains("3D")*/)
             {
                 var openWindow = new Gafas3D();
-                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                await Task.Delay(300);
-                this.Visibility = Visibility.Collapsed;
-                openWindow.Background = Brushes.White;
                 openWindow.Show();
                 this.Close();
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             }
             else
             {
                 var openWindow = new AlgoParaComer();
-                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                await Task.Delay(300);
-                this.Visibility = Visibility.Collapsed;
-                openWindow.Background = Brushes.White;
                 openWindow.Show();
                 this.Close();
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             }
-
         }
 
         public void GenerarSala()
@@ -261,16 +244,12 @@ namespace Portal.Kiosco.Properties.Views
 
             if (lc_result.Substring(0, 1) == "0")
             {
-                //Quitar switch
                 lc_result = lc_result.Replace("0-", "");
-
-                //Deserializar Json y validar respuesta MAP
                 ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
             }
             else
             {
                 lc_result = lc_result.Replace("1-", "");
-
             }
 
             //Asignar valores EST
@@ -738,7 +717,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     //Validar cantidad de sillas
                     if (pr_bolvta.Ubicaciones.Count > Convert.ToInt32(App.CantSillasBol))
-                        MessageBox.Show("Error", "Solo se pueden seleccionar hasta " + App.CantSillasBol + " sillas por transacción." );
+                        MessageBox.Show("Error", "Solo se pueden seleccionar hasta " + App.CantSillasBol + " sillas por transacción.");
 
                     //Generar y encriptar JSON para servicio
                     lc_srvpar = ob_fncgrl.JsonConverter(pr_bolvta);
@@ -761,7 +740,7 @@ namespace Portal.Kiosco.Properties.Views
                     lc_srvpar = lc_srvpar.Replace("puntoVenta", "PuntoVenta");
                     lc_srvpar = lc_srvpar.Replace("ubicaciones", "Ubicaciones");
                     lc_srvpar = lc_srvpar.Replace("NombrePelicula", "Descripcion");
-                    
+
                     //Encriptar Json GRU
                     lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
@@ -827,34 +806,30 @@ namespace Portal.Kiosco.Properties.Views
                                                 KeyPunto = App.PuntoVenta
                                             };
 
-                                            //Adicionar y guardar registro a tabla
                                             context.ReportSales.Add(reportSales);
                                             context.SaveChanges();
                                         }
-
-                                        //Paso datos de paso url
                                     }
 
                                     else
                                     {
                                         MessageBox.Show("Error", ob_auxrta["Respuesta"].ToString());
                                     }
-                                    }
                                 }
                             }
-                        }
-                    else
-                        {
-                            lc_result = lc_result.Replace("1-", "");
-
                         }
                     }
                     else
                     {
+                        lc_result = lc_result.Replace("1-", "");
                     }
-                    #endregion
-
                 }
+                else
+                {
+                }
+                #endregion
+
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
