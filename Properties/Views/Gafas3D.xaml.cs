@@ -45,7 +45,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new ComoCompra();
+            var openWindow = new AlgoParaComer();
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
             await Task.Delay(300);
@@ -84,7 +84,7 @@ namespace Portal.Kiosco.Properties.Views
                         MessageBox.Show("Solo se pueden seleccionar hasta 10 GAFAS.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                    }
                 }
-                else if(nombreBoton == "-" && gafasSeleccionadas >= 0)
+                else if(nombreBoton == "-" && gafasSeleccionadas > 0)
                 {
                     int index = Array.IndexOf(gafasSeleccionadasArray, nombreBoton);
 

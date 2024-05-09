@@ -25,7 +25,6 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             CargarPeliculasDesdeXml();
-            AnimateCircleDrawing();
             DataContext = ((App)Application.Current);
             App.IsFecha = false;
             if (App.ob_diclst.Count > 0)
@@ -39,29 +38,6 @@ namespace Portal.Kiosco.Properties.Views
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
-
-        private void AnimateCircleDrawing()
-        {
-            PathGeometry pathGeometry = new PathGeometry();
-            EllipseGeometry ellipseGeometry = new EllipseGeometry(new Point(100, 100), 50, 50);
-            pathGeometry.AddGeometry(ellipseGeometry);
-
-            // Asignar el PathGeometry al Path
-            circlePath.Data = pathGeometry;
-
-            // Crear una animación de dibujo
-            DoubleAnimation animation = new DoubleAnimation
-            {
-                From = 1,  // Inicia completamente dibujado
-                To = 0,    // Termina sin dibujar
-                Duration = TimeSpan.FromSeconds(2),
-                FillBehavior = FillBehavior.HoldEnd
-            };
-
-            // Asignar la animación al StrokeDashOffset del Path
-            circlePath.BeginAnimation(Shape.StrokeDashOffsetProperty, animation);
-        }
-
 
         public string ObtenerValorDeConfiguracion(string clave)
         {

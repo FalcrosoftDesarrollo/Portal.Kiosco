@@ -159,14 +159,28 @@ namespace Portal.Kiosco
                 if (!carteleraWindowLoaded && App.IsBoleteriaConfiteria == false)
                 {
                     var openWindow = new Cartelera();
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    Task.Delay(300);
+                    this.Visibility = Visibility.Collapsed;
+                    openWindow.Background = Brushes.White;
                     openWindow.Show();
                     this.Close();
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                 }
                 else if (App.IsBoleteriaConfiteria)
                 {
                     var openWindow = new Combos();
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    Task.Delay(300);
+                    this.Visibility = Visibility.Collapsed;
+                    openWindow.Background = Brushes.White;
                     openWindow.Show();
                     this.Close();
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                 }
             });
         }

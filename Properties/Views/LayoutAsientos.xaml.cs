@@ -180,7 +180,7 @@ namespace Portal.Kiosco.Properties.Views
                 return;
             }
 
-            if (pelicula != null && pelicula.Formato != null && pelicula.Formato.Contains("3D"))
+            if (pelicula != null && pelicula.Formato != null /*&& /*pelicula.Formato.Contains("3D")*/)
             {
                 var openWindow = new Gafas3D();
                 DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
