@@ -35,7 +35,6 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             GenerateResumen();
-
         }
 
         public void Responses(string ref_payco = "")
@@ -54,8 +53,8 @@ namespace Portal.Kiosco.Properties.Views
             string lc_urlcor = ""/*config.Value.UrlCorreo*/;
             string session = "";
 
-            decimal lc_secsec = 0;
-            decimal lc_keytea = 0;
+            decimal lc_secsec = Convert.ToDecimal(App.Secuencia); 
+            decimal lc_keytea = Convert.ToDecimal(App.idCine);
             decimal lc_puntea = Convert.ToDecimal(App.PuntoVenta);
 
             List<OrderItem> ob_ordite = new List<OrderItem>();
@@ -64,15 +63,12 @@ namespace Portal.Kiosco.Properties.Views
             TransactionSales ob_repsle = new TransactionSales();
             General ob_fncgrl = new General();
             #endregion
-
+            var status = "";
             try
             {
                 //Validar si esta la sesion activa
                 if (session/*.GetString("ClienteFrecuente")*/ != null)
-                {
-                    //URLPortal(config);
-                    //ListCarrito();
-
+                {  
                     string ClienteFrecuente = session/*.GetString("ClienteFrecuente")*/;
                     string CashBack_Acumulado = String.Format("{0:C0}", Convert.ToDecimal(session/*.GetString("CashBack_Acumulado")*/));
                 }
@@ -98,25 +94,13 @@ namespace Portal.Kiosco.Properties.Views
                         lc_refepy = ob_response.data.x_ref_payco.ToString();
                         lc_bankpy = ob_response.data.x_bank_name.ToString();
                     }
-                    else
-                    {
-                        //Obtener valores de rta cashback y consultar registro en la bd
-                        lc_secsec = Convert.ToDecimal(session/*.GetString("Secuencia")*/);
-                        lc_keytea = Convert.ToDecimal(session/*.GetString("Teatro")*/);
-                        lc_coreli = session/*.GetString("Usuario")*/;
-                        lc_valtra = ref_payco.Substring(ref_payco.IndexOf(":") + 1);
-                        lc_status = "Cashback";
-                        lc_idsepy = "Cashback:SEC-" + session/*.GetString("Secuencia")*/;
-                        lc_fectra = DateTime.Now.ToString();
-                        lc_refepy = App.PuntoVenta + "-" + session;
-                        lc_bankpy = "CashBack Procinal";
-                    }
+                  
 
                     //Inicializar instancia de BD
                     using (var context = new DataDB(config))
                     {
 
-                        
+
                         //Consultar registro de venta en BD transacciones
                         var ob_repsl1 = context.TransactionSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.Teatro == lc_keytea);
                         foreach (var TransactionSales in ob_repsl1)
@@ -129,14 +113,14 @@ namespace Portal.Kiosco.Properties.Views
                                 ob_repsle.EstadoTx = "CBK";
                                 ob_repsle.Observaciones = "VENTA SCORE/PROCINAL";
 
-                                var status = "success";
+                                status = "success";
                                 break;
 
                             case "Aceptada":
                                 ob_repsle.EstadoTx = "EPY";
                                 ob_repsle.Observaciones = "VENTA SCORE/EPAYCO";
 
-                                var status = "success";
+                                status = "success";
                                 break;
 
                             case "Rechazada":
@@ -144,14 +128,14 @@ namespace Portal.Kiosco.Properties.Views
                                 ob_repsle.EstadoTx = "REX";
                                 ob_repsle.Observaciones = "VENTA RECHAZADA EPAYCO";
 
-                                var status = "failure";
+                                status = "failure";
                                 break;
 
                             case "Pendiente":
                                 ob_repsle.EstadoTx = "EPX";
                                 ob_repsle.Observaciones = "VENTA PENDIENTE EPAYCO";
 
-                                var status = "pending";
+                                status = "pending";
                                 break;
                         }
 
@@ -231,12 +215,9 @@ namespace Portal.Kiosco.Properties.Views
                             });
                         }
 
-                       /* ViewBag.ListR = ob_ordite;*/ //ViewBag.ListCarritoR;
+                        /* ViewBag.ListR = ob_ordite;*/ //ViewBag.ListCarritoR;
                     }
-
-                    //ViewBag.ListCarritoB = null;
-                    //ViewBag.ListCarritoR = null;
-
+                      
                     if (session/*.GetString("Secuencia")*/ != null)
                     {
                         try
@@ -244,36 +225,12 @@ namespace Portal.Kiosco.Properties.Views
                             //Envio de correo Score
                             var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
                             request.GetResponse();
-
-                            //Generar Log
-                            //LogSales logSales = new LogSales();
-                            //LogAudit logAudit = new LogAudit(config);
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Envío de correo compra APROBADA: Exitoso";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            //Escribir Log
-                            //logAudit.LogApp(logSales);
+                             
                         }
                         catch (Exception)
                         {
                             string EnvioCorreo = "Fallo envío de correo compra APROBADA, por favor comunicarse con el teatro.";
-
-                            //Generar Log
-                            //LogSales logSales = new LogSales();
-                            //LogAudit logAudit = new LogAudit(config);
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Fallo envío de correo compra APROBADA, por favor comunicarse con el teatro.";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            //Escribir Log
-                            //logAudit.LogApp(logSales);
+                              
                         }
                     }
                 }
@@ -286,27 +243,15 @@ namespace Portal.Kiosco.Properties.Views
                     {
                         #region SERVICO SCORET
                         //Json de servicio RET
-                        lc_objson = "{\"Punto\":" + Convert.ToInt32(config.Value.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
+                        lc_objson = "{\"Punto\":" + Convert.ToInt32(App.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
 
                         //Encriptar Json RET
                         lc_srvpar = ob_fncgrl.EncryptStringAES(lc_objson);
 
                         //Consumir servicio RET
-                        lc_jsnrst = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scoret/"), lc_srvpar);
+                        lc_jsnrst = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoret/"), lc_srvpar);
 
-                        //Generar Log
-                        //LogSales logSales = new LogSales();
-                        //LogAudit logAudit = new LogAudit(config);
-                        //logSales.Id = Guid.NewGuid().ToString();
-                        //logSales.Fecha = DateTime.Now;
-                        //logSales.Programa = "Pages/Responses";
-                        //logSales.Metodo = "SCORET";
-                        //logSales.ExceptionMessage = lc_srvpar;
-                        //logSales.InnerExceptionMessage = lc_jsnrst;
-
-                        //Escribir Log
-                        //logAudit.LogApp(logSales);
-
+                         
                         //Validar respuesta
                         if (lc_jsnrst.Substring(0, 1) == "0")
                         {
@@ -352,32 +297,12 @@ namespace Portal.Kiosco.Properties.Views
                             lc_urlcor = lc_urlcor.Replace("compra", "Fallida");
                             var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
                             request.GetResponse();
-
-                            //Generar Log
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Envío de correo compra RECHAZADA: Exitoso";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            //Escribir Log
-                            //logAudit.LogApp(logSales);
+                             
                         }
                         catch (Exception)
                         {
                             string EnvioCorreo = "Fallo envío de correo compra RECHAZADA, por favor comunicarse con el teatro.";
-
-                            //Generar Log
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Fallo envío de correo compra RECHAZADA, por favor comunicarse con el teatro.";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            ////Escribir Log
-                            //logAudit.LogApp(logSales);
+                             
                         }
                     }
 
@@ -400,102 +325,24 @@ namespace Portal.Kiosco.Properties.Views
                             lc_urlcor = lc_urlcor.Replace("compra", "Pendiente");
                             var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
                             request.GetResponse();
-
-                            //Generar Log
-                            //LogSales logSales = new LogSales();
-                            //LogAudit logAudit = new LogAudit(config);
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Envío de correo compra PENDIENTE: Exitoso";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            //Escribir Log
-                            //logAudit.LogApp(logSales);
+                             
                         }
                         catch (Exception)
                         {
                             string EnvioCorreo = "Fallo envío de correo compra PENDIENTE, por favor comunicarse con el teatro.";
-
-                            //Generar Log
-                            //LogSales logSales = new LogSales();
-                            //LogAudit logAudit = new LogAudit(config);
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Fallo envío de correo compra PENDIENTE, por favor comunicarse con el teatro.";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            ////Escribir Log
-                            //logAudit.LogApp(logSales);
+                             
                         }
                     }
                 }
 
                 //Validar y remover sesion invitada
                 if (session/*.GetString("FlagLogin")*/ == "INV")
-                {
-                    //Session.Remove("Nombre");
-                    //Session.Remove("Passwrd");
-                    //Session.Remove("Usuario");
-                    //Session.Remove("Apellido");
-                    //Session.Remove("Telefono");
-                    //Session.Remove("Direccion");
-                    //Session.Remove("Documento");
-                    //Session.Remove("ClienteFrecuente");
-                    //Session.Remove("FlagLogin");
-                    //ViewBag.ListCarritoR = null;
-                    //ViewBag.ListCarritoB = null;
-                }
-
-                //Quitar secuencia
-                //Session.Remove("Secuencia");
-                //return View();
+                { 
+                } 
             }
             catch (Exception lc_syserr)
             {
-                #region SERVICO SCORET
-                //Json de servicio RET
-                //lc_objson = "{\"Punto\":" + Convert.ToInt32(config.Value.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
-
-                //Encriptar Json RET
-                //lc_srvpar = ob_fncgrl.EncryptStringAES(lc_objson);
-
-                //Consumir servicio RET
-                //lc_jsnrst = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scoret/"), lc_srvpar);
-
-                //Generar Log
-                //LogSales logSales = new LogSales();
-                //LogAudit logAudit = new LogAudit(config);
-                //logSales.Id = Guid.NewGuid().ToString();
-                //logSales.Fecha = DateTime.Now;
-                //logSales.Programa = "Pages/Responses";
-                //logSales.Metodo = "SCORET_CATCH";
-                //logSales.ExceptionMessage = lc_srvpar;
-                //logSales.InnerExceptionMessage = lc_jsnrst;
-
-                //Escribir Log
-                //logAudit.LogApp(logSales);
-                #endregion
-
-                //Generar Log
-                //logSales.Id = Guid.NewGuid().ToString();
-                //logSales.Fecha = DateTime.Now;
-                //logSales.Programa = "Pages/Responses";
-                //logSales.Metodo = "GET";
-                //logSales.ExceptionMessage = lc_syserr.Message;
-                //logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
-
-                //Escribir Log
-                //logAudit.LogApp(logSales);
-
-                //Validar si esta la sesion activa y Devolver vista de error
-                //if (Session.GetString("ClienteFrecuente") != null)
-                //    return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id, pr_flag = "RSPNS" });
-                //else
-                //    return RedirectToAction("Home", "Home");
+                 
             }
         }
 
@@ -573,7 +420,7 @@ namespace Portal.Kiosco.Properties.Views
             GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
             // Generar resumen de gafas
-            GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario) );
+            GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
             totalcombos += 0;
             // Generar resumen de combos
             var combos = App.ProductosSeleccionados;
