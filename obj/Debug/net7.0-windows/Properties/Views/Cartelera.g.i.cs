@@ -19,6 +19,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.Integration;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -93,7 +94,7 @@ namespace Portal.Kiosco.Properties.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;V1.0.0.0;component/properties/views/cartelera.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Portal.Kiosco;component/properties/views/cartelera.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Properties\Views\Cartelera.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -131,12 +131,10 @@ namespace Portal.Kiosco.Properties.Views
                                 Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
                                 Descripcion = vr_itevta.Descripcion
                             });
-                        }
-
-                        /* ViewBag.ListR = ob_ordite;*/ //ViewBag.ListCarritoR;
+                        } 
                     }
 
-                    if (session/*.GetString("Secuencia")*/ != null)
+                    if (lc_secsec != null)
                     {
                         try
                         {
@@ -149,137 +147,10 @@ namespace Portal.Kiosco.Properties.Views
                             string EnvioCorreo = "Fallo envío de correo compra APROBADA, por favor comunicarse con el teatro.";
                         }
                     }
-                }
+                } 
+          
 
-                //Estado Fallido
-                //Validar venta
-                if (lc_status == "Rechazada" || lc_status == "Fallida")
-                {
-                    if (session/*.GetString("Secuencia")*/ != null)
-                    {
-                        #region SERVICO SCORET
-                        //Json de servicio RET
-                        lc_objson = "{\"Punto\":" + Convert.ToInt32(App.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + App.ValorTercero + "\"}";
-
-                        //Encriptar Json RET
-                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_objson);
-
-                        //Consumir servicio RET
-                        lc_jsnrst = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoret/"), lc_srvpar);
-
-                       
-                        //Validar respuesta
-                        if (lc_jsnrst.Substring(0, 1) == "0")
-                        {
-                            //Quitar switch
-                            lc_jsnrst = lc_jsnrst.Replace("0-", "");
-                            lc_jsnrst = lc_jsnrst.Replace("[", "");
-                            lc_jsnrst = lc_jsnrst.Replace("]", "");
-
-                            //Deserializar Json y validar respuesta SEC
-                            ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_jsnrst, (typeof(Dictionary<string, string>)));
-
-                            //Validar respuesta llave 1
-                            if (ob_diclst.ContainsKey("Validación"))
-                            {
-                                //ModelState.AddModelError("", ob_diclst["Validación"].ToString());
-                                //return View();
-                            }
-                            else
-                            {
-                                //Validar respuesta llave 2
-                                if (ob_diclst.ContainsKey("Respuesta"))
-                                {
-                                    if (ob_diclst["Respuesta"].ToString() != "Proceso exitoso")
-                                    {
-                                        //ModelState.AddModelError("", ob_diclst["Respuesta"].ToString());
-                                        //return View();
-                                    }
-                                }
-                            }
-
-                            ob_diclst.Clear();
-                        }
-                        else
-                        {
-                            //ModelState.AddModelError("", "Reembolso no culminado con exito SCORET");
-                            //return View();
-                        }
-                        #endregion
-
-                        try
-                        {
-                            //Envio de correo Score
-                            lc_urlcor = lc_urlcor.Replace("compra", "Fallida");
-                            var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
-                            request.GetResponse();
-                        }
-                        catch (Exception)
-                        {
-                            string EnvioCorreo = "Fallo envío de correo compra RECHAZADA, por favor comunicarse con el teatro.";
-                        }
-                    }
-
-                }
-
-                //Estado Pendiente
-                //Validar venta
-                if (lc_status == "Pendiente")
-                {
-                    //ViewBag.ListB = null;
-                    //ViewBag.ListR = null;
-
-                    if (session/*.GetString("Secuencia")*/ != null)
-                    {
-                        try
-                        {
-                            //Envio de correo Score
-                            lc_urlcor = lc_urlcor.Replace("compra", "Pendiente");
-                            var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
-                            request.GetResponse();
-
-                            //Generar Log
-                            //LogSales logSales = new LogSales();
-                            //LogAudit logAudit = new LogAudit(config);
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Envío de correo compra PENDIENTE: Exitoso";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            //Escribir Log
-                            //logAudit.LogApp(logSales);
-                        }
-                        catch (Exception)
-                        {
-                            string EnvioCorreo = "Fallo envío de correo compra PENDIENTE, por favor comunicarse con el teatro.";
-
-                            //Generar Log
-                            //LogSales logSales = new LogSales();
-                            //LogAudit logAudit = new LogAudit(config);
-                            //logSales.Id = Guid.NewGuid().ToString();
-                            //logSales.Fecha = DateTime.Now;
-                            //logSales.Programa = "Pages/Responses";
-                            //logSales.Metodo = "EMAIL";
-                            //logSales.ExceptionMessage = "Fallo envío de correo compra PENDIENTE, por favor comunicarse con el teatro.";
-                            //logSales.InnerExceptionMessage = "null";
-
-                            ////Escribir Log
-                            //logAudit.LogApp(logSales);
-                        }
-                    }
-                }
-
-                //Validar y remover sesion invitada
-                if (session/*.GetString("FlagLogin")*/ == "INV")
-                {
-
-                }
-
-                //Quitar secuencia
-                //Session.Remove("Secuencia");
-                //return View();
+             
             }
             catch (Exception lc_syserr)
             {
@@ -306,23 +177,7 @@ namespace Portal.Kiosco.Properties.Views
                 //Escribir Log
                 //logAudit.LogApp(logSales);
                 #endregion
-
-                //Generar Log
-                //logSales.Id = Guid.NewGuid().ToString();
-                //logSales.Fecha = DateTime.Now;
-                //logSales.Programa = "Pages/Responses";
-                //logSales.Metodo = "GET";
-                //logSales.ExceptionMessage = lc_syserr.Message;
-                //logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
-
-                //Escribir Log
-                //logAudit.LogApp(logSales);
-
-                //Validar si esta la sesion activa y Devolver vista de error
-                //if (Session.GetString("ClienteFrecuente") != null)
-                //    return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id, pr_flag = "RSPNS" });
-                //else
-                //    return RedirectToAction("Home", "Home");
+                 
             }
         }
 
@@ -359,15 +214,9 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new BoletasGafasAlimentos();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+           
         }
     }
 }
