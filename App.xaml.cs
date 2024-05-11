@@ -1,5 +1,6 @@
 ﻿using APIPortalKiosco.Entities;
 using APIPortalWebMed.Entities;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Portal.Kiosco.Properties.Views;
 using System;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Portal.Kiosco
 {
@@ -34,10 +36,19 @@ namespace Portal.Kiosco
         public static string CodigoProducto { get; set; }
         public static decimal CantidadBoletas { get; set; }
         public static decimal ValorTarifa { get; set; }
+        public static decimal KeyTarifa { get; set; }
+        public static string MinDifHora { get; set; }
+        public static string NombreTarifa { get; set; }
+        public static string NombreFec { get; set; }
+        public static string Censura { get; set; }
+        public static string Imagen { get; set; }
+        public static string TipoSilla { get; set; }
+
+
         public static String TipoSala { get; set; }
         public static decimal PrecioUnitario { get; set; } = 3000; // Precio unitario de las gafas
         public static decimal CantidadGafas { get; set; } // Lista para almacenar la cantidad de gafas seleccionadas
-
+        public static string variables41 { get; set; }
         private List<UIElement> elementosCombos = new List<UIElement>();
         private List<UIElement> elementosAlimentos = new List<UIElement>();
         private List<UIElement> elementosBebidas = new List<UIElement>();
@@ -48,6 +59,8 @@ namespace Portal.Kiosco
         public static List<Producto> BebidasWeb = new List<Producto>();
         public static List<Producto> SnacksWeb = new List<Producto>();
         public static List<Producto> ProductosSeleccionados = new List<Producto>();
+        public static BolVenta BolVentaRoom = new BolVenta();
+
         public static Dictionary<string, string> FacturaCompra = new Dictionary<string, string>();
         public static bool IsFecha = true;
 
@@ -56,6 +69,13 @@ namespace Portal.Kiosco
         public static bool IsPrimeraCarga = true;
         private string _tiempoRestanteGlobal;
         private TimeSpan tiempoRestante;
+
+        public static string EmailEli { get; set; }
+        public static string NombreEli { get; set; }
+        public static string ApellidoEli { get; set; }
+        public static string TelefonoEli { get; set; }
+        public static string PortalWebDB { get; set; }
+        
 
         public string TiempoRestanteGlobal
         {
@@ -74,7 +94,7 @@ namespace Portal.Kiosco
             DatosCineFans = new CineFansData();
             Peliculas = new List<Pelicula>();
             Pelicula = new Pelicula();
-            carteleraXML = XDocument.Load("https://scorecoorp.procinal.com/MobileComJson/variable41.xml");
+            
 
             string appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
 
@@ -84,14 +104,25 @@ namespace Portal.Kiosco
                 var appSettings = JObject.Parse(jsonContent);
                 var appSettingsSection = appSettings["MyConfig"];
 
+                MinDifHora = appSettingsSection["MinDifHora"].ToString();
                 idCine = appSettingsSection["TeaDefault"].ToString();
                 PuntoVenta = appSettingsSection["PuntoVenta"].ToString();
                 ValorTercero = appSettingsSection["ValorTercero"].ToString();
                 CantProductos = appSettingsSection["CantProductos"].ToString();
                 ScoreServices = appSettingsSection["ScoreServices"].ToString();
                 CantSillasBol = appSettingsSection["CantSillasBol"].ToString();
+                EmailEli = appSettingsSection["Email"].ToString();
+                NombreEli = appSettingsSection["Nombre"].ToString();
+                ApellidoEli = appSettingsSection["Apellido"].ToString();
+                PortalWebDB = appSettingsSection["PortalWebDB"].ToString();
+                TelefonoEli = appSettingsSection["Telefono"].ToString();
+                carteleraXML = XDocument.Load(appSettingsSection["Variables41"].ToString());
                 Peliculas = ObtenerPeliculas(carteleraXML, idCine);
+                
             }
+
+           
+
         }
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -315,6 +346,117 @@ namespace Portal.Kiosco
             }
 
             return peliculas;
+        }
+
+        public static void RoomReverse()
+        {
+            #region VARIABLES LOCALES
+            int lc_idearr = 0;
+
+            string pr_fecprg = App.Pelicula.FechaSel;
+            string pr_horprg = App.Pelicula.HoraSel.ToString();
+            string pr_salprg = App.Pelicula.numeroSala.ToString();
+
+            string pr_selubi = "";
+            string lc_result = string.Empty;
+            string lc_srvpar = string.Empty;
+            string lc_auxitm = string.Empty;
+            string[] ls_lstsel = new string[5];
+
+            General ob_fncgrl = new General();
+            List<string> ls_lstubi = new List<string>();
+            Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
+            #endregion
+
+            try
+            {
+                //Obtener ubicaciones de vista
+                char[] ar_charst = App.BolVentaRoom.SelUbicaciones.ToCharArray();
+                for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
+                {
+                    //Concatenar caracteres
+                    lc_auxitm += ar_charst[lc_iditem].ToString();
+
+                    //Obtener parámetro
+                    if (ar_charst[lc_iditem].ToString() == ";")
+                    {
+                        ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
+                        lc_auxitm = string.Empty;
+                    }
+                }
+
+                //Cargar ubicaciones al modelo JSON
+                lc_auxitm = string.Empty;
+                foreach (var item in ls_lstubi)
+                {
+                    lc_idearr = 0;
+                    char[] ar_chars2 = item.ToCharArray();
+                    for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                    {
+                        //Concatenar caracteres
+                        lc_auxitm += ar_chars2[lc_iditem].ToString();
+
+                        //Obtener parámetro
+                        if (ar_chars2[lc_iditem].ToString() == "_")
+                        {
+                            ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
+
+                            lc_idearr++;
+                            lc_auxitm = string.Empty;
+                        }
+                    }
+
+                    #region SCOSIL
+                    LiberaSilla ob_libsrv = new LiberaSilla();
+                    ob_libsrv.Fila = ls_lstsel[3];
+                    ob_libsrv.Sala = Convert.ToInt32(pr_salprg.Substring(0, pr_salprg.IndexOf(";")));
+                    ob_libsrv.teatro = Convert.ToInt32(App.idCine);
+                    ob_libsrv.Funcion = Convert.ToInt32(pr_horprg.Length == 4 ? pr_horprg.Substring(0, 2) : pr_horprg.Substring(0, 1));
+                    ob_libsrv.Columna = Convert.ToInt32(ls_lstsel[4]);
+                    ob_libsrv.Usuario = 777;
+                    ob_libsrv.tercero = App.ValorTercero;
+                    ob_libsrv.FechaFuncion = pr_fecprg;
+
+                    //Generar y encriptar JSON para servicio
+                    lc_srvpar = ob_fncgrl.JsonConverter(ob_libsrv);
+
+                    lc_srvpar = lc_srvpar.Replace("fechaFuncion", "FechaFuncion");
+                    lc_srvpar = lc_srvpar.Replace("sala", "Sala");
+                    lc_srvpar = lc_srvpar.Replace("funcion", "Funcion");
+                    lc_srvpar = lc_srvpar.Replace("fila", "Fila");
+                    lc_srvpar = lc_srvpar.Replace("columna", "Columna");
+                    lc_srvpar = lc_srvpar.Replace("usuario", "Usuario");
+
+                    //Encriptar Json LIB
+                    lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                    //Consumir servicio LIB
+                    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scosil/"), lc_srvpar);
+
+
+                    //Validar secuencia
+                    if (lc_result.Substring(0, 1) == "0")
+                    {
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-", "");
+                        lc_result = lc_result.Replace("[", "");
+                        lc_result = lc_result.Replace("]", "");
+
+                        //Deserializar Json y validar respuesta
+                        ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+
+
+                    }
+
+                    #endregion
+                }
+
+                //Validar acción
+            }
+            catch (Exception lc_syserr)
+            {
+
+            }
         }
     }
 }

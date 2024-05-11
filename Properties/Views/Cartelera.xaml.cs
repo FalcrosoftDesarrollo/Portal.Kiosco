@@ -37,7 +37,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
@@ -140,14 +140,9 @@ namespace Portal.Kiosco.Properties.Views
 
                             // Navegar a la siguiente pantalla (SeleccionFuncion)
                             var openWindow = new SeleccionarFuncion();
-                            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                            await Task.Delay(300);
-                            this.Visibility = Visibility.Collapsed;
-                            openWindow.Background = Brushes.White;
+                    
                             openWindow.Show();
-                            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                       
                         };
 
                         // Configurar la posición en la cuadrícula
@@ -178,15 +173,10 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+         
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        
 
         }
 
@@ -229,29 +219,19 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new Scanear_documento();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+      
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+     
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             var openWindow = new SeleccionarFuncion();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
+     
             openWindow.Show();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+          
         }
     }
 }

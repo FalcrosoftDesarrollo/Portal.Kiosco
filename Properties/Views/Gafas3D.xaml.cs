@@ -1,5 +1,7 @@
-﻿using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Data;
+using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +34,11 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
+            App.RoomReverse();
             var openWindow = new LayoutAsientos(config);
             openWindow.Show();
             this.Close();
-          
+
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -44,7 +47,7 @@ namespace Portal.Kiosco.Properties.Views
             openWindow.Background = Brushes.White;
             openWindow.Show();
             this.Close();
-          
+
         }
 
         private int gafasSeleccionadas = 0;
@@ -60,7 +63,7 @@ namespace Portal.Kiosco.Properties.Views
 
                 if (nombreBoton == "+" && gafasSeleccionadas < 10)
                 {
-                  
+
                     int index = Array.IndexOf(gafasSeleccionadasArray, null);
 
                     // Almacena el contenido del botón en el arreglo de sillas seleccionadas
@@ -73,13 +76,13 @@ namespace Portal.Kiosco.Properties.Views
 
                     lblCantidad.Content = gafasSeleccionadas;
 
-                    if(gafasSeleccionadas == 10)
+                    if (gafasSeleccionadas == 10)
                     {
                         MessageBox.Show("Solo se pueden seleccionar hasta 10 GAFAS.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                   
+
                 }
-                else if(nombreBoton == "-" && gafasSeleccionadas > 0 && ultimoIndex >= 0)
+                else if (nombreBoton == "-" && gafasSeleccionadas > 0 && ultimoIndex >= 0)
                 {
                     gafasSeleccionadasArray[ultimoIndex] = null;
 
@@ -105,5 +108,16 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
+        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        {
+            App.RoomReverse();
+            var openWindow = new Principal();
+            
+            openWindow.Show();
+            this.Close();
+        }
+
+
+       
     }
 }

@@ -54,17 +54,25 @@
               "target": "Package",
               "version": "[7.0.17, )"
             },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.Extensions.Options": {
               "target": "Package",
               "version": "[7.0.1, )"
             },
             "MySql.Data": {
               "target": "Package",
-              "version": "[8.3.0, )"
+              "version": "[8.4.0, )"
             },
-            "MySql.Data.EntityFrameworkCore": {
+            "MySql.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.22, )"
+              "version": "[8.0.2, )"
             },
             "Nancy.Serialization.JsonNet": {
               "target": "Package",
@@ -73,6 +81,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             },
             "QRCoder": {
               "target": "Package",

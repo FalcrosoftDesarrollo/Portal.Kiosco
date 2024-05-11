@@ -105,7 +105,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Portal.Kiosco.deps
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Portal.Kiosco.runtimeconfig.json
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Portal.Kiosco.pdb
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\BouncyCastle.Cryptography.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Xceed.Wpf.AvalonDock.NET5.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Xceed.Wpf.AvalonDock.Themes.Aero.NET5.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Xceed.Wpf.AvalonDock.Themes.Metro.NET5.dll
@@ -119,8 +118,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.AspNetCo
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.AspNetCore.Http.Features.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.AspNetCore.SignalR.Common.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Bcl.HashCode.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.EntityFrameworkCore.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.EntityFrameworkCore.Relational.dll
@@ -128,7 +125,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensio
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Caching.Memory.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Configuration.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Configuration.Binder.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Configuration.Json.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.DependencyInjection.dll
@@ -142,7 +138,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensio
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Options.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Microsoft.Extensions.Primitives.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\MySql.Data.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\MySql.Data.EntityFrameworkCore.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Nancy.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Nancy.Serialization.JsonNet.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Newtonsoft.Json.dll
@@ -164,7 +159,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.Toolkit.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.UI.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.Xaml.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Uno.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\ZstdSharp.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\cs-CZ\Xceed.Wpf.AvalonDock.NET5.resources.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\de\Xceed.Wpf.AvalonDock.NET5.resources.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\es\Xceed.Wpf.AvalonDock.NET5.resources.dll
@@ -177,11 +171,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\ro\Xceed.Wpf.Avalo
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\ru\Xceed.Wpf.AvalonDock.NET5.resources.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\sv\Xceed.Wpf.AvalonDock.NET5.resources.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\zh-Hans\Xceed.Wpf.AvalonDock.NET5.resources.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\comerr64.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\gssapi64.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\k5sprt64.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\krb5_64.dll
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\krbcc64.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\browser\lib\net7.0\System.Text.Encodings.Web.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\APIPortalKiosco.Entities.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\APIPortalKiosco.Entities.pdb
@@ -196,7 +185,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\C
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Combos.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\ComoCompra.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\CorreoTecladoFlotante.g.cs
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\ErrorGeneral.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Gafas3D.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\InstruccionesDatafono.g.cs
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\LayoutAsientos.g.cs
@@ -219,7 +207,6 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\C
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Combos.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\ComoCompra.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\CorreoTecladoFlotante.baml
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\ErrorGeneral.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\Gafas3D.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\InstruccionesDatafono.baml
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\Properties\Views\LayoutAsientos.baml
@@ -246,3 +233,13 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\Port
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\refint\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.pdb
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\TEFII_NET.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\MySqlConnector.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Pomelo.EntityFrameworkCore.MySql.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\BouncyCastle.Cryptography.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\MySql.EntityFrameworkCore.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\ZstdSharp.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\comerr64.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\gssapi64.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\k5sprt64.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\krb5_64.dll
+C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\krbcc64.dll

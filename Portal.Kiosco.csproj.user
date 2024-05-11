@@ -15,9 +15,6 @@
     <Compile Update="Properties\Views\ComoCompra.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Properties\Views\ErrorGeneral.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Properties\Views\CorreoTecladoFlotante.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -39,9 +36,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\ComoCompra.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Properties\Views\ErrorGeneral.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\CorreoTecladoFlotante.xaml">

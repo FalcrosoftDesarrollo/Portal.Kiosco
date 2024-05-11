@@ -21,148 +21,39 @@ namespace Portal.Kiosco.Properties.Views
     public partial class LayoutAsientos : Window
     {
         private readonly IOptions<MyConfig> config;
-
+        
         public LayoutAsientos(IOptions<MyConfig> config)
         {
-
-            InitializeComponent();
-
-            this.config = config;
-            GenerarSala();
-            ConsultarZona();
-            DataContext = ((App)Application.Current);
-            if (App.ob_diclst.Count > 0)
+            try
             {
-                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
-            }
-            else
-            {
-                lblnombre.Content = "!HOLA INVITADO";
-            }
+                InitializeComponent();
 
-            //lblFecha.Content = App.Pelicula.FechaUsuario;
-            //lblHora.Content = App.Pelicula.HoraUsuario;
-            lblSala.Content = App.Pelicula.numeroSala;
-            lblNombrePelicula.Content = App.Pelicula.Nombre;
-
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
-        }
-
-        public void ConsultarZona()
-        {
-
-            int lc_keypel = 0;
-            int lc_auxpel = 0;
-            int lc_keytea = 0;
-            int lc_auxtea = 0;
-            int lc_swtflg = 0;
-            string Variables41TPF = string.Empty;
-            string lc_auxitem = string.Empty;
-            string lc_fecitem = string.Empty;
-            string lc_flgpre = "S";
-            string pr_tippel = "";
-
-            string lc_result = string.Empty;
-            string lc_srvpar = string.Empty;
-
-            DateTime dt_fecpro;
-
-            List<DateCartelera> ob_fechas = new List<DateCartelera>();
-
-            XmlDocument ob_xmldoc = new XmlDocument();
-            //Billboard ob_bilmov = new Billboard();
-            General ob_fncgrl = new General();
-
-            APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
-            Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
-            Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
-            List<sala> ob_lisprg = new List<sala>();
-
-
-            //Obtener información de la web
-
-            ob_carprg.Teatro = App.idCine;
-            ob_carprg.tercero = App.ValorTercero;
-            ob_carprg.IdPelicula = App.Pelicula.Id;
-            ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
-            ob_carprg.TpPelicula = App.TipoSala;
-            ob_carprg.FgPelicula = "2";
-            ob_carprg.CfPelicula = "No";
-
-            //Generar y encriptar JSON para servicio PRE
-            lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
-            lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
-            lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
-            lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
-            lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
-            lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
-            lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
-
-            //Encriptar Json
-            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-            //Consumir servicio
-            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
-
-            //Validar respuesta
-            if (lc_result.Substring(0, 1) == "0")
-            {
-                //Quitar switch
-                lc_result = lc_result.Replace("0-", "");
-                ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
-                ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
-                ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
-                var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
-
-
-                if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
+                this.config = config;
+                GenerarSala();
+                DataContext = ((App)Application.Current);
+                if (App.ob_diclst.Count > 0)
                 {
-                    foreach (var itemZonas in Zonas)
-                    {
-                        foreach (var item in ob_lisprg)
-                        {
-                            if (item.hora != null && item.hora.Count > 0)
-                            {
-                                foreach (var item2 in item.hora)
-                                {
-                                    foreach (var item3 in item2.TipoZonaOld)
-                                    {
-                                        if (itemZonas.Value == item3.nombreZona)
-                                        {
-                                            foreach (var item4 in item3.TipoSilla)
-                                            {
-                                                if (item4.Tarifa.Count > 0)
-                                                {
-                                                    foreach (var item5 in item4.Tarifa)
-                                                    {
-                                                        App.ValorTarifa = Convert.ToDecimal(item5.valor);
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (item4.nombreTipoSilla != "Discapacitado")
-                                                    {
-                                                        // Código relacionado con la ausencia de tarifas
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
                 }
                 else
                 {
-                    // Código relacionado con la falta de datos en ViewBag
+                    lblnombre.Content = "!HOLA INVITADO";
                 }
-            }
 
+                //lblFecha.Content = App.Pelicula.FechaUsuario;
+                //lblHora.Content = App.Pelicula.HoraUsuario;
+                lblSala.Content = App.Pelicula.numeroSala;
+                lblNombrePelicula.Content = App.Pelicula.Nombre;
+
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
+                gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            }
+            catch (Exception e) {
+                MessageBox.Show("Error", e.Message.ToString());
+            }
         }
+
+
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
@@ -174,7 +65,7 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
-
+            Room(App.BolVentaRoom);
             if (lblTotal.Content == "TOTAL: $0")
             {
                 MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación");
@@ -225,7 +116,7 @@ namespace Portal.Kiosco.Properties.Views
             string keypelicula = App.Pelicula.Id;
 
             //var keysal = App.Peliculas.FirstOrDefault(x => x.Id == keypelicula);
-
+            var pelicula = App.Pelicula;
             ob_datsal.Sala = Convert.ToInt32(App.Pelicula.numeroSala);
             ob_datsal.Teatro = Convert.ToInt32(App.idCine);
             ob_datsal.Tercero = 2.ToString();
@@ -261,12 +152,9 @@ namespace Portal.Kiosco.Properties.Views
             ob_datsal.FechaFuncion = App.Pelicula.FechaSel.Substring(3);
 
             string idFuncion = App.Pelicula.HoraSel;
-            string miliar = App.Peliculas.SelectMany(p => p.DiasDisponibles)
-                                          .SelectMany(f => f.horafun)
-                                          .FirstOrDefault(h => h.idFuncion == idFuncion)?.horunv;
 
-            ob_datsal.Funcion = Convert.ToInt32(miliar.Substring(0, 2));
-
+            ob_datsal.Funcion = Convert.ToInt32(App.Pelicula.HoraMilitar.Substring(0, 2));
+            
             //Generar y encriptar JSON para servicio EST
             lc_srvpar = ob_fncgrl.JsonConverter(ob_datsal);
             lc_srvpar = lc_srvpar.Replace("sala", "Sala");
@@ -345,6 +233,7 @@ namespace Portal.Kiosco.Properties.Views
             ob_datprg.FilSala = lc_maxfil;
             ob_datprg.ColSala = lc_maxcol;
             ob_datprg.MapaSala = mt_datsal;
+            App.BolVentaRoom  = ob_datprg;
             AgregarUbicacionAlWrapPanel(ob_datprg);
 
         }
@@ -428,6 +317,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     border.Child = button;
 
+
                     ContenedorSala.Rows = bolVenta.FilSala;
                     ContenedorSala.Columns = bolVenta.ColSala;
                     ContenedorSala.Children.Add(border);
@@ -460,13 +350,13 @@ namespace Portal.Kiosco.Properties.Views
                     // Decrementa el contador de sillas seleccionadas
                     sillasSeleccionadas--;
                 }
-                else if (sillasSeleccionadas < 10)
+                else if (sillasSeleccionadas < Convert.ToInt32(App.CantSillasBol))
                 {
                     // Si la silla no está seleccionada y el límite de selección no ha sido alcanzado
 
                     // Encuentra el primer índice vacío en el arreglo de sillas seleccionadas
                     int index = Array.IndexOf(sillasSeleccionadasArray, null);
-
+                    App.BolVentaRoom.SelUbicaciones = App.BolVentaRoom.SelUbicaciones + button.Name.ToString() + ";";
                     // Almacena el contenido del botón en el arreglo de sillas seleccionadas
                     sillasSeleccionadasArray[index] = silla;
 
@@ -571,8 +461,8 @@ namespace Portal.Kiosco.Properties.Views
 
             try
             {
-
-                if (App.Secuencia != "")
+                var secuencia = App.Secuencia;
+                if (secuencia != null)
                 {
                     lc_auxsec = App.Secuencia.ToString();
                 }
@@ -642,35 +532,44 @@ namespace Portal.Kiosco.Properties.Views
                     pr_bolvta.IdTarifa = "";
                     pr_bolvta.MapaSala = new Ubicaciones[1, 1];
 
-                    pr_bolvta.EmailEli = "";
-                    pr_bolvta.NombreEli = "";
-                    pr_bolvta.ApellidoEli = "";
-                    pr_bolvta.TelefonoEli = "";
+                    pr_bolvta.EmailEli = App.EmailEli.ToString();
+                    pr_bolvta.NombreEli = App.NombreEli.ToString();
+                    pr_bolvta.Nombre = App.NombreEli.ToString();
+                    pr_bolvta.ApellidoEli = App.ApellidoEli.ToString(); ;
+                    pr_bolvta.TelefonoEli = App.TelefonoEli.ToString();
 
                     pr_bolvta.Tipo = "B";
-                    pr_bolvta.NombreTarifa = pr_bolvta.NombreTar;
-                    pr_bolvta.NombrePelicula = pr_bolvta.NombrePel;
-
-                    pr_bolvta.Sala = Convert.ToInt32(pr_bolvta.KeySala);
-                    pr_bolvta.KeySala = pr_bolvta.KeySala;
-                    var telefonodefault = "";
+                    pr_bolvta.NombreTarifa = App.NombreTarifa;
+                    pr_bolvta.NombrePelicula = App.Pelicula.Nombre;
+                    pr_bolvta.SwtVenta = "V";
+                    pr_bolvta.Sala = Convert.ToInt32(App.Pelicula.numeroSala);
+                    pr_bolvta.KeySala = App.Pelicula.numeroSala;
+                    var telefonodefault = 0;
                     pr_bolvta.Telefono = Convert.ToInt64(telefonodefault);
 
-                    pr_bolvta.Nombre = "";
-                    pr_bolvta.Apellido = "";
+                    pr_bolvta.NombrePel = App.Pelicula.Nombre;
+                    pr_bolvta.NombreFec = App.Pelicula.FechaUsuario;
 
-                    pr_bolvta.FecProg = pr_bolvta.FecProg;
-                    pr_bolvta.HorProg = pr_bolvta.HorProg;
-                    pr_bolvta.KeyTarifa = pr_bolvta.KeyTarifa;
+                    pr_bolvta.NombreHor = App.Pelicula.HoraUsuario;
+                    pr_bolvta.Telefono = Convert.ToUInt32(App.TelefonoEli) ;
+                    pr_bolvta.NombreTar = App.NombreTarifa;
+                     
+                    pr_bolvta.Apellido = App.ApellidoEli;
+
+                    pr_bolvta.FecProg = App.Pelicula.FechaSel.ToString().Substring(3);
+                    pr_bolvta.HorProg = App.Pelicula.HoraMilitar;
+                    pr_bolvta.KeyTarifa = App.KeyTarifa.ToString();
                     pr_bolvta.KeyTeatro = App.idCine;
-                    pr_bolvta.KeyPelicula = pr_bolvta.KeyPelicula;
+                    pr_bolvta.KeyPelicula = App.Pelicula.Id;
                     pr_bolvta.KeySecuencia = lc_auxsec;
-
+                    pr_bolvta.NombreFec = App.NombreFec;
+                    pr_bolvta.Censura = App.Censura;
                     pr_bolvta.Tercero = App.ValorTercero;
+                    pr_bolvta.Imagen = App.Imagen;
                     pr_bolvta.Secuencia = Convert.ToInt32(lc_auxsec);
                     pr_bolvta.PuntoVenta = Convert.ToInt32(App.PuntoVenta);
                     pr_bolvta.IdFuncion = pr_bolvta.HorProg.ToString().Length == 4 ? Convert.ToInt32(pr_bolvta.HorProg.ToString().Substring(0, 2)) : Convert.ToInt32(pr_bolvta.HorProg.ToString().Substring(0, 1));
-
+                    pr_bolvta.TipoSilla = App.TipoSilla;
                     //Obtener ubicaciones de vista
                     char[] ar_charst = pr_bolvta.SelUbicaciones.ToCharArray();
                     for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
@@ -710,8 +609,10 @@ namespace Portal.Kiosco.Properties.Views
                         ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = Convert.ToInt32(pr_bolvta.KeyTarifa), FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
                     }
 
-                    pr_bolvta.Ubicaciones = ob_ubiprg;
-
+                    pr_bolvta.Ubicaciones =  ob_ubiprg;
+                    
+                    pr_bolvta.FilSala = 0;
+                    pr_bolvta.ColSala = 0;
                     if (pr_bolvta.Imagen == null)
                         pr_bolvta.Imagen = "NA";
 
@@ -741,6 +642,7 @@ namespace Portal.Kiosco.Properties.Views
                     lc_srvpar = lc_srvpar.Replace("ubicaciones", "Ubicaciones");
                     lc_srvpar = lc_srvpar.Replace("NombrePelicula", "Descripcion");
 
+             
                     //Encriptar Json GRU
                     lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
@@ -764,7 +666,7 @@ namespace Portal.Kiosco.Properties.Views
 
                             if (ob_auxrta.ContainsKey("Validación"))
                             {
-                                MessageBox.Show("");
+                                //MessageBox.Show("");
                             }
                             else
                             {

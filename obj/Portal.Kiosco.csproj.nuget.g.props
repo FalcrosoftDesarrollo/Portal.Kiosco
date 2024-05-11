@@ -15,6 +15,7 @@
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)uno.fonts.fluent\2.3.0\buildTransitive\Uno.Fonts.Fluent.props" Condition="Exists('$(NuGetPackageRoot)uno.fonts.fluent\2.3.0\buildTransitive\Uno.Fonts.Fluent.props')" />
     <Import Project="$(NuGetPackageRoot)uno.ui\5.1.104\buildTransitive\net7.0-windows\Uno.UI.props" Condition="Exists('$(NuGetPackageRoot)uno.ui\5.1.104\buildTransitive\net7.0-windows\Uno.UI.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\7.0.16\buildTransitive\net6.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\7.0.16\buildTransitive\net6.0\Microsoft.EntityFrameworkCore.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgUno_UI Condition=" '$(PkgUno_UI)' == '' ">C:\Users\stron\.nuget\packages\uno.ui\5.1.104</PkgUno_UI>
