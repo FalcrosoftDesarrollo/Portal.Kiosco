@@ -1,7 +1,8 @@
 ﻿using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Options;
 using System;
-using System.Printing;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,8 @@ namespace Portal.Kiosco.Properties.Views
     {
 
         private readonly IOptions<MyConfig> config;
+        private bool isThreadActive = true;
+
         public BoletasGafasAlimentos()
         {
             InitializeComponent();
@@ -33,7 +36,38 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
 
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
         }
 
         private void btnImprimir_Click(object sender, RoutedEventArgs e)
@@ -110,6 +144,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
+            isThreadActive = false;
             CorreoTecladoFlotante w = new CorreoTecladoFlotante(config);
             this.Close();
             w.ShowDialog();
@@ -117,6 +152,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
         {
+            isThreadActive = false;
             InstruccionesDatafono w = new InstruccionesDatafono();
             this.Close();
             w.ShowDialog();
@@ -124,32 +160,19 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
+            isThreadActive = false;
+            Principal w = new Principal();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            w.ShowDialog();
 
         }
 
         private async void btnEnviar_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new CorreoTecladoFlotante(config);
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
+            isThreadActive = false;
+            CorreoTecladoFlotante w = new CorreoTecladoFlotante(config);
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
+            w.ShowDialog();
         }
 
 

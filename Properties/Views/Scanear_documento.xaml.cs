@@ -5,13 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
-using Xceed.Wpf.Toolkit;
 using Cartelera = Portal.Kiosco.Properties.Views.Cartelera;
 
 namespace Portal.Kiosco
@@ -21,20 +16,55 @@ namespace Portal.Kiosco
     /// </summary>
     public partial class Scanear_documento : Window
     {
+        private bool isThreadActive = true;
+
         public Scanear_documento()
         {
             InitializeComponent();
             TextDocumento.Focus();
             TextDocumento.Text = "";
 
-           var monitorThread = new Thread(MonitorTextChanged);
+            var monitorThread = new Thread(MonitorTextChanged);
             monitorThread.IsBackground = true;
             monitorThread.Start();
 
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
         }
+
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
+        }
+
         private void Scanear_documento_Loaded(object sender, RoutedEventArgs e)
         {
         }
@@ -49,15 +79,17 @@ namespace Portal.Kiosco
         {
             if (App.IsBoleteriaConfiteria == false)
             {
-                var openWindow = new Cartelera();
-                openWindow.Show();
+                isThreadActive = false;
+                Cartelera w = new Cartelera();
                 this.Close();
+                w.ShowDialog();
             }
             else
             {
-                var openWindow = new Combos();
-                 openWindow.Show();
+                isThreadActive = false;
+                Combos w = new Combos();
                 this.Close();
+                w.ShowDialog();
             }
         }
 
@@ -137,9 +169,10 @@ namespace Portal.Kiosco
 
         private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new ComoCompra();
-            openWindow.Show();
+            isThreadActive = false;
+            ComoCompra w = new ComoCompra();
             this.Close();
+            w.ShowDialog();
         }
 
         private async void TextDocumento_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -158,23 +191,20 @@ namespace Portal.Kiosco
             {
                 if (!carteleraWindowLoaded && App.IsBoleteriaConfiteria == false)
                 {
-                    var openWindow = new Cartelera();
-
-                    openWindow.Show();
+                    isThreadActive = false;
+                    Cartelera w = new Cartelera();
                     this.Close();
-
+                    w.ShowDialog();
                 }
                 else if (App.IsBoleteriaConfiteria)
                 {
-                    var openWindow = new Combos();
-
-                    openWindow.Show();
+                    isThreadActive = false;
+                    Combos w = new Combos();
                     this.Close();
+                    w.ShowDialog();
                 }
             });
         }
-
-
 
         private async void MonitorTextChanged()
         {

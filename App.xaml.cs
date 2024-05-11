@@ -2,15 +2,11 @@
 using APIPortalWebMed.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Portal.Kiosco.Properties.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using static Org.BouncyCastle.Math.EC.ECCurve;
@@ -49,6 +45,10 @@ namespace Portal.Kiosco
         public static decimal PrecioUnitario { get; set; } = 3000; // Precio unitario de las gafas
         public static decimal CantidadGafas { get; set; } // Lista para almacenar la cantidad de gafas seleccionadas
         public static string variables41 { get; set; }
+        public static string _tiempoRestanteGlobal { get; set; }
+        public static TimeSpan tiempoRestante { get; set; }
+
+
         private List<UIElement> elementosCombos = new List<UIElement>();
         private List<UIElement> elementosAlimentos = new List<UIElement>();
         private List<UIElement> elementosBebidas = new List<UIElement>();
@@ -132,7 +132,7 @@ namespace Portal.Kiosco
 
         private void IniciarContadorGlobal()
         {
-            tiempoRestante = TimeSpan.FromMinutes(2);
+            tiempoRestante = TimeSpan.FromSeconds(10);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
 
             DispatcherTimer contadorGlobalTimer = new DispatcherTimer();
@@ -146,11 +146,6 @@ namespace Portal.Kiosco
                 else
                 {
                     ResetearTimer();
-
-                    // Aquí puedes añadir el código para cambiar de ventana si es necesario
-                    var openWindow = new Principal();
-                    openWindow.Show();
-                
                 }
             };
             contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
@@ -159,7 +154,7 @@ namespace Portal.Kiosco
 
         public void ResetearTimer()
         {
-            tiempoRestante = TimeSpan.FromMinutes(15);
+            tiempoRestante = TimeSpan.FromSeconds(10);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
         }
         private string DiaMes(string pr_daynum, string pr_flag)

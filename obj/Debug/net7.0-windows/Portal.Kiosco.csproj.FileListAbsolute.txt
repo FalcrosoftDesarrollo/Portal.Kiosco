@@ -232,6 +232,7 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\ref\Portal.Kiosco.
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\refint\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.pdb
+<<<<<<< HEAD
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\TEFII_NET.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\MySqlConnector.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\Pomelo.EntityFrameworkCore.MySql.dll
@@ -243,3 +244,5 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\n
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\k5sprt64.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\krb5_64.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\runtimes\win-x64\native\krbcc64.dll
+=======
+>>>>>>> d2f9e2486e3457b5d0e948e15f9017ee89e1d0cb

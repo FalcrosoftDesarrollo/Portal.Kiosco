@@ -14,8 +14,7 @@
           "Microsoft.Extensions.Configuration.FileExtensions": "8.0.0",
           "Microsoft.Extensions.Configuration.Json": "8.0.0",
           "Newtonsoft.Json": "13.0.3",
-          "Uno.UI": "5.1.104",
-          "TEFII_NET": "1.0.0.0"
+          "Uno.UI": "5.1.104"
         },
         "runtime": {
           "Portal.Kiosco.dll": {}
@@ -822,14 +821,6 @@
         "runtime": {
           "APIPortalKiosco.Entities.dll": {}
         }
-      },
-      "TEFII_NET/1.0.0.0": {
-        "runtime": {
-          "TEFII_NET.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.30.0.0"
-          }
-        }
       }
     }
   },
@@ -1394,11 +1385,6 @@
     },
     "APIPortalKiosco.Entities/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "TEFII_NET/1.0.0.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

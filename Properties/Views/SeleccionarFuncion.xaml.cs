@@ -1,13 +1,12 @@
 ﻿using APIPortalKiosco.Entities;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -25,7 +24,7 @@ namespace Portal.Kiosco.Properties.Views
         public List<UIElement> elementosConservados3D;
         public List<UIElement> elementosConservadosGeneral;
         private readonly IOptions<MyConfig> config;
-
+        private bool isThreadActive = true;
 
         public SeleccionarFuncion()
         {
@@ -48,22 +47,55 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
         }
+
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
+        }
+
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Cartelera();
-            openWindow.Show();
+            isThreadActive = false;
+            Cartelera w = new Cartelera();
             this.Close();
-
+            w.ShowDialog();
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            CargarFechasDesdeSelect();
-            var openWindow = new LayoutAsientos(config);
-            openWindow.Show();
+            isThreadActive = false;
+            LayoutAsientos w = new LayoutAsientos(config);
             this.Close();
+            w.ShowDialog();
         }
 
         private async void CargarFechasDesdeXml()
@@ -438,10 +470,10 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSelectFecha_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Cartelera();
-            openWindow.Show();
+            isThreadActive = false;
+            Cartelera w = new Cartelera();
             this.Close();
-           
+            w.ShowDialog();
         }
 
         private void CrearBotonFecha(string fecha, string fecunv)
@@ -568,7 +600,6 @@ namespace Portal.Kiosco.Properties.Views
 
         }
 
-        // Método para encontrar el padre de un tipo específico
         public T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             DependencyObject parent = VisualTreeHelper.GetParent(child);
@@ -761,11 +792,11 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
+            isThreadActive = false;
             App.IsBoleteriaConfiteria = false;
-            var openWindow = new Principal();
-            openWindow.Show();
+            Principal w = new Principal();
             this.Close();
-
+            w.ShowDialog();
         }
     }
 }

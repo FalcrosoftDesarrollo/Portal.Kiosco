@@ -7,10 +7,7 @@
         mc:Ignorable="d"
         Title="BoletaFactura" Height="900" Width="450">
     <Grid Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -19,11 +16,9 @@
 
 
 
-        <Border Grid.Row="1"  BorderThickness="1" Margin="10,10,10,10" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+        <Border BorderThickness="1" Margin="10,10,10,10" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <StackPanel Width="400">
                 <TextBlock Text="Colombiana de Cines S.A." FontSize="16" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
-                <!-- Aquí puedes agregar los detalles de la factura, como productos, cantidades, precios, etc. -->
-                <!-- Por ejemplo: -->
                 <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
                     <TextBlock Text="NIT: " FontWeight="Bold" HorizontalAlignment="Center"/>
                     <TextBlock Text="900.090.098-0" FontWeight="Bold" HorizontalAlignment="Center"/>
@@ -49,7 +44,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Fecha:     " FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="26/03/2024 15:44:07" HorizontalAlignment="Left" FontWeight="Bold"/>
+                    <TextBlock Text="" Name="FechaFac" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5" >
@@ -69,7 +64,7 @@
 
 
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Margin="10">
+                <StackPanel Orientation="Vertical" Margin="10" x:Name="ContenedorFac">
                     <!-- Encabezado de la tabla -->
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -87,7 +82,7 @@
                         <TextBlock Grid.Column="4" Text="TOTAL" FontWeight="Bold" Margin="5"/>
                     </Grid>
                     <!-- Datos de la tabla -->
-                    <Grid>
+                    <Grid x:Name="TablaProductos">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -97,13 +92,15 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Fila 1 -->
-                        <TextBlock Grid.Column="0" Text="2" Margin="5"/>
-                        <TextBlock Grid.Column="1" Text="Producto A" Margin="5"/>
-                        <TextBlock Grid.Column="2" Text="IM1" Margin="5"/>
-                        <TextBlock Grid.Column="3" Text="$50" Margin="5"/>
-                        <TextBlock Grid.Column="4" Text="$100" Margin="5"/>
+                        <TextBlock x:Name="Cantidad1" Grid.Column="0" Text="" Margin="5"/>
+                        <TextBlock x:Name="Producto1" Grid.Column="1" Text="" Margin="5"/>
+                        <TextBlock x:Name="Imagen1" Grid.Column="2" Text="" Margin="5"/>
+                        <TextBlock x:Name="Precio1" Grid.Column="3" Text="" Margin="5"/>
+                        <TextBlock x:Name="Total1" Grid.Column="4" Text="" Margin="5"/>
+
 
                     </Grid>
+
                 </StackPanel>
                 <Border BorderThickness="0,1,0,1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -122,7 +119,7 @@
                             <TextBlock Text="$13,796.30" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0,00" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="$1,103.70" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="TOTAL: $14,900.00" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="TOTAL: $14,900.00" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>
                         </StackPanel>
 
                     </StackPanel>
@@ -152,6 +149,10 @@
             </StackPanel>
         </Border>
 
+        <Border Grid.Row="1">
+            <Image Name="imgqr" />
+        </Border>
+        
 
         <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10,10,10,10" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <TextBlock Text="Solo se permite el ingreso a las instalaciones de Cinemas"  HorizontalAlignment="Center"/>

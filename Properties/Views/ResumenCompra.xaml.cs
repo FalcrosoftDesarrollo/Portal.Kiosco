@@ -7,18 +7,19 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Portal.Kiosco.Properties.Views
 {
     public partial class ResumenCompra : Window
     {
         private readonly IOptions<MyConfig> config;
+        private bool isThreadActive = true;
 
         public ResumenCompra(IOptions<MyConfig> config)
         {
@@ -33,8 +34,39 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
-
             GenerateResumen();
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
         }
 
         public void PagoConCash(string ref_payco = "")
@@ -259,20 +291,12 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
-
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Combodeluxe1();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
+            isThreadActive = false;
+            Combodeluxe1 w = new Combodeluxe1();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            w.ShowDialog();
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -284,30 +308,26 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            App.RoomReverse();
-            var openWindow = new Principal();
-    
-            openWindow.Show();
+            isThreadActive = false;
+            Principal w = new Principal();
             this.Close();
-        
-
+            w.ShowDialog();
         }
 
         private async void btnPagoTarjeta_Click(object sender, RoutedEventArgs e)
         {
-
-            var openWindow = new BoletasGafasAlimentos();
-            openWindow.Show();
+            isThreadActive = false;
+            BoletasGafasAlimentos w = new BoletasGafasAlimentos();
             this.Close();
-     
+            w.ShowDialog();
         }
 
         private async void btnPagarCash_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new PagoCashback();
-            openWindow.Show();
+            isThreadActive = false;
+            PagoCashback w = new PagoCashback();
             this.Close();
-             
+            w.ShowDialog();
         }
 
         public void GenerateResumen()
@@ -430,7 +450,6 @@ namespace Portal.Kiosco.Properties.Views
                     break;
             }
         }
-
 
         public string buscarNombre(List<Producto> productos, Decimal Codigo)
         {

@@ -4,19 +4,15 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
-
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Frame11.xaml
-    /// </summary>
+
     public partial class Combodeluxe1 : Window
     {
         private readonly IOptions<MyConfig> config;
@@ -24,7 +20,7 @@ namespace Portal.Kiosco.Properties.Views
         private int ContadorProductos = 1;
         private List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal)>();
         private List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria)> datosFinalesComida = new List<(decimal, string, decimal, string, decimal)>();
-
+        private bool isThreadActive = true;
 
         public Combodeluxe1()
         {
@@ -41,6 +37,38 @@ namespace Portal.Kiosco.Properties.Views
             CrearCombosYbebidas(App.ProductosSeleccionados);
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
         }
 
         public void CrearCombosYbebidas(List<Producto> productos)
@@ -363,50 +391,32 @@ namespace Portal.Kiosco.Properties.Views
 
             if (ContadorProductos > App.ProductosSeleccionados.Count())
             {
-
-                var openWindow = new ResumenCompra(config);
-                openWindow.Show();
+                isThreadActive = false;
+                ResumenCompra w = new ResumenCompra(config);
                 this.Close();
-              
-
+                w.ShowDialog();
             }
             else
             {
                 CrearCombosYbebidas(App.ProductosSeleccionados);
             }
-
-
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
+            isThreadActive = false;
             App.ProductosSeleccionados.Clear();
-            var openWindow = new Combos();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
+            Combos w = new Combos();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
+            w.ShowDialog();
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
+            isThreadActive = false;
+            Principal w = new Principal();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
+            w.ShowDialog();
         }
     }
 }
