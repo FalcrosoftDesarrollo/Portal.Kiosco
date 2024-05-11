@@ -64,6 +64,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
+            App.RoomReverse();
             LayoutAsientos w = new LayoutAsientos(config);
             this.Close();
             w.ShowDialog();

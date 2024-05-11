@@ -46,17 +46,19 @@ namespace Portal.Kiosco.Properties.Views
                 lblSala.Content = App.Pelicula.numeroSala;
                 lblNombrePelicula.Content = App.Pelicula.Nombre;
 
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-            Thread thread = new Thread(() =>
-            {
-                while (isThreadActive)
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                Thread thread = new Thread(() =>
                 {
-                    ComprobarTiempo();
-                }
-            });
-            thread.IsBackground = true;
-            thread.Start();
+                    while (isThreadActive)
+                    {
+                        ComprobarTiempo();
+                    }
+                });
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            catch (Exception e) { }
         }
 
         private void ComprobarTiempo()
@@ -81,120 +83,6 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
         }
-
-        public void ConsultarZona()
-        {
-
-            int lc_keypel = 0;
-            int lc_auxpel = 0;
-            int lc_keytea = 0;
-            int lc_auxtea = 0;
-            int lc_swtflg = 0;
-            string Variables41TPF = string.Empty;
-            string lc_auxitem = string.Empty;
-            string lc_fecitem = string.Empty;
-            string lc_flgpre = "S";
-            string pr_tippel = "";
-
-            string lc_result = string.Empty;
-            string lc_srvpar = string.Empty;
-
-            DateTime dt_fecpro;
-
-            List<DateCartelera> ob_fechas = new List<DateCartelera>();
-
-            XmlDocument ob_xmldoc = new XmlDocument();
-            //Billboard ob_bilmov = new Billboard();
-            General ob_fncgrl = new General();
-
-            APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
-            Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
-            Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
-            List<sala> ob_lisprg = new List<sala>();
-
-
-            //Obtener información de la web
-
-            ob_carprg.Teatro = App.idCine;
-            ob_carprg.tercero = App.ValorTercero;
-            ob_carprg.IdPelicula = App.Pelicula.Id;
-            ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
-            ob_carprg.TpPelicula = App.TipoSala;
-            ob_carprg.FgPelicula = "2";
-            ob_carprg.CfPelicula = "No";
-
-            //Generar y encriptar JSON para servicio PRE
-            lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
-            lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
-            lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
-            lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
-            lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
-            lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
-            lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
-
-            //Encriptar Json
-            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-            //Consumir servicio
-            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
-
-            //Validar respuesta
-            if (lc_result.Substring(0, 1) == "0")
-            {
-                //Quitar switch
-                lc_result = lc_result.Replace("0-", "");
-                ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
-                ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
-                ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
-                var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
-
-
-                if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
-                {
-                    foreach (var itemZonas in Zonas)
-                    {
-                        foreach (var item in ob_lisprg)
-                        {
-                            if (item.hora != null && item.hora.Count > 0)
-                            {
-                                foreach (var item2 in item.hora)
-                                {
-                                    foreach (var item3 in item2.TipoZonaOld)
-                                    {
-                                        if (itemZonas.Value == item3.nombreZona)
-                                        {
-                                            foreach (var item4 in item3.TipoSilla)
-                                            {
-                                                if (item4.Tarifa.Count > 0)
-                                                {
-                                                    foreach (var item5 in item4.Tarifa)
-                                                    {
-                                                        App.ValorTarifa = Convert.ToDecimal(item5.valor);
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (item4.nombreTipoSilla != "Discapacitado")
-                                                    {
-                                                        // Código relacionado con la ausencia de tarifas
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    // Código relacionado con la falta de datos en ViewBag
-                }
-            }
-
-
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
@@ -298,7 +186,7 @@ namespace Portal.Kiosco.Properties.Views
             string idFuncion = App.Pelicula.HoraSel;
 
             ob_datsal.Funcion = Convert.ToInt32(App.Pelicula.HoraMilitar.Substring(0, 2));
-            
+
             //Generar y encriptar JSON para servicio EST
             lc_srvpar = ob_fncgrl.JsonConverter(ob_datsal);
             lc_srvpar = lc_srvpar.Replace("sala", "Sala");
@@ -377,7 +265,7 @@ namespace Portal.Kiosco.Properties.Views
             ob_datprg.FilSala = lc_maxfil;
             ob_datprg.ColSala = lc_maxcol;
             ob_datprg.MapaSala = mt_datsal;
-            App.BolVentaRoom  = ob_datprg;
+            App.BolVentaRoom = ob_datprg;
             AgregarUbicacionAlWrapPanel(ob_datprg);
 
         }
@@ -689,9 +577,9 @@ namespace Portal.Kiosco.Properties.Views
                     pr_bolvta.NombreFec = App.Pelicula.FechaUsuario;
 
                     pr_bolvta.NombreHor = App.Pelicula.HoraUsuario;
-                    pr_bolvta.Telefono = Convert.ToUInt32(App.TelefonoEli) ;
+                    pr_bolvta.Telefono = Convert.ToUInt32(App.TelefonoEli);
                     pr_bolvta.NombreTar = App.NombreTarifa;
-                     
+
                     pr_bolvta.Apellido = App.ApellidoEli;
 
                     pr_bolvta.FecProg = App.Pelicula.FechaSel.ToString().Substring(3);
@@ -747,8 +635,8 @@ namespace Portal.Kiosco.Properties.Views
                         ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = Convert.ToInt32(pr_bolvta.KeyTarifa), FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
                     }
 
-                    pr_bolvta.Ubicaciones =  ob_ubiprg;
-                    
+                    pr_bolvta.Ubicaciones = ob_ubiprg;
+
                     pr_bolvta.FilSala = 0;
                     pr_bolvta.ColSala = 0;
                     if (pr_bolvta.Imagen == null)
@@ -780,7 +668,7 @@ namespace Portal.Kiosco.Properties.Views
                     lc_srvpar = lc_srvpar.Replace("ubicaciones", "Ubicaciones");
                     lc_srvpar = lc_srvpar.Replace("NombrePelicula", "Descripcion");
 
-             
+
                     //Encriptar Json GRU
                     lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 

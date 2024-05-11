@@ -110,7 +110,7 @@ namespace Portal.Kiosco.Properties.Views
 
         //    try
         //    {
-        //        //Validar redireccion externa
+        //        Validar redireccion externa
         //        if (pr_secpro == null)
         //            pr_secpro = "0";
         //        if (pr_swtven == null)
@@ -120,44 +120,44 @@ namespace Portal.Kiosco.Properties.Views
         //        if (pr_tbview == null)
         //            pr_tbview = "";
 
-        //        //Inicializar valores de entrada
+        //        Inicializar valores de entrada
         //        pr_secpro = pr_secpro;
         //        pr_swtven = pr_swtven;
         //        pr_tiplog = pr_tiplog;
         //        pr_tbview = pr_tbview;
 
-        //        //Session carrito de compras
-        //        //session.Remove("pr_tbview");
-        //        //session.SetString("pr_tbview", pr_tbview);
-        //        //session.Remove("pr_secpro");
-        //        //session.SetString("pr_secpro", pr_secpro);
-        //        //session.Remove("pr_swtven");
-        //        //session.SetString("pr_swtven", pr_swtven);
-        //        //session.Remove("pr_tiplog");
-        //        //session.SetString("pr_tiplog", pr_tiplog);
+        //        Session carrito de compras
+        //        session.Remove("pr_tbview");
+        //        session.SetString("pr_tbview", pr_tbview);
+        //        session.Remove("pr_secpro");
+        //        session.SetString("pr_secpro", pr_secpro);
+        //        session.Remove("pr_swtven");
+        //        session.SetString("pr_swtven", pr_swtven);
+        //        session.Remove("pr_tiplog");
+        //        session.SetString("pr_tiplog", pr_tiplog);
 
-        //        //URLPortal(config);
+        //        URLPortal(config);
 
-        //        //Validar ciudad y teatro desde web externa
-        //        //if (Teatro != "0")
-        //        //    Selteatros(Teatro);
+        //        Validar ciudad y teatro desde web externa
+        //        if (Teatro != "0")
+        //            Selteatros(Teatro);
 
-        //        ////Validar seleccion de teatro
-        //        //if (Session.GetString("Teatro") == null)
-        //        //{
-        //        //    //Devolver vista de error
-        //        //    return RedirectToAction("Error", "Pages", new { pr_message = "Debe seleccionar un teatro para continuar", pr_flag = "P" });
-        //        //}
+        //        //Validar seleccion de teatro
+        //        if (Session.GetString("Teatro") == null)
+        //        {
+        //            //Devolver vista de error
+        //            return RedirectToAction("Error", "Pages", new { pr_message = "Debe seleccionar un teatro para continuar", pr_flag = "P" });
+        //        }
 
 
-        //        //ListCarrito();
+        //        ListCarrito();
 
-        //        //Inicializar variables
+        //        Inicializar variables
         //        string listaM = null;
         //        bool alertS = false;
         //        string cantidadProductos = App.CantProductos;
-        //        //ViewBag.UrlRetailImg = config.Value.UrlRetailImg;
-        //        //ViewBag.ClientFrecnt = Session.GetString("ClienteFrecuente");
+        //        ViewBag.UrlRetailImg = config.Value.UrlRetailImg;
+        //        ViewBag.ClientFrecnt = Session.GetString("ClienteFrecuente");
         //        string tipo = pr_tiplog;
 
         //        Teatro = session/*.GetString("TeatroNombre")*/;
@@ -180,43 +180,43 @@ namespace Portal.Kiosco.Properties.Views
         //        string switchVenta = pr_swtven;
 
         //        #region SERVICIO SCOPRE
-        //        //Asignar valores PRE
+        //        Asignar valores PRE
         //        ob_scopre.Punto = Convert.ToInt32(config.Value.PuntoVenta);
         //        ob_scopre.Teatro = session/*.GetString("Teatro")*/ != "0" ? Convert.ToInt32(session/*.GetString("Teatro")*/) : Convert.ToInt32(session/*.GetString("Teatro")*/);
         //        ob_scopre.Tercero = config.Value.ValorTercero;
 
-        //        //Generar y encriptar JSON para servicio PRE
+        //        Generar y encriptar JSON para servicio PRE
         //        lc_srvpar = ob_fncgrl.JsonConverter(ob_scopre);
         //        lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
         //        lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
         //        lc_srvpar = lc_srvpar.Replace("punto", "Punto");
 
-        //        //Encriptar Json PRE
+        //        Encriptar Json PRE
         //        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-        //        //Consumir servicio PRE
-        //        //if (ViewBag.ClientFrecnt == "No")
-        //        //    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
-        //        //else
-        //        //    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
+        //        Consumir servicio PRE
+        //        if (ViewBag.ClientFrecnt == "No")
+        //            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
+        //        else
+        //            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
 
-        //        //Generar Log
-        //        //LogSales logSales = new LogSales();
-        //        //LogAudit logAudit = new LogAudit(config);
-        //        //logSales.Id = Guid.NewGuid().ToString();
-        //        //logSales.Fecha = DateTime.Now;
-        //        //logSales.Programa = "SalesCon/ProductList";
-        //        //logSales.Metodo = "GET";
-        //        //logSales.ExceptionMessage = lc_srvpar;
-        //        //logSales.InnerExceptionMessage = lc_result;
+        //        Generar Log
+        //        LogSales logSales = new LogSales();
+        //        LogAudit logAudit = new LogAudit(config);
+        //        logSales.Id = Guid.NewGuid().ToString();
+        //        logSales.Fecha = DateTime.Now;
+        //        logSales.Programa = "SalesCon/ProductList";
+        //        logSales.Metodo = "GET";
+        //        logSales.ExceptionMessage = lc_srvpar;
+        //        logSales.InnerExceptionMessage = lc_result;
 
-        //        //Escribir Log
-        //        //logAudit.LogApp(logSales);
+        //        Escribir Log
+        //        logAudit.LogApp(logSales);
 
-        //        //Validar respuesta
+        //        Validar respuesta
         //        if (lc_result.Substring(0, 1) == "0")
         //        {
-        //            //Quitar switch
+        //            Quitar switch
         //            lc_result = lc_result.Replace("0-", "");
         //            ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
         //            ob_return = (List<Producto>)JsonConvert.DeserializeObject(ob_diclst["Lista_Productos"].ToString(), (typeof(List<Producto>)));
@@ -228,7 +228,7 @@ namespace Portal.Kiosco.Properties.Views
         //            }
         //            else
         //            {
-        //                //Recorrido por objeto para obtener descripcion de receta combos
+        //                Recorrido por objeto para obtener descripcion de receta combos
         //                foreach (Producto item in ob_return)
         //                {
         //                    if (item.Tipo == "C")
@@ -246,14 +246,14 @@ namespace Portal.Kiosco.Properties.Views
         //                    }
         //                }
 
-        //                //Recorrido por objeto para obtener el orden de pantallas y mostrar en vista
+        //                Recorrido por objeto para obtener el orden de pantallas y mostrar en vista
         //                List<Producto> CombosWeb = new List<Producto>();
         //                List<Producto> AlimentosWeb = new List<Producto>();
         //                List<Producto> BebidasWeb = new List<Producto>();
         //                List<Producto> SnacksWeb = new List<Producto>();
         //                foreach (Producto item in ob_return)
         //                {
-        //                    //Recorrido por pantallas
+        //                    Recorrido por pantallas
         //                    foreach (var pantallas in item.Pantallas)
         //                    {
         //                        switch (pantallas.Descripcion)
@@ -297,17 +297,17 @@ namespace Portal.Kiosco.Properties.Views
         //                    }
         //                }
 
-        //                //Validar productos a mostrar combos
+        //                Validar productos a mostrar combos
         //                if (pr_tbview == "" || pr_tbview == "tab-combos")
         //                    CrearCombosYbebidas(CombosWeb.OrderBy(o => o.OrdenView).ToList());
 
         //                if (pr_tbview == "tab-alimentos")
         //                    CrearCombosYbebidas(App.AlimentosWeb.OrderBy(o => o.OrdenView).ToList());
-        //                //Validar productos a mostrar bebidas
+        //                Validar productos a mostrar bebidas
         //                if (pr_tbview == "tab-bebidas")
         //                    CrearCombosYbebidas(App.BebidasWeb.OrderBy(o => o.OrdenView).ToList());
 
-        //                //Validar productos a mostrar snacks
+        //                Validar productos a mostrar snacks
         //                if (pr_tbview == "tab-snacks")
         //                    CrearCombosYbebidas(App.SnacksWeb.OrderBy(o => o.OrdenView).ToList());
         //            }
@@ -320,26 +320,26 @@ namespace Portal.Kiosco.Properties.Views
         //        }
         //        #endregion
 
-        //        //Devolver a vista
-        //        //return View();
+        //        Devolver a vista
+        //        return View();
         //    }
         //    catch (Exception lc_syserr)
         //    {
-        //        ////Generar Log
-        //        //LogSales logSales = new LogSales();
-        //        //LogAudit logAudit = new LogAudit(config);
-        //        //logSales.Id = Guid.NewGuid().ToString();
-        //        //logSales.Fecha = DateTime.Now;
-        //        //logSales.Programa = "SalesCon/ProductList";
-        //        //logSales.Metodo = "GET";
-        //        //logSales.ExceptionMessage = lc_syserr.Message;
-        //        //logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
+        //        //Generar Log
+        //        LogSales logSales = new LogSales();
+        //        LogAudit logAudit = new LogAudit(config);
+        //        logSales.Id = Guid.NewGuid().ToString();
+        //        logSales.Fecha = DateTime.Now;
+        //        logSales.Programa = "SalesCon/ProductList";
+        //        logSales.Metodo = "GET";
+        //        logSales.ExceptionMessage = lc_syserr.Message;
+        //        logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
 
-        //        ////Escribir Log
-        //        //logAudit.LogApp(logSales);
+        //        //Escribir Log
+        //        logAudit.LogApp(logSales);
 
-        //        ////Devolver vista de error
-        //        //return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id });
+        //        //Devolver vista de error
+        //        return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id });
         //    }
         //}
 
@@ -362,20 +362,20 @@ namespace Portal.Kiosco.Properties.Views
 
         //    try
         //    {
-        //        //Inicializar valores de entrada
+        //        Inicializar valores de entrada
         //        pr_secpro = pr_secpro;
         //        pr_swtven = pr_swtven;
         //        pr_tiplog = pr_tiplog;
         //        pr_tbview = pr_tbview;
 
-        //        //URLPortal(config);
-        //        //ListCarrito();
+        //        URLPortal(config);
+        //        ListCarrito();
 
-        //        //Inicializar variables
-        //        //ViewBag.ListaM = null;
+        //        Inicializar variables
+        //        ViewBag.ListaM = null;
         //        bool alertS = false;
         //        string cantidadProductos = App.CantProductos;
-        //        //ViewBag.UrlRetailImg = config.Value.UrlRetailImg;
+        //        ViewBag.UrlRetailImg = config.Value.UrlRetailImg;
         //        string clientFrecnt = session/*.GetString("ClienteFrecuente")*/;
         //        string tipo = pr_tiplog;
 
@@ -391,7 +391,7 @@ namespace Portal.Kiosco.Properties.Views
         //        App.BebidasWeb = null;
         //        App.SnacksWeb = null;
 
-        //        //ViewBag.ClientFrecnt = "No";
+        //        ViewBag.ClientFrecnt = "No";
 
         //        if (session/*.GetString("Secuencia")*/ != null)
         //            secuencia = session/*.GetString("Secuencia")*/;
@@ -401,54 +401,54 @@ namespace Portal.Kiosco.Properties.Views
         //        string switchVenta = pr_swtven;
 
         //        #region SERVICIO SCOPRE
-        //        //Asignar valores PRE
+        //        Asignar valores PRE
         //        ob_scopre.Punto = Convert.ToInt32(config.Value.PuntoVenta);
         //        ob_scopre.Teatro = session/*.GetString("Teatro")*/ != "0" ? Convert.ToInt32(session/*.GetString("Teatro")*/) : Convert.ToInt32(session/*.GetString("Teatro")*/);
         //        ob_scopre.Tercero = config.Value.ValorTercero;
 
-        //        //Generar y encriptar JSON para servicio PRE
+        //        Generar y encriptar JSON para servicio PRE
         //        lc_srvpar = ob_fncgrl.JsonConverter(ob_scopre);
         //        lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
         //        lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
         //        lc_srvpar = lc_srvpar.Replace("punto", "Punto");
 
-        //        //Encriptar Json PRE
+        //        Encriptar Json PRE
         //        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-        //        //Consumir servicio PRE
-        //        //if (ViewBag.ClientFrecnt == "No")
-        //        //    lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopre/"), lc_srvpar);
-        //        //else
-        //        //    lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopcf/"), lc_srvpar);
+        //        Consumir servicio PRE
+        //        if (ViewBag.ClientFrecnt == "No")
+        //            lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopre/"), lc_srvpar);
+        //        else
+        //            lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopcf/"), lc_srvpar);
 
-        //        ////Generar Log
-        //        //LogSales logSales = new LogSales();
-        //        //LogAudit logAudit = new LogAudit(config);
-        //        //logSales.Id = Guid.NewGuid().ToString();
-        //        //logSales.Fecha = DateTime.Now;
-        //        //logSales.Programa = "SalesCon/Addproduct";
-        //        //logSales.Metodo = "SCOPRE";
-        //        //logSales.ExceptionMessage = lc_srvpar;
-        //        //logSales.InnerExceptionMessage = lc_result;
+        //        //Generar Log
+        //        LogSales logSales = new LogSales();
+        //        LogAudit logAudit = new LogAudit(config);
+        //        logSales.Id = Guid.NewGuid().ToString();
+        //        logSales.Fecha = DateTime.Now;
+        //        logSales.Programa = "SalesCon/Addproduct";
+        //        logSales.Metodo = "SCOPRE";
+        //        logSales.ExceptionMessage = lc_srvpar;
+        //        logSales.InnerExceptionMessage = lc_result;
 
-        //        ////Escribir Log
-        //        //logAudit.LogApp(logSales);
+        //        //Escribir Log
+        //        logAudit.LogApp(logSales);
 
-        //        //Validar respuesta
+        //        Validar respuesta
         //        if (lc_result.Substring(0, 1) == "0")
         //        {
-        //            //Quitar switch
+        //            Quitar switch
         //            lc_result = lc_result.Replace("0-", "");
         //            ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
         //            ob_return = (List<Producto>)JsonConvert.DeserializeObject(ob_diclst["Lista_Productos"].ToString(), (typeof(List<Producto>)));
 
         //            if (ob_diclst.ContainsKey("Validación"))
         //            {
-        //                //ModelState.AddModelError("", ob_diclst["Validación"].ToString());
+        //                ModelState.AddModelError("", ob_diclst["Validación"].ToString());
         //            }
         //            else
         //            {
-        //                //Recorrido por objeto para obtener descripcion de receta combos
+        //                Recorrido por objeto para obtener descripcion de receta combos
         //                foreach (Producto item in ob_return)
         //                {
         //                    if (item.Tipo == "C")
@@ -475,7 +475,7 @@ namespace Portal.Kiosco.Properties.Views
 
         //                foreach (Producto item in ob_return)
         //                {
-        //                    //Recorrido por pantallas
+        //                    Recorrido por pantallas
         //                    foreach (var pantallas in item.Pantallas)
         //                    {
         //                        switch (pantallas.Descripcion)
@@ -518,51 +518,51 @@ namespace Portal.Kiosco.Properties.Views
         //                    }
         //                }
 
-        //                //Validar productos a mostrar combos
+        //                Validar productos a mostrar combos
         //                if (pr_tbview == "" || pr_tbview == "tab-combos")
         //                    CrearCombosYbebidas(CombosWeb.OrderBy(o => o.OrdenView).ToList());
 
         //                if (pr_tbview == "tab-alimentos")
         //                    CrearCombosYbebidas(App.AlimentosWeb.OrderBy(o => o.OrdenView).ToList());
-        //                //Validar productos a mostrar bebidas
+        //                Validar productos a mostrar bebidas
         //                if (pr_tbview == "tab-bebidas")
         //                    CrearCombosYbebidas(App.BebidasWeb.OrderBy(o => o.OrdenView).ToList());
 
-        //                //Validar productos a mostrar snacks
+        //                Validar productos a mostrar snacks
         //                if (pr_tbview == "tab-snacks")
         //                    CrearCombosYbebidas(App.SnacksWeb.OrderBy(o => o.OrdenView).ToList());
 
-        //                //Asignar lista de adiciones
-        //                //ViewBag.ListaA = AdicionesWeb.OrderBy(o => o.OrdenView).ToList();
+        //                Asignar lista de adiciones
+        //                ViewBag.ListaA = AdicionesWeb.OrderBy(o => o.OrdenView).ToList();
         //            }
         //        }
         //        else
         //        {
         //            lc_result = lc_result.Replace("1-", "");
-        //            //ModelState.AddModelError("", lc_result);
+        //            ModelState.AddModelError("", lc_result);
         //        }
         //        #endregion
 
-        //        //Devolver a vista
-        //        //return View();
+        //        Devolver a vista
+        //        return View();
         //    }
         //    catch (Exception lc_syserr)
         //    {
-        //        //Generar Log
-        //        //LogSales logSales = new LogSales();
-        //        //LogAudit logAudit = new LogAudit(config);
-        //        //logSales.Id = Guid.NewGuid().ToString();
-        //        //logSales.Fecha = DateTime.Now;
-        //        //logSales.Programa = "SalesCon/Addproduct";
-        //        //logSales.Metodo = "GET";
-        //        //logSales.ExceptionMessage = lc_syserr.Message;
-        //        //logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
+        //        Generar Log
+        //        LogSales logSales = new LogSales();
+        //        LogAudit logAudit = new LogAudit(config);
+        //        logSales.Id = Guid.NewGuid().ToString();
+        //        logSales.Fecha = DateTime.Now;
+        //        logSales.Programa = "SalesCon/Addproduct";
+        //        logSales.Metodo = "GET";
+        //        logSales.ExceptionMessage = lc_syserr.Message;
+        //        logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
 
-        //        ////Escribir Log
-        //        //logAudit.LogApp(logSales);
+        //        //Escribir Log
+        //        logAudit.LogApp(logSales);
 
-        //        ////Devolver vista de error
-        //        //return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id });
+        //        //Devolver vista de error
+        //        return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id });
         //    }
         //}
 
@@ -587,40 +587,40 @@ namespace Portal.Kiosco.Properties.Views
         //    General ob_fncgrl = new General();
         //    #endregion
 
-        //    //Inicializar variables
-        //    //ViewBag.ListaM = null;
+        //    Inicializar variables
+        //    ViewBag.ListaM = null;
         //    bool alertS = false;
-        //    //ViewBag.UrlRetailImg = config.Value.UrlRetailImg;
+        //    ViewBag.UrlRetailImg = config.Value.UrlRetailImg;
         //    string CantidadProductos = App.CantProductos;
         //    string secuencia = pr_secpro;
         //    string switchVenta = pr_swtven;
         //    string tipo = pr_tiplog;
         //    string switchAdd = pr_swtadd;
-        //    //ViewBag.ListaB = null;
-        //    //ViewBag.ListaC = null;
+        //    ViewBag.ListaB = null;
+        //    ViewBag.ListaC = null;
 
-        //    //Session carrito de compras
-        //    //Session.Remove("pr_keypro");
-        //    //Session.SetString("pr_keypro", pr_keypro);
-        //    //Session.Remove("pr_secpro");
-        //    //Session.SetString("pr_secpro", pr_secpro);
-        //    //Session.Remove("pr_swtven");
-        //    //Session.SetString("pr_swtven", pr_swtven);
-        //    //Session.Remove("pr_tiplog");
-        //    //Session.SetString("pr_tiplog", pr_tiplog);
+        //    Session carrito de compras
+        //    Session.Remove("pr_keypro");
+        //    Session.SetString("pr_keypro", pr_keypro);
+        //    Session.Remove("pr_secpro");
+        //    Session.SetString("pr_secpro", pr_secpro);
+        //    Session.Remove("pr_swtven");
+        //    Session.SetString("pr_swtven", pr_swtven);
+        //    Session.Remove("pr_tiplog");
+        //    Session.SetString("pr_tiplog", pr_tiplog);
 
         //    try
         //    {
-        //        //URLPortal(config);
-        //        //ListCarrito();
+        //        URLPortal(config);
+        //        ListCarrito();
 
-        //        //Validar inicio de sesión
+        //        Validar inicio de sesión
         //        if (session/*.GetString("Usuario")*/ == null)
-        //            //return RedirectToAction("Error", "Pages", new { pr_message = "Se debe iniciar Sesión para Continuar", pr_flag = "PX" });
+        //            return RedirectToAction("Error", "Pages", new { pr_message = "Se debe iniciar Sesión para Continuar", pr_flag = "PX" });
 
-        //            //ViewBag.ClientFrecnt = Session.GetString("ClienteFrecuente"); //"No;"
+        //        ViewBag.ClientFrecnt = Session.GetString("ClienteFrecuente"); //"No;"
 
-        //            ob_datpro.Codigo = Convert.ToDecimal(pr_keypro);
+        //        ob_datpro.Codigo = Convert.ToDecimal(pr_keypro);
         //        ob_datpro.SwtVenta = pr_swtven;
         //        ob_datpro.EmailEli = session/*.GetString("Usuario")*/;
         //        ob_datpro.NombreEli = session/*.GetString("Nombre")*/;
@@ -631,61 +631,61 @@ namespace Portal.Kiosco.Properties.Views
         //        ob_datpro.KeySecuencia = pr_secpro;
 
         //        #region SERVICIO SCOPRE
-        //        //Asignar valores PRE
+        //        Asignar valores PRE
         //        ob_scopre.Punto = Convert.ToInt32(config.Value.PuntoVenta);
         //        ob_scopre.Teatro = Convert.ToInt32(ob_datpro.KeyTeatro);
         //        ob_scopre.Tercero = config.Value.ValorTercero;
 
-        //        //Generar y encriptar JSON para servicio PRE
+        //        Generar y encriptar JSON para servicio PRE
         //        lc_srvpar = ob_fncgrl.JsonConverter(ob_scopre);
         //        lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
         //        lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
         //        lc_srvpar = lc_srvpar.Replace("punto", "Punto");
 
-        //        //Encriptar Json PRE
+        //        Encriptar Json PRE
         //        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-        //        //Consumir servicio PRE
-        //        //if (ViewBag.ClientFrecnt == "No")
-        //        //    lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopre/"), lc_srvpar);
-        //        //else
-        //        //    lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopcf/"), lc_srvpar);
+        //        Consumir servicio PRE
+        //        if (ViewBag.ClientFrecnt == "No")
+        //            lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopre/"), lc_srvpar);
+        //        else
+        //            lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scopcf/"), lc_srvpar);
 
-        //        ////Generar Log
-        //        //LogSales logSales = new LogSales();
-        //        //LogAudit logAudit = new LogAudit(config);
-        //        //logSales.Id = Guid.NewGuid().ToString();
-        //        //logSales.Fecha = DateTime.Now;
-        //        //logSales.Programa = "SalesCon/Details";
-        //        //logSales.Metodo = "SCOPRE";
-        //        //logSales.ExceptionMessage = lc_srvpar;
-        //        //logSales.InnerExceptionMessage = lc_result;
+        //        //Generar Log
+        //        LogSales logSales = new LogSales();
+        //        LogAudit logAudit = new LogAudit(config);
+        //        logSales.Id = Guid.NewGuid().ToString();
+        //        logSales.Fecha = DateTime.Now;
+        //        logSales.Programa = "SalesCon/Details";
+        //        logSales.Metodo = "SCOPRE";
+        //        logSales.ExceptionMessage = lc_srvpar;
+        //        logSales.InnerExceptionMessage = lc_result;
 
-        //        //Escribir Log
-        //        //logAudit.LogApp(logSales);
+        //        Escribir Log
+        //        logAudit.LogApp(logSales);
 
-        //        //Validar respuesta
+        //        Validar respuesta
         //        if (lc_result.Substring(0, 1) == "0")
         //        {
-        //            //Quitar switch
+        //            Quitar switch
         //            lc_result = lc_result.Replace("0-", "");
         //            ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
         //            ob_return = (List<Producto>)JsonConvert.DeserializeObject(ob_diclst["Lista_Productos"].ToString(), (typeof(List<Producto>)));
 
         //            if (ob_diclst.ContainsKey("Validación"))
         //            {
-        //                //ModelState.AddModelError("", ob_diclst["Validación"].ToString());
+        //                ModelState.AddModelError("", ob_diclst["Validación"].ToString());
         //            }
         //            else
         //            {
-        //                //Recorrido por objeto para obtener el orden de pantallas y mostrar en vista
+        //                Recorrido por objeto para obtener el orden de pantallas y mostrar en vista
         //                List<Producto> CombosWeb = new List<Producto>();
         //                List<Producto> AlimentosWeb = new List<Producto>();
         //                List<Producto> BebidasWeb = new List<Producto>();
         //                List<Producto> SnacksWeb = new List<Producto>();
         //                foreach (Producto item in ob_return)
         //                {
-        //                    //Recorrido por pantallas
+        //                    Recorrido por pantallas
         //                    foreach (var pantallas in item.Pantallas)
         //                    {
         //                        switch (pantallas.Descripcion)
@@ -721,17 +721,17 @@ namespace Portal.Kiosco.Properties.Views
         //                    }
         //                }
 
-        //                //ViewBag.ListaM = CombosWeb.OrderBy(o => o.OrdenView).ToList();
+        //                ViewBag.ListaM = CombosWeb.OrderBy(o => o.OrdenView).ToList();
         //            }
         //        }
         //        else
         //        {
         //            lc_result = lc_result.Replace("1-", "");
-        //            //ModelState.AddModelError("", lc_result);
+        //            ModelState.AddModelError("", lc_result);
         //        }
         //        #endregion
 
-        //        //Recorrido por productos para obtener el seleccionado y sus valores
+        //        Recorrido por productos para obtener el seleccionado y sus valores
         //        foreach (var itepro in ob_return)
         //        {
         //            if (itepro.Codigo == ob_datpro.Codigo)
@@ -768,7 +768,7 @@ namespace Portal.Kiosco.Properties.Views
         //                                    var NombreFinalBotella = i.Descripcion.ToString();
         //                                    var precioFinalBotella = i.Precios.Sum(precio => precio.General);
         //                                    var frecuenciaBotella = i.Frecuente.ToString();
-        //                                    // Hacer algo con precioFinalCombo
+        //                                    Hacer algo con precioFinalCombo
         //                                    datosFinalesBotella.Add((CodioBotella, NombreFinalBotella, precioFinalBotella, frecuenciaBotella, itecat.Codigo));
         //                                }
         //                            }
@@ -781,21 +781,21 @@ namespace Portal.Kiosco.Properties.Views
         //                                    var precioFinalComida = i.Precios.Sum(precio => precio.General);
         //                                    var frecuenciaComida = i.Frecuente.ToString();
 
-        //                                    // Hacer algo con precioFinalCombo
+        //                                    Hacer algo con precioFinalCombo
         //                                    datosFinalesComida.Add((CodioComida, NombreFinalComida, precioFinalComida, frecuenciaComida, itecat.Codigo));
         //                                }
         //                            }
-        //                            //Valido que las listas se hayan llenado
+        //                            Valido que las listas se hayan llenado
         //                            if (datosFinalesBotella.Count > 0 && datosFinalesComida.Count > 0)
         //                            {
-        //                                // Establecer el indicador para salir del bucle
-        //                                condicionCumplida = true;
+        //                                Establecer el indicador para salir del bucle
+        //                               condicionCumplida = true;
         //                            }
-        //                            // Si se cumplió la condición, salir del bucle foreach
+        //                            Si se cumplió la condición, salir del bucle foreach
         //                            if (condicionCumplida)
-        //                            {
-        //                                break;
-        //                            }
+        //                                {
+        //                                    break;
+        //                                }
         //                        }
 
         //                        break;
@@ -832,13 +832,13 @@ namespace Portal.Kiosco.Properties.Views
         //                        break;
         //                }
 
-        //                //Romper el ciclo
+        //                Romper el ciclo
         //                break;
         //            }
         //        }
-        //        //ViewBag.ListaB = datosFinalesBotella.Distinct().ToList();
-        //        //ViewBag.ListaC = datosFinalesComida.Distinct().ToList();
-        //        //Asignar valores encriptados
+        //        ViewBag.ListaB = datosFinalesBotella.Distinct().ToList();
+        //        ViewBag.ListaC = datosFinalesComida.Distinct().ToList();
+        //        Asignar valores encriptados
         //        ob_datpro.SwtVenta = pr_swtven;
         //        ob_datpro.EmailEli = session/*.GetString("Usuario")*/;
         //        ob_datpro.NombreEli = session/*.GetString("Nombre")*/;
@@ -849,25 +849,25 @@ namespace Portal.Kiosco.Properties.Views
         //        ob_datpro.TelefonoEli = session/*.GetString("Telefono")*/;
         //        ob_datpro.KeySecuencia = pr_secpro;
 
-        //        //return View(ob_datpro);
+        //        return View(ob_datpro);
         //    }
         //    catch (Exception lc_syserr)
         //    {
-        //        //Generar Log
-        //        //LogSales logSales = new LogSales();
-        //        //LogAudit logAudit = new LogAudit(config);
-        //        //logSales.Id = Guid.NewGuid().ToString();
-        //        //logSales.Fecha = DateTime.Now;
-        //        //logSales.Programa = "SalesCon/Details";
-        //        //logSales.Metodo = "GET";
-        //        //logSales.ExceptionMessage = lc_syserr.Message;
-        //        //logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
+        //        Generar Log
+        //        LogSales logSales = new LogSales();
+        //        LogAudit logAudit = new LogAudit(config);
+        //        logSales.Id = Guid.NewGuid().ToString();
+        //        logSales.Fecha = DateTime.Now;
+        //        logSales.Programa = "SalesCon/Details";
+        //        logSales.Metodo = "GET";
+        //        logSales.ExceptionMessage = lc_syserr.Message;
+        //        logSales.InnerExceptionMessage = logSales.ExceptionMessage.Contains("Inner") ? lc_syserr.InnerException.Message : "null";
 
-        //        ////Escribir Log
-        //        //logAudit.LogApp(logSales);
+        //        //Escribir Log
+        //        logAudit.LogApp(logSales);
 
-        //        ////Devolver vista de error
-        //        //return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id });
+        //        //Devolver vista de error
+        //        return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id });
         //    }
         //}
 

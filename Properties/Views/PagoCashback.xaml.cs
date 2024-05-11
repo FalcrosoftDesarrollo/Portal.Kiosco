@@ -82,8 +82,8 @@ namespace Portal.Kiosco.Properties.Views
             isThreadActive = false;
             InstruccionesDatafono w = new InstruccionesDatafono();
             var openWindow = new InstruccionesDatafono();
-         
-            openWindow.Show();
+
+            w.ShowDialog();
             this.Close();
          
         }
@@ -91,8 +91,8 @@ namespace Portal.Kiosco.Properties.Views
         private void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             App.RoomReverse();
-            var openWindow = new Principal();
-            openWindow.Show();
+            var w = new Principal();
+            
             this.Close();
             w.ShowDialog();
         }

@@ -67,8 +67,7 @@ namespace Portal.Kiosco
         public static Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
         public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
-        private string _tiempoRestanteGlobal;
-        private TimeSpan tiempoRestante;
+    
 
         public static string EmailEli { get; set; }
         public static string NombreEli { get; set; }
