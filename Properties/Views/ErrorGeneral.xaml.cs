@@ -1,7 +1,5 @@
 ﻿using System.Windows;
 
-
-
 namespace Portal.Kiosco.Properties.Views
 {
     /// <summary>

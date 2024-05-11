@@ -1,13 +1,10 @@
 ﻿using APIPortalKiosco.Entities;
-using APIPortalWebMed.Entities;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Threading;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
-
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -16,6 +13,8 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class ComoCompra : Window
     {
+        private bool isThreadActive = true;
+
         public ComoCompra()
         {
             InitializeComponent();
@@ -25,10 +24,43 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
         }
 
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
         {
+            isThreadActive = false;
             App.IsCinefans = false;
             var openWindow = new Scanear_documento();
             openWindow.Show();
@@ -47,32 +79,19 @@ namespace Portal.Kiosco.Properties.Views
             {
                 if (App.IsBoleteriaConfiteria == false)
                 {
+                    isThreadActive = false;
                     App.IsCinefans = true;
-                    var openWindow = new Cartelera();
-                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                    await Task.Delay(300);
-                    this.Visibility = Visibility.Collapsed;
-                    openWindow.Background = Brushes.White;
-                    openWindow.Show();
+                    Cartelera w = new Cartelera();
                     this.Close();
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-                    ;
+                    w.ShowDialog();
                 }
                 else
                 {
+                    isThreadActive = false;
                     App.IsCinefans = true;
-                    var openWindow = new Combos();
-                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-                    this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                    await Task.Delay(300);
-                    this.Visibility = Visibility.Collapsed;
-                    openWindow.Background = Brushes.White;
-                    openWindow.Show();
+                    Combos w = new Combos();
                     this.Close();
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-                    openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    w.ShowDialog();
 
                 }
             }
@@ -84,17 +103,10 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
+            isThreadActive = false;
+            Principal w = new Principal();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
+            w.ShowDialog();
         }
 
     }   

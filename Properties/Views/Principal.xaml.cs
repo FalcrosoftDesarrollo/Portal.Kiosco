@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Threading;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
     public partial class Principal : Window
     {
+        private bool isThreadActive = true;
+        private static Principal instance;
+
         public Principal()
         {
             InitializeComponent();
@@ -17,6 +20,39 @@ namespace Portal.Kiosco.Properties.Views
             this.KeyDown += Principal_KeyDown; // Manejador de eventos para teclas presionadas
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        public static Principal GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Principal();
+            }
+            return instance;
+        }
+
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (this.Visibility == Visibility.Hidden)
+                    {
+                        this.Show();
+                        this.Activate();
+                    }
+                });
+            }
         }
 
         private void Principal_KeyDown(object sender, KeyEventArgs e)
@@ -26,7 +62,6 @@ namespace Portal.Kiosco.Properties.Views
             {
                 if (e.Key == Key.D)
                 {
-                    // Cerrar la ventana
                     this.Close();
                 }
             }
@@ -34,18 +69,21 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnBoleteria_Click(object sender, RoutedEventArgs e)
         {
+            isThreadActive = false;
             App.IsBoleteriaConfiteria = false;
-            var openWindow = new ComoCompra();
-            openWindow.Show();
+            ComoCompra w = new ComoCompra();
             this.Close();
+            w.ShowDialog();
+            
         }
 
         private async void btnConfiteria_Click(object sender, RoutedEventArgs e)
         {
+            isThreadActive = false;
             App.IsBoleteriaConfiteria = true;
-            var openWindow = new ComoCompra();
-            openWindow.Show();
+            ComoCompra w = new ComoCompra();
             this.Close();
+            w.ShowDialog();
         }
     }
 }

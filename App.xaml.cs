@@ -1,15 +1,11 @@
 ﻿using APIPortalKiosco.Entities;
 using APIPortalWebMed.Entities;
 using Newtonsoft.Json.Linq;
-using Portal.Kiosco.Properties.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml.Linq;
 
@@ -37,6 +33,9 @@ namespace Portal.Kiosco
         public static String TipoSala { get; set; }
         public static decimal PrecioUnitario { get; set; } = 3000; // Precio unitario de las gafas
         public static decimal CantidadGafas { get; set; } // Lista para almacenar la cantidad de gafas seleccionadas
+        public static string _tiempoRestanteGlobal { get; set; }
+        public static TimeSpan tiempoRestante { get; set; }
+
 
         private List<UIElement> elementosCombos = new List<UIElement>();
         private List<UIElement> elementosAlimentos = new List<UIElement>();
@@ -54,9 +53,8 @@ namespace Portal.Kiosco
         public static Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
         public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
-        private string _tiempoRestanteGlobal;
-        private TimeSpan tiempoRestante;
 
+        
         public string TiempoRestanteGlobal
         {
             get { return _tiempoRestanteGlobal; }
@@ -101,7 +99,7 @@ namespace Portal.Kiosco
 
         private void IniciarContadorGlobal()
         {
-            tiempoRestante = TimeSpan.FromMinutes(2);
+            tiempoRestante = TimeSpan.FromSeconds(10);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
 
             DispatcherTimer contadorGlobalTimer = new DispatcherTimer();
@@ -115,11 +113,6 @@ namespace Portal.Kiosco
                 else
                 {
                     ResetearTimer();
-
-                    // Aquí puedes añadir el código para cambiar de ventana si es necesario
-                    var openWindow = new Principal();
-                    openWindow.Show();
-                
                 }
             };
             contadorGlobalTimer.Interval = TimeSpan.FromSeconds(1);
@@ -128,7 +121,7 @@ namespace Portal.Kiosco
 
         public void ResetearTimer()
         {
-            tiempoRestante = TimeSpan.FromMinutes(15);
+            tiempoRestante = TimeSpan.FromSeconds(10);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
         }
         private string DiaMes(string pr_daynum, string pr_flag)

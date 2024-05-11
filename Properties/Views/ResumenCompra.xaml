@@ -59,7 +59,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid  Name="gridPrincipal">
+    <Grid Name="gridPrincipal">
         <Border>
             <Grid>
                 <Grid.RowDefinitions>
@@ -82,7 +82,7 @@
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
                             <Grid>
                                 <Canvas>
-                                    <Path Name="circlePath" Stroke="LawnGreen" StrokeThickness="4" StrokeDashArray="1,100">
+                                    <Path Name="circlePath" Stroke="LawnGreen" StrokeThickness="4" StrokeDashArray="157, 157" StrokeDashOffset="157">
                                         <Path.Data>
                                             <EllipseGeometry Center="52,52" RadiusX="50" RadiusY="50"/>
                                         </Path.Data>
@@ -90,7 +90,7 @@
                                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="100" To="0" Duration="1:0:0" RepeatBehavior="Forever"/>
+                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="157" To="0" Duration="0:0:10" RepeatBehavior="Forever"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>

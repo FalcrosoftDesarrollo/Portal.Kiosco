@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,6 +21,7 @@ namespace Portal.Kiosco.Properties.Views
     public partial class LayoutAsientos : Window
     {
         private readonly IOptions<MyConfig> config;
+        private bool isThreadActive = true;
 
         public LayoutAsientos(IOptions<MyConfig> config)
         {
@@ -47,7 +48,38 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
 
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
         }
 
         public void ConsultarZona()
@@ -166,9 +198,10 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Cartelera();
-            openWindow.Show();
+            isThreadActive = false;
+            Cartelera w = new Cartelera();
             this.Close();
+            w.ShowDialog();
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -183,15 +216,17 @@ namespace Portal.Kiosco.Properties.Views
 
             if (pelicula != null && pelicula.Formato != null /*&& /*pelicula.Formato.Contains("3D")*/)
             {
-                var openWindow = new Gafas3D();
-                openWindow.Show();
+                isThreadActive = false;
+                Gafas3D w = new Gafas3D();
                 this.Close();
+                w.ShowDialog();
             }
             else
             {
-                var openWindow = new AlgoParaComer();
-                openWindow.Show();
+                isThreadActive = false;
+                AlgoParaComer w = new AlgoParaComer();
                 this.Close();
+                w.ShowDialog();
             }
         }
 
@@ -350,7 +385,7 @@ namespace Portal.Kiosco.Properties.Views
         }
 
         private int sillasSeleccionadas = 0;
-        private string[] sillasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
+        public static string[] sillasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
 
         private void AgregarUbicacionAlWrapPanel(BolVenta bolVenta)
         {
@@ -534,16 +569,10 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new Principal();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-            await Task.Delay(300);
-            this.Visibility = Visibility.Collapsed;
-            openWindow.Background = Brushes.White;
-            openWindow.Show();
+            isThreadActive = false;
+            Principal w = new Principal();
             this.Close();
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            openWindow.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            w.ShowDialog();
 
         }
 

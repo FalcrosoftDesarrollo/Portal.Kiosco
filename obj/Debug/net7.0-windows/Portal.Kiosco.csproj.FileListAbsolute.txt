@@ -245,4 +245,3 @@ C:\FALCROSOFT\PROCINAL\Portal.Kiosco\obj\Debug\net7.0-windows\ref\Portal.Kiosco.
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\refint\Portal.Kiosco.dll
 C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Portal.Kiosco\obj\Debug\net7.0-windows\Portal.Kiosco.pdb
-C:\FALCROSOFT\PROCINAL\Portal.Kiosco\bin\Debug\net7.0-windows\TEFII_NET.dll

@@ -1,18 +1,15 @@
 ﻿using APIPortalKiosco.Data;
 using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -22,6 +19,8 @@ namespace Portal.Kiosco.Properties.Views
     public partial class CorreoTecladoFlotante : Window
     {
         private readonly IOptions<MyConfig> config;
+        private bool isThreadActive = true;
+
         public CorreoTecladoFlotante(IOptions<MyConfig> config)
         {
             InitializeComponent();
@@ -29,6 +28,38 @@ namespace Portal.Kiosco.Properties.Views
             this.config = config;
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            Thread thread = new Thread(() =>
+            {
+                while (isThreadActive)
+                {
+                    ComprobarTiempo();
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void ComprobarTiempo()
+        {
+            if (App._tiempoRestanteGlobal == "00:00")
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null)
+                    {
+                        this.Close();
+                        principal.Show();
+                    }
+                    else
+                    {
+
+                        Principal p = new Principal();
+                        this.Close();
+                        p.Show();
+                    }
+                });
+            }
         }
 
         private async void btnObtenerDatos_Click(object sender, RoutedEventArgs e)
@@ -58,7 +89,6 @@ namespace Portal.Kiosco.Properties.Views
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
         private void EnvioCorreo (string correo)
         {
@@ -188,7 +218,6 @@ namespace Portal.Kiosco.Properties.Views
             return regex.IsMatch(email);
         }
 
-
         private void KeyButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -210,13 +239,12 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-            var openWindow = new BoletasGafasAlimentos();
-            openWindow.Show();
+            isThreadActive = false;
+            BoletasGafasAlimentos w = new BoletasGafasAlimentos();
             this.Close();
-           
+            w.ShowDialog();
         }
     }
 }
