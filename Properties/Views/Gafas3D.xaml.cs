@@ -16,7 +16,7 @@ namespace Portal.Kiosco.Properties.Views
     /// </summary>
     public partial class Gafas3D : Window
     {
-        private const int PrecioUnitario = 3000; 
+        private const int PrecioUnitario = 3000;
         private int[] cantidadGafas = new int[10];
         private readonly IOptions<MyConfig> config;
         private int indiceArray = 0;
@@ -28,6 +28,7 @@ namespace Portal.Kiosco.Properties.Views
             DataContext = ((App)Application.Current);
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            lblPrecio.Content = "$ 3.000";
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -38,45 +39,63 @@ namespace Portal.Kiosco.Properties.Views
             thread.IsBackground = true;
             thread.Start();
         }
-
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
                     }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             App.RoomReverse();
-            LayoutAsientos w = new LayoutAsientos(config);
+            LayoutAsientos openWindows = new LayoutAsientos(config);
             this.Close();
-            w.ShowDialog();
+            openWindows.Show();
 
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            AlgoParaComer w = new AlgoParaComer();
+            AlgoParaComer openWindows = new AlgoParaComer();
             this.Close();
-            w.ShowDialog();         
+            openWindows.Show();
         }
 
         private int gafasSeleccionadas = 0;
@@ -123,6 +142,7 @@ namespace Portal.Kiosco.Properties.Views
                     ultimoIndex = Array.LastIndexOf(gafasSeleccionadasArray, "+");
 
                     lblCantidad.Content = gafasSeleccionadas;
+
                 }
 
             }
@@ -142,8 +162,16 @@ namespace Portal.Kiosco.Properties.Views
         {
             App.RoomReverse();
             var openWindow = new Principal();
-            
+
             openWindow.Show();
+            this.Close();
+        }
+
+        private  void btnOmitirGafas_Click(object sender, RoutedEventArgs e)
+        {
+            App.CantidadGafas = 0;
+            var openWindows = new ResumenCompra(config);
+            openWindows.Show();
             this.Close();
         }
     }

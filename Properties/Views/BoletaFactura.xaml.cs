@@ -38,18 +38,48 @@ namespace Portal.Kiosco.Properties.Views
             thread.Start();
         }
 
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    Principal principalWindow = new Principal();
-                    this.Close();
-                    principalWindow.Show();
+                    Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
+                    if (principal != null && principal.Visibility == Visibility.Visible)
+                    {
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                    }
+                    else
+                    {
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
+                    }
+
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
+
 
         public void GenerateResumen()
         {

@@ -30,7 +30,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
             }
-            else 
+            else
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
@@ -47,35 +47,58 @@ namespace Portal.Kiosco.Properties.Views
             thread.Start();
         }
 
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
-                    } 
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                    }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
+
+
+
+
 
         public string ObtenerValorDeConfiguracion(string clave)
         {
             string valor = ConfigurationManager.AppSettings[clave];
             return valor;
         }
- 
+
         private void CargarPeliculasDesdeXml()
         {
             try
@@ -165,13 +188,14 @@ namespace Portal.Kiosco.Properties.Views
                             App.Pelicula.Duracion = pelicula.Duracion;
                             App.Pelicula.Genero = pelicula.Genero;
                             App.Pelicula.Censura = pelicula.Censura;
-                            
+
 
                             // Navegar a la siguiente pantalla (SeleccionFuncion)
                             var openWindow = new SeleccionarFuncion();
-                    
+
                             openWindow.Show();
-                       
+                            this.Close();
+
                         };
 
                         // Configurar la posición en la cuadrícula
@@ -200,9 +224,9 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Principal w = new Principal();
+            Principal openWindows = new Principal();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
 
         }
 
@@ -245,17 +269,17 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Scanear_documento w = new Scanear_documento();
+            Scanear_documento openWindows = new Scanear_documento();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            SeleccionarFuncion w = new SeleccionarFuncion();
+            SeleccionarFuncion openWindows = new SeleccionarFuncion();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
     }
 }

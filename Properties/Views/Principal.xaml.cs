@@ -20,15 +20,7 @@ namespace Portal.Kiosco.Properties.Views
             this.KeyDown += Principal_KeyDown; // Manejador de eventos para teclas presionadas
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-            Thread thread = new Thread(() =>
-            {
-                while (isThreadActive)
-                {
-                    ComprobarTiempo();
-                }
-            });
-            thread.IsBackground = true;
-            thread.Start();
+        
         }
 
         public static Principal GetInstance()
@@ -39,21 +31,8 @@ namespace Portal.Kiosco.Properties.Views
             }
             return instance;
         }
+ 
 
-        private void ComprobarTiempo()
-        {
-            if (App._tiempoRestanteGlobal == "00:00")
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (this.Visibility == Visibility.Hidden)
-                    {
-                        this.Show();
-                        this.Activate();
-                    }
-                });
-            }
-        }
 
         private void Principal_KeyDown(object sender, KeyEventArgs e)
         {
@@ -71,19 +50,20 @@ namespace Portal.Kiosco.Properties.Views
         {
             isThreadActive = false;
             App.IsBoleteriaConfiteria = false;
-            ComoCompra w = new ComoCompra();
+            ComoCompra openWindows = new ComoCompra();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
-            
+
+
         }
 
         private async void btnConfiteria_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
             App.IsBoleteriaConfiteria = true;
-            ComoCompra w = new ComoCompra();
+            ComoCompra openWindows = new ComoCompra();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
     }
 }

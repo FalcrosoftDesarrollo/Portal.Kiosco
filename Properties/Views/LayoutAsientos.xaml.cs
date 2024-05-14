@@ -22,14 +22,17 @@ namespace Portal.Kiosco.Properties.Views
     {
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
+        public static string[] sillasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
+        private int sillasSeleccionadas = 0;
 
         public LayoutAsientos(IOptions<MyConfig> config)
         {
             try
             {
                 InitializeComponent();
-
+                //sillasSeleccionadasArray = new string[10];
                 this.config = config;
+                ContenedorSala.Children.Clear();
                 GenerarSala();
                 DataContext = ((App)Application.Current);
                 if (App.ob_diclst.Count > 0)
@@ -46,7 +49,7 @@ namespace Portal.Kiosco.Properties.Views
                 lblSala.Content = App.Pelicula.numeroSala;
                 lblNombrePelicula.Content = App.Pelicula.Nombre;
 
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                 Thread thread = new Thread(() =>
                 {
@@ -61,35 +64,56 @@ namespace Portal.Kiosco.Properties.Views
             catch (Exception e) { }
         }
 
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
                     }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+
                 });
             }
+
+            
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Cartelera w = new Cartelera();
+            Cartelera openWindows = new Cartelera();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -102,180 +126,180 @@ namespace Portal.Kiosco.Properties.Views
                 return;
             }
 
-            if (pelicula != null && pelicula.Formato != null /*&& /*pelicula.Formato.Contains("3D")*/)
+            if (pelicula != null && pelicula.Formato != null && pelicula.Formato.Contains("3D"))
             {
                 isThreadActive = false;
-                Gafas3D w = new Gafas3D();
+                Gafas3D openWindows = new Gafas3D();
+                openWindows.Show();
                 this.Close();
-                w.ShowDialog();
+
             }
             else
             {
                 isThreadActive = false;
-                AlgoParaComer w = new AlgoParaComer();
+                AlgoParaComer openWindows = new AlgoParaComer();
+                openWindows.Show();
                 this.Close();
-                w.ShowDialog();
             }
         }
 
         public void GenerarSala()
         {
 
-            ContenedorSala.Children.Clear();
-
-            int lc_maxcol = 0;
-            int lc_maxfil = 0;
-            int lc_idxrow = 0;
-            string lc_auxval = string.Empty;
-            string lc_auxtar = string.Empty;
-            string lc_auxhor = string.Empty;
-            string lc_srvpar = string.Empty;
-            string lc_result = string.Empty;
-
-            DataTable ob_datubi = new DataTable();
-
-            XmlDocument ob_xmldoc = new XmlDocument();
-
-            Dictionary<string, object> ob_estsil = new Dictionary<string, object>();
-            Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
-            Dictionary<string, object>[] ob_diclst2 = null;
-            List<BolVenta> ob_lisprg = new List<BolVenta>();
-
-            MapaSala ob_datsal = new MapaSala();
-            BolVenta ob_datprg = new BolVenta();
-            General ob_fncgrl = new General();
-
-            string keypelicula = App.Pelicula.Id;
-
-            //var keysal = App.Peliculas.FirstOrDefault(x => x.Id == keypelicula);
-            var pelicula = App.Pelicula;
-            ob_datsal.Sala = Convert.ToInt32(App.Pelicula.numeroSala);
-            ob_datsal.Teatro = Convert.ToInt32(App.idCine);
-            ob_datsal.Tercero = 2.ToString();
-            ob_datsal.Correo = "";
-            ob_datsal.FechaFuncion = "";
-
-            //Generar y encriptar JSON para servicio MAP
-            lc_srvpar = ob_fncgrl.JsonConverter(ob_datsal);
-            lc_srvpar = lc_srvpar.Replace("sala", "Sala");
-
-            //Encriptar Json MAP
-            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-            //Consumir servicio MAP
-            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scomap/"), lc_srvpar);
-
-            if (lc_result.Substring(0, 1) == "0")
+            try
             {
-                lc_result = lc_result.Replace("0-", "");
-                ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-            }
-            else
-            {
-                lc_result = lc_result.Replace("1-", "");
-            }
 
-            //Asignar valores EST
-            ob_datsal.Sala = Convert.ToInt32(App.Pelicula.numeroSala);
-            ob_datsal.Teatro = Convert.ToInt32(App.idCine);
-            ob_datsal.Tercero = "2";
+                int lc_maxcol = 0;
+                int lc_maxfil = 0;
+                int lc_idxrow = 0;
+                string lc_auxval = string.Empty;
+                string lc_auxtar = string.Empty;
+                string lc_auxhor = string.Empty;
+                string lc_srvpar = string.Empty;
+                string lc_result = string.Empty;
 
-            ob_datsal.Correo = "pol@scoreprojects.net";
-            ob_datsal.FechaFuncion = App.Pelicula.FechaSel.Substring(3);
+                DataTable ob_datubi = new DataTable();
 
-            string idFuncion = App.Pelicula.HoraSel;
+                XmlDocument ob_xmldoc = new XmlDocument();
 
-            ob_datsal.Funcion = Convert.ToInt32(App.Pelicula.HoraMilitar.Substring(0, 2));
+                Dictionary<string, object> ob_estsil = new Dictionary<string, object>();
+                Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
+                Dictionary<string, object>[] ob_diclst2 = null;
+                List<BolVenta> ob_lisprg = new List<BolVenta>();
 
-            //Generar y encriptar JSON para servicio EST
-            lc_srvpar = ob_fncgrl.JsonConverter(ob_datsal);
-            lc_srvpar = lc_srvpar.Replace("sala", "Sala");
-            lc_srvpar = lc_srvpar.Replace("correo", "Correo");
-            lc_srvpar = lc_srvpar.Replace("funcion", "Funcion");
-            lc_srvpar = lc_srvpar.Replace("fechaFuncion", "FechaFuncion");
+                MapaSala ob_datsal = new MapaSala();
+                BolVenta ob_datprg = new BolVenta();
+                General ob_fncgrl = new General();
 
-            //Encriptar Json EST
-            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+                string keypelicula = App.Pelicula.Id;
 
-            //Consumir servicio EST
-            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoest/"), lc_srvpar);
+                //var keysal = App.Peliculas.FirstOrDefault(x => x.Id == keypelicula);
+                var pelicula = App.Pelicula;
+                ob_datsal.Sala = Convert.ToInt32(App.Pelicula.numeroSala);
+                ob_datsal.Teatro = Convert.ToInt32(App.idCine);
+                ob_datsal.Tercero = 2.ToString();
+                ob_datsal.Correo = "";
+                ob_datsal.FechaFuncion = "";
 
-            if (lc_result.Substring(0, 1) == "0")
-            {
-                //Quitar switch
-                lc_result = lc_result.Replace("0-", "");
+                //Generar y encriptar JSON para servicio MAP
+                lc_srvpar = ob_fncgrl.JsonConverter(ob_datsal);
+                lc_srvpar = lc_srvpar.Replace("sala", "Sala");
 
-                //Deserializar Json y validar respuesta EST
-                ob_diclst2 = (Dictionary<string, object>[])JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>[])));
-            }
+                //Encriptar Json MAP
+                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-            foreach (var item in ob_diclst2)
-            {
-                lc_maxcol = Convert.ToInt32(item["maxCol"]);
-                lc_maxfil = ob_diclst2.Length;
-                ob_estsil.Add(item["filRel"].ToString(), item["DescripcionSilla"]);
-            }
+                //Consumir servicio MAP
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scomap/"), lc_srvpar);
 
-            double[] ColumnaTotal = (double[])JsonConvert.DeserializeObject(ob_diclst["ColumnaTotal"].ToString(), (typeof(double[])));
-            double[] ColumnaRelativa = (double[])JsonConvert.DeserializeObject(ob_diclst["ColumnaRelativa"].ToString(), (typeof(double[])));
-            string[] FilaTotal = (string[])JsonConvert.DeserializeObject(ob_diclst["FilaTotal"].ToString(), (typeof(string[])));
-            string[] FilaRelativa = (string[])JsonConvert.DeserializeObject(ob_diclst["FilaRelativa"].ToString(), (typeof(string[])));
-            string[] TipoSilla = (string[])JsonConvert.DeserializeObject(ob_diclst["TipoSilla"].ToString(), (typeof(string[])));
-            string[] TipoZona = (string[])JsonConvert.DeserializeObject(ob_diclst["TipoZona"].ToString(), (typeof(string[])));
-
-            Ubicaciones[,] mt_datsal = new Ubicaciones[lc_maxfil, lc_maxcol];
-            for (int lc_idxiii = 0; lc_idxiii < lc_maxfil; lc_idxiii++)
-            {
-                //Recorrer y cargar matriz de sala (columnas)
-                for (int lc_idxjjj = 0; lc_idxjjj < lc_maxcol; lc_idxjjj++)
+                if (lc_result.Substring(0, 1) == "0")
                 {
-                    //Inicializar objeto de ubicaciones 
-                    Ubicaciones ob_ubisal = new Ubicaciones();
-
-                    //Cargar valores numericos de los arreglos al objeto
-                    ob_ubisal.Columna = Convert.ToInt32(ColumnaTotal[lc_idxrow]);
-                    ob_ubisal.ColRelativa = Convert.ToInt32(ColumnaRelativa[lc_idxrow]);
-
-                    //Cargar valores string de los arreglos al objeto
-                    ob_ubisal.Fila = FilaTotal[lc_idxrow];
-                    ob_ubisal.FilRelativa = FilaRelativa[lc_idxrow];
-                    ob_ubisal.TipoSilla = TipoSilla[lc_idxrow];
-                    ob_ubisal.TipoZona = TipoZona[lc_idxrow];
-
-                    //Recorrer y buscar fila en ciclo de matriz
-                    List<EstadoDeSilla> ls_estsil = new List<EstadoDeSilla>((List<EstadoDeSilla>)JsonConvert.DeserializeObject(ob_estsil[FilaRelativa[lc_idxrow]].ToString(), (typeof(List<EstadoDeSilla>))));
-                    foreach (var item in ls_estsil)
-                    {
-                        //Validar columna en ciclo de matriz
-                        if (Convert.ToInt32(item.Columna) == ColumnaRelativa[lc_idxrow])
-                        {
-                            //Asignar valor y romper ciclo
-                            ob_ubisal.EstadoSilla = item.EstadoSilla;
-                            break;
-                        }
-                    }
-
-                    //Cargar objeto ubicaciones a la matriz
-                    mt_datsal[lc_idxiii, lc_idxjjj] = ob_ubisal;
-                    lc_idxrow++;
+                    lc_result = lc_result.Replace("0-", "");
+                    ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
                 }
-            }
+                else
+                {
+                    lc_result = lc_result.Replace("1-", "");
+                }
 
-            //Asignar Sala a Objeto
-            ob_datprg.FilSala = lc_maxfil;
-            ob_datprg.ColSala = lc_maxcol;
-            ob_datprg.MapaSala = mt_datsal;
-            App.BolVentaRoom = ob_datprg;
-            AgregarUbicacionAlWrapPanel(ob_datprg);
+                //Asignar valores EST
+                ob_datsal.Sala = Convert.ToInt32(App.Pelicula.numeroSala);
+                ob_datsal.Teatro = Convert.ToInt32(App.idCine);
+                ob_datsal.Tercero = "2";
+
+                ob_datsal.Correo = App.EmailEli;
+                ob_datsal.FechaFuncion = App.Pelicula.FechaSel.Substring(3);
+
+                string idFuncion = App.Pelicula.HoraSel;
+
+                ob_datsal.Funcion = Convert.ToInt32(App.Pelicula.HoraMilitar.Substring(0, 2));
+
+                //Generar y encriptar JSON para servicio EST
+                lc_srvpar = ob_fncgrl.JsonConverter(ob_datsal);
+                lc_srvpar = lc_srvpar.Replace("sala", "Sala");
+                lc_srvpar = lc_srvpar.Replace("correo", "Correo");
+                lc_srvpar = lc_srvpar.Replace("funcion", "Funcion");
+                lc_srvpar = lc_srvpar.Replace("fechaFuncion", "FechaFuncion");
+
+                //Encriptar Json EST
+                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                //Consumir servicio EST
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoest/"), lc_srvpar);
+
+                if (lc_result.Substring(0, 1) == "0")
+                {
+                    //Quitar switch
+                    lc_result = lc_result.Replace("0-", "");
+
+                    //Deserializar Json y validar respuesta EST
+                    ob_diclst2 = (Dictionary<string, object>[])JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>[])));
+                }
+
+                foreach (var item in ob_diclst2)
+                {
+                    lc_maxcol = Convert.ToInt32(item["maxCol"]);
+                    lc_maxfil = ob_diclst2.Length;
+                    ob_estsil.Add(item["filRel"].ToString(), item["DescripcionSilla"]);
+                }
+
+                double[] ColumnaTotal = (double[])JsonConvert.DeserializeObject(ob_diclst["ColumnaTotal"].ToString(), (typeof(double[])));
+                double[] ColumnaRelativa = (double[])JsonConvert.DeserializeObject(ob_diclst["ColumnaRelativa"].ToString(), (typeof(double[])));
+                string[] FilaTotal = (string[])JsonConvert.DeserializeObject(ob_diclst["FilaTotal"].ToString(), (typeof(string[])));
+                string[] FilaRelativa = (string[])JsonConvert.DeserializeObject(ob_diclst["FilaRelativa"].ToString(), (typeof(string[])));
+                string[] TipoSilla = (string[])JsonConvert.DeserializeObject(ob_diclst["TipoSilla"].ToString(), (typeof(string[])));
+                string[] TipoZona = (string[])JsonConvert.DeserializeObject(ob_diclst["TipoZona"].ToString(), (typeof(string[])));
+
+                Ubicaciones[,] mt_datsal = new Ubicaciones[lc_maxfil, lc_maxcol];
+                for (int lc_idxiii = 0; lc_idxiii < lc_maxfil; lc_idxiii++)
+                {
+                    //Recorrer y cargar matriz de sala (columnas)
+                    for (int lc_idxjjj = 0; lc_idxjjj < lc_maxcol; lc_idxjjj++)
+                    {
+                        //Inicializar objeto de ubicaciones 
+                        Ubicaciones ob_ubisal = new Ubicaciones();
+
+                        //Cargar valores numericos de los arreglos al objeto
+                        ob_ubisal.Columna = Convert.ToInt32(ColumnaTotal[lc_idxrow]);
+                        ob_ubisal.ColRelativa = Convert.ToInt32(ColumnaRelativa[lc_idxrow]);
+
+                        //Cargar valores string de los arreglos al objeto
+                        ob_ubisal.Fila = FilaTotal[lc_idxrow];
+                        ob_ubisal.FilRelativa = FilaRelativa[lc_idxrow];
+                        ob_ubisal.TipoSilla = TipoSilla[lc_idxrow];
+                        ob_ubisal.TipoZona = TipoZona[lc_idxrow];
+
+                        //Recorrer y buscar fila en ciclo de matriz
+                        List<EstadoDeSilla> ls_estsil = new List<EstadoDeSilla>((List<EstadoDeSilla>)JsonConvert.DeserializeObject(ob_estsil[FilaRelativa[lc_idxrow]].ToString(), (typeof(List<EstadoDeSilla>))));
+                        foreach (var item in ls_estsil)
+                        {
+                            //Validar columna en ciclo de matriz
+                            if (Convert.ToInt32(item.Columna) == ColumnaRelativa[lc_idxrow])
+                            {
+                                //Asignar valor y romper ciclo
+                                ob_ubisal.EstadoSilla = item.EstadoSilla;
+                                break;
+                            }
+                        }
+
+                        //Cargar objeto ubicaciones a la matriz
+                        mt_datsal[lc_idxiii, lc_idxjjj] = ob_ubisal;
+                        lc_idxrow++;
+                    }
+                }
+
+                //Asignar Sala a Objeto
+                ob_datprg.FilSala = lc_maxfil;
+                ob_datprg.ColSala = lc_maxcol;
+                ob_datprg.MapaSala = mt_datsal;
+                App.BolVentaRoom = ob_datprg;
+                AgregarUbicacionAlWrapPanel(ob_datprg);
+            }
+            catch (Exception ex) { MessageBox.Show("Error", "No se logro generar la sala de la funcion"); }
 
         }
 
-        private int sillasSeleccionadas = 0;
-        public static string[] sillasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
-
         private void AgregarUbicacionAlWrapPanel(BolVenta bolVenta)
         {
-
             // Crear la plantilla de control personalizada
             Ubicaciones[,] ubicaciones = bolVenta.MapaSala;
 
@@ -430,7 +454,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     // Crea un nuevo Label para la cantidad (siempre será 1)
                     Label labelCantidad = new Label();
-                    labelCantidad.Content = App.ValorTarifa.ToString();
+                    labelCantidad.Content =  App.ValorTarifa.ToString();
                     labelCantidad.FontFamily = new FontFamily("Myanmar Khyay");
                     labelCantidad.FontSize = 16;
                     labelCantidad.VerticalAlignment = VerticalAlignment.Center;
@@ -457,9 +481,9 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Principal w = new Principal();
+            Principal openWindows = new Principal();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
 
         }
 

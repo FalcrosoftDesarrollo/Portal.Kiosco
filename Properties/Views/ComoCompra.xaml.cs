@@ -28,35 +28,61 @@ namespace Portal.Kiosco.Properties.Views
             {
                 while (isThreadActive)
                 {
-                    ComprobarTiempo();
+                    if (ComprobarTiempo())
+                    {
+                        break; // Salir del bucle si la ventana principal está abierta
+                    }
                 }
             });
             thread.IsBackground = true;
             thread.Start();
         }
 
-        private void ComprobarTiempo()
+        private bool isMainWindowOpen = false; // Variable para indicar si la ventana principal está abierta
+
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
                     }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+                 
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
+
+
 
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
         {
@@ -81,17 +107,19 @@ namespace Portal.Kiosco.Properties.Views
                 {
                     isThreadActive = false;
                     App.IsCinefans = true;
-                    Cartelera w = new Cartelera();
+                    Cartelera openWindows = new Cartelera();
+
+                    openWindows.Show();
                     this.Close();
-                    w.ShowDialog();
                 }
                 else
                 {
                     isThreadActive = false;
                     App.IsCinefans = true;
-                    Combos w = new Combos();
+                    Combos openWindows = new Combos();
+
+                    openWindows.Show();
                     this.Close();
-                    w.ShowDialog();
 
                 }
             }
@@ -104,10 +132,10 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Principal w = new Principal();
+            Principal openWindows = new Principal();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
 
-    }   
+    }
 }

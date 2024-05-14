@@ -42,28 +42,48 @@ namespace Portal.Kiosco
             thread.Start();
         }
 
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
                     }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
+
 
         private void Scanear_documento_Loaded(object sender, RoutedEventArgs e)
         {
@@ -80,16 +100,16 @@ namespace Portal.Kiosco
             if (App.IsBoleteriaConfiteria == false)
             {
                 isThreadActive = false;
-                Cartelera w = new Cartelera();
+                Cartelera openWindows = new Cartelera();
+                openWindows.Show();
                 this.Close();
-                w.ShowDialog();
             }
             else
             {
                 isThreadActive = false;
-                Combos w = new Combos();
+                Combos openWindows = new Combos();
+                openWindows.Show();
                 this.Close();
-                w.ShowDialog();
             }
         }
 
@@ -163,16 +183,16 @@ namespace Portal.Kiosco
         //        {
         //            this.Visibility = Visibility.Visible;
         //        };
-        //        errorWindow.ShowDialog();
+        //        errorWindoopenWindows.Show();
         //    }
         //}
 
         private async void btnVolverComoCompra_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            ComoCompra w = new ComoCompra();
+            ComoCompra openWindows = new ComoCompra();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
 
         private async void TextDocumento_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -192,16 +212,16 @@ namespace Portal.Kiosco
                 if (!carteleraWindowLoaded && App.IsBoleteriaConfiteria == false)
                 {
                     isThreadActive = false;
-                    Cartelera w = new Cartelera();
+                    Cartelera openWindows = new Cartelera();
+                    openWindows.Show();
                     this.Close();
-                    w.ShowDialog();
                 }
                 else if (App.IsBoleteriaConfiteria)
                 {
                     isThreadActive = false;
-                    Combos w = new Combos();
+                    Combos openWindows = new Combos();
+                    openWindows.Show();
                     this.Close();
-                    w.ShowDialog();
                 }
             });
         }

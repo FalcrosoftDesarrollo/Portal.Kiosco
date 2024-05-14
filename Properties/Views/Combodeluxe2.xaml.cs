@@ -26,9 +26,9 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            Principal w = new Principal();
+            Principal openWindows = new Principal();
             this.Close();
-            w.ShowDialog();
+            openWindows.Show();
         }
     }
 }

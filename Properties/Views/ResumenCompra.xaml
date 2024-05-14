@@ -302,7 +302,13 @@
                                     <ColumnDefinition Width="1550"/>
 
                                 </Grid.ColumnDefinitions>
-                                <Label FontSize="32" FontFamily="Myanmar Khyay" Name="TotalResumen" Content="TOTAL A PAGAR: $170.800" Height="42" Width="587"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-126,0" />
+                                 
+                                <Border Width="350" HorizontalAlignment="Right" CornerRadius="10" Background="White" Margin="0,0,0,0">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="TOTAL A PAGAR:" FontFamily="Myanmar Khyay" FontSize="32" Margin="0,0,10,0"/>
+                                        <Label  Name="TotalResumen" Content="0" FontFamily="Myanmar Khyay" FontSize="32" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Border>
                             </Grid>
                         </Border>
                         <Border Grid.Row="5">

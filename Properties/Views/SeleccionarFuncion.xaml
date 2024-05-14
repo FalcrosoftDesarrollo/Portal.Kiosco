@@ -10,7 +10,7 @@
         WindowState="Maximized" 
         >
     <Window.Resources>
-       <Style TargetType="Button">
+        <Style TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Foreground" Value="Red" />
@@ -161,14 +161,15 @@
                                         </Grid.RowDefinitions>
 
                                         <Label FontSize="32" Content="¿Cuándo la quieres ver?" FontFamily="Myanmar Khyay" Grid.Row="0"/>
+                                        <ScrollViewer Grid.Row="1"  PanningMode="HorizontalOnly" Margin="6,0,270,0" >
+                                            <WrapPanel VerticalAlignment="Center" Width="971" HorizontalAlignment="Left" x:Name="ContenedorFechas">
 
-                                        <WrapPanel Grid.Row="1" VerticalAlignment="Center" Width="971" HorizontalAlignment="Left" x:Name="ContenedorFechas">
-
-                                        </WrapPanel>
+                                            </WrapPanel>
+                                        </ScrollViewer>
 
                                         <WrapPanel Grid.Row="2" VerticalAlignment="Center" Height="41">
                                             <Border Width="840" Height="10" CornerRadius="20" Background="#F5F5F5">
-                                                <Border Height="40" Width="283" HorizontalAlignment="Right" Margin="0,0,25,0" Background="#D9D9D9">
+                                                <Border Height="40" Width="283" HorizontalAlignment="Right" Margin="0,0,25,0" Background="White">
 
                                                 </Border>
                                             </Border>
@@ -177,128 +178,128 @@
 
                                             </Button>
                                         </WrapPanel>
-                                         
-                                            <Border Grid.Row="3" Width="980" HorizontalAlignment="Left">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition  Width="15" />
-                                                        <ColumnDefinition />
-                                                    </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Row="3" Width="980" HorizontalAlignment="Left">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition  Width="15" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
 
 
-                                                    <Border Grid.Column="0">
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="65"/>
-                                                                <RowDefinition />
-                                                            </Grid.RowDefinitions>
+                                                <Border Grid.Column="0">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="65"/>
+                                                            <RowDefinition />
+                                                        </Grid.RowDefinitions>
 
-                                                            <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
-                                                                <Label FontSize="32" Content="2D" FontFamily="Myanmar Khyay"  Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
+                                                        <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
+                                                            <Label FontSize="32" Content="2D" FontFamily="Myanmar Khyay"  Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
 
-                                                            </Border>
-
-
-                                                            <Border Grid.Row="1">
-                                                                <Grid>
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="122" />
-                                                                        <ColumnDefinition  Width="122"/>
-                                                                        <ColumnDefinition  Width="122"/>
-                                                                        <ColumnDefinition Width="122" />
-                                                                    </Grid.ColumnDefinitions>
-
-                                                                    <WrapPanel Grid.Column="0" x:Name="ContenedorHorasGeneral">
-
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
-                                                                        </Border>
-
-                                                                    </WrapPanel>
-                                                                    <WrapPanel Grid.Column="1" x:Name="ContenedorHorasSupernova">
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="Supernova" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14"  />
-                                                                        </Border>
+                                                        </Border>
 
 
-                                                                    </WrapPanel>
-                                                                    <WrapPanel Grid.Column="2" x:Name="ContenedorHorasBlackStar">
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
-                                                                        </Border>
-                                                                     
-                                                                    </WrapPanel>
-                                                                    <WrapPanel Grid.Column="3" x:Name="ContenedorHoras4DX">
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
-                                                                        </Border>
-                                                                       
-                                                                    </WrapPanel>
+                                                        <Border Grid.Row="1">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="122" />
+                                                                    <ColumnDefinition  Width="122"/>
+                                                                    <ColumnDefinition  Width="122"/>
+                                                                    <ColumnDefinition Width="122" />
+                                                                </Grid.ColumnDefinitions>
 
-                                                                </Grid>
-                                                            </Border>
-                                                        </Grid>
-                                                    </Border>
+                                                                <WrapPanel Grid.Column="0" x:Name="ContenedorHorasGeneral">
 
-                                                    <Border Grid.Column="2">
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="65"/>
-                                                                <RowDefinition />
-                                                            </Grid.RowDefinitions>
-                                                            <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
-                                                                <Label FontSize="32" Content="3D" FontFamily="Myanmar Khyay" Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
-                                                            </Border>
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                        <Button Background="Transparent" BorderThickness="0" Content="General" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
+                                                                    </Border>
 
-                                                            <Border Grid.Row="1">
-                                                                <Grid>
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="122" />
-                                                                        <ColumnDefinition  Width="122"/>
-                                                                        <ColumnDefinition  Width="122"/>
-                                                                        <ColumnDefinition Width="122" />
-                                                                    </Grid.ColumnDefinitions>
+                                                                </WrapPanel>
+                                                                <WrapPanel Grid.Column="1" x:Name="ContenedorHorasSupernova">
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                        <Button Background="Transparent" BorderThickness="0" Content="Supernova" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14"  />
+                                                                    </Border>
 
 
-                                                                    <WrapPanel Grid.Column="0"  x:Name="ContenedorHoras3D">
+                                                                </WrapPanel>
+                                                                <WrapPanel Grid.Column="2" x:Name="ContenedorHorasBlackStar">
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                        <Button Background="Transparent" BorderThickness="0" Content="Black Star" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
+                                                                    </Border>
 
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="General &#x0a;     3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14"  HorizontalContentAlignment="Center"/>
-                                                                        </Border>
-                                                                       
+                                                                </WrapPanel>
+                                                                <WrapPanel Grid.Column="3" x:Name="ContenedorHoras4DX">
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
+                                                                        <Button Background="Transparent" BorderThickness="0" Content="4DX" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
+                                                                    </Border>
 
-                                                                    </WrapPanel>
+                                                                </WrapPanel>
 
-                                                                    <WrapPanel Grid.Column="1" x:Name="ContenedorHoras3DSuperNova">
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button   Background="Transparent" BorderThickness="0" Content="Supernova &#x0a;         3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
-                                                                        </Border>
-                                                                        
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
 
-                                                                    </WrapPanel>
-                                                                    <WrapPanel Grid.Column="2" x:Name="ContenedorHoras3DBlackStar">
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="Black Star &#x0a;        3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
-                                                                        </Border>
-                                                                        
+                                                <Border Grid.Column="2">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="65"/>
+                                                            <RowDefinition />
+                                                        </Grid.RowDefinitions>
+                                                        <Border Grid.Row="0" Height="51" CornerRadius="10" Background="#F5F5F5">
+                                                            <Label FontSize="32" Content="3D" FontFamily="Myanmar Khyay" Height="51" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
+                                                        </Border>
 
-                                                                    </WrapPanel>
-                                                                    <WrapPanel Grid.Column="3" x:Name="ContenedorHoras3D4DX">
-                                                                        <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
-                                                                            <Button Background="Transparent" BorderThickness="0" Content="4DX - 3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
-                                                                        </Border>
-                                                                       
-                                                                    </WrapPanel>
+                                                        <Border Grid.Row="1">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="122" />
+                                                                    <ColumnDefinition  Width="122"/>
+                                                                    <ColumnDefinition  Width="122"/>
+                                                                    <ColumnDefinition Width="122" />
+                                                                </Grid.ColumnDefinitions>
 
-                                                                </Grid>
-                                                            </Border>
-                                                        </Grid>
-                                                    </Border>
 
-                                                </Grid>
-                                            </Border>
-                                         
+                                                                <WrapPanel Grid.Column="0"  x:Name="ContenedorHoras3D">
+
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                        <Button Background="Transparent" BorderThickness="0" Content="General &#x0a;     3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14"  HorizontalContentAlignment="Center"/>
+                                                                    </Border>
+
+
+                                                                </WrapPanel>
+
+                                                                <WrapPanel Grid.Column="1" x:Name="ContenedorHoras3DSuperNova">
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                        <Button   Background="Transparent" BorderThickness="0" Content="Supernova &#x0a;         3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
+                                                                    </Border>
+
+
+                                                                </WrapPanel>
+                                                                <WrapPanel Grid.Column="2" x:Name="ContenedorHoras3DBlackStar">
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,6,5" Width="115" Height="46">
+                                                                        <Button Background="Transparent" BorderThickness="0" Content="Black Star &#x0a;        3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
+                                                                    </Border>
+
+
+                                                                </WrapPanel>
+                                                                <WrapPanel Grid.Column="3" x:Name="ContenedorHoras3D4DX">
+                                                                    <Border Grid.Row="0" CornerRadius="10" Background="#F5F5F5" Margin="0,7,0,5" Width="115" Height="46">
+                                                                        <Button Background="Transparent" BorderThickness="0" Content="4DX - 3D" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="14" />
+                                                                    </Border>
+
+                                                                </WrapPanel>
+
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
+
+                                            </Grid>
+                                        </Border>
+
                                     </Grid>
                                 </Border>
 
@@ -322,15 +323,15 @@
 
                                         <Border Grid.Row="0" Margin="31,0,0,0">
                                             <WrapPanel>
-                                                <TextBlock>
-                                                            <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " Width="1200" Height="43"/>
-                                                            <LineBreak/>
-                                                            <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
-                                                            <LineBreak/>
-                                                            <Label Name="lblClasificacion" FontFamily="Myanmar Khyay" FontSize="24" Content="Clasificación: 7 años" Height="38"/>
-                                                            <LineBreak/>
-                                                            <Label Name="lblGenero" FontFamily="Myanmar Khyay" FontSize="24" Content="Género: Aventura, Comedia, Fantasía" Height="38"/>
-                                                </TextBlock>
+                                                <StackPanel>
+                                                    <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " Width="1200" Height="43"/>
+
+                                                    <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
+
+                                                    <Label Name="lblClasificacion" FontFamily="Myanmar Khyay" FontSize="24" Content="Clasificación: 7 años" Height="38"/>
+
+                                                    <Label Name="lblGenero" FontFamily="Myanmar Khyay" FontSize="24" Content="Género: Aventura, Comedia, Fantasía" Height="38"/>
+                                                </StackPanel>
 
                                             </WrapPanel>
                                         </Border>
@@ -339,9 +340,9 @@
                                             <WrapPanel Height="100" VerticalAlignment="Top">
                                                 <Image Height="62" Width="74" Margin="25,18"  Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\advertencia.png"/>
                                                 <TextBlock Width="705" FontFamily="Inter Mixed" FontSize="20" Foreground="White" VerticalAlignment="Center">
-                                                    Las películas con clasificación +15 y +18 años son restrictivas,
+                                                    <Run Text="Las películas con clasificación +15 y +18 años son restrictivas,"></Run>
                                                     <LineBreak/>
-                                                    y deberás presentar el documento de identificación para ingresar a la sala.
+                                                    <Run Text="y deberás presentar el documento de identificación para ingresar a la sala."></Run>
                                                 </TextBlock>
                                             </WrapPanel>
                                         </Border>
@@ -365,7 +366,7 @@
 
                                             </Button>
                                         </Border>
-                                    
+
                                     </Grid>
                                 </Border>
                             </Grid>

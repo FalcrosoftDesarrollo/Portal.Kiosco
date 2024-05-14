@@ -66,28 +66,48 @@ namespace Portal.Kiosco.Properties.Views
             thread.Start();
         }
 
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
                     }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
+
 
         private Border clickedBorder;
 
@@ -1630,17 +1650,17 @@ namespace Portal.Kiosco.Properties.Views
                 if (ProductosSeleccionados != null)
                 {
                     isThreadActive = false;
-                    Combodeluxe1 w = new Combodeluxe1();
+                    Combodeluxe1 openWindows = new Combodeluxe1();
+                    openWindows.Show();
                     this.Close();
-                    w.ShowDialog();
 
                 }
                 else
                 {
                     isThreadActive = false;
-                    ResumenCompra w = new ResumenCompra(config);
+                    ResumenCompra openWindows = new ResumenCompra(config);
+                    openWindows.Show();
                     this.Close();
-                    w.ShowDialog();
 
                 }
             }
@@ -1657,18 +1677,18 @@ namespace Portal.Kiosco.Properties.Views
             {
                 isThreadActive = false;
                 App.IsCinefans = true;
-                AlgoParaComer w = new AlgoParaComer();
+                AlgoParaComer openWindows = new AlgoParaComer();
+                openWindows.Show();
                 this.Close();
-                w.ShowDialog();
 
             }
             else
             {
                 isThreadActive = false;
                 App.IsCinefans = true;
-                ComoCompra w = new ComoCompra();
+                ComoCompra openWindows = new ComoCompra();
+                openWindows.Show();
                 this.Close();
-                w.ShowDialog();
 
             }
 
@@ -1677,9 +1697,9 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Principal w = new Principal();
+            Principal openWindows = new Principal();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
 
         }
     }

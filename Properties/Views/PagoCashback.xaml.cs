@@ -38,63 +38,83 @@ namespace Portal.Kiosco.Properties.Views
             thread.Start();
         }
 
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
                     }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
+
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            InstruccionesDatafono w = new InstruccionesDatafono();
+            InstruccionesDatafono openWindows = new InstruccionesDatafono();
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            ResumenCompra w = new ResumenCompra(config);
+            ResumenCompra openWindows = new ResumenCompra(config);
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
 
         private async void btnCambiar_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            InstruccionesDatafono w = new InstruccionesDatafono();
+            InstruccionesDatafono openWindows = new InstruccionesDatafono();
             var openWindow = new InstruccionesDatafono();
 
-            w.ShowDialog();
+            openWindows.Show();
             this.Close();
-         
+
         }
 
         private void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             App.RoomReverse();
-            var w = new Principal();
-            
+            var openWindows = new Principal();
+
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
     }
 }

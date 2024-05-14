@@ -1,10 +1,12 @@
 ﻿using APIPortalKiosco.Entities;
 using APIPortalWebMed.Entities;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
@@ -67,14 +69,16 @@ namespace Portal.Kiosco
         public static Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
         public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
-    
+
 
         public static string EmailEli { get; set; }
         public static string NombreEli { get; set; }
         public static string ApellidoEli { get; set; }
         public static string TelefonoEli { get; set; }
         public static string PortalWebDB { get; set; }
-        
+        public static string Credicor { get; set; }
+        public static string TotalPagar { get; set; }
+        public static string ResponseDatafono { get; set; }
 
         public string TiempoRestanteGlobal
         {
@@ -88,39 +92,36 @@ namespace Portal.Kiosco
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
             base.OnStartup(e);
             IniciarContadorGlobal();
             DatosCineFans = new CineFansData();
             Peliculas = new List<Pelicula>();
             Pelicula = new Pelicula();
-            
+
 
             string appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            var appSettingsSection = configuration.GetSection("MyConfig");
 
-            if (File.Exists(appSettingsPath))
-            {
-                string jsonContent = File.ReadAllText(appSettingsPath);
-                var appSettings = JObject.Parse(jsonContent);
-                var appSettingsSection = appSettings["MyConfig"];
+            Credicor = appSettingsSection["Credicor"].ToString();
+            MinDifHora = appSettingsSection["MinDifHora"].ToString();
+            idCine = appSettingsSection["TeaDefault"].ToString();
+            PuntoVenta = appSettingsSection["PuntoVenta"].ToString();
+            ValorTercero = appSettingsSection["ValorTercero"].ToString();
+            CantProductos = appSettingsSection["CantProductos"].ToString();
+            ScoreServices = appSettingsSection["ScoreServices"].ToString();
+            CantSillasBol = appSettingsSection["CantSillasBol"].ToString();
+            EmailEli = appSettingsSection["Email"].ToString();
+            NombreEli = appSettingsSection["Nombre"].ToString();
+            ApellidoEli = appSettingsSection["Apellido"].ToString();
+            PortalWebDB = appSettingsSection["PortalWebDB"].ToString();
+            TelefonoEli = appSettingsSection["Telefono"].ToString();
+            carteleraXML = XDocument.Load(appSettingsSection["Variables41"].ToString());
 
-                MinDifHora = appSettingsSection["MinDifHora"].ToString();
-                idCine = appSettingsSection["TeaDefault"].ToString();
-                PuntoVenta = appSettingsSection["PuntoVenta"].ToString();
-                ValorTercero = appSettingsSection["ValorTercero"].ToString();
-                CantProductos = appSettingsSection["CantProductos"].ToString();
-                ScoreServices = appSettingsSection["ScoreServices"].ToString();
-                CantSillasBol = appSettingsSection["CantSillasBol"].ToString();
-                EmailEli = appSettingsSection["Email"].ToString();
-                NombreEli = appSettingsSection["Nombre"].ToString();
-                ApellidoEli = appSettingsSection["Apellido"].ToString();
-                PortalWebDB = appSettingsSection["PortalWebDB"].ToString();
-                TelefonoEli = appSettingsSection["Telefono"].ToString();
-                carteleraXML = XDocument.Load(appSettingsSection["Variables41"].ToString());
-                Peliculas = ObtenerPeliculas(carteleraXML, idCine);
-                
-            }
-
-           
+            Peliculas = ObtenerPeliculas(carteleraXML, idCine);
 
         }
         protected virtual void OnPropertyChanged(string propertyName)
@@ -131,7 +132,7 @@ namespace Portal.Kiosco
 
         private void IniciarContadorGlobal()
         {
-            tiempoRestante = TimeSpan.FromSeconds(10);
+            tiempoRestante = TimeSpan.FromSeconds(900);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
 
             DispatcherTimer contadorGlobalTimer = new DispatcherTimer();
@@ -153,7 +154,7 @@ namespace Portal.Kiosco
 
         public void ResetearTimer()
         {
-            tiempoRestante = TimeSpan.FromSeconds(10);
+            tiempoRestante = TimeSpan.FromSeconds(900);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
         }
         private string DiaMes(string pr_daynum, string pr_flag)
@@ -452,5 +453,42 @@ namespace Portal.Kiosco
 
             }
         }
+
+        public static string RunProgramAndWait(string arguments)
+        {
+
+
+            try
+            {
+                using (Process process = new Process())
+                {
+                    process.StartInfo.FileName = App.Credicor;
+                    process.StartInfo.Arguments = arguments;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.Verb = "runas"; // Ejecutar como administrador
+
+                    // Iniciar el proceso
+                    process.Start();
+
+                    // Leer la salida del proceso
+                    string output = process.StandardOutput.ReadToEnd();
+
+                    // Esperar a que el proceso termine
+                    process.WaitForExit();
+
+                    // Devolver la salida del proceso
+                    return output;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
+        }
+
+
     }
 }

@@ -29,17 +29,12 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="QRCoder" Version="1.5.1" />
+    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
     <PackageReference Include="Uno.UI" Version="5.1.104" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\APIPortalWebMed.Entities\APIPortalKiosco.Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="TEFII_NET">
-      <HintPath>..\..\..\TEFII_NET\TEFII_NET.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

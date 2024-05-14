@@ -11,8 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+using System.Windows.Media; 
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -45,29 +44,48 @@ namespace Portal.Kiosco.Properties.Views
             thread.IsBackground = true;
             thread.Start();
         }
-
-        private void ComprobarTiempo()
+        private bool ComprobarTiempo()
         {
+            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null)
+                    if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        this.Close();
-                        principal.Show();
+                        // Enfocar la ventana principal si está abierta y visible
+                        principal.Activate();
+                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
                     }
                     else
                     {
-
-                        Principal p = new Principal();
-                        this.Close();
-                        p.Show();
+                        if (!isMainWindowOpen)
+                        {
+                            if (principal == null)
+                            {
+                                principal = new Principal();
+                                principal.Show();
+                                isMainWindowOpen = true;
+                            }
+                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            foreach (Window window in Application.Current.Windows)
+                            {
+                                if (window != principal && window != this)
+                                {
+                                    window.Close();
+                                }
+                            }
+                        }
                     }
+
                 });
             }
+
+            return isMainWindowOpen; // Devolver el valor booleano
         }
+
 
         public void PagoConCash(string ref_payco = "")
         {
@@ -294,40 +312,94 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Combodeluxe1 w = new Combodeluxe1();
+            Combodeluxe1 openWindows = new Combodeluxe1();
             this.Close();
-            w.ShowDialog();
+            openWindows.Show();
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            //PagoCashback w = new PagoCashback();
+            //PagoCashback openWindows = new PagoCashback();
             //this.Close();
-            //w.ShowDialog();
+            //openWindows.Show();
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Principal w = new Principal();
+            Principal openWindows = new Principal();
             this.Close();
-            w.ShowDialog();
+            openWindows.Show();
         }
 
         private async void btnPagoTarjeta_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            BoletasGafasAlimentos w = new BoletasGafasAlimentos();
-            this.Close();
-            w.ShowDialog();
+
+            decimal totalDecimal;
+            if (decimal.TryParse(TotalResumen.Content.ToString(), NumberStyles.Currency, CultureInfo.GetCultureInfo("es-CO"), out totalDecimal))
+            {
+                // Convertir el valor decimal a un entero
+                var total = Convert.ToString(Convert.ToInt32(totalDecimal));
+                App.TotalPagar = total.ToString();
+            }
+            else
+            {
+                Console.WriteLine("No se pudo convertir la cadena en un valor decimal.");
+            }
+            StartMonitoringDatafono();
+            var openWindows = new InstruccionesDatafono();
+            openWindows.ShowDialog();
+
+        }
+        private Thread monitorThread;
+        private void StartMonitoringDatafono()
+        {
+            monitorThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    // Revisar si App.ResponseDatafono es igual a "00"
+                    if (App.ResponseDatafono == "00")
+                    {
+                        // Abrir la ventana BoletasGafasAlimentos y cerrar la ventana resumenCompraWindow
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            BoletasGafasAlimentos boletasGafasAlimentos = new BoletasGafasAlimentos();
+                            boletasGafasAlimentos.Show();
+
+                            this.Close();
+                        });
+
+                        // Salir del bucle y finalizar el hilo
+                        return;
+                    }
+
+                   
+
+                    // Esperar un momento antes de revisar nuevamente
+                    Thread.Sleep(1000); // Esperar 1 segundo
+                }
+            });
+
+            if (App.ResponseDatafono != "00" && App.ResponseDatafono != null)
+            {
+                // Detener el hilo
+                monitorThread.Suspend();
+                return;
+            }
+
+            monitorThread.IsBackground = true; // Hacer que el hilo sea de fondo para que se cierre automáticamente con la aplicación
+            monitorThread.Start();
         }
 
         private async void btnPagarCash_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            PagoCashback w = new PagoCashback();
+            PagoCashback openWindows = new PagoCashback();
+           
+            openWindows.Show();
             this.Close();
-            w.ShowDialog();
         }
 
         public void GenerateResumen()
@@ -360,7 +432,7 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             // Calcular y mostrar el total
-            TotalResumen.Content = "TOTAL A PAGAR: " + totalcombos.ToString("C", new CultureInfo("es-CO"));
+            TotalResumen.Content = totalcombos.ToString("C", new CultureInfo("es-CO"));
         }
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
