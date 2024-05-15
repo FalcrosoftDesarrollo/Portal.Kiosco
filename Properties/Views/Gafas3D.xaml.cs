@@ -99,7 +99,7 @@ namespace Portal.Kiosco.Properties.Views
         }
 
         private int gafasSeleccionadas = 0;
-        private string[] gafasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
+        private string[] gafasSeleccionadasArray = new string[10]; 
         private int ultimoIndex = -1;
 
         private void btnSumar_Click(object sender, RoutedEventArgs e)
@@ -115,10 +115,8 @@ namespace Portal.Kiosco.Properties.Views
 
                     int index = Array.IndexOf(gafasSeleccionadasArray, null);
 
-                    // Almacena el contenido del botón en el arreglo de sillas seleccionadas
                     gafasSeleccionadasArray[index] = nombreBoton;
 
-                    // Incrementa el contador de sillas seleccionadas
                     gafasSeleccionadas++;
 
                     ultimoIndex = index;

@@ -92,7 +92,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
-                MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.");
+                MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             if (responseSection.Replace("Response:","").Substring(0, 3).Replace(",", "") == "00")
             {

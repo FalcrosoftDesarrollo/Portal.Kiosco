@@ -285,7 +285,7 @@ namespace Portal.Kiosco.Properties.Views
                             //Validar respuesta llave 1
                             if (ob_diclst.ContainsKey("Validación"))
                             {
-                                MessageBox.Show("", ob_diclst["Validación"].ToString());
+                                MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 //return View();
                             }
 
@@ -296,7 +296,7 @@ namespace Portal.Kiosco.Properties.Views
                     }
                     else
                     {
-                        MessageBox.Show("", "Reembolso no culminado con exito SCORET");
+                        MessageBox.Show("Reembolso no culminado con exito SCORET", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         //return View();
                     }
                     #endregion
@@ -305,7 +305,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show("");
+                MessageBox.Show("", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

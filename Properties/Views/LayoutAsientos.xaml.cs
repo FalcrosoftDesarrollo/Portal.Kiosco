@@ -122,7 +122,7 @@ namespace Portal.Kiosco.Properties.Views
             Room(App.BolVentaRoom);
             if (lblTotal.Content == "TOTAL: $0")
             {
-                MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación");
+                MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -294,7 +294,7 @@ namespace Portal.Kiosco.Properties.Views
                 App.BolVentaRoom = ob_datprg;
                 AgregarUbicacionAlWrapPanel(ob_datprg);
             }
-            catch (Exception ex) { MessageBox.Show("Error", "No se logro generar la sala de la funcion"); }
+            catch (Exception ex) { MessageBox.Show("No se logro generar la sala de la funcion", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 
         }
 
@@ -550,7 +550,8 @@ namespace Portal.Kiosco.Properties.Views
 
                         if (ob_diclst.ContainsKey("Validación"))
                         {
-                            MessageBox.Show(ob_diclst["Validación"].ToString());
+                            MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                         }
                         else
                         {
@@ -668,7 +669,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     //Validar cantidad de sillas
                     if (pr_bolvta.Ubicaciones.Count > Convert.ToInt32(App.CantSillasBol))
-                        MessageBox.Show("Error", "Solo se pueden seleccionar hasta " + App.CantSillasBol + " sillas por transacción.");
+                        MessageBox.Show("Solo se pueden seleccionar hasta " + App.CantSillasBol + " sillas por transacción.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                     //Generar y encriptar JSON para servicio
                     lc_srvpar = ob_fncgrl.JsonConverter(pr_bolvta);
@@ -765,7 +766,7 @@ namespace Portal.Kiosco.Properties.Views
 
                                     else
                                     {
-                                        MessageBox.Show("Error", ob_auxrta["Respuesta"].ToString());
+                                        MessageBox.Show(ob_auxrta["Respuesta"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                     }
                                 }
                             }
@@ -784,7 +785,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -53,7 +53,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             catch (Exception ex) 
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show(ex.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             Thread thread = new Thread(() =>
             {
@@ -1211,7 +1211,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show(ex.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
