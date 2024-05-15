@@ -24,7 +24,8 @@ namespace Portal.Kiosco.Properties.Views
         private bool isThreadActive = true;
         public static string[] sillasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
         private int sillasSeleccionadas = 0;
-
+        private string zonaseleccionada = "";
+        private BolVenta bolVentaSala;
         public LayoutAsientos(IOptions<MyConfig> config)
         {
             try
@@ -103,7 +104,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            
+
 
             return isMainWindowOpen; // Devolver el valor booleano
         }
@@ -293,10 +294,170 @@ namespace Portal.Kiosco.Properties.Views
                 ob_datprg.ColSala = lc_maxcol;
                 ob_datprg.MapaSala = mt_datsal;
                 App.BolVentaRoom = ob_datprg;
+
+
+
                 AgregarUbicacionAlWrapPanel(ob_datprg);
             }
             catch (Exception ex) { MessageBox.Show("No se logro generar la sala de la funcion", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 
+        }
+
+        public void CalcularTarifa(String ZonaSeleccionda)
+        {
+            try
+            {
+
+                int lc_keypel = 0;
+                int lc_auxpel = 0;
+                int lc_keytea = 0;
+                int lc_auxtea = 0;
+                int lc_swtflg = 0;
+                string Variables41TPF = string.Empty;
+                string lc_auxitem = string.Empty;
+                string lc_fecitem = string.Empty;
+                string lc_flgpre = "S";
+                string pr_tippel = "";
+
+                string lc_result = string.Empty;
+                string lc_srvpar = string.Empty;
+
+                DateTime dt_fecpro;
+
+                List<DateCartelera> ob_fechas = new List<DateCartelera>();
+
+                XmlDocument ob_xmldoc = new XmlDocument();
+                //Billboard ob_bilmov = new Billboard();
+                General ob_fncgrl = new General();
+
+                APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
+                Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
+                Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
+                List<sala> ob_lisprg = new List<sala>();
+
+                //Obtener información de la web
+                var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == App.Pelicula.TituloOriginal);
+                var fechaSel = App.Pelicula.FechaSel.Substring(3);
+                var horaSel = App.Pelicula.HoraSel;
+                var horaMilitar = App.Pelicula.HoraMilitar;
+                if (peliculaDias != null)
+                {
+                    foreach (var dias in peliculaDias)
+                    {
+                        foreach (var fecha in dias.DiasDisponibles)
+                        {
+                            if (fecha.fecunv == fechaSel)
+                            {
+                                foreach (var hora in fecha.horafun)
+                                {
+                                    if (horaSel == hora.horunv)
+                                    {
+                                        App.Pelicula.Id = dias.Id;
+                                        App.TipoSala = dias.tipoSala;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                ob_carprg.Teatro = App.idCine;
+                ob_carprg.tercero = App.ValorTercero;
+                ob_carprg.IdPelicula = App.Pelicula.Id;
+                ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
+                ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
+                ob_carprg.FgPelicula = "2";
+                ob_carprg.CfPelicula = "No";
+
+                //Generar y encriptar JSON para servicio PRE
+                lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
+                lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
+                lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
+                lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
+                lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
+                lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
+                lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
+
+                //Encriptar Json
+                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                //Consumir servicio
+
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+                if (lc_result.StartsWith("0"))
+                {
+
+                    HashSet<string> fechasProcesadas = new HashSet<string>();
+                    HashSet<string> horasProcesadas = new HashSet<string>();
+                    //Validar respuesta
+                    if (lc_result.Substring(0, 1) == "0")
+                    {
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-", "");
+                        ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                        //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                        ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
+                        ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
+                        var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
+
+                        if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
+                        {
+                            foreach (var itemZonas in Zonas)
+                            {
+                                if (ZonaSeleccionda == itemZonas.Key)
+                                {
+                                    foreach (var item in ob_lisprg)
+                                    {
+                                        if (item.hora != null && item.hora.Count > 0)
+                                        {
+                                            foreach (var item2 in item.hora)
+                                            {
+                                                if (item2.militar == horaMilitar)
+                                                {
+                                                    foreach (var item3 in item2.TipoZonaOld)
+                                                    {
+                                                        if (itemZonas.Value == item3.nombreZona)
+                                                        {
+                                                            foreach (var item4 in item3.TipoSilla)
+                                                            {
+                                                                if (item4.Tarifa.Count > 0)
+                                                                {
+                                                                    foreach (var item5 in item4.Tarifa)
+                                                                    {
+                                                                        App.ValorTarifa = Convert.ToDecimal(item5.valor);
+                                                                        App.KeyTarifa = Convert.ToDecimal(item5.codigoTarifa);
+                                                                        App.NombreTarifa = item5.nombreTarifa + ";" + item5.valor.ToString();
+                                                                        App.TipoSilla = item4.nombreTipoSilla;
+                                                                        App.Pelicula.numeroSala = item.numeroSala;
+                                                                        //borSiguente.Visibility = Visibility.Visible;
+                                                                        App.Pelicula.HoraMilitar = item2.militar;
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (item4.nombreTipoSilla != "Discapacitado")
+                                                                    {
+                                                                        // Código relacionado con la ausencia de tarifas
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Código relacionado con la falta de datos en ViewBag
+                        }
+                    }
+                }
+            }
+            catch (Exception e) { }
         }
 
         private void AgregarUbicacionAlWrapPanel(BolVenta bolVenta)
@@ -312,6 +473,7 @@ namespace Portal.Kiosco.Properties.Views
                     Button button = new Button();
                     string lc_valmos = string.Concat(ubicacion.FilRelativa, ubicacion.ColRelativa);
                     string lc_values = string.Concat(ubicacion.EstadoSilla, "_", ubicacion.FilRelativa, "_", ubicacion.ColRelativa, "_", ubicacion.Fila, "_", ubicacion.Columna, "_");
+                    
 
                     button.Content = lc_valmos;
                     button.Name = lc_values;
@@ -414,6 +576,27 @@ namespace Portal.Kiosco.Properties.Views
                     // Encuentra el primer índice vacío en el arreglo de sillas seleccionadas
                     int index = Array.IndexOf(sillasSeleccionadasArray, null);
                     App.BolVentaRoom.SelUbicaciones = App.BolVentaRoom.SelUbicaciones + button.Name.ToString() + ";";
+                    zonaseleccionada = button.Name.ToString();
+
+                    Ubicaciones[,] ubicaciones = App.BolVentaRoom.MapaSala;
+
+                    for (int i = 0; i < ubicaciones.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < ubicaciones.GetLength(1); j++)
+                        {
+                            Ubicaciones ubicacion = ubicaciones[i, j];
+                            string lc_values = string.Concat(ubicacion.EstadoSilla, "_", ubicacion.FilRelativa, "_", ubicacion.ColRelativa, "_", ubicacion.Fila, "_", ubicacion.Columna, "_");
+
+                            if (zonaseleccionada == lc_values)
+                            {
+                                CalcularTarifa(ubicacion.TipoZona);
+                                break;
+                            }
+
+                        }
+                    }
+
+                   
                     // Almacena el contenido del botón en el arreglo de sillas seleccionadas
                     sillasSeleccionadasArray[index] = silla;
 
@@ -425,10 +608,16 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    MessageBox.Show("Solo se pueden seleccionar hasta "+App.CantidadBoletas+" sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Solo se pueden seleccionar hasta " + App.CantidadBoletas + " sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 // Actualiza el contenido del UniformGrid con las sillas seleccionadas
+
+
+            
+
+                
+
                 ActualizarInterfazSillasSeleccionadas();
             }
         }
@@ -455,7 +644,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     // Crea un nuevo Label para la cantidad (siempre será 1)
                     Label labelCantidad = new Label();
-                    labelCantidad.Content =  App.ValorTarifa.ToString("C0");
+                    labelCantidad.Content = App.ValorTarifa.ToString("C0");
                     labelCantidad.FontFamily = new FontFamily("Myanmar Khyay");
                     labelCantidad.FontSize = 16;
                     labelCantidad.VerticalAlignment = VerticalAlignment.Center;
@@ -474,7 +663,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
-                lblTotal.Content =  (sillasSeleccionadas * App.ValorTarifa).ToString("C0");
+                lblTotal.Content = (sillasSeleccionadas * App.ValorTarifa).ToString("C0");
                 App.CantidadBoletas = Convert.ToDecimal(sillasSeleccionadas);
             }
         }
@@ -622,6 +811,7 @@ namespace Portal.Kiosco.Properties.Views
                     pr_bolvta.PuntoVenta = Convert.ToInt32(App.PuntoVenta);
                     pr_bolvta.IdFuncion = pr_bolvta.HorProg.ToString().Length == 4 ? Convert.ToInt32(pr_bolvta.HorProg.ToString().Substring(0, 2)) : Convert.ToInt32(pr_bolvta.HorProg.ToString().Substring(0, 1));
                     pr_bolvta.TipoSilla = App.TipoSilla;
+
                     //Obtener ubicaciones de vista
                     char[] ar_charst = pr_bolvta.SelUbicaciones.ToCharArray();
                     for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)

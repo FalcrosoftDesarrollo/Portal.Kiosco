@@ -1,6 +1,8 @@
-﻿using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Data;
+using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,7 @@ namespace Portal.Kiosco.Properties.Views
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+                App.TelefonoEli = App.ob_diclst["Telefono"].ToString();
             }
             else
             {
@@ -185,16 +188,27 @@ namespace Portal.Kiosco.Properties.Views
 
                                     }
                                 }
-
+                                
                             }
+
+                            var producto = new Producto();
+                            producto = item;
+
+                            App.agregarProducto(producto);
+
                         }
                         itemContador++;
                     }
+
+
 
                 }
                 ContadorProductos++;
             }
         }
+
+
+       
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
