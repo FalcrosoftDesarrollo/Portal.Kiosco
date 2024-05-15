@@ -27,6 +27,7 @@ namespace Portal.Kiosco.Properties.Views
             var combos = App.ProductosSeleccionados;
 
             GenerateResumen();
+            CargarQr();
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -563,6 +564,4 @@ namespace Portal.Kiosco.Properties.Views
         }
 
     }
-
-
 }

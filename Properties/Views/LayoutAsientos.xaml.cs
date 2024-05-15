@@ -30,7 +30,7 @@ namespace Portal.Kiosco.Properties.Views
             try
             {
                 InitializeComponent();
-                //sillasSeleccionadasArray = new string[10];
+                sillasSeleccionadasArray = new string[10];
                 this.config = config;
                 ContenedorSala.Children.Clear();
                 GenerarSala();

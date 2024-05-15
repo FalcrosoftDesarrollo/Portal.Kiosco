@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="BoletaFactura" Height="900" Width="450">
+        Title="BoletaFactura" Height="1000" Width="540">
     <Grid Background="White">
 
         <Grid.RowDefinitions>
@@ -36,6 +36,11 @@
                     <TextBlock Text="Sucursal:" FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="Cra 50 N 38-A 105, local 04284" HorizontalAlignment="Left"/>
 
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="5" >
+                    <TextBlock Text="Detalle de documento:"  FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="KIOSCO PROCINAL" FontWeight="Bold" HorizontalAlignment="Left"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Margin="5">
@@ -129,13 +134,10 @@
                     <TextBlock Text="Valor pagado en:"  FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock  Text="Efectivo: $14,900.00" Margin="30,0,0,0"  HorizontalAlignment="Left"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="CAMBIO: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="$0.00" FontWeight="Bold" HorizontalAlignment="Left"/>
-                </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Cajero: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="CARDONA IGLESIAS DANIELA" FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock  Text="KIOSCO PROCINAL" FontWeight="Bold" HorizontalAlignment="Left"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Caja: "  FontWeight="Bold" HorizontalAlignment="Left"/>

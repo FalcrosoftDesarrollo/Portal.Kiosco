@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media; 
+using System.Windows.Media;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -349,7 +349,8 @@ namespace Portal.Kiosco.Properties.Views
             }
             StartMonitoringDatafono();
             var openWindows = new InstruccionesDatafono();
-            openWindows.ShowDialog();
+            openWindows.Show();
+            this.Close();
 
         }
         private Thread monitorThread;
@@ -375,7 +376,7 @@ namespace Portal.Kiosco.Properties.Views
                         return;
                     }
 
-                   
+
 
                     // Esperar un momento antes de revisar nuevamente
                     Thread.Sleep(1000); // Esperar 1 segundo
@@ -397,7 +398,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             isThreadActive = false;
             PagoCashback openWindows = new PagoCashback();
-           
+
             openWindows.Show();
             this.Close();
         }
@@ -406,15 +407,20 @@ namespace Portal.Kiosco.Properties.Views
         {
             // Generar resumen de boletas
             decimal totalcombos = 0;
-            GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
+            if (App.Pelicula.Nombre !="")
+            {
+                GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
+            }
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
             // Generar resumen de gafas
-            GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
+            if (App.CantidadGafas.ToString() != "0")
+            {
+                GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
+            }
             totalcombos += 0;
-            // Generar resumen de combos
+            
             var combos = App.ProductosSeleccionados;
 
-            // Agrupar los combos por código
             var combosAgrupados = combos.GroupBy(c => c.Codigo);
 
             foreach (var grupoCombos in combosAgrupados)
@@ -426,7 +432,7 @@ namespace Portal.Kiosco.Properties.Views
                 decimal precio = buscarprecio(combos, codigo);
                 int cantidad = grupoCombos.Count();
 
-                string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim(); 
+                string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
                 decimal totalAnterior = decimal.Parse(totalString);
                 decimal nuevoTotal = totalAnterior + precio;
 
@@ -560,6 +566,7 @@ namespace Portal.Kiosco.Properties.Views
                         case "P": //PRODUCTOS
                             ob_datpro.Codigo = itepro.Codigo;
                             ob_datpro.Descripcion = itepro.Descripcion;
+                            nombre = itepro.Descripcion;
                             ob_datpro.Tipo = itepro.Tipo;
                             ob_datpro.Precios = itepro.Precios;
 
@@ -617,6 +624,7 @@ namespace Portal.Kiosco.Properties.Views
                                     {
                                         var CodioBotella = i.Codigo;
                                         var NombreFinalBotella = i.Descripcion.ToString();
+                                        
                                         var precioFinalBotella = i.Precios.Sum(precio => precio.General);
                                         var frecuenciaBotella = i.Frecuente.ToString();
                                         // Hacer algo con precioFinalCombo
@@ -633,6 +641,7 @@ namespace Portal.Kiosco.Properties.Views
                                     {
                                         var CodioComida = i.Codigo;
                                         var NombreFinalComida = i.Descripcion.ToString();
+                                        
                                         var precioFinalComida = i.Precios.Sum(precio => precio.General);
                                         var frecuenciaComida = i.Frecuente.ToString();
                                         if (Convert.ToBoolean(frecuenciaComida) == true)
@@ -866,7 +875,7 @@ namespace Portal.Kiosco.Properties.Views
 
                             break;
                     }
-                break;
+                    break;
                 }
             }
 

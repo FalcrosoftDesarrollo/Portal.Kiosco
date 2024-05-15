@@ -80,6 +80,7 @@ namespace Portal.Kiosco.Properties.Views
 
             return isMainWindowOpen; // Devolver el valor booleano
         }
+
         private async void btnObtenerDatos_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -96,7 +97,7 @@ namespace Portal.Kiosco.Properties.Views
                     MessageBox.Show("El correo electrónico ingresado no es válido.", "Notificación", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                else if(IsValidEmail(email))
+                else if (IsValidEmail(email))
                 {
                     EnvioCorreo(email);
                 }
@@ -108,7 +109,7 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-        private void EnvioCorreo (string correo)
+        private void EnvioCorreo(string correo)
         {
             string lc_fectra = string.Empty;
             string lc_valtra = string.Empty;
@@ -120,7 +121,7 @@ namespace Portal.Kiosco.Properties.Views
             string lc_srvpar = string.Empty;
             string lc_refepy = string.Empty;
             string lc_bankpy = string.Empty;
-            string lc_urlcor = ""/*config.Value.UrlCorreo*/;
+            string lc_urlcor = App.UrlCorreo;
             string session = "";
             string status = "";
             decimal lc_secsec = Convert.ToDecimal(App.Secuencia);
@@ -138,94 +139,74 @@ namespace Portal.Kiosco.Properties.Views
 
                 //Adicionar valores de envio de correo Score
                 lc_urlcor = lc_urlcor.Replace("#xxx", lc_keytea.ToString());
-                lc_urlcor = lc_urlcor.Replace("#yyy", App.PuntoVenta);
+                lc_urlcor = lc_urlcor.Replace("#yyy", lc_puntea.ToString());
                 lc_urlcor = lc_urlcor.Replace("#zzz", lc_secsec.ToString());
                 lc_urlcor = lc_urlcor.Replace("#ccc", correo);
 
                 //Estado Exitoso
-                if (lc_status == "Aceptada" || lc_status == "Cashback")
+
+                using (var context = new DataDB(config))
                 {
-                    using (var context = new DataDB(config))
+                    var rs = context.RetailSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == lc_keytea).Where(x => x.Tipo == "C").ToList();
+                    List<RetailSales> retailsales = rs
+                        .GroupBy(l => l.KeyProducto)
+                        .Select(cl => new RetailSales
+                        {
+                            Descripcion = cl.First().Descripcion,
+                            Cantidad = cl.Sum(c => c.Cantidad),
+                            Precio = cl.Sum(c => c.Precio)
+                        }).ToList();
+
+                    foreach (var vr_itevta in retailsales)
                     {
-                        var rs = context.RetailSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == lc_keytea).Where(x => x.Tipo == "C").ToList();
-                        List<RetailSales> retailsales = rs
-                            .GroupBy(l => l.KeyProducto)
-                            .Select(cl => new RetailSales
-                            {
-                                Descripcion = cl.First().Descripcion,
-                                Cantidad = cl.Sum(c => c.Cantidad),
-                                Precio = cl.Sum(c => c.Precio)
-                            }).ToList();
-
-                        foreach (var vr_itevta in retailsales)
+                        //Adicionar a lista
+                        ob_ordite.Add(new OrderItem
                         {
-                            //Adicionar a lista
-                            ob_ordite.Add(new OrderItem
-                            {
-                                Precio = vr_itevta.Precio,
-                                Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
-                                Descripcion = vr_itevta.Descripcion
-                            });
-                        }
-
-                        rs = context.RetailSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == lc_keytea).Where(x => x.Tipo != "C").ToList();
-
-                        foreach (var vr_itevta in rs)
-                        {
-                            //Adicionar a lista
-                            ob_ordite.Add(new OrderItem
-                            {
-                                Precio = vr_itevta.Precio * Convert.ToInt32(vr_itevta.Cantidad),
-                                Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
-                                Descripcion = vr_itevta.Descripcion
-                            });
-                        } 
+                            Precio = vr_itevta.Precio,
+                            Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
+                            Descripcion = vr_itevta.Descripcion
+                        });
                     }
 
-                    if (lc_secsec != null)
-                    {
-                        try
-                        {
-                            //Envio de correo Score
-                            var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
-                            request.GetResponse();
-                        }
-                        catch (Exception)
-                        {
-                            string EnvioCorreo = "Fallo envío de correo compra APROBADA, por favor comunicarse con el teatro.";
-                        }
-                    }
-                } 
-          
+                    rs = context.RetailSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == lc_keytea).Where(x => x.Tipo != "C").ToList();
 
-             
+                    foreach (var vr_itevta in rs)
+                    {
+                        //Adicionar a lista
+                        ob_ordite.Add(new OrderItem
+                        {
+                            Precio = vr_itevta.Precio * Convert.ToInt32(vr_itevta.Cantidad),
+                            Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
+                            Descripcion = vr_itevta.Descripcion
+                        });
+                    }
+                }
+
+                if (lc_secsec != null)
+                {
+                    try
+                    {
+                        //Envio de correo Score
+                        var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
+                        request.GetResponse();
+                        var openWindows = new Principal();
+                        openWindows.Show();
+                        this.Close();
+
+                    }
+                    catch (Exception)
+                    {
+                        string EnvioCorreo = "Fallo envío de correo compra APROBADA, por favor comunicarse con el teatro.";
+                    }
+                }
+
+
+
+
             }
             catch (Exception lc_syserr)
             {
-                #region SERVICO SCORET
-                //Json de servicio RET
-                //lc_objson = "{\"Punto\":" + Convert.ToInt32(config.Value.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
 
-                //Encriptar Json RET
-                //lc_srvpar = ob_fncgrl.EncryptStringAES(lc_objson);
-
-                //Consumir servicio RET
-                //lc_jsnrst = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scoret/"), lc_srvpar);
-
-                //Generar Log
-                //LogSales logSales = new LogSales();
-                //LogAudit logAudit = new LogAudit(config);
-                //logSales.Id = Guid.NewGuid().ToString();
-                //logSales.Fecha = DateTime.Now;
-                //logSales.Programa = "Pages/Responses";
-                //logSales.Metodo = "SCORET_CATCH";
-                //logSales.ExceptionMessage = lc_srvpar;
-                //logSales.InnerExceptionMessage = lc_jsnrst;
-
-                //Escribir Log
-                //logAudit.LogApp(logSales);
-                #endregion
-                 
             }
         }
 
@@ -261,6 +242,14 @@ namespace Portal.Kiosco.Properties.Views
         {
             isThreadActive = false;
             BoletasGafasAlimentos openWindows = new BoletasGafasAlimentos();
+            this.Close();
+            openWindows.Show();
+        }
+
+        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        {
+            isThreadActive = false;
+            var openWindows = new Principal();
             this.Close();
             openWindows.Show();
         }

@@ -295,7 +295,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1800"/>
                                 </Grid.ColumnDefinitions>
-                                 
+
                                 <Border Width="700" HorizontalAlignment="Right" CornerRadius="10" Background="White" Margin="0,0,0,0">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Label Content="TOTAL A PAGAR:" FontFamily="Myanmar Khyay" FontSize="32" Margin="0,0,10,0"/>
