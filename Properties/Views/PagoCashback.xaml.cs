@@ -36,6 +36,8 @@ namespace Portal.Kiosco.Properties.Views
             });
             thread.IsBackground = true;
             thread.Start();
+            
+            lblTotalPagarCash.Content = Convert.ToDecimal(App.TotalPagar).ToString("C0");
         }
 
         private bool ComprobarTiempo()
@@ -115,6 +117,11 @@ namespace Portal.Kiosco.Properties.Views
 
             openWindows.Show();
             this.Close();
+        }
+
+        private void Button_Click()
+        {
+
         }
     }
 }

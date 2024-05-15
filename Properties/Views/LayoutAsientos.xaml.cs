@@ -424,7 +424,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    MessageBox.Show("Solo se pueden seleccionar hasta 10 sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Solo se pueden seleccionar hasta "+App.CantidadBoletas+" sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 // Actualiza el contenido del UniformGrid con las sillas seleccionadas
@@ -454,7 +454,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     // Crea un nuevo Label para la cantidad (siempre será 1)
                     Label labelCantidad = new Label();
-                    labelCantidad.Content =  App.ValorTarifa.ToString();
+                    labelCantidad.Content =  App.ValorTarifa.ToString("C0");
                     labelCantidad.FontFamily = new FontFamily("Myanmar Khyay");
                     labelCantidad.FontSize = 16;
                     labelCantidad.VerticalAlignment = VerticalAlignment.Center;
@@ -469,11 +469,11 @@ namespace Portal.Kiosco.Properties.Views
             // Muestra el total actualizado
             if (sillasSeleccionadas == 0)
             {
-                lblTotal.Content = "TOTAL: $0";
+                lblTotal.Content = Convert.ToDecimal("0").ToString("C0");
             }
             else
             {
-                lblTotal.Content = "TOTAL: $" + (sillasSeleccionadas * App.ValorTarifa).ToString();
+                lblTotal.Content =  (sillasSeleccionadas * App.ValorTarifa).ToString("C0");
                 App.CantidadBoletas = Convert.ToDecimal(sillasSeleccionadas);
             }
         }

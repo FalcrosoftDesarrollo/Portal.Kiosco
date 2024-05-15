@@ -154,7 +154,7 @@
                                         </Border>
 
                                         <Border Width="430" Height="69" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Bottom" CornerRadius="10">
-                                            <Button Content="$180.000" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"  >
+                                            <Button Content="0" Name="lblCashDisp" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"  >
                                                 
                                             </Button>
                                             
@@ -165,11 +165,11 @@
                                 <Border Grid.Column="1" Width="430" HorizontalAlignment="Left" Margin="42.5,0,0,0">
                                     <Grid>
                                         <Border CornerRadius="10" Background="#F5F5F5" Width="430" Height="69" VerticalAlignment="Top">
-                                            <Label   Background="Transparent" BorderThickness="0" Content="TOTAL A PAGAR" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="32" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <Label   Background="Transparent"  BorderThickness="0" Content="TOTAL A PAGAR" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="32" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <Border Width="430" Height="69" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Bottom" CornerRadius="10">
-                                            <Button Content="$170.800" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"  >
+                                            <Button Content="0" Name="lblTotalPagarCash" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"   >
                                                 
                                             </Button>
                                             

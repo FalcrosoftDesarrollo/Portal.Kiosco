@@ -174,26 +174,26 @@ namespace Portal.Kiosco.Properties.Views
                                     isfecha = 1;
 
                                 }
-                                //else
-                                //{
-                                //    if (isfecha == 0)
-                                //    {
-                                //        if (!horasProcesadas.Contains(hora.horario))
-                                //        {
-                                //            horasProcesadas.Add(hora.horario);
+                                else
+                                {
+                                    if (isfecha == 0)
+                                    {
+                                        if (!horasProcesadas.Contains(hora.horario))
+                                        {
+                                            horasProcesadas.Add(hora.horario);
 
-                                //            if (pelicula.Formato.Contains("2D"))
-                                //            {
-                                //                ContenedorHorasGeneral.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
-                                //            }
-                                //            if (pelicula.Formato.Contains("3D"))
-                                //            {
-                                //                ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
-                                //            }
-                                //        }
-                                //    }
+                                            if (pelicula.Formato.Contains("2D"))
+                                            {
+                                                ContenedorHorasGeneral.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
+                                            }
+                                            if (pelicula.Formato.Contains("3D"))
+                                            {
+                                                ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
+                                            }
+                                        }
+                                    }
 
-                                //}
+                                }
 
                                 App.TipoSala = hora.tipSala;
                             }
@@ -208,27 +208,29 @@ namespace Portal.Kiosco.Properties.Views
             HashSet<string> fechasProcesadas = new HashSet<string>();
             HashSet<string> horasProcesadas = new HashSet<string>();
             int isfecha = 0;
+            var fecha = App.Pelicula.FechaSel.Substring(3);
+  
             foreach (var pelicula in App.Peliculas)
             {
                 if (pelicula.TituloOriginal == App.Pelicula.TituloOriginal)
                 {
                     foreach (var fechas in pelicula.DiasDisponibles)
                     {
-                        if (!fechasProcesadas.Contains(fechas.fecunv))
-                        {
-                            CrearBotonFecha($"{fechas.fecham}", "btn" + fechas.fecunv);
-                            fechasProcesadas.Add(fechas.fecunv);
+                        //if (!fechasProcesadas.Contains(fechas.fecunv))
+                        //{
+                        //    //CrearBotonFecha($"{fechas.fecham}", "btn" + fechas.fecunv);
+                        //    //fechasProcesadas.Add(fechas.fecunv);
 
-                        }
+                        //}
 
                         foreach (var hora in fechas.horafun.OrderBy(h => DateTime.ParseExact(h.horario, "h:mm tt", CultureInfo.InvariantCulture)))
                         {
-                            if (hora.idFuncion.Contains(App.Pelicula.FechaSel.Substring(3)))
+                            if (hora.idFuncion.Contains(fecha))
                             {
                                 DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + hora.horunv.Substring(0, 2) + ":" + hora.horunv.Substring(2, 2) + ":00");
                                 DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 
-                                if (DateTime.Now.ToString("yyyyMMdd") == fechas.fecunv)
+                                if (DateTime.Now.ToString("yyyyMMdd") == fecha)
                                 {
                                     if (App.MinDifHora != "0")
                                     {
@@ -252,9 +254,10 @@ namespace Portal.Kiosco.Properties.Views
                                                 }
                                             }
                                         }
+                                        isfecha = 1;
                                     }
 
-                                    isfecha = 1;
+                                  
 
                                 }
                                 else
@@ -456,7 +459,7 @@ namespace Portal.Kiosco.Properties.Views
         //    }
         //}
 
-        public async void CalcularTarifa()
+        public void CalcularTarifa()
         {
             try
             {
@@ -492,7 +495,8 @@ namespace Portal.Kiosco.Properties.Views
             var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == App.Pelicula.TituloOriginal);
             var fechaSel = App.Pelicula.FechaSel.Substring(3);
             var horaSel = App.Pelicula.HoraSel;
-            if (peliculaDias != null)
+                var horaMilitar = App.Pelicula.HoraMilitar;
+                if (peliculaDias != null)
             {
                 foreach (var dias in peliculaDias)
                 {
@@ -535,7 +539,7 @@ namespace Portal.Kiosco.Properties.Views
 
             //Consumir servicio
 
-            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
             if (lc_result.StartsWith("0"))
             {
 
@@ -562,7 +566,7 @@ namespace Portal.Kiosco.Properties.Views
                                 {
                                     foreach (var item2 in item.hora)
                                     {
-                                        if (item2.militar == App.Pelicula.HoraSel)
+                                        if (item2.militar == horaMilitar)
                                         {
                                             foreach (var item3 in item2.TipoZonaOld)
                                             {
@@ -760,7 +764,7 @@ namespace Portal.Kiosco.Properties.Views
         private void btnSeleccionHora_Click(object sender, RoutedEventArgs e)
         {
 
-            CalcularTarifa();
+           
             //ResetarStylos();
             string buttonName = "";
             Button clickedButton = sender as Button;
@@ -967,6 +971,7 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
             }
+             
             if (buttonBorder != null)
             {
                 buttonBorder.BorderBrush = Brushes.Red;

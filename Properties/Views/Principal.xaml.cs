@@ -1,4 +1,7 @@
-﻿using System;
+﻿using APIPortalKiosco.Entities;
+using APIPortalWebMed.Entities;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -18,6 +21,8 @@ namespace Portal.Kiosco.Properties.Views
             ((App)Application.Current).ResetearTimer();
             App.IsFecha = false;
             this.KeyDown += Principal_KeyDown; // Manejador de eventos para teclas presionadas
+            App.Pelicula = new Pelicula();
+            App.ProductosSeleccionados = new List<Producto>();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         

@@ -263,8 +263,11 @@
                                                 </UniformGrid>
                                             </Border>
                                             <Border Grid.Row="6" CornerRadius="10" Background="#d9d9d9" HorizontalAlignment="Center" VerticalAlignment="Center" Width="350" Height="80">
-                                                <Label FontFamily="Myanmar Khyay" Name="lblTotal" FontSize="30" Content="TOTAL: $0" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-
+                                                
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="TOTAL:" FontFamily="Myanmar Khyay" FontSize="32" />
+                                                    <Label FontFamily="Myanmar Khyay" Name="lblTotal" FontSize="30" Content="0" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                                </StackPanel>
                                             </Border>
                                         </Grid>
                                     </Border>

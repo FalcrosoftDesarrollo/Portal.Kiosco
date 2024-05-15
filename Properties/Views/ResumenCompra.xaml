@@ -199,32 +199,32 @@
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="28"/>
-                                                        <ColumnDefinition Width="870"/>
+                                                        <ColumnDefinition Width="840"/>
                                                         <ColumnDefinition Width="0"/>
-                                                        <ColumnDefinition Width="125"/>
-                                                        <ColumnDefinition Width="105"/>
-                                                        <ColumnDefinition Width="125"/>
-                                                        <ColumnDefinition Width="118"/>
-                                                        <ColumnDefinition Width="125"/>
+                                                        <ColumnDefinition Width="185"/>
+                                                        <ColumnDefinition Width="50"/>
+                                                        <ColumnDefinition Width="185"/>
+                                                        <ColumnDefinition Width="50"/>
+                                                        <ColumnDefinition Width="185"/>
                                                         <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
                                                     <Border Grid.Column="1" >
-                                                        <Label Content="Boletas &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center" Margin="0,0,-109,0"></Label>
+                                                        <Label Content="Boletas &#xD;&#xA;detalle" FontFamily="Myanmar Khyay" FontSize="24" VerticalContentAlignment="Center" Margin="0,0,0,0"></Label>
                                                     </Border>
                                                     <Border Grid.Column="3">
-                                                        <Label Height="37" Name="lblPrecioBoletas" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-44,23"></Label>
+                                                        <Label Height="37" Name="lblPrecioBoletas" HorizontalAlignment="Center" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,0,23"></Label>
                                                     </Border>
                                                     <Border Grid.Column="5">
-                                                        <Label Height="37" Name="lblCantidadBoletas" Content="0" FontFamily="Myanmar Khyay" FontSize="24"></Label>
+                                                        <Label Height="37" Name="lblCantidadBoletas" HorizontalAlignment="Center" Content="0" FontFamily="Myanmar Khyay" FontSize="24"></Label>
                                                     </Border>
                                                     <Border Grid.Column="7">
-                                                        <Label Height="37" Name="lblBoletas" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22,-70,23"></Label>
+                                                        <Label Height="37" Name="lblBoletas" HorizontalAlignment="Center" Content="0" FontFamily="Myanmar Khyay" FontSize="24" Margin="0,22, 0,23"></Label>
                                                     </Border>
                                                 </Grid>
 
 
-                                            </Border>
-                                            <Border Grid.Row="2" BorderThickness="0 0 0 1" BorderBrush="Black">
+                                            </Border>-->
+                                                <!--<Border Grid.Row="2" BorderThickness="0 0 0 1" BorderBrush="Black">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="28"/>
@@ -288,22 +288,15 @@
                                     </Grid>
                                 </Border>
 
-
-
-
-
-
                             </Grid>
                         </Border>
                         <Border Grid.Row="3">
-
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1550"/>
-
+                                    <ColumnDefinition Width="1800"/>
                                 </Grid.ColumnDefinitions>
                                  
-                                <Border Width="350" HorizontalAlignment="Right" CornerRadius="10" Background="White" Margin="0,0,0,0">
+                                <Border Width="700" HorizontalAlignment="Right" CornerRadius="10" Background="White" Margin="0,0,0,0">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Label Content="TOTAL A PAGAR:" FontFamily="Myanmar Khyay" FontSize="32" Margin="0,0,10,0"/>
                                         <Label  Name="TotalResumen" Content="0" FontFamily="Myanmar Khyay" FontSize="32" FontWeight="Bold"/>

@@ -425,14 +425,20 @@ namespace Portal.Kiosco.Properties.Views
                 string nombre = buscarNombre(combos, codigo);
                 decimal precio = buscarprecio(combos, codigo);
                 int cantidad = grupoCombos.Count();
-                decimal total = (Convert.ToDecimal(precio) * cantidad);
+
+                string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim(); 
+                decimal totalAnterior = decimal.Parse(totalString);
+                decimal nuevoTotal = totalAnterior + precio;
+
+
+                decimal total = nuevoTotal * cantidad;
                 totalcombos += total;
                 // Generar el resumen para el grupo de combos
                 GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
             // Calcular y mostrar el total
-            TotalResumen.Content = totalcombos.ToString("C", new CultureInfo("es-CO"));
+            TotalResumen.Content = totalcombos.ToString("C0");
         }
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
@@ -448,19 +454,19 @@ namespace Portal.Kiosco.Properties.Views
                 if (i == 0)
                     columnDefinition.Width = new GridLength(28);
                 else if (i == 1)
-                    columnDefinition.Width = new GridLength(870);
+                    columnDefinition.Width = new GridLength(840);
                 else if (i == 2)
                     columnDefinition.Width = new GridLength(0);
                 else if (i == 3)
-                    columnDefinition.Width = new GridLength(125);
+                    columnDefinition.Width = new GridLength(185);
                 else if (i == 4)
-                    columnDefinition.Width = new GridLength(105);
+                    columnDefinition.Width = new GridLength(50);
                 else if (i == 5)
-                    columnDefinition.Width = new GridLength(125);
+                    columnDefinition.Width = new GridLength(185);
                 else if (i == 6)
-                    columnDefinition.Width = new GridLength(118);
+                    columnDefinition.Width = new GridLength(50);
                 else if (i == 7)
-                    columnDefinition.Width = new GridLength(125);
+                    columnDefinition.Width = new GridLength(185);
                 // La última columna no tiene un ancho específico
 
                 grid.ColumnDefinitions.Add(columnDefinition);
@@ -487,17 +493,20 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else if (i == 2)
                 {
-                    label.Content = valor.ToString("C", new CultureInfo("es-CO")); ;
-                    label.Margin = new Thickness(0, 22, -44, 23);
+                    label.Content = valor.ToString("C0"); ;
+                    //label.Margin = new Thickness(0, 22, -44, 23);
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
                 }
                 else if (i == 3)
                 {
                     label.Content = cantidad;
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+
                 }
                 else if (i == 4)
                 {
-                    label.Content = total.ToString("C", new CultureInfo("es-CO"));
-                    ;
+                    label.Content = total.ToString("C0");
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
                     total += Convert.ToDecimal(total);
                 }
 
