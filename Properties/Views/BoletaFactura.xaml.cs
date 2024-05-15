@@ -22,6 +22,9 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
 
             FechaFac.Text = DateTime.Now.ToString();
+            Sucursal.Text = App.DirEmpresa;
+            NomEmpresa.Text = App.NomEmpresa;
+            NomEmpresa2.Text = App.NomEmpresa;
 
             // Generar resumen de combos
             var combos = App.ProductosSeleccionados;

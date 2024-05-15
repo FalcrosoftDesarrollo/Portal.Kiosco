@@ -75,6 +75,15 @@ namespace Portal.Kiosco
         public static bool IsPrimeraCarga = true;
 
 
+        public static string NomEmpresa { get; set; }
+        public static string DirEmpresa { get; set; }
+        public static string CiuEmpresa { get; set; }
+        public static string TelEmpresa { get; set; }
+        public static string CorEmpresa { get; set; }
+        public static string TeaDefault { get; set; }
+        public static string NomDefault { get; set; }
+        public static string CiuDefault { get; set; }
+
 
         public static string EmailEli { get; set; }
         public static string NombreEli { get; set; }
@@ -85,7 +94,8 @@ namespace Portal.Kiosco
         public static string TotalPagar { get; set; }
         public static string ResponseDatafono { get; set; }
         public static string UrlCorreo { get; set; }
-        
+
+
 
         public string TiempoRestanteGlobal
         {
@@ -112,6 +122,16 @@ namespace Portal.Kiosco
                 .AddJsonFile("appsettings.json")
                 .Build();
             var appSettingsSection = configuration.GetSection("MyConfig");
+
+            NomEmpresa = appSettingsSection["NomEmpresa"].ToString();
+            DirEmpresa = appSettingsSection["DirEmpresa"].ToString();
+            CiuEmpresa = appSettingsSection["CiuEmpresa"].ToString();
+            TelEmpresa = appSettingsSection["TelEmpresa"].ToString();
+            CorEmpresa = appSettingsSection["CorEmpresa"].ToString();
+            TeaDefault = appSettingsSection["TeaDefault"].ToString();
+            NomDefault = appSettingsSection["NomDefault"].ToString();
+            CiuDefault = appSettingsSection["CiuDefault"].ToString();
+
 
             Credicor = appSettingsSection["Credicor"].ToString();
             MinDifHora = appSettingsSection["MinDifHora"].ToString();

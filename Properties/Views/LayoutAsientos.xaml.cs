@@ -118,6 +118,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
+
             var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
             Room(App.BolVentaRoom);
             if (lblTotal.Content == "TOTAL: $0")

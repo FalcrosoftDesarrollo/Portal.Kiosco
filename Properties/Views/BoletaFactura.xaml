@@ -18,7 +18,7 @@
 
         <Border BorderThickness="1" Margin="10,10,10,10" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <StackPanel Width="400">
-                <TextBlock Text="Colombiana de Cines S.A." FontSize="16" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+                <TextBlock Text=" " Name="NomEmpresa" FontSize="16" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
                     <TextBlock Text="NIT: " FontWeight="Bold" HorizontalAlignment="Center"/>
                     <TextBlock Text="900.090.098-0" FontWeight="Bold" HorizontalAlignment="Center"/>
@@ -29,43 +29,52 @@
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Matriz:" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Colombiana de Cines S.A." HorizontalAlignment="Left"/>
+                    <TextBlock Text=" " Name="NomEmpresa2" HorizontalAlignment="Left"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5" >
-                    <TextBlock Text="Sucursal:" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Cra 50 N 38-A 105, local 04284" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Sucursal: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text=" " Name="Sucursal" HorizontalAlignment="Left"/>
 
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Margin="5" >
+                    <TextBlock Text="Detalle de documento: "  FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="KIOSCO PROCINAL" HorizontalAlignment="Left"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Detalle de documento:"  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="KIOSCO PROCINAL" FontWeight="Bold" HorizontalAlignment="Left"/>
-                </StackPanel>
+                    <TextBlock Text="Detalle de documento: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="320-014-000874403" HorizontalAlignment="Left"/>
 
-                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Margin="5">
-                    <TextBlock Text="Detalle de documento:" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="320-014-000874403" FontWeight="Bold" HorizontalAlignment="Right"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Fecha:     " FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="" Name="FechaFac" HorizontalAlignment="Left" FontWeight="Bold"/>
+                    <TextBlock Text="" Name="FechaFac" HorizontalAlignment="Left"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Resolucion de facturacion:" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="18764059689843 del 10/11/2023" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="desde PF 748662 hasta PF 2000000" FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="18764059689843 del 10/11/2023" HorizontalAlignment="Left"/>
+                    <TextBlock Text="desde PF 748662 hasta PF 2000000" HorizontalAlignment="Left"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Factura de Venta:" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="PF 000874403" FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="PF 000874403" HorizontalAlignment="Left"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="5" >
-                    <TextBlock Text="Cliente:  CONSUMIDOR FINAL" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Ced. I/NIT: 99999999999999999"  HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Cliente: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                        <TextBlock Text="CONSUMIDOR FINAL" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Ced. I/NIT: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                        <TextBlock Text="99999999999999999" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    
 
 
                 </StackPanel>
@@ -112,40 +121,41 @@
                         <!-- Columna 1 -->
                         <StackPanel>
                             <!-- Contenido de la columna 1 -->
-                            <TextBlock Text="Subtotal: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="Subtotal: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="SUBTOTAL: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="SUBTOTAL: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="TOTAL:" FontWeight="Bold" HorizontalAlignment="Left"/>
                         </StackPanel>
                         <!-- Columna 2 -->
                         <StackPanel Margin="30,0,30,0"/>
                         <StackPanel >
 
                             <!-- Contenido de la columna 2 -->
-                            <TextBlock Text="$13,796.30" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="$0,00" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="$1,103.70" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="TOTAL: $14,900.00" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="$0" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="$0" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="$0" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="$0" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>
                         </StackPanel>
 
                     </StackPanel>
 
                 </Border>
-                <StackPanel Orientation="Vertical" Margin="5" >
-                    <TextBlock Text="Valor pagado en:"  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="Efectivo: $14,900.00" Margin="30,0,0,0"  HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" Margin="5" >
+                    <TextBlock Text="Valor pagado: "  FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock  Text="$0"   HorizontalAlignment="Left"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Cajero: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="KIOSCO PROCINAL" FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock  Text="KIOSCO PROCINAL" HorizontalAlignment="Left"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Caja: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="CN4" FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock  Text="CN4" HorizontalAlignment="Left"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Auditoria Interna: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="80115" FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock  Text="80115" HorizontalAlignment="Left"/>
                 </StackPanel>
 
             </StackPanel>
