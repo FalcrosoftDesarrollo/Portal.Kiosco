@@ -1500,7 +1500,7 @@ namespace Portal.Kiosco.Properties.Views
                                         // Hacer algo con precioFinalCombo
                                         if (Convert.ToBoolean(frecuenciaBotella) == true)
                                         {
-                                            Precios += precioFinalBotella;
+                                            Precios += precioFinalBotella * itecat.Cantidad;
                                         }
                                         datosFinalesBotella.Add((CodioBotella, NombreFinalBotella, precioFinalBotella, frecuenciaBotella, itecat.Codigo));
                                     }
@@ -1515,7 +1515,7 @@ namespace Portal.Kiosco.Properties.Views
                                         var frecuenciaComida = i.Frecuente.ToString();
                                         if (Convert.ToBoolean(frecuenciaComida) == true)
                                         {
-                                            Precios += precioFinalComida;
+                                            Precios += precioFinalComida * itecat.Cantidad;
                                         }
                                         // Hacer algo con precioFinalCombo
                                         datosFinalesComida.Add((CodioComida, NombreFinalComida, precioFinalComida, frecuenciaComida, itecat.Codigo));
