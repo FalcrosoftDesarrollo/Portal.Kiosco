@@ -79,11 +79,18 @@ namespace Portal.Kiosco
         public static string TelefonoEli { get; set; }
         public static string PortalWebDB { get; set; }
         public static string Credicor { get; set; }
-        public static string TotalPagar { get; set; }
+        public static string TotalPagar { get; set; } = "0";
         public static string ResponseDatafono { get; set; }
         public static string UrlCorreo { get; set; }
         public static string ClienteFrecuente { get; set; }
-        public static string Saldo { get; set; }
+        public static string Saldo { get; set; } = "0";
+        public static string TipoCompra { get; set; }
+        public static string NroTarjeta { get; set; }
+        public static string CodMedioPago { get; set; }
+        public static string CodMedioPagoCB { get; set; }
+        public static string NroDocumento { get; set; }
+        public static string Direccion { get; set; }
+
         public string TiempoRestanteGlobal
         {
             get { return _tiempoRestanteGlobal; }
@@ -120,6 +127,8 @@ namespace Portal.Kiosco
             NomDefault = appSettingsSection["NomDefault"].ToString();
             CiuDefault = appSettingsSection["CiuDefault"].ToString();
 
+            CodMedioPago = appSettingsSection["CodMedioPago"].ToString();
+            CodMedioPagoCB = appSettingsSection["CodMedioPagoCB"].ToString();
 
             Credicor = appSettingsSection["Credicor"].ToString();
             MinDifHora = appSettingsSection["MinDifHora"].ToString();
@@ -533,7 +542,7 @@ namespace Portal.Kiosco
             string NombreEli = string.Empty;
             string KeyTeatro = App.idCine;
             string DesTeatro = string.Empty;
-            string TipoCompra = string.Empty;
+            string TipoCompra = App.TipoCompra;
             string ApellidoEli = string.Empty;
             string TelefonoEli = string.Empty;
             string DireccionEli = string.Empty;
@@ -577,18 +586,18 @@ namespace Portal.Kiosco
                 alertS = false;
                 var PuntoVenta = App.PuntoVenta;
 
-                EmailEli = session/*.GetString("Usuario")*/;
-                NombreEli = session/*.GetString("Nombre")*/;
+                EmailEli = App.EmailEli;
+                NombreEli = App.NombreEli;
                 KeyTeatro = App.idCine;
                 TipoCompra = pr_datpro.TipoCompra;
-                ApellidoEli = session/*.GetString("Apellido")*/;
-                TelefonoEli = session/*.GetString("Telefono")*/;
-                DireccionEli = session/*.GetString("Direccion")*/;
-                DocumentoEli = session/*.GetString("Documento")*/;
+                ApellidoEli = App.ApellidoEli;
+                TelefonoEli = App.TelefonoEli;
+                DireccionEli = App.Direccion;
+                DocumentoEli = App.NroDocumento;
                 KeySecuencia = pr_datpro.KeySecuencia;
 
-                if (session/*.GetString("NroTarjeta") */!= null)
-                    lc_barclf = Convert.ToInt32(session/*.GetString("NroTarjeta")*/);
+                if (App.NroTarjeta != null)
+                    lc_barclf = Convert.ToInt32(App.NroTarjeta);
                 else
                     lc_barclf = 0;
 
@@ -676,13 +685,13 @@ namespace Portal.Kiosco
                             //Validar pago cashback
                             if (pr_datpro.SwitchCashback == "S")
                             {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(config.Value.CodMedioPagoCB);
+                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
                                 ob_intvta.PagoInterno = Convert.ToDouble(pr_datpro.Valor);
                                 ob_intvta.PagoCredito = 0;
                             }
                             else
                             {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(config.Value.CodMedioPago);
+                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
                                 ob_intvta.PagoInterno = 0;
                                 ob_intvta.PagoCredito = Convert.ToDouble(pr_datpro.Valor);
                             }
@@ -2280,8 +2289,8 @@ namespace Portal.Kiosco
             {
 
                 //Asignar Valores
-                ob_servicio.Clave = ""; // Session.GetString("Passwrd");
-                ob_servicio.Correo = ""; // Session.GetString("Usuario");
+                ob_servicio.Clave = "1103"; // Session.GetString("Passwrd");
+                ob_servicio.Correo = "monicajannethd2012@gmail.com"; // Session.GetString("Usuario");
                 ob_servicio.Fecha1 = Convert.ToString(DateTime.Now.Year - 1) + "0101";
                 ob_servicio.Fecha2 = Convert.ToString(DateTime.Now.Year + 1) + "1231";
                 ob_servicio.tercero = App.ValorTercero;
@@ -2299,7 +2308,7 @@ namespace Portal.Kiosco
 
                 #region SCOMOV
                 //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scomov/"), lc_srvpar);
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scomov/"), lc_srvpar);
 
                 //Validar respuesta
                 if (lc_result.Substring(0, 1) == "0")
@@ -2356,7 +2365,7 @@ namespace Portal.Kiosco
 
                 #region SCOHIS
                 //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scohis/"), lc_srvpar);
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scohis/"), lc_srvpar);
 
                 //Validar respuesta
                 if (lc_result.Substring(0, 1) == "0")
@@ -2368,7 +2377,7 @@ namespace Portal.Kiosco
                         ob_cfinicio = (CinefansINI)JsonConvert.DeserializeObject(lc_result, (typeof(CinefansINI))); //Deserializar Json y validar respuesta
 
                         foreach (var item in ob_cfinicio.Saldo)
-                            App.Saldo = String.Format("{0:C0}", Convert.ToInt32(item.Saldo));
+                            App.Saldo = item.Saldo.ToString();
 
                     }
                 }
@@ -2382,8 +2391,8 @@ namespace Portal.Kiosco
 
                 #region SCOLOG
                 //Asignar valores
-                pr_datlog.Correo = ""; // Session.GetString("Usuario");
-                pr_datlog.Password = ""; //Session.GetString("Passwrd2");
+                pr_datlog.Correo = "monicajannethd2012@gmail.com"; // Session.GetString("Usuario");
+                pr_datlog.Password = "1103"; //Session.GetString("Passwrd2");
                 pr_datlog.Tercero = App.ValorTercero;
 
                 //Generar y encriptar JSON para servicio
@@ -2411,6 +2420,21 @@ namespace Portal.Kiosco
                     {
                         //Devolver a vista
                         MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                    if(ob_diclst.ContainsKey("No. Tarjeta"))
+                    {
+                        App.NroTarjeta = ob_diclst["No. Tarjeta"].ToString();
+                    }
+
+                    if (ob_diclst.ContainsKey("Documento"))
+                    {
+                        App.NroDocumento = ob_diclst["Documento"].ToString();
+                    }
+
+                    if (ob_diclst.ContainsKey("Direccion"))
+                    {
+                        App.Direccion = ob_diclst["Direccion"].ToString();
                     }
                 }
                 else

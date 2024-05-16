@@ -85,24 +85,9 @@ namespace Portal.Kiosco.Properties.Views
             this.Close();
         }
 
-        private async void btnVolver_Click(object sender, RoutedEventArgs e)
-        {
-            isThreadActive = false;
-            AlgoParaComer openWindows = new AlgoParaComer();
-            openWindows.Show();
-            this.Close();
-        }
-
-        private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
-        {
-            isThreadActive = false;
-            Combos openWindows = new Combos();
-            openWindows.Show();
-            this.Close();
-        }
-
         private async void btnCombos_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "M";
             isThreadActive = false;
             Combos openWindows = new Combos();
             openWindows.Show();
@@ -111,6 +96,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnResumen_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "B";
             isThreadActive = false;
             ResumenCompra openWindows = new ResumenCompra(config);
             openWindows.Show();

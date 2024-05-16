@@ -50,6 +50,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnBoleteria_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "B";
             isThreadActive = false;
             App.IsBoleteriaConfiteria = false;
             ComoCompra openWindows = new ComoCompra();
@@ -59,6 +60,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnConfiteria_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "P";
             isThreadActive = false;
             App.IsBoleteriaConfiteria = true;
             ComoCompra openWindows = new ComoCompra();

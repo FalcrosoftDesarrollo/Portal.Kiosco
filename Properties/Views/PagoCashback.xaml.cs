@@ -18,6 +18,7 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
             DataContext = ((App)Application.Current);
             lblTotalPagarCash.Content = Convert.ToDecimal(App.TotalPagar).ToString("C0");
+            lblCashDisp.Content = Convert.ToDecimal(App.Saldo).ToString("C0");
 
             if (App.ob_diclst.Count > 0)
             {
@@ -116,6 +117,17 @@ namespace Portal.Kiosco.Properties.Views
             var openWindows = new Principal();
             openWindows.Show();
             this.Close();
+        }
+
+        private void PagoConCash_Click(object sender, RoutedEventArgs e)
+        {
+            Producto producto = new Producto
+            {
+                TipoCompra = App.TipoCompra,
+                KeySecuencia = App.Secuencia,
+                SwtVenta = "V",
+            };
+            App.Payment(producto);
         }
     }
 }

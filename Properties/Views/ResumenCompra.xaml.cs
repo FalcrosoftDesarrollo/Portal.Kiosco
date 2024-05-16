@@ -18,7 +18,6 @@ namespace Portal.Kiosco.Properties.Views
     {
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
-
         public ResumenCompra(IOptions<MyConfig> config)
         {
             InitializeComponent();
@@ -85,7 +84,6 @@ namespace Portal.Kiosco.Properties.Views
             return isMainWindowOpen; 
         }
 
-
         public void PagoConCash(string ref_payco = "")
         {
             #region VARIABLES LOCALES
@@ -99,7 +97,7 @@ namespace Portal.Kiosco.Properties.Views
             string lc_srvpar = string.Empty;
             string lc_refepy = string.Empty;
             string lc_bankpy = string.Empty;
-            string lc_urlcor = ""/*config.Value.UrlCorreo*/;
+            string lc_urlcor = App.UrlCorreo;
             string session = "";
 
             decimal lc_secsec = Convert.ToDecimal(App.Secuencia);
@@ -116,10 +114,9 @@ namespace Portal.Kiosco.Properties.Views
             try
             {
                 //Validar si esta la sesion activa
-                if (session/*.GetString("ClienteFrecuente")*/ != null)
+                if (App.ClienteFrecuente != null)
                 {
-                    string ClienteFrecuente = session/*.GetString("ClienteFrecuente")*/;
-                    string CashBack_Acumulado = String.Format("{0:C0}", Convert.ToDecimal(session/*.GetString("CashBack_Acumulado")*/));
+                    App.Saldo = String.Format("{0:C0}");
                 }
 
                 //Inicializar instancia web client para leer respuesta
@@ -148,8 +145,6 @@ namespace Portal.Kiosco.Properties.Views
                     //Inicializar instancia de BD
                     using (var context = new DataDB(config))
                     {
-
-
                         //Consultar registro de venta en BD transacciones
                         var ob_repsl1 = context.TransactionSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.Teatro == lc_keytea);
                         foreach (var TransactionSales in ob_repsl1)
@@ -316,13 +311,6 @@ namespace Portal.Kiosco.Properties.Views
             openWindows.Show();
         }
 
-        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
-        {
-            //PagoCashback openWindows = new PagoCashback();
-            //this.Close();
-            //openWindows.Show();
-        }
-
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
@@ -389,15 +377,25 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnPagarCash_Click(object sender, RoutedEventArgs e)
         {
-            isThreadActive = false;
-            PagoCashback openWindows = new PagoCashback();
-            openWindows.Show();
-            this.Close();
+            App.CineFans();
+            if (Convert.ToDecimal(App.Saldo) < Convert.ToDecimal(App.TotalPagar))
+            {
+                MessageBox.Show("Ups! Tu cashback disponible es inferior al monto total de la compra", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                
+            } 
+            else if(Convert.ToDecimal(App.Saldo) >= Convert.ToDecimal(App.TotalPagar))
+            {
+                isThreadActive = false;
+                PagoCashback openWindows = new PagoCashback();
+                this.Close();
+                openWindows.Show();
+            }
         }
 
         public void GenerateResumen()
         {
             decimal totalcombos = 0;
+
             if (App.Pelicula.Nombre !="")
             {
                 GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
@@ -433,6 +431,8 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             TotalResumen.Content = totalcombos.ToString("C0");
+
+            App.TotalPagar = totalcombos.ToString();
         }
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
