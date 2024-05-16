@@ -45,7 +45,7 @@ namespace Portal.Kiosco
         public static string TipoSilla { get; set; }
         public static String TipoSala { get; set; }
         public static decimal PrecioUnitario { get; set; } = 3000;
-        public static decimal CantidadGafas { get; set; } 
+        public static decimal CantidadGafas { get; set; }
         public static string variables41 { get; set; }
         public static string _tiempoRestanteGlobal { get; set; }
         public static TimeSpan tiempoRestante { get; set; }
@@ -59,6 +59,7 @@ namespace Portal.Kiosco
         public static List<Producto> BebidasWeb = new List<Producto>();
         public static List<Producto> SnacksWeb = new List<Producto>();
         public static List<Producto> ProductosSeleccionados = new List<Producto>();
+        public static List<Producto> ProductosCambiados = new List<Producto>();
         public static BolVenta BolVentaRoom = new BolVenta();
         public static CinefansINI Cashback = new CinefansINI();
         public static Dictionary<string, string> FacturaCompra = new Dictionary<string, string>();
@@ -130,7 +131,6 @@ namespace Portal.Kiosco
             UrlRetailImg = appSettingsSection["UrlRetailImg"].ToString();
             CodMedioPago = appSettingsSection["CodMedioPago"].ToString();
             CodMedioPagoCB = appSettingsSection["CodMedioPagoCB"].ToString();
-
             Credicor = appSettingsSection["Credicor"].ToString();
             MinDifHora = appSettingsSection["MinDifHora"].ToString();
             idCine = appSettingsSection["TeaDefault"].ToString();
@@ -139,11 +139,7 @@ namespace Portal.Kiosco
             CantProductos = appSettingsSection["CantProductos"].ToString();
             ScoreServices = appSettingsSection["ScoreServices"].ToString();
             CantSillasBol = appSettingsSection["CantSillasBol"].ToString();
-            EmailEli = appSettingsSection["Email"].ToString();
-            NombreEli = appSettingsSection["Nombre"].ToString();
-            ApellidoEli = appSettingsSection["Apellido"].ToString();
             PortalWebDB = appSettingsSection["PortalWebDB"].ToString();
-            TelefonoEli = appSettingsSection["Telefono"].ToString();
             UrlCorreo = appSettingsSection["UrlCorreo"].ToString();
             carteleraXML = XDocument.Load(appSettingsSection["Variables41"].ToString());
 
@@ -492,11 +488,11 @@ namespace Portal.Kiosco
                     process.StartInfo.FileName = App.Credicor;
                     process.StartInfo.Arguments = arguments;
                     process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.RedirectStandardInput = true; 
+                    process.StartInfo.RedirectStandardInput = true;
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.Verb = "runas"; 
-        
+                    process.StartInfo.Verb = "runas";
+
                     process.Start();
 
                     string output = process.StandardOutput.ReadToEnd();
@@ -1481,7 +1477,7 @@ namespace Portal.Kiosco
             string lc_srvpar = string.Empty;
             string lc_refepy = string.Empty;
             string lc_bankpy = string.Empty;
-            string lc_urlcor = config.Value.UrlCorreo;
+            string lc_urlcor = App.UrlCorreo;
 
             string lc_secsec = App.Secuencia;
             string lc_keytea = App.idCine;
@@ -1499,50 +1495,21 @@ namespace Portal.Kiosco
 
             try
             {
-                //Validar si esta la sesion activa
-                if (session/*.GetString("ClienteFrecuente")*/ != null)
-                {
-                    //URLPortal(config);
-                    //ListCarrito();
-
-                    //ViewBag.ClienteFrecuente = Session.GetString("ClienteFrecuente");
-                    //ViewBag.CashBack_Acumulado = String.Format("{0:C0}", Convert.ToDecimal(Session.GetString("CashBack_Acumulado")));
-                }
-
                 //Inicializar instancia web client para leer respuesta
                 using (WebClient wc = new WebClient())
                 {
-                    //Obtener información de epayco
-                    var ob_json = wc.DownloadString(config.Value.data_epayco_secure + ref_payco);
-                    var ob_response = JsonConvert.DeserializeObject<EpaycoApiGet>(ob_json);
 
-                    //validar rta y Obtener y deserializar respuesta
-                    if (!ref_payco.Contains("CashBack"))
-                    {
-                        //Obtener valores de rta Epayco y consultar registro en la bd
-                        lc_secsec = App.Secuencia;
-                        lc_keytea = App.idCine;
-                        lc_coreli = ob_response.data.x_customer_email.ToString();
-                        lc_valtra = ob_response.data.x_amount.ToString();
-                        lc_status = ob_response.data.x_response.ToString();
-                        lc_idsepy = ob_response.data.x_transaction_id.ToString();
-                        lc_fectra = ob_response.data.x_fecha_transaccion.ToString();
-                        lc_refepy = ob_response.data.x_ref_payco.ToString();
-                        lc_bankpy = ob_response.data.x_bank_name.ToString();
-                    }
-                    else
-                    {
-                        //Obtener valores de rta cashback y consultar registro en la bd
-                        lc_secsec = App.Secuencia;
-                        lc_keytea = App.idCine;
-                        lc_coreli = session/*.GetString("Usuario")*/;
-                        lc_valtra = ref_payco.Substring(ref_payco.IndexOf(":") + 1);
-                        lc_status = "Cashback";
-                        lc_idsepy = "Cashback:SEC-" + session/*.GetString("Secuencia")*/;
-                        lc_fectra = DateTime.Now.ToString();
-                        lc_refepy = App.PuntoVenta + "-" + session/*.GetString("Secuencia")*/;
-                        lc_bankpy = "CashBack Procinal";
-                    }
+                    //Obtener valores de rta cashback y consultar registro en la bd
+                    lc_secsec = App.Secuencia;
+                    lc_keytea = App.idCine;
+                    lc_coreli = App.EmailEli;
+                    lc_valtra = ref_payco.Substring(ref_payco.IndexOf(":") + 1);
+                    lc_status = "Cashback";
+                    lc_idsepy = "Cashback:SEC-" + App.Secuencia;
+                    lc_fectra = DateTime.Now.ToString();
+                    lc_refepy = App.PuntoVenta + "-" + App.Secuencia;
+                    lc_bankpy = "CashBack Procinal";
+
 
                     //Inicializar instancia de BD
                     using (var context = new DataDB(config))
@@ -1592,14 +1559,11 @@ namespace Portal.Kiosco
                         ob_repsle.BancoTx = lc_bankpy;
                         ob_repsle.FechaModificado = DateTime.Now;
 
-                        //Validar si la sesion esta activa
-                        if (session/*.GetString("Usuario")*/ != null)
-                        {
-                            ob_repsle.EmailEli = session/*.GetString("Usuario")*/;
-                            ob_repsle.NombreEli = session/*.GetString("Nombre") */+ " " + session/*.GetString("Apellido")*/;
-                            ob_repsle.TelefonoEli = session/*.GetString("Telefono")*/;
-                            ob_repsle.DocumentoEli = session/*.GetString("Documento")*/;
-                        }
+                        ob_repsle.EmailEli = App.EmailEli;
+                        ob_repsle.NombreEli = App.NombreEli+ " " + App.ApellidoEli;
+                        ob_repsle.TelefonoEli = App.TelefonoEli;
+                        ob_repsle.DocumentoEli = App.NroDocumento;
+
 
                         //Actualizar estado de transacción
                         context.TransactionSales.Update(ob_repsle);
@@ -1659,140 +1623,10 @@ namespace Portal.Kiosco
                             });
                         }
 
-                        //ViewBag.ListR = ob_ordite; //ViewBag.ListCarritoR;
                     }
 
-                    //ViewBag.ListCarritoB = null;
-                    //ViewBag.ListCarritoR = null;
-
-                    if (App.Secuencia != null)
-                    {
-                        try
-                        {
-                            //Envio de correo Score
-                            var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
-                            request.GetResponse();
-
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Fallo envío de correo compra APROBADA, por favor comunicarse con el teatro.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
                 }
 
-                //Estado Fallido
-                //Validar venta
-                if (lc_status == "Rechazada" || lc_status == "Fallida")
-                {
-                    if (App.Secuencia != null)
-                    {
-                        #region SERVICO SCORET
-                        //Json de servicio RET
-                        lc_objson = "{\"Punto\":" + Convert.ToInt32(App.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(lc_secsec) + ",\"teatro\":\"" + Convert.ToInt32(lc_keytea) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
-
-                        //Encriptar Json RET
-                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_objson);
-
-                        //Consumir servicio RET
-                        lc_jsnrst = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoret/"), lc_srvpar);
-
-                        //Validar respuesta
-                        if (lc_jsnrst.Substring(0, 1) == "0")
-                        {
-                            //Quitar switch
-                            lc_jsnrst = lc_jsnrst.Replace("0-", "");
-                            lc_jsnrst = lc_jsnrst.Replace("[", "");
-                            lc_jsnrst = lc_jsnrst.Replace("]", "");
-
-                            //Deserializar Json y validar respuesta SEC
-                            ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_jsnrst, (typeof(Dictionary<string, string>)));
-
-                            //Validar respuesta llave 1
-                            if (ob_diclst.ContainsKey("Validación"))
-                            {
-                                MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            else
-                            {
-                                //Validar respuesta llave 2
-                                if (ob_diclst.ContainsKey("Respuesta"))
-                                {
-                                    if (ob_diclst["Respuesta"].ToString() != "Proceso exitoso")
-                                    {
-                                        MessageBox.Show(ob_diclst["Respuesta"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                    }
-                                }
-                            }
-
-                            ob_diclst.Clear();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Reembolso no culminado con exito SCORET", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        #endregion
-
-                        try
-                        {
-                            //Envio de correo Score
-                            lc_urlcor = lc_urlcor.Replace("compra", "Fallida");
-                            var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
-                            request.GetResponse();
-
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Fallo envío de correo compra RECHAZADA, por favor comunicarse con el teatro.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-
-                    //ViewBag.ListB = null;
-                    //ViewBag.ListR = null;
-                }
-
-                //Estado Pendiente
-                //Validar venta
-                if (lc_status == "Pendiente")
-                {
-                    //ViewBag.ListB = null;
-                    //ViewBag.ListR = null;
-
-                    if (App.Secuencia != null)
-                    {
-                        try
-                        {
-                            //Envio de correo Score
-                            lc_urlcor = lc_urlcor.Replace("compra", "Pendiente");
-                            var request = (HttpWebRequest)WebRequest.Create(lc_urlcor);
-                            request.GetResponse();
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Fallo envío de correo compra PENDIENTE, por favor comunicarse con el teatro.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-                }
-
-                //Validar y remover sesion invitada
-                //if (Session.GetString("FlagLogin") == "INV")
-                //{
-                //    Session.Remove("Nombre");
-                //    Session.Remove("Passwrd");
-                //    Session.Remove("Usuario");
-                //    Session.Remove("Apellido");
-                //    Session.Remove("Telefono");
-                //    Session.Remove("Direccion");
-                //    Session.Remove("Documento");
-                //    Session.Remove("ClienteFrecuente");
-                //    Session.Remove("FlagLogin");
-                //    ViewBag.ListCarritoR = null;
-                //    ViewBag.ListCarritoB = null;
-                //}
-
-                ////Quitar secuencia
-                //Session.Remove("Secuencia");
-                //return View();
             }
             catch (Exception lc_syserr)
             {
@@ -1808,14 +1642,6 @@ namespace Portal.Kiosco
                 #endregion
                 MessageBox.Show((lc_syserr.Message).Contains("Inner") ? lc_syserr.InnerException.Message : "null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                //Escribir Log
-                //logAudit.LogApp(logSales);
-
-                //Validar si esta la sesion activa y Devolver vista de error
-                //if (Session.GetString("ClienteFrecuente") != null)
-                //    return RedirectToAction("Error", "Pages", new { pr_message = config.Value.MessageException + logSales.Id, pr_flag = "RSPNS" });
-                //else
-                //    return RedirectToAction("Home", "Home");
             }
         }
 
@@ -2423,20 +2249,11 @@ namespace Portal.Kiosco
                         MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
-                    if(ob_diclst.ContainsKey("No. Tarjeta"))
+                    if (ob_diclst.ContainsKey("No. Tarjeta"))
                     {
                         App.NroTarjeta = ob_diclst["No. Tarjeta"].ToString();
                     }
 
-                    if (ob_diclst.ContainsKey("Documento"))
-                    {
-                        App.NroDocumento = ob_diclst["Documento"].ToString();
-                    }
-
-                    if (ob_diclst.ContainsKey("Direccion"))
-                    {
-                        App.Direccion = ob_diclst["Direccion"].ToString();
-                    }
                 }
                 else
                 {

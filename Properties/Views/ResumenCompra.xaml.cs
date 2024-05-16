@@ -21,6 +21,7 @@ namespace Portal.Kiosco.Properties.Views
         public ResumenCompra(IOptions<MyConfig> config)
         {
             InitializeComponent();
+            App.ProductosSeleccionados = App.ProductosCambiados;
             GenerateResumen();
             DataContext = ((App)Application.Current);
             this.config = config;
@@ -44,6 +45,7 @@ namespace Portal.Kiosco.Properties.Views
             thread.IsBackground = true;
             thread.Start();
         }
+
         private bool ComprobarTiempo()
         {
             bool isMainWindowOpen = false; 
