@@ -7,11 +7,14 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Threading;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Portal.Kiosco
@@ -106,46 +109,91 @@ namespace Portal.Kiosco
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
             base.OnStartup(e);
             IniciarContadorGlobal();
             DatosCineFans = new CineFansData();
             Peliculas = new List<Pelicula>();
             Pelicula = new Pelicula();
 
+            try
+            {
+                var configuration = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+                var appSettingsSection = configuration.GetSection("MyConfig");
 
-            //string appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-            var appSettingsSection = configuration.GetSection("MyConfig");
+                NomEmpresa = appSettingsSection["NomEmpresa"];
+                DirEmpresa = appSettingsSection["DirEmpresa"];
+                CiuEmpresa = appSettingsSection["CiuEmpresa"];
+                TelEmpresa = appSettingsSection["TelEmpresa"];
+                CorEmpresa = appSettingsSection["CorEmpresa"];
+                TeaDefault = appSettingsSection["TeaDefault"];
+                NomDefault = appSettingsSection["NomDefault"];
+                CiuDefault = appSettingsSection["CiuDefault"];
+                UrlRetailImg = appSettingsSection["UrlRetailImg"];
+                CodMedioPago = appSettingsSection["CodMedioPago"];
+                CodMedioPagoCB = appSettingsSection["CodMedioPagoCB"];
+                Credicor = appSettingsSection["Credicor"];
+                MinDifHora = appSettingsSection["MinDifHora"];
+                idCine = appSettingsSection["TeaDefault"];
+                PuntoVenta = appSettingsSection["PuntoVenta"];
+                EmailEli = appSettingsSection["Email"];
+                NombreEli = appSettingsSection["Nombre"];
+                ApellidoEli = appSettingsSection["Apellido"];
+                ValorTercero = appSettingsSection["ValorTercero"];
+                CantProductos = appSettingsSection["CantProductos"];
+                ScoreServices = appSettingsSection["ScoreServices"];
+                CantSillasBol = appSettingsSection["CantSillasBol"];
+                PortalWebDB = appSettingsSection["PortalWebDB"];
+                UrlCorreo = appSettingsSection["UrlCorreo"];
+                TelefonoEli = appSettingsSection["Telefono"];
 
-            NomEmpresa = appSettingsSection["NomEmpresa"].ToString();
-            DirEmpresa = appSettingsSection["DirEmpresa"].ToString();
-            CiuEmpresa = appSettingsSection["CiuEmpresa"].ToString();
-            TelEmpresa = appSettingsSection["TelEmpresa"].ToString();
-            CorEmpresa = appSettingsSection["CorEmpresa"].ToString();
-            TeaDefault = appSettingsSection["TeaDefault"].ToString();
-            NomDefault = appSettingsSection["NomDefault"].ToString();
-            CiuDefault = appSettingsSection["CiuDefault"].ToString();
-            UrlRetailImg = appSettingsSection["UrlRetailImg"].ToString();
-            CodMedioPago = appSettingsSection["CodMedioPago"].ToString();
-            CodMedioPagoCB = appSettingsSection["CodMedioPagoCB"].ToString();
-            Credicor = appSettingsSection["Credicor"].ToString();
-            MinDifHora = appSettingsSection["MinDifHora"].ToString();
-            idCine = appSettingsSection["TeaDefault"].ToString();
-            PuntoVenta = appSettingsSection["PuntoVenta"].ToString();
-            ValorTercero = appSettingsSection["ValorTercero"].ToString();
-            CantProductos = appSettingsSection["CantProductos"].ToString();
-            ScoreServices = appSettingsSection["ScoreServices"].ToString();
-            CantSillasBol = appSettingsSection["CantSillasBol"].ToString();
-            PortalWebDB = appSettingsSection["PortalWebDB"].ToString();
-            UrlCorreo = appSettingsSection["UrlCorreo"].ToString();
-            carteleraXML = XDocument.Load(appSettingsSection["Variables41"].ToString());
+                var xmlPath = appSettingsSection["Variables41"];
+                if (string.IsNullOrEmpty(xmlPath))
+                {
+                    throw new ApplicationException("XML path for 'Variables41' is missing or empty.");
+                }
 
-            Peliculas = ObtenerPeliculas(carteleraXML, idCine);
-
+                carteleraXML = XDocument.Load(xmlPath);
+                Peliculas = ObtenerPeliculas(carteleraXML, idCine);
+            }
+            catch (FileNotFoundException fnfEx)
+            {
+                HandleStartupError(fnfEx, "Configuration file not found. Please ensure 'appsettings.json' is present.");
+            }
+            catch (ConfigurationErrorsException confEx)
+            {
+                HandleStartupError(confEx, "Error reading configuration settings. Please check the 'appsettings.json' file.");
+            }
+            catch (XmlException xmlEx)
+            {
+                HandleStartupError(xmlEx, "Error loading XML configuration. Please check the XML file specified in 'Variables41'.");
+            }
+            catch (Exception ex)
+            {
+                HandleStartupError(ex, "An unexpected error occurred while starting the application. Please try again.");
+            }
         }
+
+        private void HandleStartupError(Exception ex, string userMessage)
+        {
+            // Log the exception
+            LogError(ex);
+
+            // Show the user-friendly message
+            MessageBox.Show(userMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            // Terminate the application
+            Application.Current.Shutdown();
+        }
+
+        private void LogError(Exception ex)
+        {
+            // Assuming you have a logger set up, e.g., NLog, log4net, Serilog, etc.
+            // Example using Console for simplicity:
+            Console.WriteLine($"Error: {ex.Message}\nStack Trace: {ex.StackTrace}");
+        }
+
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -307,6 +355,7 @@ namespace Portal.Kiosco
                                 Director = (string)peliculaNode.Element("data").Attribute("director"),
                                 Distribuidor = (string)peliculaNode.Element("data").Attribute("distribuidor"),
                                 Habilitado = (bool)peliculaNode.Element("data").Attribute("Habilitado"),
+
                                 DiasDisponibles = new List<Fechas>(),
                                 CinesDisponibles = new List<string>()
                             };
