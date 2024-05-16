@@ -188,7 +188,7 @@ namespace Portal.Kiosco
                             }
 
                             Usuario = App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
-
+                            App.EmailEli = App.ob_diclst["Login"].ToString();
                             if (Usuario != "")
                             {
                                 getnuevapantalla();

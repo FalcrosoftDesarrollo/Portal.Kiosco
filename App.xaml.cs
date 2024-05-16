@@ -2308,59 +2308,59 @@ namespace Portal.Kiosco
 
                 #region SCOMOV
                 //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scomov/"), lc_srvpar);
+                //lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scomov/"), lc_srvpar);
 
-                //Validar respuesta
-                if (lc_result.Substring(0, 1) == "0")
-                {
-                    //Quitar switch
-                    lc_result = lc_result.Replace("0-", "");
-                    lc_result = lc_result.Replace("[", "");
-                    lc_result = lc_result.Replace("]", "");
+                ////Validar respuesta
+                //if (lc_result.Substring(0, 1) == "0")
+                //{
+                //    //Quitar switch
+                //    lc_result = lc_result.Replace("0-", "");
+                //    lc_result = lc_result.Replace("[", "");
+                //    lc_result = lc_result.Replace("]", "");
 
-                    //Deserializar Json y validar respuesta
-                    ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
-                    if (ob_diclst.ContainsKey("puntos_acumulados"))
-                    {
-                        ob_rtacnfs.puntos_vencidos = Convert.ToDecimal(ob_diclst["puntos_vencidos"]);
-                        ob_rtacnfs.puntos_redimidos = Convert.ToDecimal(ob_diclst["puntos_redimidos"]);
-                        ob_rtacnfs.puntos_acumulados = Convert.ToDecimal(ob_diclst["puntos_acumulados"]);
-                        ob_rtacnfs.puntos_disponibles = Convert.ToDecimal(ob_diclst["puntos_disponibles"]);
-                    }
-                    else
-                    {
-                        ob_rtacnfs.puntos_vencidos = 0;
-                        ob_rtacnfs.puntos_redimidos = 0;
-                        ob_rtacnfs.puntos_acumulados = 0;
-                        ob_rtacnfs.puntos_disponibles = 0;
-                    }
-                }
-                else
-                {
-                    //Devolver a vista
-                    lc_result = lc_result.Replace("1-", "");
-                    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                //    //Deserializar Json y validar respuesta
+                //    ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+                //    if (ob_diclst.ContainsKey("puntos_acumulados"))
+                //    {
+                //        ob_rtacnfs.puntos_vencidos = Convert.ToDecimal(ob_diclst["puntos_vencidos"]);
+                //        ob_rtacnfs.puntos_redimidos = Convert.ToDecimal(ob_diclst["puntos_redimidos"]);
+                //        ob_rtacnfs.puntos_acumulados = Convert.ToDecimal(ob_diclst["puntos_acumulados"]);
+                //        ob_rtacnfs.puntos_disponibles = Convert.ToDecimal(ob_diclst["puntos_disponibles"]);
+                //    }
+                //    else
+                //    {
+                //        ob_rtacnfs.puntos_vencidos = 0;
+                //        ob_rtacnfs.puntos_redimidos = 0;
+                //        ob_rtacnfs.puntos_acumulados = 0;
+                //        ob_rtacnfs.puntos_disponibles = 0;
+                //    }
+                //}
+                //else
+                //{
+                //    //Devolver a vista
+                //    lc_result = lc_result.Replace("1-", "");
+                //    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //}
 
                 #endregion
 
                 #region SCODES
-                //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scodes/"), lc_srvpar);
+                ////Consumir servicio
+                //lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scodes/"), lc_srvpar);
 
-                //Validar respuesta
-                if (lc_result.Substring(0, 1) == "0")
-                {
-                    //Quitar switch
-                    lc_result = lc_result.Replace("0-[", "[");
-                    ob_cfsdet = (List<CinefansDET>)JsonConvert.DeserializeObject(lc_result, (typeof(List<CinefansDET>))); //Deserializar Json y validar respuesta
-                }
-                else
-                {
-                    //Devolver a vista
-                    lc_result = lc_result.Replace("1-", "");
-                    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                ////Validar respuesta
+                //if (lc_result.Substring(0, 1) == "0")
+                //{
+                //    //Quitar switch
+                //    lc_result = lc_result.Replace("0-[", "[");
+                //    ob_cfsdet = (List<CinefansDET>)JsonConvert.DeserializeObject(lc_result, (typeof(List<CinefansDET>))); //Deserializar Json y validar respuesta
+                //}
+                //else
+                //{
+                //    //Devolver a vista
+                //    lc_result = lc_result.Replace("1-", "");
+                //    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //}
                 #endregion
 
                 #region SCOHIS
@@ -2391,7 +2391,7 @@ namespace Portal.Kiosco
 
                 #region SCOLOG
                 //Asignar valores
-                pr_datlog.Correo = "monicajannethd2012@gmail.com"; // Session.GetString("Usuario");
+                pr_datlog.Correo = App.EmailEli;  // Session.GetString("Usuario");
                 pr_datlog.Password = "1103"; //Session.GetString("Passwrd2");
                 pr_datlog.Tercero = App.ValorTercero;
 
