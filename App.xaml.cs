@@ -1988,11 +1988,27 @@ namespace Portal.Kiosco
                         IdRetail = context.RetailSales.Max(u => u.Id);
 
                     //Recorrer la cantidad maxima de categorias por combo
-
-
-                    RetailDet(Convert.ToDecimal(lc_secsec), IdRetail, pr_datpro.ProCategoria_1, pr_datpro.Check1, pr_datpro.Check11, pr_datpro.Check111, pr_datpro.Check1111);
-
-
+                    for (int lc_variii = 0; lc_variii < 4; lc_variii++)
+                    {
+                        switch (lc_variii)
+                        {
+                            case 0:
+                                RetailDet(Convert.ToDecimal(lc_secsec), IdRetail, pr_datpro.ProCategoria_1, pr_datpro.Check1, pr_datpro.Check11, pr_datpro.Check111, pr_datpro.Check1111);
+                                break;
+                            case 1:
+                                RetailDet(Convert.ToDecimal(lc_secsec), IdRetail, pr_datpro.ProCategoria_2, pr_datpro.Check2, pr_datpro.Check22, pr_datpro.Check222, pr_datpro.Check2222);
+                                break;
+                            case 2:
+                                RetailDet(Convert.ToDecimal(lc_secsec), IdRetail, pr_datpro.ProCategoria_3, pr_datpro.Check3, pr_datpro.Check33, pr_datpro.Check333, pr_datpro.Check3333);
+                                break;
+                            case 3:
+                                RetailDet(Convert.ToDecimal(lc_secsec), IdRetail, pr_datpro.ProCategoria_4, pr_datpro.Check4, pr_datpro.Check44, pr_datpro.Check444, pr_datpro.Check4444);
+                                break;
+                            case 4:
+                                RetailDet(Convert.ToDecimal(lc_secsec), IdRetail, pr_datpro.ProCategoria_5, pr_datpro.Check5, pr_datpro.Check44, pr_datpro.Check555, pr_datpro.Check5555);
+                                break;
+                        }
+                    }
                 }
 
 

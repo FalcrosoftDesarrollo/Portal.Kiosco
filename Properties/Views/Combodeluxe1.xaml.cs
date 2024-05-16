@@ -543,7 +543,6 @@ namespace Portal.Kiosco.Properties.Views
 
             if (ContadorProductos > App.ProductosSeleccionados.Count())
             {
-                App.
                 isThreadActive = false;
                 ResumenCompra openWindows = new ResumenCompra(config);
                 openWindows.Show();

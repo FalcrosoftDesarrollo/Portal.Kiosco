@@ -192,8 +192,8 @@
                                         <Border Grid.Row="1"  >
                                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                                 <StackPanel Orientation="Vertical" Name="radioComidas" Margin="0,0,17,0">
-                                                    <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                    <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                    <!--<RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                    <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>-->
                                                     <!-- Agrega más RadioButtons si es necesario -->
                                                 </StackPanel>
                                             </ScrollViewer>
@@ -213,10 +213,10 @@
 
                                                 <ScrollViewer VerticalScrollBarVisibility="Auto"  >
                                                     <StackPanel Orientation="Vertical"  Name="radiobebidas" Grid.RowSpan="2" >
-                                                        <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                        <!--<RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
                                                         <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
                                                         <RadioButton Content="Option 3" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                        <RadioButton Content="Option 4" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                        <RadioButton Content="Option 4" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>-->
 
                                                     </StackPanel>
                                                 </ScrollViewer>
@@ -239,12 +239,12 @@
 
                                         <Border Grid.Row="1">
                                             <StackPanel Orientation="Vertical" Name="radioAdicionales" >
-                                                <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                <!--<RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
-                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>-->
                                             </StackPanel>
                                         </Border>
                                     </Grid>
