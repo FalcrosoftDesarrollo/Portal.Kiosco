@@ -20,17 +20,15 @@ namespace Portal.Kiosco.Properties.Views
         public BoletaFactura()
         {
             InitializeComponent();
+            GenerateResumen();
+            CargarQr();
 
             FechaFac.Text = DateTime.Now.ToString();
             Sucursal.Text = App.DirEmpresa;
             NomEmpresa.Text = App.NomEmpresa;
             NomEmpresa2.Text = App.NomEmpresa;
-
-            // Generar resumen de combos
             var combos = App.ProductosSeleccionados;
-
-            GenerateResumen();
-            CargarQr();
+    
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -44,7 +42,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false;
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -53,9 +51,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -67,7 +64,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -81,53 +78,42 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen;
         }
 
 
         public void GenerateResumen()
         {
-            // Generar resumen de boletas
             decimal totalcombos = 0;
             GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
-            // Generar resumen de gafas
             GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
             totalcombos += 0;
-            // Generar resumen de combos
             var combos = App.ProductosSeleccionados;
-
-            // Agrupar los combos por código
             var combosAgrupados = combos.GroupBy(c => c.Codigo);
 
             foreach (var grupoCombos in combosAgrupados)
             {
                 decimal codigo = grupoCombos.Key;
-
-                // Obtener el nombre, precio y cantidad para el grupo de combos
                 string nombre = buscarNombre(combos, codigo);
                 decimal precio = buscarprecio(combos, codigo);
                 int cantidad = grupoCombos.Count();
                 decimal total = (Convert.ToDecimal(precio) * cantidad);
                 totalcombos += total;
-                // Generar el resumen para el grupo de combos
                 GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
-            // Calcular y mostrar el total
             TotalFac.Text = "TOTAL A PAGAR: " + totalcombos.ToString("C", new CultureInfo("es-CO"));
         }
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
         {
-            // Crear un nuevo Grid
             Grid grid = new Grid();
 
-            // Crear definiciones de columna
             for (int i = 0; i < 6; i++)
             {
                 ColumnDefinition columnDefinition = new ColumnDefinition();
-                // Asignar el ancho de la columna según corresponda
+
                 if (i == 0)
                     columnDefinition.Width = new GridLength(1, GridUnitType.Auto);
                 else
@@ -136,16 +122,12 @@ namespace Portal.Kiosco.Properties.Views
                 grid.ColumnDefinitions.Add(columnDefinition);
             }
 
-            // Crear los bordes con etiquetas dentro
-            // Crear los bordes con etiquetas dentro
-            bool cantidadZeroFound = false; // Variable para seguir si se encuentra una cantidad cero
+            bool cantidadZeroFound = false;
             for (int i = 0; i < 5; i++)
             {
-                // Si la cantidad es cero y ya se ha encontrado una cantidad cero previamente, salta la iteración
                 if (cantidad == "0" && cantidadZeroFound)
                     continue;
 
-                // Si la cantidad es cero, marca que se ha encontrado una cantidad cero
                 if (cantidad == "0")
                 {
                     cantidadZeroFound = true;
@@ -153,14 +135,13 @@ namespace Portal.Kiosco.Properties.Views
                 }
 
                 Border border = new Border();
-                Grid.SetColumn(border, i); // Colocar el borde en columnas 0, 1, 2, 3
+                Grid.SetColumn(border, i); 
                 Label label = new Label();
                 label.FontFamily = new System.Windows.Media.FontFamily("Myanmar Khyay");
                 label.FontSize = 12;
                 label.VerticalContentAlignment = VerticalAlignment.Center;
-                border.BorderBrush = System.Windows.Media.Brushes.Black; // Color de la línea
+                border.BorderBrush = System.Windows.Media.Brushes.Black; 
 
-                // Configurar contenido según corresponda
                 if (i == 0)
                 {
                     label.Content = cantidad;
@@ -175,18 +156,14 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else if (i == 3)
                 {
-                    // Formatear valor sin ceros decimales
-                    label.Content = valor.ToString("N0", new CultureInfo("es-CO"));
+                    label.Content = valor.ToString("C0");
                 }
                 else if (i == 4)
                 {
-                    // Formatear total sin ceros decimales
-                    label.Content = total.ToString("N0", new CultureInfo("es-CO"));
+                    label.Content = total.ToString("C0");
                 }
 
-                // Alinea el contenido de la etiqueta al centro
                 label.HorizontalAlignment = HorizontalAlignment.Center;
-
                 border.Child = label;
                 grid.Children.Add(border);
             }
@@ -357,14 +334,11 @@ namespace Portal.Kiosco.Properties.Views
                             break;
                     }
 
-
-
                     break;
                 }
             }
 
             return nombre;
-
         }
 
         public decimal total = 0;
@@ -529,19 +503,15 @@ namespace Portal.Kiosco.Properties.Views
                             break;
                     }
 
-
-
                     break;
                 }
             }
 
             return Precios;
-
         }
 
         public void CargarQr()
         {
-            //datos que se mostraran al digitar qr 
             string sala = App.Pelicula.numeroSala;
             string ubicacion = (LayoutAsientos.sillasSeleccionadasArray).ToString();
             string peli = App.Pelicula.Nombre;
@@ -551,7 +521,7 @@ namespace Portal.Kiosco.Properties.Views
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(datos, QRCodeGenerator.ECCLevel.H);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
-            // creo un objeto memory stream para guardar en bytes imagen temporalmente
+
             using (MemoryStream memory = new MemoryStream())
             {
                 qrCodeImage.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
@@ -561,10 +531,8 @@ namespace Portal.Kiosco.Properties.Views
                 bitmapimage.StreamSource = memory;
                 bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapimage.EndInit();
-
                 imgqr.Source = bitmapimage;
             }
         }
-
     }
 }

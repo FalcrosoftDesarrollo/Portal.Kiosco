@@ -4,18 +4,15 @@ using APIPortalWebMed.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Portal.Kiosco
 {
@@ -45,36 +42,29 @@ namespace Portal.Kiosco
         public static string Censura { get; set; }
         public static string Imagen { get; set; }
         public static string TipoSilla { get; set; }
-
-
         public static String TipoSala { get; set; }
-        public static decimal PrecioUnitario { get; set; } = 3000; // Precio unitario de las gafas
-        public static decimal CantidadGafas { get; set; } // Lista para almacenar la cantidad de gafas seleccionadas
+        public static decimal PrecioUnitario { get; set; } = 3000;
+        public static decimal CantidadGafas { get; set; } 
         public static string variables41 { get; set; }
         public static string _tiempoRestanteGlobal { get; set; }
         public static TimeSpan tiempoRestante { get; set; }
         private static IOptions<MyConfig> config { get; set; }
-
         private List<UIElement> elementosCombos = new List<UIElement>();
         private List<UIElement> elementosAlimentos = new List<UIElement>();
         private List<UIElement> elementosBebidas = new List<UIElement>();
         private List<UIElement> elementosSnack = new List<UIElement>();
-
         public static List<Producto> CombosWeb = new List<Producto>();
         public static List<Producto> AlimentosWeb = new List<Producto>();
         public static List<Producto> BebidasWeb = new List<Producto>();
         public static List<Producto> SnacksWeb = new List<Producto>();
         public static List<Producto> ProductosSeleccionados = new List<Producto>();
         public static BolVenta BolVentaRoom = new BolVenta();
-
+        public static CinefansINI Cashback = new CinefansINI();
         public static Dictionary<string, string> FacturaCompra = new Dictionary<string, string>();
         public static bool IsFecha = true;
-
         public static Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
         public event PropertyChangedEventHandler PropertyChanged;
         public static bool IsPrimeraCarga = true;
-
-
         public static string NomEmpresa { get; set; }
         public static string DirEmpresa { get; set; }
         public static string CiuEmpresa { get; set; }
@@ -83,8 +73,6 @@ namespace Portal.Kiosco
         public static string TeaDefault { get; set; }
         public static string NomDefault { get; set; }
         public static string CiuDefault { get; set; }
-
-
         public static string EmailEli { get; set; }
         public static string NombreEli { get; set; }
         public static string ApellidoEli { get; set; }
@@ -94,9 +82,8 @@ namespace Portal.Kiosco
         public static string TotalPagar { get; set; }
         public static string ResponseDatafono { get; set; }
         public static string UrlCorreo { get; set; }
-
         public static string ClienteFrecuente { get; set; }
-
+        public static string Saldo { get; set; }
         public string TiempoRestanteGlobal
         {
             get { return _tiempoRestanteGlobal; }
@@ -106,6 +93,7 @@ namespace Portal.Kiosco
                 OnPropertyChanged(nameof(TiempoRestanteGlobal));
             }
         }
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -152,10 +140,12 @@ namespace Portal.Kiosco
             Peliculas = ObtenerPeliculas(carteleraXML, idCine);
 
         }
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public event EventHandler<string> TiempoRestanteActualizado;
 
         private void IniciarContadorGlobal()
@@ -185,6 +175,7 @@ namespace Portal.Kiosco
             tiempoRestante = TimeSpan.FromSeconds(900);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
         }
+
         private string DiaMes(string pr_daynum, string pr_flag)
         {
             #region VARIABLES LOCALES
@@ -484,8 +475,6 @@ namespace Portal.Kiosco
 
         public static string RunProgramAndWait(string arguments)
         {
-
-
             try
             {
                 using (Process process = new Process())
@@ -493,30 +482,23 @@ namespace Portal.Kiosco
                     process.StartInfo.FileName = App.Credicor;
                     process.StartInfo.Arguments = arguments;
                     process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.RedirectStandardInput = true; // Redirigir entrada estándar
+                    process.StartInfo.RedirectStandardInput = true; 
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.Verb = "runas"; // Ejecutar como administrador
-
-                    // Iniciar el proceso
+                    process.StartInfo.Verb = "runas"; 
+        
                     process.Start();
 
-                    // Leer la salida del proceso mientras se ejecuta
                     string output = process.StandardOutput.ReadToEnd();
 
-                    // Cerrar la entrada estándar después de iniciar el proceso para evitar que espere entrada del usuario
                     process.StandardInput.Close();
 
-                    // Esperar a que el proceso termine (esto evitará que el código continúe hasta que el proceso termine)
                     process.WaitForExit();
 
-                    // Cerrar el proceso después de que termine y obtengas la salida
                     process.Close();
 
-                    // Devolver la salida del proceso
                     return output;
                 }
-
 
             }
             catch (Exception ex)
@@ -1827,7 +1809,6 @@ namespace Portal.Kiosco
             }
         }
 
-
         public static void agregarProducto(Producto pr_datpro)
         {
             #region VARIABLES LOCALES
@@ -2279,6 +2260,173 @@ namespace Portal.Kiosco
             }
         }
 
+        public static void CineFans()
+        {
+            #region VARIABLES LOCALES
+            string lc_result = string.Empty;
+            string lc_srvpar = string.Empty;
 
+            List<CinefansDET> ob_cfsdet = new List<CinefansDET>();
+            Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
+
+            Login pr_datlog = new Login();
+            General ob_fncgrl = new General();
+            Cinefans ob_rtacnfs = new Cinefans();
+            CinefansSRV ob_servicio = new CinefansSRV();
+            CinefansINI ob_cfinicio = new CinefansINI();
+            #endregion
+
+            try
+            {
+
+                //Asignar Valores
+                ob_servicio.Clave = ""; // Session.GetString("Passwrd");
+                ob_servicio.Correo = ""; // Session.GetString("Usuario");
+                ob_servicio.Fecha1 = Convert.ToString(DateTime.Now.Year - 1) + "0101";
+                ob_servicio.Fecha2 = Convert.ToString(DateTime.Now.Year + 1) + "1231";
+                ob_servicio.tercero = App.ValorTercero;
+
+
+                // Generar y encriptar JSON para servicio
+                lc_srvpar = ob_fncgrl.JsonConverter(ob_servicio);
+                lc_srvpar = lc_srvpar.Replace("correo", "Correo");
+                lc_srvpar = lc_srvpar.Replace("clave", "Clave");
+                lc_srvpar = lc_srvpar.Replace("fecha1", "Fecha1");
+                lc_srvpar = lc_srvpar.Replace("fecha2", "Fecha2");
+
+                //Encriptar Json
+                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                #region SCOMOV
+                //Consumir servicio
+                lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scomov/"), lc_srvpar);
+
+                //Validar respuesta
+                if (lc_result.Substring(0, 1) == "0")
+                {
+                    //Quitar switch
+                    lc_result = lc_result.Replace("0-", "");
+                    lc_result = lc_result.Replace("[", "");
+                    lc_result = lc_result.Replace("]", "");
+
+                    //Deserializar Json y validar respuesta
+                    ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+                    if (ob_diclst.ContainsKey("puntos_acumulados"))
+                    {
+                        ob_rtacnfs.puntos_vencidos = Convert.ToDecimal(ob_diclst["puntos_vencidos"]);
+                        ob_rtacnfs.puntos_redimidos = Convert.ToDecimal(ob_diclst["puntos_redimidos"]);
+                        ob_rtacnfs.puntos_acumulados = Convert.ToDecimal(ob_diclst["puntos_acumulados"]);
+                        ob_rtacnfs.puntos_disponibles = Convert.ToDecimal(ob_diclst["puntos_disponibles"]);
+                    }
+                    else
+                    {
+                        ob_rtacnfs.puntos_vencidos = 0;
+                        ob_rtacnfs.puntos_redimidos = 0;
+                        ob_rtacnfs.puntos_acumulados = 0;
+                        ob_rtacnfs.puntos_disponibles = 0;
+                    }
+                }
+                else
+                {
+                    //Devolver a vista
+                    lc_result = lc_result.Replace("1-", "");
+                    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                #endregion
+
+                #region SCODES
+                //Consumir servicio
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scodes/"), lc_srvpar);
+
+                //Validar respuesta
+                if (lc_result.Substring(0, 1) == "0")
+                {
+                    //Quitar switch
+                    lc_result = lc_result.Replace("0-[", "[");
+                    ob_cfsdet = (List<CinefansDET>)JsonConvert.DeserializeObject(lc_result, (typeof(List<CinefansDET>))); //Deserializar Json y validar respuesta
+                }
+                else
+                {
+                    //Devolver a vista
+                    lc_result = lc_result.Replace("1-", "");
+                    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                #endregion
+
+                #region SCOHIS
+                //Consumir servicio
+                lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scohis/"), lc_srvpar);
+
+                //Validar respuesta
+                if (lc_result.Substring(0, 1) == "0")
+                {
+                    if (!lc_result.Contains("Validación"))
+                    {
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-{", "{");
+                        ob_cfinicio = (CinefansINI)JsonConvert.DeserializeObject(lc_result, (typeof(CinefansINI))); //Deserializar Json y validar respuesta
+
+                        foreach (var item in ob_cfinicio.Saldo)
+                            App.Saldo = String.Format("{0:C0}", Convert.ToInt32(item.Saldo));
+
+                    }
+                }
+                else
+                {
+                    //Devolver a vista
+                    lc_result = lc_result.Replace("1-", "");
+                    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                #endregion
+
+                #region SCOLOG
+                //Asignar valores
+                pr_datlog.Correo = ""; // Session.GetString("Usuario");
+                pr_datlog.Password = ""; //Session.GetString("Passwrd2");
+                pr_datlog.Tercero = App.ValorTercero;
+
+                //Generar y encriptar JSON para servicio
+                lc_srvpar = ob_fncgrl.JsonConverter(pr_datlog);
+                lc_srvpar = lc_srvpar.Replace("correo", "Correo");
+                lc_srvpar = lc_srvpar.Replace("password", "Clave");
+
+                //Encriptar Json
+                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                //Consumir servicio
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scolog/"), lc_srvpar);
+
+                //Validar respuesta
+                if (lc_result.Substring(0, 1) == "0")
+                {
+                    //Quitar switch
+                    lc_result = lc_result.Replace("0-", "");
+                    lc_result = lc_result.Replace("[", "");
+                    lc_result = lc_result.Replace("]", "");
+
+                    //Deserializar Json y validar respuesta
+                    ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+                    if (ob_diclst.ContainsKey("Validación"))
+                    {
+                        //Devolver a vista
+                        MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    //Devolver a vista
+                    lc_result = lc_result.Replace("1-", "");
+                    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                #endregion
+            }
+            catch (Exception lc_syserr)
+            {
+                MessageBox.Show(lc_syserr.Message.Contains("Inner") ? lc_syserr.InnerException.Message : "null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+
+        }
     }
 }

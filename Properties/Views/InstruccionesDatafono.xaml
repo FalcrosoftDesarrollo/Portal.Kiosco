@@ -19,6 +19,7 @@
                         <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
+                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="false">
                                 <Setter Property="Opacity" Value="0.8" />
@@ -42,11 +43,10 @@
                                BorderThickness="0"
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
-                               IsTabStop="False" 
-                               
+                               IsTabStop="False"                     
                                Minimum="0" 
                                Orientation="Vertical" 
-                              />
+                            />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -62,7 +62,6 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -71,7 +70,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        <!-- logo -->
+                        
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -98,28 +97,24 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-
-
-                        <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
                             <Button Background="Transparent" Click="btnSalir_Click" Name="btnSalir" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-   <Run Text="SALIR"></Run>
+                                    <Run Text="SALIR"/>
                                 </TextBlock>
+
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
+
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-
-
                     </Grid>
                 </Border>
 
-                <!-- Centro -->
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -127,13 +122,17 @@
                             <RowDefinition Height="130"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Width="721" Height="130" TextAlignment="Center"><Run Text="Completa tu pago siguiendo"/><LineBreak/><Run Text="las ins"/><Run Language="es-es" Text="tr"/><Run Text="ucciones del datafono"/></TextBlock>
+                        
+                        <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Width="721" Height="130" TextAlignment="Center">
+                            <Run Text="Completa tu pago siguiendo"/><LineBreak/><Run Text="las ins"/>
+                            <Run Language="es-es" Text="tr"/><Run Text="ucciones del datafono"/>
+                        </TextBlock>
+
                         <Border Grid.Row="2" Width="570" Height="543" Background="#F5F5F5" VerticalAlignment="Top" Margin="0,35,0,0" CornerRadius="10">
                             <Grid>
                                 <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\datafono.png" Width="178" Height="389" />
                             </Grid>
                         </Border>
-
                     </Grid>
                 </Border>
             </Grid>

@@ -14,10 +14,8 @@ using System.Windows.Media.Imaging;
 
 namespace Portal.Kiosco.Properties.Views
 {
-
     public partial class Combos : Window
     {
-
         private IConfiguration configuration;
         private int SelectProd = 1;
         private readonly IOptions<MyConfig> config;
@@ -30,8 +28,8 @@ namespace Portal.Kiosco.Properties.Views
         public Combos()
         {
             InitializeComponent();
-
             DataContext = ((App)Application.Current);
+
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -49,12 +47,12 @@ namespace Portal.Kiosco.Properties.Views
 
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
             }
             catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -68,7 +66,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -77,9 +75,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true; 
                     }
                     else
                     {
@@ -91,7 +88,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -105,7 +102,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen; 
         }
 
 
@@ -895,18 +892,16 @@ namespace Portal.Kiosco.Properties.Views
         {
             RestoreButtonState();
 
-            System.Windows.Controls.Button clickedButton = sender as System.Windows.Controls.Button;
+            Button clickedButton = sender as Button;
 
             clickedBorder = GetButtonBorder(clickedButton);
 
             clickedButton.Foreground = new SolidColorBrush(Colors.White);
             clickedButton.Background = new SolidColorBrush(Colors.Red);
             clickedBorder.Background = new SolidColorBrush(Colors.Red);
-
-
         }
 
-        private Border GetButtonBorder(System.Windows.Controls.Button button)
+        private Border GetButtonBorder(Button button)
         {
             DependencyObject parent = VisualTreeHelper.GetParent(button);
 
@@ -1014,7 +1009,6 @@ namespace Portal.Kiosco.Properties.Views
                     break;
 
                 default:
-                    // Manejar un caso no previsto
                     break;
             }
 
@@ -1223,15 +1217,11 @@ namespace Portal.Kiosco.Properties.Views
 
             string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\appsettings.json";
 
-            // Cargar la configuración desde el archivo appsettings.json
             var builder = new ConfigurationBuilder()
                 .AddJsonFile(appSettingsPath, optional: true, reloadOnChange: true);
 
             configuration = builder.Build();
-
             var myConfigSection = configuration.GetSection("MyConfig");
-
-            // Obtener la URL de las imágenes desde la configuración
             string urlRetailImg = myConfigSection["UrlRetailImg"];
 
             if (productos != null)
@@ -1241,7 +1231,6 @@ namespace Portal.Kiosco.Properties.Views
                     string lc_auxcod = item.Codigo.ToString();
                     string lc_auximg = string.Concat(urlRetailImg, lc_auxcod.Substring(0, lc_auxcod.Length - 2), ".jpg");
 
-                    // Crear el contenedor del diseño proporcionado
                     Border border = new Border();
                     border.Width = 300;
                     border.Height = 550;
@@ -1249,27 +1238,22 @@ namespace Portal.Kiosco.Properties.Views
                     border.BorderBrush = Brushes.Transparent;
                     border.BorderThickness = new Thickness(1);
 
-                    // Agregar el Grid al Border
                     Grid grid = new Grid();
                     border.Child = grid;
 
-                    // Definir las columnas del Grid
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                    // Definir las filas del Grid
                     grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(462) });
                     grid.RowDefinitions.Add(new RowDefinition());
 
-                    // Agregar la imagen al Grid
                     Image image = new Image();
                     image.Source = new BitmapImage(new Uri(lc_auximg));
                     Grid.SetRow(image, 0);
                     Grid.SetColumnSpan(image, 3);
                     grid.Children.Add(image);
 
-                    // Agregar los elementos interiores al Grid
                     Border innerBorder = new Border();
                     innerBorder.HorizontalAlignment = HorizontalAlignment.Center;
                     innerBorder.Width = 250;
@@ -1277,16 +1261,13 @@ namespace Portal.Kiosco.Properties.Views
                     Grid.SetColumnSpan(innerBorder, 3);
                     grid.Children.Add(innerBorder);
 
-                    // Definir el contenido del interior del Border
                     Grid innerGrid = new Grid();
                     innerBorder.Child = innerGrid;
 
-                    // Definir las columnas del Grid interior
                     innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
                     innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
                     innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-                    // Agregar el botón "-" al Grid interior
                     Border minusButtonBorder = new Border();
                     minusButtonBorder.CornerRadius = new CornerRadius(100);
                     minusButtonBorder.Background = new SolidColorBrush(Color.FromRgb(243, 6, 19));
@@ -1306,7 +1287,6 @@ namespace Portal.Kiosco.Properties.Views
                     minusButton.Click += MinusButton_Click;
                     minusButtonBorder.Child = minusButton;
 
-                    // Agregar el Label al Grid interior
                     Label countLabel = new Label();
                     countLabel.FontFamily = new FontFamily("Myanmar Khyay");
                     countLabel.FontSize = 32;
@@ -1317,7 +1297,6 @@ namespace Portal.Kiosco.Properties.Views
                     Grid.SetColumn(countLabel, 1);
                     innerGrid.Children.Add(countLabel);
 
-                    // Agregar el botón "+" al Grid interior
                     Border plusButtonBorder = new Border();
                     plusButtonBorder.CornerRadius = new CornerRadius(100);
                     plusButtonBorder.Background = new SolidColorBrush(Color.FromRgb(243, 6, 19));
@@ -1346,7 +1325,6 @@ namespace Portal.Kiosco.Properties.Views
                 int CodigoBebidas = 1244;
                 int CodigoBebidas2 = 2444;
                 int CodigoComidas = 246;
-
             }
         }
 
@@ -1354,8 +1332,8 @@ namespace Portal.Kiosco.Properties.Views
         {
 
             var producto = new List<Producto>();
-
             decimal Precios = 0;
+
             switch (SelectProd)
             {
                 case 1:
@@ -1404,7 +1382,6 @@ namespace Portal.Kiosco.Properties.Views
                     break;
 
                 default:
-                    // Manejar un caso no previsto
                     break;
             }
 
@@ -1497,7 +1474,7 @@ namespace Portal.Kiosco.Properties.Views
                                         var NombreFinalBotella = i.Descripcion.ToString();
                                         var precioFinalBotella = i.Precios.Sum(precio => precio.General);
                                         var frecuenciaBotella = i.Frecuente.ToString();
-                                        // Hacer algo con precioFinalCombo
+
                                         if (Convert.ToBoolean(frecuenciaBotella) == true)
                                         {
                                             Precios += precioFinalBotella;
@@ -1517,17 +1494,16 @@ namespace Portal.Kiosco.Properties.Views
                                         {
                                             Precios += precioFinalComida;
                                         }
-                                        // Hacer algo con precioFinalCombo
+
                                         datosFinalesComida.Add((CodioComida, NombreFinalComida, precioFinalComida, frecuenciaComida, itecat.Codigo));
                                     }
                                 }
-                                //Valido que las listas se hayan llenado
+
                                 if (datosFinalesBotella.Count > 0 && datosFinalesComida.Count > 0)
                                 {
-                                    // Establecer el indicador para salir del bucle
                                     condicionCumplida = true;
                                 }
-                                // Si se cumplió la condición, salir del bucle foreach
+
                                 if (condicionCumplida)
                                 {
                                     break;
@@ -1580,7 +1556,6 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             return Precios;
-
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
@@ -1595,7 +1570,7 @@ namespace Portal.Kiosco.Properties.Views
             countLabel.Content = currentValue.ToString();
             var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)));
 
-            string totalString = totalLabel.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim(); // Remueve el símbolo de la moneda y cualquier separador de miles
+            string totalString = totalLabel.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim(); 
             decimal totalAnterior = decimal.Parse(totalString);
             decimal nuevoTotal = totalAnterior + precio;
             totalLabel.Content = nuevoTotal.ToString("C0");
@@ -1643,7 +1618,6 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-
             if (totalLabel.Content.ToString() != "0")
             {
                 var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");
@@ -1668,7 +1642,6 @@ namespace Portal.Kiosco.Properties.Views
             {
                 MessageBox.Show("Ups, aun no haz seleccionado un producto.", "Notificación", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -1680,7 +1653,6 @@ namespace Portal.Kiosco.Properties.Views
                 AlgoParaComer openWindows = new AlgoParaComer();
                 openWindows.Show();
                 this.Close();
-
             }
             else
             {
@@ -1689,9 +1661,7 @@ namespace Portal.Kiosco.Properties.Views
                 ComoCompra openWindows = new ComoCompra();
                 openWindows.Show();
                 this.Close();
-
             }
-
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
@@ -1700,7 +1670,6 @@ namespace Portal.Kiosco.Properties.Views
             Principal openWindows = new Principal();
             openWindows.Show();
             this.Close();
-
         }
     }
 }

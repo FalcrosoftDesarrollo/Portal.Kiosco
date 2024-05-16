@@ -30,13 +30,11 @@
             </Setter>
         </Style>
 
-
-        <Style  TargetType="RadioButton">
+        <Style TargetType="RadioButton">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <Grid>
-                            <!-- Esfera -->
                             <Ellipse x:Name="RadioEllipse"
                                  Width="40"
                                  Height="40"
@@ -44,19 +42,19 @@
                                  Stroke="LightGray"
                                  StrokeThickness="1" 
                                  HorizontalAlignment="Left"/>
-                            <!-- Texto -->
+                            
                             <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="70,15,0,20"/>
                         </Grid>
+                        
                         <ControlTemplate.Triggers>
-                            <!-- Trigger para cambiar el color de la esfera cuando el RadioButton está seleccionado -->
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="RadioEllipse" Property="Fill" Value="Red"/>
                             </Trigger>
-                            <!-- Trigger para cambiar el color de la esfera cuando el RadioButton no está seleccionado -->
+                            
                             <Trigger Property="IsChecked" Value="False">
                                 <Setter TargetName="RadioEllipse" Property="Fill" Value="LightGray"/>
                             </Trigger>
-                            <!-- Trigger para cambiar el color del borde cuando el mouse está sobre el RadioButton -->
+                            
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="RadioEllipse" Property="Stroke" Value="Red"/>
                             </Trigger>
@@ -65,9 +63,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
-
 
         <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
             <Setter Property="Template">
@@ -82,14 +77,10 @@
                                BorderThickness="0"
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
-                               IsTabStop="False" 
-                               
+                               IsTabStop="False"          
                                Minimum="0" 
-                               Orientation="Vertical" 
-                               
-                               
+                               Orientation="Vertical"                     
                               />
-
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -99,16 +90,12 @@
 
     <Grid Name="gridPrincipal">
         <Border>
-
             <Grid RenderTransformOrigin="0.108,0.669">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="140" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-
-
-                <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -117,7 +104,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        <!-- logo -->
+                        
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -144,27 +131,24 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-
-
-                        <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
                             <Button x:Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-                <Run Text="SALIR"/>
-
+                                    <Run Text="SALIR"/>
                                 </TextBlock>
+
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
+
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-
-
                     </Grid>
                 </Border>
+                
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -184,7 +168,6 @@
                                     <ColumnDefinition Width="415.69"/>
                                     <ColumnDefinition Width="158.31"/>
                                     <ColumnDefinition Width="573"/>
-                                    
                                     <ColumnDefinition Width="508"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
@@ -192,6 +175,7 @@
                                 <Border Grid.Column="1">
                                     <Image Name="ImgCombo" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\rectangle241.png"></Image>
                                 </Border>
+                                
                                 <Border Grid.Column="3">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -204,61 +188,64 @@
                                         <Border Grid.Row="0">
                                             <Label Height="46" VerticalAlignment="Top" Content="Elige Perro o Sánduche" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" Margin="0,0,-66,0"/>
                                         </Border>
-                                        <Border Grid.Row="1"  >
+                                        
+                                        <Border Grid.Row="1">
                                             <StackPanel Orientation="Vertical" Name="radioComidas" Margin="0,0,-162,0">
                                                 <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-
                                             </StackPanel>
                                         </Border>
 
                                         <Border Grid.Row="2">
                                             <Label Width="367" Height="46" VerticalAlignment="Top" Content="Elige la bebida" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
                                         </Border>
+                                        
                                         <Border Grid.Row="3">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="197*"/>
                                                     <RowDefinition Height="3*"/>
                                                 </Grid.RowDefinitions>
+                                                
                                                 <StackPanel Orientation="Vertical" Margin="0,0,-192,-104" Name="radiobebidas" Grid.RowSpan="2">
-                                                    <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                    <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                    <RadioButton Content="Option 3" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                    <RadioButton Content="Option 3" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                    <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                    <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                    <RadioButton Content="Option 3" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                    <RadioButton Content="Option 3" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
                                     </Grid>
                                 </Border>
+                                
                                 <Border Grid.Column="4">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="78"/>
                                             <RowDefinition Height="400"/>
-
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
                                         <Border Grid.Row="0">
                                             <Label Width="391" Height="43" VerticalAlignment="Top" Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
                                         </Border>
+
                                         <Border Grid.Row="1">
                                             <StackPanel Orientation="Vertical" Name="radioAdicionales" >
-                                                <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
+                                                <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                             </StackPanel>
                                         </Border>
-
-
                                     </Grid>
                                 </Border>
                             </Grid>
+                            
                         </Border>
+                        
                         <Border Grid.Row="2">
                             <Grid>
                                 <Border Width="830" Height="80" HorizontalAlignment="Right" Margin="0,0,54,0">
@@ -273,17 +260,18 @@
                                                 </Border>
                                             </Grid>
                                         </Border>
+
                                         <Border>
                                             <Grid Width="374" HorizontalAlignment="Right">
                                                 <Border Width="180" Height="80"  HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
                                                     <Button Background="Transparent" Click="btnVolver_Click" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                                 </Border>
+
                                                 <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
                                                     <Button Background="Transparent" BorderThickness="0" Click="btnSiguiente_Click" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
-
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -291,7 +279,6 @@
                         </Border>
                     </Grid>
                 </Border>
-                <!-- Centro -->
             </Grid>
         </Border>
     </Grid>

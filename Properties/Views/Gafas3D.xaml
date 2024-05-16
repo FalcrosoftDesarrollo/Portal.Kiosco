@@ -45,7 +45,7 @@
                                IsTabStop="False"  
                                Minimum="0" 
                                Orientation="Vertical" 
-                                />
+                            />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -61,7 +61,6 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -70,7 +69,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        <!-- logo -->
+
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -97,30 +96,26 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-
-
-                        <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
                             <Button Background="Transparent" BorderThickness="0" Name="btnSalir" Click="btnSalir_Click" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-    <Run Text="SALIR"/>
-
+                                    <Run Text="SALIR"/>
                                 </TextBlock>
+
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
+
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-
-
                     </Grid>
                 </Border>
+
                 <Border Grid.Row="1">
                     <Grid>
-                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="129"/>
                             <RowDefinition Height="260"/>
@@ -134,31 +129,36 @@
                             <RowDefinition Height="80"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                      
+
                         <Border Grid.Row="1">
                             <Grid>
                                 <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\frame.png" Width="236" Height="132" VerticalAlignment="Bottom"></Image>
                                 <Label FontFamily="Myanmar Khyay" Content="Tu pelicula necesita gafas 3D" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
                             </Grid>
                         </Border>
+
                         <Border Grid.Row="3" Width="851">
                             <Grid>
                                 <Border CornerRadius="10" Background="#F5F5F5" Width="274" HorizontalAlignment="Left">
                                     <Label FontFamily="Myanmar Khyay" FontSize="32" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                 </Border>
+
                                 <Border CornerRadius="10" Background="#F5F5F5" Width="274" HorizontalAlignment="Center">
                                     <Label FontFamily="Myanmar Khyay" FontSize="32" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                 </Border>
+
                                 <Border CornerRadius="10" Background="#F5F5F5" Width="274" HorizontalAlignment="Right">
                                     <Label FontFamily="Myanmar Khyay" FontSize="32"  Content="TOTAL" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                 </Border>
                             </Grid>
                         </Border>
+
                         <Border Grid.Row="5" Width="696" HorizontalAlignment="Center">
                             <Grid>
                                 <Border Width="150" Height="43" HorizontalAlignment="Left">
                                     <Label FontFamily="Myanmar Khyay" FontSize="32" Name="lblPrecio"  Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                                 </Border>
+
                                 <Border HorizontalAlignment="Center" Width="217">
                                     <Grid>
                                         <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="61" Height="61" >
@@ -167,46 +167,50 @@
                                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                 </Button.Effect>
                                             </Button>
+
                                             <Border.Effect>
                                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                             </Border.Effect>
-
                                         </Border>
+
                                         <Border>
                                             <Label FontFamily="Myanmar Khyay" FontSize="32" Name="lblCantidad" Content="0" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                         </Border>
+
                                         <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Right" Width="61" Height="61" >
                                             <Button Background="Transparent" Click="btnSumar_Click" BorderThickness="0" Content="+" FontFamily="Myanmar Khyay" FontSize="50" Foreground="White">
                                                 <Button.Effect>
                                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                 </Button.Effect>
                                             </Button>
+
                                             <Border.Effect>
                                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                             </Border.Effect>
-
                                         </Border>
                                     </Grid>
-
                                 </Border>
+
                                 <Border Width="150" Height="43" HorizontalAlignment="Right">
                                     <Label FontFamily="Myanmar Khyay" FontSize="32" Name="lblTotal" Foreground="#F30613" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
                                 </Border>
                             </Grid>
                         </Border>
+
                         <Border Grid.Row="7" Width="562" CornerRadius="10">
                             <Border CornerRadius="10" Background="#d9d9d9">
-                                <Button  Click="btnOmitirGafas_Click" Name="btnOmitirGafas" BorderThickness="0" Foreground="#f30613" Background="Transparent" Content="Traje las gafas, omitir este paso" FontSize="24" FontFamily="Myanmar Khyay">
+                                <Button Click="btnOmitirGafas_Click" Name="btnOmitirGafas" BorderThickness="0" Foreground="#f30613" Background="Transparent" Content="Traje las gafas, omitir este paso" FontSize="24" FontFamily="Myanmar Khyay">
                                     <Button.Effect>
                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                     </Button.Effect>
                                 </Button>
+
                                 <Border.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                 </Border.Effect>
                             </Border>
-
                         </Border>
+
                         <Border Grid.Row="9">
                             <Border Width="374" Height="80" HorizontalAlignment="Right" Margin="0,0,54,0">
                                 <Grid>
@@ -222,9 +226,7 @@
                         </Border>
                     </Grid>
                 </Border>
-
             </Grid>
         </Border>
-
     </Grid>
 </Window>

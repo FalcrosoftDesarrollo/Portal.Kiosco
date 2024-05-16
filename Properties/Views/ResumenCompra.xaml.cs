@@ -8,7 +8,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -23,8 +22,10 @@ namespace Portal.Kiosco.Properties.Views
         public ResumenCompra(IOptions<MyConfig> config)
         {
             InitializeComponent();
+            GenerateResumen();
             DataContext = ((App)Application.Current);
             this.config = config;
+
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -33,7 +34,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
-            GenerateResumen();
+          
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -46,7 +47,7 @@ namespace Portal.Kiosco.Properties.Views
         }
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -55,9 +56,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -69,7 +69,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -79,11 +79,10 @@ namespace Portal.Kiosco.Properties.Views
                             }
                         }
                     }
-
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen; 
         }
 
 
@@ -339,7 +338,6 @@ namespace Portal.Kiosco.Properties.Views
             decimal totalDecimal;
             if (decimal.TryParse(TotalResumen.Content.ToString(), NumberStyles.Currency, CultureInfo.GetCultureInfo("es-CO"), out totalDecimal))
             {
-                // Convertir el valor decimal a un entero
                 var total = Convert.ToString(Convert.ToInt32(totalDecimal));
                 App.TotalPagar = total.ToString();
             }
@@ -347,12 +345,14 @@ namespace Portal.Kiosco.Properties.Views
             {
                 Console.WriteLine("No se pudo convertir la cadena en un valor decimal.");
             }
+
             StartMonitoringDatafono();
             var openWindows = new InstruccionesDatafono();
             openWindows.Show();
             this.Close();
 
         }
+
         private Thread monitorThread;
         private void StartMonitoringDatafono()
         {
@@ -360,10 +360,8 @@ namespace Portal.Kiosco.Properties.Views
             {
                 while (true)
                 {
-                    // Revisar si App.ResponseDatafono es igual a "00"
                     if (App.ResponseDatafono == "00")
                     {
-                        // Abrir la ventana BoletasGafasAlimentos y cerrar la ventana resumenCompraWindow
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             BoletasGafasAlimentos boletasGafasAlimentos = new BoletasGafasAlimentos();
@@ -372,25 +370,20 @@ namespace Portal.Kiosco.Properties.Views
                             this.Close();
                         });
 
-                        // Salir del bucle y finalizar el hilo
                         return;
                     }
 
-
-
-                    // Esperar un momento antes de revisar nuevamente
-                    Thread.Sleep(1000); // Esperar 1 segundo
+                    Thread.Sleep(1000);
                 }
             });
 
             if (App.ResponseDatafono != "00" && App.ResponseDatafono != null)
             {
-                // Detener el hilo
                 monitorThread.Suspend();
                 return;
             }
 
-            monitorThread.IsBackground = true; // Hacer que el hilo sea de fondo para que se cierre automáticamente con la aplicación
+            monitorThread.IsBackground = true;
             monitorThread.Start();
         }
 
@@ -398,27 +391,26 @@ namespace Portal.Kiosco.Properties.Views
         {
             isThreadActive = false;
             PagoCashback openWindows = new PagoCashback();
-
             openWindows.Show();
             this.Close();
         }
 
         public void GenerateResumen()
         {
-            // Generar resumen de boletas
             decimal totalcombos = 0;
             if (App.Pelicula.Nombre !="")
             {
                 GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
             }
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
-            // Generar resumen de gafas
+
             if (App.CantidadGafas.ToString() != "0")
             {
                 GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
             }
+
             totalcombos += 0;
-            
+         
             var combos = App.ProductosSeleccionados;
 
             var combosAgrupados = combos.GroupBy(c => c.Codigo);
@@ -426,8 +418,6 @@ namespace Portal.Kiosco.Properties.Views
             foreach (var grupoCombos in combosAgrupados)
             {
                 decimal codigo = grupoCombos.Key;
-
-                // Obtener el nombre, precio y cantidad para el grupo de combos
                 string nombre = buscarNombre(combos, codigo);
                 decimal precio = buscarprecio(combos, codigo);
                 int cantidad = grupoCombos.Count();
@@ -436,27 +426,22 @@ namespace Portal.Kiosco.Properties.Views
                 decimal totalAnterior = decimal.Parse(totalString);
                 decimal nuevoTotal = totalAnterior + precio;
 
-
                 decimal total = nuevoTotal * cantidad;
                 totalcombos += total;
-                // Generar el resumen para el grupo de combos
+
                 GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
-            // Calcular y mostrar el total
             TotalResumen.Content = totalcombos.ToString("C0");
         }
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
         {
-            // Crear un nuevo Grid
             Grid grid = new Grid();
 
-            // Crear definiciones de columna
             for (int i = 0; i < 9; i++)
             {
                 ColumnDefinition columnDefinition = new ColumnDefinition();
-                // Asignar el ancho de la columna según corresponda
                 if (i == 0)
                     columnDefinition.Width = new GridLength(28);
                 else if (i == 1)
@@ -473,25 +458,20 @@ namespace Portal.Kiosco.Properties.Views
                     columnDefinition.Width = new GridLength(50);
                 else if (i == 7)
                     columnDefinition.Width = new GridLength(185);
-                // La última columna no tiene un ancho específico
 
                 grid.ColumnDefinitions.Add(columnDefinition);
             }
 
-            // Crear los bordes con etiquetas dentro
             for (int i = 1; i <= 4; i++)
             {
                 Border border = new Border();
-                Grid.SetColumn(border, i * 2 - 1); // Colocar el borde en columnas impares (1, 3, 5)
+                Grid.SetColumn(border, i * 2 - 1);
                 Label label = new Label();
                 label.FontFamily = new FontFamily("Myanmar Khyay");
                 label.FontSize = 24;
                 label.VerticalContentAlignment = VerticalAlignment.Center;
-                border.BorderBrush = Brushes.Black; // Color de la línea
+                border.BorderBrush = Brushes.Black; 
 
-
-
-                // Configurar contenido y márgenes según corresponda
                 if (i == 1)
                 {
                     label.Content = nombre;
@@ -500,7 +480,6 @@ namespace Portal.Kiosco.Properties.Views
                 else if (i == 2)
                 {
                     label.Content = valor.ToString("C0"); ;
-                    //label.Margin = new Thickness(0, 22, -44, 23);
                     label.HorizontalAlignment = HorizontalAlignment.Center;
                 }
                 else if (i == 3)
@@ -520,7 +499,6 @@ namespace Portal.Kiosco.Properties.Views
                 grid.Children.Add(border);
             }
 
-            // Agregar el Grid al contenedor correspondiente
             switch (categoria)
             {
                 case "Boletas":
@@ -532,7 +510,6 @@ namespace Portal.Kiosco.Properties.Views
                 case "Combos":
                     ContenedorResumen.Children.Add(grid);
                     break;
-                // Agrega más casos según las categorías que tengas
                 default:
                     break;
             }
@@ -590,8 +567,6 @@ namespace Portal.Kiosco.Properties.Views
                             {
                                 if (itemprer.Precios != null)
                                 {
-
-
                                     foreach (var itempre in itemprer.Precios)
                                     {
                                         var preitem = new Precios()
@@ -704,14 +679,11 @@ namespace Portal.Kiosco.Properties.Views
                             break;
                     }
 
-
-
                     break;
                 }
             }
 
             return nombre;
-
         }
 
         public decimal total = 0;
@@ -738,7 +710,6 @@ namespace Portal.Kiosco.Properties.Views
                 {
                     switch (itepro.Tipo)
                     {
-
                         case "P": //PRODUCTOS
                             ob_datpro.Codigo = itepro.Codigo;
                             ob_datpro.Descripcion = itepro.Descripcion;
@@ -765,8 +736,6 @@ namespace Portal.Kiosco.Properties.Views
                             {
                                 if (itemprer.Precios != null)
                                 {
-
-
                                     foreach (var itempre in itemprer.Precios)
                                     {
                                         var preitem = new Precios()
@@ -800,7 +769,7 @@ namespace Portal.Kiosco.Properties.Views
                                         var NombreFinalBotella = i.Descripcion.ToString();
                                         var precioFinalBotella = i.Precios.Sum(precio => precio.General);
                                         var frecuenciaBotella = i.Frecuente.ToString();
-                                        // Hacer algo con precioFinalCombo
+
                                         if (Convert.ToBoolean(frecuenciaBotella) == true)
                                         {
                                             Precios += precioFinalBotella;
@@ -820,17 +789,17 @@ namespace Portal.Kiosco.Properties.Views
                                         {
                                             Precios += precioFinalComida;
                                         }
-                                        // Hacer algo con precioFinalCombo
+
                                         datosFinalesComida.Add((CodioComida, NombreFinalComida, precioFinalComida, frecuenciaComida, itecat.Codigo));
                                     }
                                 }
-                                //Valido que las listas se hayan llenado
+
                                 if (datosFinalesBotella.Count > 0 && datosFinalesComida.Count > 0)
                                 {
-                                    // Establecer el indicador para salir del bucle
+
                                     condicionCumplida = true;
                                 }
-                                // Si se cumplió la condición, salir del bucle foreach
+
                                 if (condicionCumplida)
                                 {
                                     break;
@@ -880,7 +849,6 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             return Precios;
-
         }
     }
 }

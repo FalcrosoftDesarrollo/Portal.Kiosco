@@ -8,9 +8,6 @@ using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para ComoCompra.xaml
-    /// </summary>
     public partial class ComoCompra : Window
     {
         private bool isThreadActive = true;
@@ -24,13 +21,14 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
                 {
                     if (ComprobarTiempo())
                     {
-                        break; // Salir del bucle si la ventana principal está abierta
+                        break; 
                     }
                 }
             });
@@ -38,11 +36,11 @@ namespace Portal.Kiosco.Properties.Views
             thread.Start();
         }
 
-        private bool isMainWindowOpen = false; // Variable para indicar si la ventana principal está abierta
+        private bool isMainWindowOpen = false; 
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -51,9 +49,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -65,7 +62,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -79,7 +76,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen;
         }
 
 
@@ -92,6 +89,7 @@ namespace Portal.Kiosco.Properties.Views
             openWindow.Show();
             this.Close();
         }
+
         private bool procesoEnCurso = false;
 
         private async void btnInvitado_Click(object sender, RoutedEventArgs e)
@@ -120,7 +118,6 @@ namespace Portal.Kiosco.Properties.Views
 
                     openWindows.Show();
                     this.Close();
-
                 }
             }
             finally
@@ -136,6 +133,5 @@ namespace Portal.Kiosco.Properties.Views
             openWindows.Show();
             this.Close();
         }
-
     }
 }

@@ -19,6 +19,7 @@
                         <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
+                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Opacity" Value="0.8" />
@@ -43,12 +44,9 @@
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
                                IsTabStop="False" 
-                               
                                Minimum="0" 
                                Orientation="Vertical" 
-                               
-                               
-                              />
+                            />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -64,7 +62,6 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -73,7 +70,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        <!-- logo -->
+                        
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -100,28 +97,24 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-
-
-                        <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
                             <Button Background="Transparent" BorderThickness="0" Name="btnSalir" Click="btnSalir_Click" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-                        <Run Text="SALIR"></Run>
+                                    <Run Text="SALIR"/>
                                 </TextBlock>
+
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
+
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-
-
                     </Grid>
                 </Border>
 
-                <!-- Centro -->
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -146,18 +139,14 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
-                                <!--42.5 mar-->
                                 <Border Width="430" HorizontalAlignment="Right" Margin="0,0,42.5,0">
                                     <Grid>
                                         <Border CornerRadius="10" Background="#F5F5F5" Width="430" Height="69" VerticalAlignment="Top">
-                                            <Label   Background="Transparent" BorderThickness="0" Content="CASHBACK DISPONIBLE" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="32" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                                            <Label Background="Transparent" BorderThickness="0" Content="CASHBACK DISPONIBLE" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="32" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
                                         </Border>
 
                                         <Border Width="430" Height="69" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Bottom" CornerRadius="10">
-                                            <Button Content="0" Name="lblCashDisp" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"  >
-                                                
-                                            </Button>
-                                            
+                                            <Button Content="0" Name="lblCashDisp" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"/>
                                         </Border>
                                     </Grid>
                                 </Border>
@@ -165,42 +154,36 @@
                                 <Border Grid.Column="1" Width="430" HorizontalAlignment="Left" Margin="42.5,0,0,0">
                                     <Grid>
                                         <Border CornerRadius="10" Background="#F5F5F5" Width="430" Height="69" VerticalAlignment="Top">
-                                            <Label   Background="Transparent"  BorderThickness="0" Content="TOTAL A PAGAR" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="32" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <Label Background="Transparent" BorderThickness="0" Content="TOTAL A PAGAR" Foreground="Black" FontFamily="Myanmar Khyay" FontSize="32" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <Border Width="430" Height="69" Background="White" BorderBrush="#F30613" BorderThickness="1" VerticalAlignment="Bottom" CornerRadius="10">
-                                            <Button Content="0" Name="lblTotalPagarCash" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"   >
-                                                
-                                            </Button>
-                                            
+                                            <Button Content="0" Name="lblTotalPagarCash" Background="Transparent" BorderThickness="0"  FontFamily="Myanmar Khyay" FontSize="32"/>
+
                                         </Border>
                                     </Grid>
                                 </Border>
-
-
                             </Grid>
                         </Border>
 
                         <Border Grid.Row="7">
                             <Grid>
-
                                 <Border Width="351" Height="182" VerticalAlignment="Top">
                                     <Grid>
-
                                         <Border Width="350" Height="80" Background="#F30613" VerticalAlignment="Top" CornerRadius="10">
                                             <Button Content="PAGAR CON CASHBACK" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"  >
                                                 <Button.Effect>
                                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                 </Button.Effect>
                                             </Button>
+
                                             <Border.Effect>
                                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                             </Border.Effect>
                                         </Border>
 
                                         <Border Width="350" Height="80" Background="#D9D9D9" VerticalAlignment="Bottom" CornerRadius="10">
-                                            <Button Name="btnCambiar" Click="btnCambiar_Click" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20"  Content="Cambiar método de pago">
-
+                                            <Button Name="btnCambiar" Click="btnCambiar_Click" Background="Transparent" BorderThickness="0" Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="20" Content="Cambiar método de pago">
                                                 <Button.Effect>
                                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                 </Button.Effect>
@@ -209,15 +192,11 @@
                                             <Border.Effect>
                                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                             </Border.Effect>
-
                                         </Border>
-
                                     </Grid>
-
                                 </Border>
                             </Grid>
                         </Border>
-
                     </Grid>
                 </Border>
             </Grid>

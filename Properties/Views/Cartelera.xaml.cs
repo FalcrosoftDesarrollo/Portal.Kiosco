@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,13 +18,13 @@ namespace Portal.Kiosco.Properties.Views
     {
         private List<Pelicula> Peliculas = new List<Pelicula>();
         private bool isThreadActive = true;
-
         public Cartelera()
         {
             InitializeComponent();
             CargarPeliculasDesdeXml();
             DataContext = ((App)Application.Current);
             App.IsFecha = false;
+
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -34,8 +33,11 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
+
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -49,7 +51,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false;
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -58,9 +60,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -72,7 +73,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -86,12 +87,8 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen;
         }
-
-
-
-
 
         public string ObtenerValorDeConfiguracion(string clave)
         {
@@ -109,13 +106,11 @@ namespace Portal.Kiosco.Properties.Views
 
                 foreach (var pelicula in App.Peliculas.OrderByDescending(p => p.Tipo))
                 {
-                    // Verificar si el título original ya ha sido procesado
                     if (!titulosProcesados.ContainsKey(pelicula.TituloOriginal))
                     {
                         titulosProcesados[pelicula.TituloOriginal] = true;
 
-                        // Crear el contenedor para la película
-                        var nuevoBorde = new System.Windows.Controls.Border
+                        var nuevoBorde = new Border
                         {
                             Name = "P" + pelicula.Id.ToString(),
                             Margin = new Thickness(40),
@@ -136,24 +131,20 @@ namespace Portal.Kiosco.Properties.Views
                             }
                         };
 
-                        // Crear un grid para contener la imagen y el borde superior rojo
-                        var grid = new System.Windows.Controls.Grid();
+                        var grid = new Grid();
 
-                        // Agregar la imagen de la película al grid
-                        System.Windows.Controls.Image nuevaImagen = new System.Windows.Controls.Image
+                        Image nuevaImagen = new Image
                         {
                             Width = 360,
-                            Height = 444, // Altura ajustada para dar espacio al borde superior rojo
+                            Height = 444,
                             Stretch = Stretch.Fill,
                             Source = new BitmapImage(new Uri(pelicula.Imagen))
                         };
                         grid.Children.Add(nuevaImagen);
 
-                        // Verificar si la película es de tipo "Preventa"
                         if (pelicula.Tipo == "Preventa")
                         {
-                            // Crear el borde superior rojo con el texto "PREVENTA"
-                            System.Windows.Controls.Border preventaBorder = new System.Windows.Controls.Border
+                            Border preventaBorder = new Border
                             {
                                 Height = 56,
                                 VerticalAlignment = VerticalAlignment.Top,
@@ -174,13 +165,10 @@ namespace Portal.Kiosco.Properties.Views
                             grid.Children.Add(preventaBorder);
                         }
 
-                        // Agregar el grid como contenido del borde
                         nuevoBorde.Child = grid;
 
-                        // Configurar el evento Click para abrir la pantalla SeleccionarFuncion
                         nuevoBorde.MouseLeftButtonUp += async (sender, e) =>
                         {
-                            // Llenar App.Pelicula.Id con el Id de la película al hacer clic
                             App.Pelicula.Id = pelicula.Id.ToString();
                             App.Pelicula.TituloOriginal = pelicula.TituloOriginal.ToString();
                             App.Pelicula.Imagen = pelicula.Imagen;
@@ -189,25 +177,19 @@ namespace Portal.Kiosco.Properties.Views
                             App.Pelicula.Genero = pelicula.Genero;
                             App.Pelicula.Censura = pelicula.Censura;
 
-
-                            // Navegar a la siguiente pantalla (SeleccionFuncion)
                             var openWindow = new SeleccionarFuncion();
-
                             openWindow.Show();
                             this.Close();
-
                         };
 
-                        // Configurar la posición en la cuadrícula
-                        System.Windows.Controls.Grid.SetRow(nuevoBorde, fila);
-                        System.Windows.Controls.Grid.SetColumn(nuevoBorde, columna);
+                        Grid.SetRow(nuevoBorde, fila);
+                        Grid.SetColumn(nuevoBorde, columna);
 
-                        // Agregar el contenedor a la cuadrícula
                         ContenedorPeliculas.Children.Add(nuevoBorde);
 
-                        // Incrementar las columnas y filas
                         columna++;
-                        if (columna >= 4) // cambiar 4 por el número de columnas deseado
+
+                        if (columna >= 4)
                         {
                             columna = 0;
                             fila++;
@@ -227,7 +209,6 @@ namespace Portal.Kiosco.Properties.Views
             Principal openWindows = new Principal();
             openWindows.Show();
             this.Close();
-
         }
 
         private bool isDragging = false;
@@ -256,7 +237,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             if (isDragging)
             {
-                System.Windows.Controls.ScrollViewer scrollViewer = sender as System.Windows.Controls.ScrollViewer;
+                ScrollViewer scrollViewer = sender as ScrollViewer;
                 Point currentPoint = e.GetPosition(scrollViewer);
 
                 if (currentPoint.Y < 0)

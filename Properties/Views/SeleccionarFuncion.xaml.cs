@@ -1,11 +1,8 @@
 ﻿using APIPortalKiosco.Entities;
-using APIPortalWebMed.Entities;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -15,13 +12,11 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Xml;
-//using Windows.UI.Xaml.Controls;
 
 namespace Portal.Kiosco.Properties.Views
 {
     public partial class SeleccionarFuncion : Window
     {
-        //private Dictionary<string, List<string>> horasPorFecha = new Dictionary<string, List<string>>();
         public List<UIElement> elementosConservados3D;
         public List<UIElement> elementosConservadosGeneral;
         private readonly IOptions<MyConfig> config;
@@ -37,6 +32,7 @@ namespace Portal.Kiosco.Properties.Views
             lblNombre.Content = App.Pelicula.Nombre;
             lblDuracion.Content = "Duración: " + App.Pelicula.Duracion + " min";
             lblGenero.Content = "Genero: " + App.Pelicula.Genero;
+
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -57,12 +53,11 @@ namespace Portal.Kiosco.Properties.Views
             });
             thread.IsBackground = true;
             thread.Start();
-
         }
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -71,9 +66,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true; 
                     }
                     else
                     {
@@ -85,7 +79,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -99,7 +93,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen; 
         }
 
 
@@ -126,6 +120,7 @@ namespace Portal.Kiosco.Properties.Views
             HashSet<string> horasProcesadas = new HashSet<string>();
             HashSet<string> zonasProcesadas = new HashSet<string>();
             int isfecha = 0;
+
             foreach (var pelicula in App.Peliculas)
             {
                 if (pelicula.TituloOriginal == App.Pelicula.TituloOriginal)
@@ -139,7 +134,6 @@ namespace Portal.Kiosco.Properties.Views
 
                         }
 
-
                         var listpelicula = App.Peliculas.Where(x => x.TituloOriginal == lblnombre.Content.ToString());
                         int lc_keypel = 0;
                         int lc_auxpel = 0;
@@ -151,30 +145,23 @@ namespace Portal.Kiosco.Properties.Views
                         string lc_fecitem = string.Empty;
                         string lc_flgpre = "S";
                         string pr_tippel = "";
-
                         string lc_result = string.Empty;
                         string lc_srvpar = string.Empty;
 
                         DateTime dt_fecpro;
 
                         List<DateCartelera> ob_fechas = new List<DateCartelera>();
-
                         XmlDocument ob_xmldoc = new XmlDocument();
-                        //Billboard ob_bilmov = new Billboard();
                         General ob_fncgrl = new General();
-
                         APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
                         Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
                         Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
                         List<sala> ob_lisprg = new List<sala>();
 
-
-                        //Obtener información de la web
-
                         ob_carprg.Teatro = App.idCine;
                         ob_carprg.tercero = App.ValorTercero;
                         ob_carprg.IdPelicula = App.Pelicula.Id;
-                        ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
+                        ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);
                         ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
                         ob_carprg.FgPelicula = "2";
                         ob_carprg.CfPelicula = "No";
@@ -232,46 +219,6 @@ namespace Portal.Kiosco.Properties.Views
 
                                                             if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
                                                             {
-                                                                //if (!zonasProcesadas.Contains(itemZonas.Key))
-                                                                {
-                                                                 
-                                                                    if (itemZonas.Key.Contains("GENERAL"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                    }
-                                                                    if (itemZonas.Key == "3D")
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                    }
-
-                                                                    if (itemZonas.Key.Contains("Black Star"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                    }
-                                                                    if (itemZonas.Key.Contains("Black Star 3D"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                    }
-                                                                    horasProcesadas.Add(item2.horario);
-                                                                    //zonasProcesadas.Add(itemZonas.Key);
-                                                                //}
-                                                            }
-                                                        }
-
-                                                        isfecha = 1;
-
-                                                    }
-                                                    else
-                                                    {
-                                                        if (isfecha == 0)
-                                                        {
-                                                            //if (!zonasProcesadas.Contains(itemZonas.Key))
-                                                            //{
-                                                               
                                                                 if (itemZonas.Key.Contains("GENERAL"))
                                                                 {
                                                                     if (!horasProcesadas.Contains(item2.horario))
@@ -288,35 +235,58 @@ namespace Portal.Kiosco.Properties.Views
                                                                     if (!horasProcesadas.Contains(item2.horario))
                                                                         ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
                                                                 }
-
                                                                 if (itemZonas.Key.Contains("Black Star 3D"))
                                                                 {
                                                                     if (!horasProcesadas.Contains(item2.horario))
                                                                         ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
                                                                 }
                                                                 horasProcesadas.Add(item2.horario);
-                                                                //zonasProcesadas.Add(itemZonas.Key);
                                                             }
                                                         }
 
+                                                        isfecha = 1;
+
+                                                    }
+                                                    else
+                                                    {
+                                                        if (isfecha == 0)
+                                                        {
+                                                            if (itemZonas.Key.Contains("GENERAL"))
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+                                                            if (itemZonas.Key == "3D")
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+
+                                                            if (itemZonas.Key.Contains("Black Star"))
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+
+                                                            if (itemZonas.Key.Contains("Black Star 3D"))
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+                                                            horasProcesadas.Add(item2.horario);                                                            
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
                                 }
-
                             }
                         }
-
-
-
                     }
                 }
             }
         }
-
-
 
         public async void CargarFechasDesdeSelect()
         {
@@ -326,7 +296,6 @@ namespace Portal.Kiosco.Properties.Views
             ContenedorHoras3D.Children.Clear();
             ContenedorHorasBlackStar.Children.Clear();
             ContenedorHoras3DBlackStar.Children.Clear();
-
             ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
             ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
             ContenedorHorasBlackStar.Children.Add(CrearBotonFormato("Black Star"));
@@ -343,30 +312,23 @@ namespace Portal.Kiosco.Properties.Views
             string lc_fecitem = string.Empty;
             string lc_flgpre = "S";
             string pr_tippel = "";
-
             string lc_result = string.Empty;
             string lc_srvpar = string.Empty;
 
             DateTime dt_fecpro;
 
             List<DateCartelera> ob_fechas = new List<DateCartelera>();
-
             XmlDocument ob_xmldoc = new XmlDocument();
-            //Billboard ob_bilmov = new Billboard();
             General ob_fncgrl = new General();
-
             APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
             Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
             Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
             List<sala> ob_lisprg = new List<sala>();
 
-
-            //Obtener información de la web
-
             ob_carprg.Teatro = App.idCine;
             ob_carprg.tercero = App.ValorTercero;
             ob_carprg.IdPelicula = App.Pelicula.Id;
-            ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
+            ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);
             ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
             ob_carprg.FgPelicula = "2";
             ob_carprg.CfPelicula = "No";
@@ -430,44 +392,6 @@ namespace Portal.Kiosco.Properties.Views
 
                                                     if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
                                                     {
-                                                        //if (!zonasProcesadas.Contains(itemZonas.Key))
-                                                        //{
-                                                           
-                                                            if (itemZonas.Key.Contains("GENERAL"))
-                                                            {
-                                                                if (!horasProcesadas.Contains(item2.horario))
-                                                                    ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                            }
-                                                            if (itemZonas.Key == "3D")
-                                                            {
-                                                                if (!horasProcesadas.Contains(item2.horario))
-                                                                    ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                            }
-
-                                                            if (itemZonas.Key.Contains("Black Star"))
-                                                            {
-                                                                if (!horasProcesadas.Contains(item2.horario))
-                                                                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                            }
-                                                            if (itemZonas.Key.Contains("Black Star 3D"))
-                                                            {
-                                                                if (!horasProcesadas.Contains(item2.horario))
-                                                                    ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                            }
-                                                            horasProcesadas.Add(item2.horario);
-                                                            zonasProcesadas.Add(itemZonas.Key);
-                                                        //}
-                                                    }
-                                                }
-                                                isfecha = 1;
-                                            }
-                                            else
-                                            {
-                                                if (isfecha == 0)
-                                                {
-                                                    //if (!zonasProcesadas.Contains(itemZonas.Key))
-                                                    //{
-                                                      
                                                         if (itemZonas.Key.Contains("GENERAL"))
                                                         {
                                                             if (!horasProcesadas.Contains(item2.horario))
@@ -491,16 +415,44 @@ namespace Portal.Kiosco.Properties.Views
                                                         }
                                                         horasProcesadas.Add(item2.horario);
                                                         zonasProcesadas.Add(itemZonas.Key);
-                                                    //}
+                                                    }
+                                                }
+                                                isfecha = 1;
+                                            }
+                                            else
+                                            {
+                                                if (isfecha == 0)
+                                                {
+                                                    if (itemZonas.Key.Contains("GENERAL"))
+                                                    {
+                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                    }
+                                                    if (itemZonas.Key == "3D")
+                                                    {
+                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                    }
+
+                                                    if (itemZonas.Key.Contains("Black Star"))
+                                                    {
+                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                    }
+                                                    if (itemZonas.Key.Contains("Black Star 3D"))
+                                                    {
+                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                    }
+                                                    horasProcesadas.Add(item2.horario);
+                                                    zonasProcesadas.Add(itemZonas.Key);
                                                 }
                                             }
-
                                         }
                                     }
                                 }
                             }
                         }
-
                     }
                 }
             }
@@ -510,7 +462,6 @@ namespace Portal.Kiosco.Properties.Views
         {
             try
             {
-
                 int lc_keypel = 0;
                 int lc_auxpel = 0;
                 int lc_keytea = 0;
@@ -521,24 +472,19 @@ namespace Portal.Kiosco.Properties.Views
                 string lc_fecitem = string.Empty;
                 string lc_flgpre = "S";
                 string pr_tippel = "";
-
                 string lc_result = string.Empty;
                 string lc_srvpar = string.Empty;
 
                 DateTime dt_fecpro;
 
                 List<DateCartelera> ob_fechas = new List<DateCartelera>();
-
                 XmlDocument ob_xmldoc = new XmlDocument();
-                //Billboard ob_bilmov = new Billboard();
                 General ob_fncgrl = new General();
-
                 APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
                 Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
                 Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
                 List<sala> ob_lisprg = new List<sala>();
 
-                //Obtener información de la web
                 var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == App.Pelicula.TituloOriginal);
                 var fechaSel = App.Pelicula.FechaSel.Substring(3);
                 var horaSel = App.Pelicula.HoraSel;
@@ -567,7 +513,7 @@ namespace Portal.Kiosco.Properties.Views
                 ob_carprg.Teatro = App.idCine;
                 ob_carprg.tercero = App.ValorTercero;
                 ob_carprg.IdPelicula = App.Pelicula.Id;
-                ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
+                ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);
                 ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
                 ob_carprg.FgPelicula = "2";
                 ob_carprg.CfPelicula = "No";
@@ -636,13 +582,6 @@ namespace Portal.Kiosco.Properties.Views
                                                                         App.Pelicula.HoraMilitar = item2.militar;
                                                                     }
                                                                 }
-                                                                else
-                                                                {
-                                                                    if (item4.nombreTipoSilla != "Discapacitado")
-                                                                    {
-                                                                        // Código relacionado con la ausencia de tarifas
-                                                                    }
-                                                                }
                                                             }
                                                         }
                                                     }
@@ -650,20 +589,14 @@ namespace Portal.Kiosco.Properties.Views
                                             }
                                         }
                                     }
-
                                 }
                             }
-                        }
-                        else
-                        {
-                            // Código relacionado con la falta de datos en ViewBag
                         }
                     }
                 }
             }
             catch (Exception e) { }
         }
-
 
         private async void btnSelectFecha_Click(object sender, RoutedEventArgs e)
         {
@@ -675,17 +608,14 @@ namespace Portal.Kiosco.Properties.Views
 
         private void CrearBotonFecha(string fecha, string fecunv)
         {
-            // Separar la fecha en sus partes
             string[] partesFecha = fecha.Split(' ');
             string diaSemana = partesFecha[0];
             string diaMes = partesFecha[2];
             string fechaFormateada = $"{diaSemana} {diaMes}";
 
-            // Crear un nuevo botón y un nuevo borde
             Button btn = new Button();
             Border border = new Border();
 
-            // Establecer propiedades del botón
             btn.Name = fecunv;
             btn.Content = fechaFormateada;
             btn.Background = Brushes.Transparent;
@@ -694,7 +624,6 @@ namespace Portal.Kiosco.Properties.Views
             btn.FontSize = 20;
             btn.Foreground = Brushes.Red;
 
-            // Agregar efecto de sombra al botón
             DropShadowEffect shadowEffect = new DropShadowEffect();
             shadowEffect.Color = Colors.Gray;
             shadowEffect.Direction = 270;
@@ -702,7 +631,6 @@ namespace Portal.Kiosco.Properties.Views
             shadowEffect.Opacity = 0.5;
             btn.Effect = shadowEffect;
 
-            // Establecer propiedades del borde
             border.Width = 115;
             border.Height = 60;
             border.Background = Brushes.White;
@@ -717,50 +645,38 @@ namespace Portal.Kiosco.Properties.Views
                 btn.Foreground = Brushes.White;
                 border.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 App.Pelicula.FechaSel = fecunv;
-                //App.Pelicula.FechaUsuario = fechaFormateada;
                 App.IsFecha = true;
             }
 
-            // Manejador de eventos Click para el botón
             btn.Click += btnSeleccionFecha_Click;
 
-            // Agregar el botón con su borde al contenedor de fechas
             ContenedorFechas.Children.Add(border);
         }
 
         public Border CrearBotonFormato(string ContenidoFormato)
         {
-            // Crear el nuevo botón
             Button nuevoBoton = new Button();
-            nuevoBoton.Content = ContenidoFormato; // Texto deseado con salto de línea
+            nuevoBoton.Content = ContenidoFormato; 
             nuevoBoton.Background = Brushes.Transparent;
             nuevoBoton.BorderThickness = new Thickness(0);
             nuevoBoton.Foreground = Brushes.Black;
             nuevoBoton.FontFamily = new FontFamily("Myanmar Khyay");
             nuevoBoton.FontSize = 14;
-
-            // Aplicar el mismo estilo que el botón estático
-            //nuevoBoton.Style = FindResource("MyButton") as Style;
-
             nuevoBoton.HorizontalContentAlignment = HorizontalAlignment.Center;
 
-            // Crear el contenedor (Border) para el nuevo botón
             Border nuevoBorder = new Border();
             nuevoBorder.CornerRadius = new CornerRadius(10);
-            nuevoBorder.Background = Brushes.White; // Color de fondo deseado
-            nuevoBorder.Margin = new Thickness(0, 7, 6, 5); // Ajusta los márgenes según sea necesario
+            nuevoBorder.Background = Brushes.White; 
+            nuevoBorder.Margin = new Thickness(0, 7, 6, 5); 
             nuevoBorder.Width = 115;
             nuevoBorder.Height = 46;
-
             nuevoBorder.Child = nuevoBoton;
 
-            // Retornar el nuevo botón y su contenedor
             return nuevoBorder;
         }
 
         private Border CrearBotonHora(string hora, string idFuncion, string tipotarifa)
         {
-
             Button btn = new Button();
             btn.Name = "btn" + idFuncion;
             btn.Content = hora;
@@ -768,9 +684,7 @@ namespace Portal.Kiosco.Properties.Views
             btn.Height = 46;
             btn.FontFamily = new FontFamily("Myanmar Khyay");
             btn.FontSize = 14;
-            //btn.Style = FindResource("MyButton") as Style; // Puedes cambiar "MyButton" por el nombre correcto del estilo
             btn.Foreground = Brushes.Red;
-
 
             Border border = new Border();
             border.Width = 115;
@@ -783,18 +697,15 @@ namespace Portal.Kiosco.Properties.Views
             border.Child = btn;
             border.Name = tipotarifa.Replace(" ", "_");
 
-            // Agregar efecto de sombra al botón
             DropShadowEffect shadowEffect = new DropShadowEffect();
             shadowEffect.Color = Colors.Gray;
             shadowEffect.Direction = 270;
             shadowEffect.ShadowDepth = 3;
             shadowEffect.Opacity = 0.5;
             btn.Effect = shadowEffect;
-            // Suscribirse al evento Click
             btn.Click += btnSeleccionHora_Click;
 
             return border;
-
         }
 
         public T FindParent<T>(DependencyObject child) where T : DependencyObject
@@ -814,24 +725,15 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnSeleccionHora_Click(object sender, RoutedEventArgs e)
         {
-
-
-            //ResetarStylos();
             string buttonName = "";
             Button clickedButton = sender as Button;
             buttonName = clickedButton.Name.ToString();
             App.Pelicula.HoraSel = clickedButton.Name.ToString().Substring(3);
             App.Pelicula.HoraUsuario = clickedButton.Content.ToString();
-            // Buscar el Border padre del botón
             Border buttonBorder = FindParent<Border>(clickedButton);
-
-            // Aquí tienes el Border al que pertenece el botón
-
 
             var wrapPanelName = "";
             var formato = "";
-
-
             var TituloOriginal = App.Pelicula.TituloOriginal;
             var DiasDisponibles = App.Pelicula.DiasDisponibles;
             var FechaSel = App.Pelicula.FechaSel;
@@ -859,32 +761,27 @@ namespace Portal.Kiosco.Properties.Views
                                         App.TipoSala = sala.tipSala;
                                         App.Pelicula.numeroSala = sala.numSala;
                                         App.Pelicula.HoraMilitar = sala.horunv;
-                                        break;
 
+                                        break;
                                     }
                                 }
                             }
-
                         }
                     }
                 }
             }
+
             Panel contenedor = ContenedorHorasGeneral;
             foreach (var control in contenedor.Children)
             {
-                if (control is Border) // Si el control es un borde
+                if (control is Border) 
                 {
-
                     Border border = (Border)control;
-                    // Verificar si el contenido del borde es un botón
                     if (border.Child is Button)
                     {
-
                         Button btn = (Button)border.Child;
-                        // Almacenar el contenido y el nombre del botón
                         if (btn.Content.ToString() != "General")
                         {
-                            // Aplicar estilos al borde
                             if (border.Name != "General")
                             {
                                 border.Width = 115;
@@ -899,12 +796,11 @@ namespace Portal.Kiosco.Properties.Views
                             object contenido = btn.Content;
                             string nombre = btn.Name;
 
-                            // Aplicar estilos al botón
                             btn.Width = 115;
                             btn.Height = 46;
                             btn.FontFamily = new FontFamily("Myanmar Khyay");
                             btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red; // Establecer el color del texto como rojo
+                            btn.Foreground = Brushes.Red; 
                             btn.BorderBrush = Brushes.Black;
                         }
                     }
@@ -912,21 +808,17 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             Panel contenedor3d = ContenedorHoras3D;
+
             foreach (var control3d in contenedor3d.Children)
             {
-                if (control3d is Border) // Si el control es un borde
+                if (control3d is Border) 
                 {
-
                     Border border = (Border)control3d;
-                    // Verificar si el contenido del borde es un botón
                     if (border.Child is Button)
                     {
-
                         Button btn = (Button)border.Child;
-                        // Almacenar el contenido y el nombre del botón
                         if (btn.Content.ToString().Contains("3D"))
                         {
-                            // Aplicar estilos al borde
                             if (border.Name.Contains("3D"))
                             {
                                 border.Width = 115;
@@ -941,19 +833,16 @@ namespace Portal.Kiosco.Properties.Views
                             object contenido = btn.Content;
                             string nombre = btn.Name;
 
-                            // Aplicar estilos al botón
                             btn.Width = 115;
                             btn.Height = 46;
                             btn.FontFamily = new FontFamily("Myanmar Khyay");
                             btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red; // Establecer el color del texto como rojo
+                            btn.Foreground = Brushes.Red;
                             btn.BorderBrush = Brushes.Black;
                         }
                     }
                 }
             }
-
-
 
             if (buttonBorder != null)
             {
@@ -961,12 +850,9 @@ namespace Portal.Kiosco.Properties.Views
                 buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 App.TipoSilla = buttonBorder.Name.ToString();
             }
-            //App.Pelicula.HoraUsuario = clickedButton.Content.ToString();
-
             clickedButton.Foreground = Brushes.White;
             CalcularTarifa();
         }
-
 
         private void btnSeleccionFecha_Click(object sender, RoutedEventArgs e)
         {
@@ -975,11 +861,9 @@ namespace Portal.Kiosco.Properties.Views
             Button clickedButton = sender as Button;
             buttonName = clickedButton.Name;
 
-            // Buscar el Border padre del botón
             Border buttonBorder = FindParent<Border>(clickedButton);
             clickedButton.Foreground = Brushes.White;
             App.Pelicula.FechaSel = buttonName;
-            // Limpiar contenedores y cargar nuevas fechas
             ContenedorHoras3D.Children.Clear();
             ContenedorHorasGeneral.Children.Clear();
             ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
@@ -988,18 +872,15 @@ namespace Portal.Kiosco.Properties.Views
 
             foreach (var control in contenedor.Children)
             {
-                if (control is Border) // Si el control es un borde
+                if (control is Border) 
                 {
                     Border border = (Border)control;
-                    // Verificar si el contenido del borde es un botón
                     if (border.Child is Button)
                     {
 
                         Button btn = (Button)border.Child;
-                        // Almacenar el contenido y el nombre del botón
                         if (btn.Content.ToString() != "General")
                         {
-                            // Aplicar estilos al borde
                             if (border.Name != "General")
                             {
                                 border.Width = 115;
@@ -1029,7 +910,7 @@ namespace Portal.Kiosco.Properties.Views
                 buttonBorder.BorderBrush = Brushes.Red;
                 buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
             }
-            //App.Pelicula.FechaUsuario = clickedButton.Content.ToString();
+            clickedButton.Foreground = Brushes.White;
             clickedButton.Foreground = Brushes.White;
             CargarFechasDesdeSelect();
         }

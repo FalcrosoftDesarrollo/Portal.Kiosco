@@ -196,6 +196,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 ContadorProductos++;
             }
+            ProductosAdicionales();
         }
         
         public void ProductosAdicionales()

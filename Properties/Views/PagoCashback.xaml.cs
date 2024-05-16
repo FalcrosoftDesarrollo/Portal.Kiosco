@@ -16,6 +16,9 @@ namespace Portal.Kiosco.Properties.Views
         public PagoCashback()
         {
             InitializeComponent();
+            DataContext = ((App)Application.Current);
+            lblTotalPagarCash.Content = Convert.ToDecimal(App.TotalPagar).ToString("C0");
+
             if (App.ob_diclst.Count > 0)
             {
                 lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -24,9 +27,10 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
-            DataContext = ((App)Application.Current);
+            
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -37,14 +41,12 @@ namespace Portal.Kiosco.Properties.Views
             thread.IsBackground = true;
             thread.Start();
 
-            lblTotalPagarCash.Content = Convert.ToDecimal(App.TotalPagar).ToString("C0");
+            
         }
-
-
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -53,9 +55,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -67,7 +68,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -81,9 +82,8 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen; 
         }
-
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
@@ -108,21 +108,14 @@ namespace Portal.Kiosco.Properties.Views
             var openWindow = new InstruccionesDatafono();
             openWindows.Show();
             this.Close();
-
         }
 
         private void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             App.RoomReverse();
             var openWindows = new Principal();
-
             openWindows.Show();
             this.Close();
-        }
-
-        private void Button_Click()
-        {
-
         }
     }
 }
