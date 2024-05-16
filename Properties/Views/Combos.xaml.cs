@@ -1450,14 +1450,8 @@ namespace Portal.Kiosco.Properties.Views
 
             imagenes.Children.Clear();
 
-            string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\appsettings.json";
-
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile(appSettingsPath, optional: true, reloadOnChange: true);
-
-            configuration = builder.Build();
-            var myConfigSection = configuration.GetSection("MyConfig");
-            string urlRetailImg = myConfigSection["UrlRetailImg"];
+          
+            string urlRetailImg = App.UrlRetailImg;
 
             if (productos != null)
             {

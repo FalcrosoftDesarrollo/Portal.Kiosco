@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -30,6 +32,7 @@ namespace Portal.Kiosco.Properties.Views
             imgPelicula.Source = new BitmapImage(new Uri(App.Pelicula.Imagen));
             lblClasificacion.Content = "Clasificación: " + App.Pelicula.Censura;
             lblNombre.Content = App.Pelicula.Nombre;
+            lblnombre.IsEnabled = false;
             lblDuracion.Content = "Duración: " + App.Pelicula.Duracion + " min";
             lblGenero.Content = "Genero: " + App.Pelicula.Genero;
 
@@ -116,72 +119,317 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void CargarFechasDesdeXml()
         {
+            ContenedorHorasGeneral.Children.Clear();
+            ContenedorHoras3D.Children.Clear();
+            ContenedorHorasBlackStar.Children.Clear();
+            ContenedorHoras3DBlackStar.Children.Clear();
+            ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
+            ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
+            ContenedorHorasBlackStar.Children.Add(CrearBotonFormato("Black Star"));
+            ContenedorHoras3DBlackStar.Children.Add(CrearBotonFormato("Black Star 3D"));
+
             HashSet<string> fechasProcesadas = new HashSet<string>();
             HashSet<string> horasProcesadas = new HashSet<string>();
             HashSet<string> zonasProcesadas = new HashSet<string>();
+            var id = "";
             int isfecha = 0;
+            int totalfecha = 0;
             try
             {
-                foreach (var pelicula in App.Peliculas)
+                foreach (var pelicula in App.Peliculas.Where(x => x.TituloOriginal == App.Pelicula.TituloOriginal))
                 {
-                    if (pelicula.TituloOriginal == App.Pelicula.TituloOriginal)
+
+
+                    id = pelicula.Id;
+
+                    var listpelicula = App.Peliculas.Where(x => x.Id == id).ToList();
+
+                    foreach (var fechas in pelicula.DiasDisponibles.Distinct())
                     {
-                        foreach (var fechas in pelicula.DiasDisponibles)
+                        if (!fechasProcesadas.Contains(fechas.fecunv))
                         {
-                            if (!fechasProcesadas.Contains(fechas.fecunv))
+                            if (totalfecha < 7)
                             {
                                 CrearBotonFecha($"{fechas.fecham}", "btn" + fechas.fecunv);
-                                fechasProcesadas.Add(fechas.fecunv);
-
                             }
+                            fechasProcesadas.Add(fechas.fecunv);
+                            totalfecha++;
+                        }
 
-                            var listpelicula = App.Peliculas.Where(x => x.TituloOriginal == lblnombre.Content.ToString());
-                            int lc_keypel = 0;
-                            int lc_auxpel = 0;
-                            int lc_keytea = 0;
-                            int lc_auxtea = 0;
-                            int lc_swtflg = 0;
-                            string Variables41TPF = string.Empty;
-                            string lc_auxitem = string.Empty;
-                            string lc_fecitem = string.Empty;
-                            string lc_flgpre = "S";
-                            string pr_tippel = "";
-                            string lc_result = string.Empty;
-                            string lc_srvpar = string.Empty;
 
-                            DateTime dt_fecpro;
+                        int lc_keypel = 0;
+                        int lc_auxpel = 0;
+                        int lc_keytea = 0;
+                        int lc_auxtea = 0;
+                        int lc_swtflg = 0;
+                        string Variables41TPF = string.Empty;
+                        string lc_auxitem = string.Empty;
+                        string lc_fecitem = string.Empty;
+                        string lc_flgpre = "S";
+                        string pr_tippel = "";
+                        string lc_result = string.Empty;
+                        string lc_srvpar = string.Empty;
 
-                            List<DateCartelera> ob_fechas = new List<DateCartelera>();
-                            XmlDocument ob_xmldoc = new XmlDocument();
-                            General ob_fncgrl = new General();
-                            APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
-                            Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
-                            Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
-                            List<sala> ob_lisprg = new List<sala>();
+                        DateTime dt_fecpro;
 
-                            ob_carprg.Teatro = App.idCine;
-                            ob_carprg.tercero = App.ValorTercero;
-                            ob_carprg.IdPelicula = App.Pelicula.Id;
-                            ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);
-                            ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
-                            ob_carprg.FgPelicula = "2";
-                            ob_carprg.CfPelicula = "No";
+                        List<DateCartelera> ob_fechas = new List<DateCartelera>();
+                        XmlDocument ob_xmldoc = new XmlDocument();
+                        General ob_fncgrl = new General();
+                        APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
+                        Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
+                        Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
+                        List<sala> ob_lisprg = new List<sala>();
 
-                            //Generar y encriptar JSON para servicio PRE
-                            lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
-                            lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
-                            lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
-                            lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
-                            lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
-                            lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
-                            lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
+                        ob_carprg.Teatro = App.idCine;
+                        ob_carprg.tercero = App.ValorTercero;
+                        ob_carprg.IdPelicula = id;
+                        ob_carprg.FcPelicula = pelicula.DiasDisponibles.FirstOrDefault().fecunv;
+                        ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
+                        ob_carprg.FgPelicula = "2";
+                        ob_carprg.CfPelicula = "No";
 
-                            //Encriptar Json
-                            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+                        //Generar y encriptar JSON para servicio PRE
+                        lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
+                        lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
+                        lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
+                        lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
+                        lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
+                        lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
+                        lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
 
-                            //Consumir servicio
+                        //Encriptar Json
+                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+                        //Consumir servicio
+
+                        lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+                        if (lc_result.StartsWith("0"))
+                        {
+
+                            //Validar respuesta
+                            if (lc_result.Substring(0, 1) == "0")
+                            {
+                                //Quitar switch
+                                lc_result = lc_result.Replace("0-", "");
+                                ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                                //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                                ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
+                                ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
+                                var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
+
+                                if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
+                                {
+                                    foreach (var item in ob_lisprg)
+                                    {
+                                        foreach (var itemZonas in Zonas)
+                                        {
+
+                                            if (item.hora != null && item.hora.Count > 0)
+                                            {
+                                                foreach (var item2 in item.hora)
+                                                {
+                                                    DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + item2.militar.Substring(0, 2) + ":" + item2.militar.Substring(2, 2) + ":00");
+                                                    DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+
+                                                    foreach (var item3 in item2.TipoZonaOld)
+                                                    {
+
+
+                                                        if (DateTime.Now.ToString("yyyyMMdd") == fechas.fecunv)
+                                                        {
+                                                            if (App.MinDifHora != "0")
+                                                            {
+                                                                //Diferencia de tiempo entre hora funcion y hora del dia 
+                                                                TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
+                                                                var diferenciaenminutos = diferencia.TotalMinutes;
+
+                                                                if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
+                                                                {
+                                                                    if (pelicula.Formato == "Digital 3D")
+                                                                    {
+                                                                        if (item3.nombreZona.Contains("GENERAL"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, "GENERAL3D"));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                        }
+                                                                    }
+
+                                                                    if (pelicula.Formato == "Digital 2D")
+                                                                    {
+                                                                        if (item3.nombreZona.Contains("GENERAL"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                        }
+                                                                    }
+
+                                                                    horasProcesadas.Add(item2.horario);
+                                                                }
+                                                            }
+
+                                                            isfecha = 1;
+
+                                                        }
+                                                        else
+                                                        {
+                                                            if (isfecha == 0)
+                                                            {
+                                                                if (pelicula.Formato == "Digital 3D")
+                                                                {
+                                                                    if (item3.nombreZona.Contains("GENERAL"))
+                                                                    {
+                                                                        //if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, "GENERAL3D"));
+                                                                    }
+                                                                    if (item3.nombreZona.Contains("Black Star"))
+                                                                    {
+                                                                        //if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                    }
+                                                                    if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                    {
+                                                                        //if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                    }
+                                                                }
+
+                                                                if (pelicula.Formato == "Digital 2D")
+                                                                {
+                                                                    if (item3.nombreZona.Contains("GENERAL"))
+                                                                    {
+                                                                        //if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                    }
+                                                                    if (item3.nombreZona.Contains("Black Star"))
+                                                                    {
+                                                                        //if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                    }
+                                                                    if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                    {
+                                                                        //if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                    }
+                                                                }
+
+                                                                horasProcesadas.Add(item2.horario);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+            }
+            catch (Exception e) { }
+
+        }
+
+        public void CargarFechasDesdeSelect()
+        {
+            borSiguente.Visibility = Visibility.Hidden;
+            HashSet<string> zonasProcesadas = new HashSet<string>();
+            int isfecha = 0;
+            ContenedorHorasGeneral.Children.Clear();
+            ContenedorHoras3D.Children.Clear();
+            ContenedorHorasBlackStar.Children.Clear();
+            ContenedorHoras3DBlackStar.Children.Clear();
+
+            ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
+            ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
+            ContenedorHorasBlackStar.Children.Add(CrearBotonFormato("Black Star"));
+            ContenedorHoras3DBlackStar.Children.Add(CrearBotonFormato("Black Star 3D"));
+
+            var fechasel = App.Pelicula.FechaSel.Substring(3);
+
+            var listpelicula = App.Peliculas.Where(x => x.TituloOriginal == App.Pelicula.TituloOriginal.ToString()).ToList();
+            int lc_keypel = 0;
+            int lc_auxpel = 0;
+            int lc_keytea = 0;
+            int lc_auxtea = 0;
+            int lc_swtflg = 0;
+            string Variables41TPF = string.Empty;
+            string lc_auxitem = string.Empty;
+            string lc_fecitem = string.Empty;
+            string lc_flgpre = "S";
+            string pr_tippel = "";
+            string lc_result = string.Empty;
+            string lc_srvpar = string.Empty;
+
+            DateTime dt_fecpro;
+
+            List<DateCartelera> ob_fechas = new List<DateCartelera>();
+            XmlDocument ob_xmldoc = new XmlDocument();
+            General ob_fncgrl = new General();
+            APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
+            Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
+            Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
+            List<sala> ob_lisprg = new List<sala>();
+
+
+            foreach (var pelicula in listpelicula)
+            {
+                foreach (var fechas in pelicula.DiasDisponibles.Distinct())
+                {
+                    if (fechas.fecunv == fechasel)
+                    {
+
+                        ob_carprg.Teatro = App.idCine;
+                        ob_carprg.tercero = App.ValorTercero;
+                        ob_carprg.IdPelicula = pelicula.Id;
+                        ob_carprg.FcPelicula = fechasel;
+                        ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
+                        ob_carprg.FgPelicula = "2";
+                        ob_carprg.CfPelicula = "No";
+
+                        //Generar y encriptar JSON para servicio PRE
+                        lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
+                        lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
+                        lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
+                        lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
+                        lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
+                        lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
+                        lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
+
+                        //Encriptar Json
+                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                        //Consumir servicio
+
+                        lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+                        if (lc_result.StartsWith("0"))
+                        {
+
+                            HashSet<string> fechasProcesadas = new HashSet<string>();
+                            HashSet<string> horasProcesadas = new HashSet<string>();
+                            //Validar respuesta
                             if (lc_result.StartsWith("0"))
                             {
 
@@ -209,72 +457,105 @@ namespace Portal.Kiosco.Properties.Views
                                                     {
                                                         DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + item2.militar.Substring(0, 2) + ":" + item2.militar.Substring(2, 2) + ":00");
                                                         DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
-                                                        if (DateTime.Now.ToString("yyyyMMdd") == fechas.fecunv)
+                                                        foreach (var item3 in item2.TipoZonaOld)
                                                         {
-                                                            if (App.MinDifHora != "0")
+                                                            if (DateTime.Now.ToString("yyyyMMdd") == App.Pelicula.FechaSel)
                                                             {
-                                                                //Diferencia de tiempo entre hora funcion y hora del dia 
-                                                                TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
-                                                                var diferenciaenminutos = diferencia.TotalMinutes;
-
-                                                                if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
+                                                                if (App.MinDifHora != "0")
                                                                 {
-                                                                    if (itemZonas.Key.Contains("GENERAL"))
+                                                                    //Diferencia de tiempo entre hora funcion y hora del dia 
+                                                                    TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
+                                                                    var diferenciaenminutos = diferencia.TotalMinutes;
+
+                                                                    if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
                                                                     {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                        if (pelicula.Formato == "Digital 3D")
+                                                                        {
+                                                                            if (item3.nombreZona.Contains("GENERAL"))
+                                                                            {
+                                                                                //if (!horasProcesadas.Contains(item2.horario))
+                                                                                ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, "GENERAL3D"));
+                                                                            }
+                                                                            if (item3.nombreZona.Contains("Black Star"))
+                                                                            {
+                                                                                //if (!horasProcesadas.Contains(item2.horario))
+                                                                                ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                            }
+                                                                            if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                            {
+                                                                                //if (!horasProcesadas.Contains(item2.horario))
+                                                                                ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                            }
+                                                                        }
+
+                                                                        if (pelicula.Formato == "Digital 2D")
+                                                                        {
+                                                                            if (item3.nombreZona.Contains("GENERAL"))
+                                                                            {
+                                                                                //if (!horasProcesadas.Contains(item2.horario))
+                                                                                ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                            }
+                                                                            if (item3.nombreZona.Contains("Black Star"))
+                                                                            {
+                                                                                //if (!horasProcesadas.Contains(item2.horario))
+                                                                                ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                            }
+                                                                            if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                            {
+                                                                                //if (!horasProcesadas.Contains(item2.horario))
+                                                                                ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                            }
+                                                                        }
+                                                                        horasProcesadas.Add(item2.horario);
+                                                                        zonasProcesadas.Add(itemZonas.Key);
                                                                     }
-                                                                    if (itemZonas.Key == "3D")
+                                                                }
+                                                                isfecha = 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                if (isfecha == 0)
+                                                                {
+                                                                    if (pelicula.Formato == "Digital 3D")
                                                                     {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                        if (item3.nombreZona.Contains("GENERAL"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, "GENERAL3D"));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                        }
                                                                     }
 
-                                                                    if (itemZonas.Key.Contains("Black Star"))
+                                                                    if (pelicula.Formato == "Digital 2D")
                                                                     {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                    }
-                                                                    if (itemZonas.Key.Contains("Black Star 3D"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                        if (item3.nombreZona.Contains("GENERAL"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
+                                                                        }
+                                                                        if (item3.nombreZona.Contains("Black Star 3D"))
+                                                                        {
+                                                                            //if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "3DBlackStar"));
+                                                                        }
                                                                     }
                                                                     horasProcesadas.Add(item2.horario);
+                                                                    zonasProcesadas.Add(itemZonas.Key);
                                                                 }
-                                                            }
-
-                                                            isfecha = 1;
-
-                                                        }
-                                                        else
-                                                        {
-                                                            if (isfecha == 0)
-                                                            {
-                                                                if (itemZonas.Key.Contains("GENERAL"))
-                                                                {
-                                                                    if (!horasProcesadas.Contains(item2.horario))
-                                                                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                }
-                                                                if (itemZonas.Key == "3D")
-                                                                {
-                                                                    if (!horasProcesadas.Contains(item2.horario))
-                                                                        ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                }
-
-                                                                if (itemZonas.Key.Contains("Black Star"))
-                                                                {
-                                                                    if (!horasProcesadas.Contains(item2.horario))
-                                                                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                }
-
-                                                                if (itemZonas.Key.Contains("Black Star 3D"))
-                                                                {
-                                                                    if (!horasProcesadas.Contains(item2.horario))
-                                                                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                }
-                                                                horasProcesadas.Add(item2.horario);
                                                             }
                                                         }
                                                     }
@@ -288,24 +569,12 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
             }
-            catch (Exception e){}
-
         }
 
-        public async void CargarFechasDesdeSelect()
+        public void CalcularTarifa()
         {
-            HashSet<string> zonasProcesadas = new HashSet<string>();
-            int isfecha = 0;
-            ContenedorHorasGeneral.Children.Clear();
-            ContenedorHoras3D.Children.Clear();
-            ContenedorHorasBlackStar.Children.Clear();
-            ContenedorHoras3DBlackStar.Children.Clear();
-            ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
-            ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
-            ContenedorHorasBlackStar.Children.Add(CrearBotonFormato("Black Star"));
-            ContenedorHoras3DBlackStar.Children.Add(CrearBotonFormato("Black Star 3D"));
-
-            var listpelicula = App.Peliculas.Where(x => x.TituloOriginal == lblnombre.Content.ToString());
+            //try
+            //{
             int lc_keypel = 0;
             int lc_auxpel = 0;
             int lc_keytea = 0;
@@ -328,6 +597,34 @@ namespace Portal.Kiosco.Properties.Views
             Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
             Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
             List<sala> ob_lisprg = new List<sala>();
+            var tituloriginal = App.Pelicula.TituloOriginal;
+            var fechaSel = App.Pelicula.FechaSel.Substring(3);
+            var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == tituloriginal).ToList();
+            
+            var horaSel = App.Pelicula.HoraSel;
+            var horaMilitar = App.Pelicula.HoraMilitar;
+            if (peliculaDias != null)
+            {
+                foreach (var dias in peliculaDias)
+                {
+                    foreach (var fecha in dias.DiasDisponibles)
+                    {
+                        if (fecha.fecunv == fechaSel)
+                        {
+                            foreach (var hora in fecha.horafun)
+                            {
+                                if (horaSel == hora.horunv)
+                                {
+                                    App.Pelicula.Id = dias.Id;
+                                    App.TipoSala = hora.tipSala;
+                                    App.TipoSilla = hora.tipSala.Replace(" ", "_");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             ob_carprg.Teatro = App.idCine;
             ob_carprg.tercero = App.ValorTercero;
@@ -351,241 +648,59 @@ namespace Portal.Kiosco.Properties.Views
 
             //Consumir servicio
 
-            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
             if (lc_result.StartsWith("0"))
             {
 
                 HashSet<string> fechasProcesadas = new HashSet<string>();
                 HashSet<string> horasProcesadas = new HashSet<string>();
                 //Validar respuesta
-                if (lc_result.StartsWith("0"))
+                if (lc_result.Substring(0, 1) == "0")
                 {
+                    //Quitar switch
+                    lc_result = lc_result.Replace("0-", "");
+                    ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                    //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                    ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
+                    ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
+                    var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
 
-                    //Validar respuesta
-                    if (lc_result.Substring(0, 1) == "0")
+                    if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
                     {
-                        //Quitar switch
-                        lc_result = lc_result.Replace("0-", "");
-                        ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                        //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
-                        ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
-                        ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
-                        var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
-
-                        if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
+                        foreach (var itemZonas in Zonas)
                         {
-                            foreach (var item in ob_lisprg)
+                            if (itemZonas.Key.ToLower() == App.TipoSilla.Replace("_", " ").ToLower())
                             {
-                                foreach (var itemZonas in Zonas)
+                                foreach (var item in ob_lisprg)
                                 {
-
                                     if (item.hora != null && item.hora.Count > 0)
                                     {
                                         foreach (var item2 in item.hora)
                                         {
-                                            DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + item2.militar.Substring(0, 2) + ":" + item2.militar.Substring(2, 2) + ":00");
-                                            DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
-                                            if (DateTime.Now.ToString("yyyyMMdd") == App.Pelicula.FechaSel)
+                                            if (item2.militar == horaMilitar)
                                             {
-                                                if (App.MinDifHora != "0")
+                                                foreach (var item3 in item2.TipoZonaOld)
                                                 {
-                                                    //Diferencia de tiempo entre hora funcion y hora del dia 
-                                                    TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
-                                                    var diferenciaenminutos = diferencia.TotalMinutes;
-
-                                                    if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
+                                                    if (itemZonas.Value == item3.nombreZona)
                                                     {
-                                                        if (itemZonas.Key.Contains("GENERAL"))
+                                                        foreach (var item4 in item3.TipoSilla)
                                                         {
-                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                        }
-                                                        if (itemZonas.Key == "3D")
-                                                        {
-                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                        }
-
-                                                        if (itemZonas.Key.Contains("Black Star"))
-                                                        {
-                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                        }
-                                                        if (itemZonas.Key.Contains("Black Star 3D"))
-                                                        {
-                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                        }
-                                                        horasProcesadas.Add(item2.horario);
-                                                        zonasProcesadas.Add(itemZonas.Key);
-                                                    }
-                                                }
-                                                isfecha = 1;
-                                            }
-                                            else
-                                            {
-                                                if (isfecha == 0)
-                                                {
-                                                    if (itemZonas.Key.Contains("GENERAL"))
-                                                    {
-                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                    }
-                                                    if (itemZonas.Key == "3D")
-                                                    {
-                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                    }
-
-                                                    if (itemZonas.Key.Contains("Black Star"))
-                                                    {
-                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                    }
-                                                    if (itemZonas.Key.Contains("Black Star 3D"))
-                                                    {
-                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                    }
-                                                    horasProcesadas.Add(item2.horario);
-                                                    zonasProcesadas.Add(itemZonas.Key);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public void CalcularTarifa()
-        {
-            try
-            {
-                int lc_keypel = 0;
-                int lc_auxpel = 0;
-                int lc_keytea = 0;
-                int lc_auxtea = 0;
-                int lc_swtflg = 0;
-                string Variables41TPF = string.Empty;
-                string lc_auxitem = string.Empty;
-                string lc_fecitem = string.Empty;
-                string lc_flgpre = "S";
-                string pr_tippel = "";
-                string lc_result = string.Empty;
-                string lc_srvpar = string.Empty;
-
-                DateTime dt_fecpro;
-
-                List<DateCartelera> ob_fechas = new List<DateCartelera>();
-                XmlDocument ob_xmldoc = new XmlDocument();
-                General ob_fncgrl = new General();
-                APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
-                Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
-                Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
-                List<sala> ob_lisprg = new List<sala>();
-
-                var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == App.Pelicula.TituloOriginal);
-                var fechaSel = App.Pelicula.FechaSel.Substring(3);
-                var horaSel = App.Pelicula.HoraSel;
-                var horaMilitar = App.Pelicula.HoraMilitar;
-                if (peliculaDias != null)
-                {
-                    foreach (var dias in peliculaDias)
-                    {
-                        foreach (var fecha in dias.DiasDisponibles)
-                        {
-                            if (fecha.fecunv == fechaSel)
-                            {
-                                foreach (var hora in fecha.horafun)
-                                {
-                                    if (horaSel == hora.horunv)
-                                    {
-                                        App.Pelicula.Id = dias.Id;
-                                        App.TipoSala = dias.tipoSala;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                ob_carprg.Teatro = App.idCine;
-                ob_carprg.tercero = App.ValorTercero;
-                ob_carprg.IdPelicula = App.Pelicula.Id;
-                ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);
-                ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
-                ob_carprg.FgPelicula = "2";
-                ob_carprg.CfPelicula = "No";
-
-                //Generar y encriptar JSON para servicio PRE
-                lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
-                lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
-                lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
-                lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
-                lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
-                lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
-                lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
-
-                //Encriptar Json
-                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-                //Consumir servicio
-
-                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
-                if (lc_result.StartsWith("0"))
-                {
-
-                    HashSet<string> fechasProcesadas = new HashSet<string>();
-                    HashSet<string> horasProcesadas = new HashSet<string>();
-                    //Validar respuesta
-                    if (lc_result.Substring(0, 1) == "0")
-                    {
-                        //Quitar switch
-                        lc_result = lc_result.Replace("0-", "");
-                        ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                        //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
-                        ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
-                        ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
-                        var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
-
-                        if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
-                        {
-                            foreach (var itemZonas in Zonas)
-                            {
-                                if (itemZonas.Key == App.TipoSilla.Replace("_", " "))
-                                {
-                                    foreach (var item in ob_lisprg)
-                                    {
-                                        if (item.hora != null && item.hora.Count > 0)
-                                        {
-                                            foreach (var item2 in item.hora)
-                                            {
-                                                if (item2.militar == horaMilitar)
-                                                {
-                                                    foreach (var item3 in item2.TipoZonaOld)
-                                                    {
-                                                        if (itemZonas.Value == item3.nombreZona)
-                                                        {
-                                                            foreach (var item4 in item3.TipoSilla)
+                                                            if (item4.Tarifa.Count > 0)
                                                             {
-                                                                if (item4.Tarifa.Count > 0)
+                                                                foreach (var item5 in item4.Tarifa)
                                                                 {
-                                                                    foreach (var item5 in item4.Tarifa)
-                                                                    {
-                                                                        App.ValorTarifa = Convert.ToDecimal(item5.valor);
-                                                                        App.KeyTarifa = Convert.ToDecimal(item5.codigoTarifa);
-                                                                        App.NombreTarifa = item5.nombreTarifa + ";" + item5.valor.ToString();
-                                                                        App.TipoSilla = item4.nombreTipoSilla;
-                                                                        App.Pelicula.numeroSala = item.numeroSala;
-                                                                        borSiguente.Visibility = Visibility.Visible;
-                                                                        App.Pelicula.HoraMilitar = item2.militar;
-                                                                    }
+                                                                    App.ValorTarifa = Convert.ToDecimal(item5.valor);
+                                                                    App.KeyTarifa = Convert.ToDecimal(item5.codigoTarifa);
+                                                                    App.NombreTarifa = item5.nombreTarifa + ";" + item5.valor.ToString();
+                                                                    App.TipoSilla = item4.nombreTipoSilla;
+                                                                    App.Pelicula.numeroSala = item.numeroSala;
+                                                                    borSiguente.Visibility = Visibility.Visible;
+                                                                    App.Pelicula.HoraMilitar = item2.militar;
                                                                 }
+                                                            }
+                                                            else
+                                                            {
+                                                                //MessageBox.Show("La funcion no tiene una tarifa asignada");
                                                             }
                                                         }
                                                     }
@@ -599,7 +714,8 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
             }
-            catch (Exception e) { }
+            //}
+            //catch (Exception e) { }
         }
 
         private async void btnSelectFecha_Click(object sender, RoutedEventArgs e)
@@ -675,6 +791,7 @@ namespace Portal.Kiosco.Properties.Views
             nuevoBorder.Width = 115;
             nuevoBorder.Height = 46;
             nuevoBorder.Child = nuevoBoton;
+            nuevoBorder.Name = "border" + ContenidoFormato.Replace(" ", "");
 
             return nuevoBorder;
         }
@@ -739,7 +856,7 @@ namespace Portal.Kiosco.Properties.Views
             var wrapPanelName = "";
             var formato = "";
             var TituloOriginal = App.Pelicula.TituloOriginal;
-            var DiasDisponibles = App.Pelicula.DiasDisponibles;
+            var DiasDisponibles = App.Peliculas.Where(p => p.TituloOriginal == TituloOriginal).ToList();
             var FechaSel = App.Pelicula.FechaSel;
             var HoraSel = App.Pelicula.HoraSel;
             var apppelicula = App.Pelicula;
@@ -823,7 +940,82 @@ namespace Portal.Kiosco.Properties.Views
                         Button btn = (Button)border.Child;
                         if (btn.Content.ToString().Contains("3D"))
                         {
-                            if (border.Name.Contains("3D"))
+                            if (!border.Name.Replace(" ", "").Contains("3D"))
+                            {
+                                border.Width = 115;
+                                border.Height = 46;
+                                border.Background = Brushes.White;
+                                border.CornerRadius = new CornerRadius(5);
+                                border.Margin = new Thickness(0, 0, 6, 7);
+                                border.BorderThickness = new Thickness(1);
+                                border.BorderBrush = Brushes.Black;
+                            }
+
+                            object contenido = btn.Content;
+                            string nombre = btn.Name;
+
+                            btn.Width = 115;
+                            btn.Height = 46;
+                            btn.FontFamily = new FontFamily("Myanmar Khyay");
+                            btn.FontSize = 14;
+                            btn.Foreground = Brushes.Red;
+                            btn.BorderBrush = Brushes.Black;
+                        }
+                    }
+                }
+            }
+
+            Panel contenedorBlackStar = ContenedorHorasBlackStar;
+
+            foreach (var controlBlackStar in contenedorBlackStar.Children)
+            {
+                if (controlBlackStar is Border)
+                {
+                    Border border = (Border)controlBlackStar;
+                    if (border.Child is Button)
+                    {
+                        Button btn = (Button)border.Child;
+                        if (btn.Content.ToString().Contains("BlackStar"))
+                        {
+                            if (!border.Name.Replace(" ", "").Contains("BlackStar"))
+                            {
+                                border.Width = 115;
+                                border.Height = 46;
+                                border.Background = Brushes.White;
+                                border.CornerRadius = new CornerRadius(5);
+                                border.Margin = new Thickness(0, 0, 6, 7);
+                                border.BorderThickness = new Thickness(1);
+                                border.BorderBrush = Brushes.Black;
+                            }
+
+                            object contenido = btn.Content;
+                            string nombre = btn.Name;
+
+                            btn.Width = 115;
+                            btn.Height = 46;
+                            btn.FontFamily = new FontFamily("Myanmar Khyay");
+                            btn.FontSize = 14;
+                            btn.Foreground = Brushes.Red;
+                            btn.BorderBrush = Brushes.Black;
+                        }
+                    }
+                }
+            }
+
+
+            Panel contenedor3DBlackStar = ContenedorHoras3DBlackStar;
+
+            foreach (var control3DBlackStar in contenedor3DBlackStar.Children)
+            {
+                if (control3DBlackStar is Border)
+                {
+                    Border border = (Border)control3DBlackStar;
+                    if (border.Child is Button)
+                    {
+                        Button btn = (Button)border.Child;
+                        if (btn.Content.ToString().Contains("BlackStar3D"))
+                        {
+                            if (!border.Name.Replace(" ", "").Contains("BlackStar3D"))
                             {
                                 border.Width = 115;
                                 border.Height = 46;
@@ -906,6 +1098,8 @@ namespace Portal.Kiosco.Properties.Views
                             btn.Foreground = Brushes.Red;
                         }
                     }
+
+                  
                 }
             }
 

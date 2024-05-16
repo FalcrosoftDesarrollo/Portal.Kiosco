@@ -18,6 +18,7 @@ namespace Portal.Kiosco
 {
     public partial class App : Application, INotifyPropertyChanged
     {
+        public static string UrlRetailImg { get; set; }
         public static bool IsUserAuthenticated { get; set; }
         public static CineFansData DatosCineFans { get; set; }
         public static bool IsBoleteriaConfiteria { get; set; } = false;
@@ -126,7 +127,7 @@ namespace Portal.Kiosco
             TeaDefault = appSettingsSection["TeaDefault"].ToString();
             NomDefault = appSettingsSection["NomDefault"].ToString();
             CiuDefault = appSettingsSection["CiuDefault"].ToString();
-
+            UrlRetailImg = appSettingsSection["UrlRetailImg"].ToString();
             CodMedioPago = appSettingsSection["CodMedioPago"].ToString();
             CodMedioPagoCB = appSettingsSection["CodMedioPagoCB"].ToString();
 

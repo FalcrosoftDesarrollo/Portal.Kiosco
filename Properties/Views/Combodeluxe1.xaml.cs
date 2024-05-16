@@ -328,6 +328,48 @@ namespace Portal.Kiosco.Properties.Views
 
                 }
 
+                if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 0)
+                {
+
+                    productonew = productocambiado;
+                    productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
+                    productonew.CanCategoria_1 = 1;
+                    productonew.Cantidad = 1;
+
+                    productonew.Cantidad1 = 1;
+                    productonew.Cantidad11 = 0;
+                    productonew.Cantidad111 = 0;
+                    productonew.Cantidad1111 = 0;
+
+
+                    productonew.ProCantidad_1 = 1;
+                    productonew.ProCantidad_2 = 0;
+                    productonew.ProCategoria_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().categoria;
+                    productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella;
+                    productonew.ProProducto_2 = 0;
+                    productonew.ProProducto_3 = 0;
+                    productonew.ProProducto_4 = 0;
+                    productonew.ProProducto_5 = 0;
+
+                    productonew.NombreEli = App.NombreEli;
+                    productonew.EmailEli = App.EmailEli;
+
+                    productonew.Tipo = "C";
+                    productonew.TipoCompra = "P";
+                    productonew.TelefonoEli = App.TelefonoEli;
+                    productonew.SwitchAdd = "N";
+                    productonew.SwtVenta = "V";
+                    productonew.Receta = null;
+
+                    foreach (var bebidas in opcionSeleccionadabebidasDetalle)
+                    {
+                        datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
+                    }
+
+                    productonew.Check1 = datosselecionado;
+
+                }
+
                 productosCambiados.Add(productonew);
 
 

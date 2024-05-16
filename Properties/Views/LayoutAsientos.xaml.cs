@@ -123,6 +123,7 @@ namespace Portal.Kiosco.Properties.Views
                 if (lblTotal.Content == "TOTAL: $0")
                 {
                     MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                   
                     return;
                 }
 
@@ -293,7 +294,7 @@ namespace Portal.Kiosco.Properties.Views
 
                 AgregarUbicacionAlWrapPanel(ob_datprg);
             }
-            catch (Exception ex) { MessageBox.Show("No se logro generar la sala de la funcion", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (Exception ex) { MessageBox.Show("No se logro generar la sala de la funcion", "Error", MessageBoxButton.OK, MessageBoxImage.Error); isError = true; }
 
         }
 
@@ -929,7 +930,7 @@ namespace Portal.Kiosco.Properties.Views
                                     else
                                     {
                                         MessageBox.Show(ob_auxrta["Respuesta"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                                        isError = true;
                                     }
                                 }
                             }
