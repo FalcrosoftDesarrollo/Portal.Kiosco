@@ -124,6 +124,7 @@ namespace Portal.Kiosco.Properties.Views
         {
             HashSet<string> fechasProcesadas = new HashSet<string>();
             HashSet<string> horasProcesadas = new HashSet<string>();
+            HashSet<string> zonasProcesadas = new HashSet<string>();
             int isfecha = 0;
             foreach (var pelicula in App.Peliculas)
             {
@@ -138,173 +139,198 @@ namespace Portal.Kiosco.Properties.Views
 
                         }
 
-                        foreach (var hora in fechas.horafun.OrderBy(h => DateTime.ParseExact(h.horario, "h:mm tt", CultureInfo.InvariantCulture)))
+
+                        var listpelicula = App.Peliculas.Where(x => x.TituloOriginal == lblnombre.Content.ToString());
+                        int lc_keypel = 0;
+                        int lc_auxpel = 0;
+                        int lc_keytea = 0;
+                        int lc_auxtea = 0;
+                        int lc_swtflg = 0;
+                        string Variables41TPF = string.Empty;
+                        string lc_auxitem = string.Empty;
+                        string lc_fecitem = string.Empty;
+                        string lc_flgpre = "S";
+                        string pr_tippel = "";
+
+                        string lc_result = string.Empty;
+                        string lc_srvpar = string.Empty;
+
+                        DateTime dt_fecpro;
+
+                        List<DateCartelera> ob_fechas = new List<DateCartelera>();
+
+                        XmlDocument ob_xmldoc = new XmlDocument();
+                        //Billboard ob_bilmov = new Billboard();
+                        General ob_fncgrl = new General();
+
+                        APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
+                        Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
+                        Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
+                        List<sala> ob_lisprg = new List<sala>();
+
+
+                        //Obtener información de la web
+
+                        ob_carprg.Teatro = App.idCine;
+                        ob_carprg.tercero = App.ValorTercero;
+                        ob_carprg.IdPelicula = App.Pelicula.Id;
+                        ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
+                        ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
+                        ob_carprg.FgPelicula = "2";
+                        ob_carprg.CfPelicula = "No";
+
+                        //Generar y encriptar JSON para servicio PRE
+                        lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
+                        lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
+                        lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
+                        lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
+                        lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
+                        lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
+                        lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
+
+                        //Encriptar Json
+                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                        //Consumir servicio
+
+                        lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+                        if (lc_result.StartsWith("0"))
                         {
-                            if (hora.idFuncion.Contains(fechas.fecunv))
+
+                            //Validar respuesta
+                            if (lc_result.Substring(0, 1) == "0")
                             {
-                                DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + hora.horunv.Substring(0, 2) + ":" + hora.horunv.Substring(2, 2) + ":00");
-                                DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                                //Quitar switch
+                                lc_result = lc_result.Replace("0-", "");
+                                ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                                //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                                ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
+                                ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
+                                var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
 
-                                if (DateTime.Now.ToString("yyyyMMdd") == fechas.fecunv)
+                                if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
                                 {
-                                    if (App.MinDifHora != "0")
+                                    foreach (var item in ob_lisprg)
                                     {
-                                        //Diferencia de tiempo entre hora funcion y hora del dia 
-                                        TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
-                                        var diferenciaenminutos = diferencia.TotalMinutes;
-
-                                        if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
+                                        foreach (var itemZonas in Zonas)
                                         {
-                                            if (!horasProcesadas.Contains(hora.horario))
+
+                                            if (item.hora != null && item.hora.Count > 0)
                                             {
-                                                horasProcesadas.Add(hora.horario);
+                                                foreach (var item2 in item.hora)
+                                                {
+                                                    DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + item2.militar.Substring(0, 2) + ":" + item2.militar.Substring(2, 2) + ":00");
+                                                    DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 
-                                                if (hora.tipSala.Contains("GENERAL"))
-                                                {
-                                                    ContenedorHorasGeneral.Children.Add(CrearBotonHora(hora.horario, hora.horunv));
-                                                }
-                                                if (hora.tipSala.Contains("3D"))
-                                                {
-                                                    ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.horunv));
-                                                }
+                                                    if (DateTime.Now.ToString("yyyyMMdd") == fechas.fecunv)
+                                                    {
+                                                        if (App.MinDifHora != "0")
+                                                        {
+                                                            //Diferencia de tiempo entre hora funcion y hora del dia 
+                                                            TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
+                                                            var diferenciaenminutos = diferencia.TotalMinutes;
 
-                                                if (hora.tipSala.Contains("BLACK"))
-                                                {
-                                                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(hora.horario, hora.horunv));
+                                                            if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
+                                                            {
+                                                                //if (!zonasProcesadas.Contains(itemZonas.Key))
+                                                                {
+                                                                 
+                                                                    if (itemZonas.Key.Contains("GENERAL"))
+                                                                    {
+                                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                    }
+                                                                    if (itemZonas.Key == "3D")
+                                                                    {
+                                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                    }
+
+                                                                    if (itemZonas.Key.Contains("Black Star"))
+                                                                    {
+                                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                    }
+                                                                    if (itemZonas.Key.Contains("Black Star 3D"))
+                                                                    {
+                                                                        if (!horasProcesadas.Contains(item2.horario))
+                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                    }
+                                                                    horasProcesadas.Add(item2.horario);
+                                                                    //zonasProcesadas.Add(itemZonas.Key);
+                                                                //}
+                                                            }
+                                                        }
+
+                                                        isfecha = 1;
+
+                                                    }
+                                                    else
+                                                    {
+                                                        if (isfecha == 0)
+                                                        {
+                                                            //if (!zonasProcesadas.Contains(itemZonas.Key))
+                                                            //{
+                                                               
+                                                                if (itemZonas.Key.Contains("GENERAL"))
+                                                                {
+                                                                    if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                }
+                                                                if (itemZonas.Key == "3D")
+                                                                {
+                                                                    if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                }
+
+                                                                if (itemZonas.Key.Contains("Black Star"))
+                                                                {
+                                                                    if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                }
+
+                                                                if (itemZonas.Key.Contains("Black Star 3D"))
+                                                                {
+                                                                    if (!horasProcesadas.Contains(item2.horario))
+                                                                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                                }
+                                                                horasProcesadas.Add(item2.horario);
+                                                                //zonasProcesadas.Add(itemZonas.Key);
+                                                            }
+                                                        }
+
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-
-                                    isfecha = 1;
-
-                                }
-                                else
-                                {
-                                    if (isfecha == 0)
-                                    {
-                                        if (!horasProcesadas.Contains(hora.horario))
-                                        {
-                                            horasProcesadas.Add(hora.horario);
-
-                                            if (pelicula.Formato.Contains("2D"))
-                                            {
-                                                ContenedorHorasGeneral.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
-                                            }
-                                            if (pelicula.Formato.Contains("3D"))
-                                            {
-                                                ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
-                                            }
-                                            if (pelicula.Formato.Contains("BLACK"))
-                                            {
-                                                ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
-                                            }
-                                        }
-                                    }
-
                                 }
 
-                                App.TipoSala = hora.tipSala;
                             }
                         }
+
+
+
                     }
                 }
             }
         }
 
-        //private async void CargarFechasDesdeSelect()
-        //{
-        //    HashSet<string> fechasProcesadas = new HashSet<string>();
-        //    HashSet<string> horasProcesadas = new HashSet<string>();
-        //    int isfecha = 0;
-        //    var fecha = App.Pelicula.FechaSel.Substring(3);
 
-        //    foreach (var pelicula in App.Peliculas)
-        //    {
-        //        if (pelicula.TituloOriginal == App.Pelicula.TituloOriginal)
-        //        {
-        //            foreach (var fechas in pelicula.DiasDisponibles)
-        //            {
-        //                //if (!fechasProcesadas.Contains(fechas.fecunv))
-        //                //{
-        //                //    //CrearBotonFecha($"{fechas.fecham}", "btn" + fechas.fecunv);
-        //                //    //fechasProcesadas.Add(fechas.fecunv);
-
-        //                //}
-
-        //                foreach (var hora in fechas.horafun.OrderBy(h => DateTime.ParseExact(h.horario, "h:mm tt", CultureInfo.InvariantCulture)))
-        //                {
-        //                    if (hora.idFuncion.Contains(fecha))
-        //                    {
-        //                        DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + hora.horunv.Substring(0, 2) + ":" + hora.horunv.Substring(2, 2) + ":00");
-        //                        DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
-        //                        if (DateTime.Now.ToString("yyyyMMdd") == fecha)
-        //                        {
-        //                            if (App.MinDifHora != "0")
-        //                            {
-        //                                //Diferencia de tiempo entre hora funcion y hora del dia 
-        //                                TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
-        //                                var diferenciaenminutos = diferencia.TotalMinutes;
-
-        //                                if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
-        //                                {
-        //                                    if (!horasProcesadas.Contains(hora.horario))
-        //                                    {
-        //                                        horasProcesadas.Add(hora.horario);
-
-        //                                        if (pelicula.Formato.Contains("2D"))
-        //                                        {
-        //                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(hora.horario, hora.horunv));
-        //                                        }
-        //                                        if (pelicula.Formato.Contains("3D"))
-        //                                        {
-        //                                            ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.horunv));
-        //                                        }
-        //                                    }
-        //                                }
-        //                                isfecha = 1;
-        //                            }
-
-
-
-        //                        }
-        //                        else
-        //                        {
-        //                            if (isfecha == 0)
-        //                            {
-        //                                if (!horasProcesadas.Contains(hora.horario))
-        //                                {
-        //                                    horasProcesadas.Add(hora.horario);
-
-        //                                    if (pelicula.Formato.Contains("2D"))
-        //                                    {
-        //                                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
-        //                                    }
-        //                                    if (pelicula.Formato.Contains("3D"))
-        //                                    {
-        //                                        ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.idFuncion));
-        //                                    }
-        //                                }
-        //                            }
-
-        //                        }
-
-        //                        App.TipoSala = hora.tipSala;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //}
 
         public async void CargarFechasDesdeSelect()
         {
+            HashSet<string> zonasProcesadas = new HashSet<string>();
+            int isfecha = 0;
             ContenedorHorasGeneral.Children.Clear();
             ContenedorHoras3D.Children.Clear();
+            ContenedorHorasBlackStar.Children.Clear();
+            ContenedorHoras3DBlackStar.Children.Clear();
+
             ContenedorHoras3D.Children.Add(CrearBotonFormato("3D"));
             ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
+            ContenedorHorasBlackStar.Children.Add(CrearBotonFormato("Black Star"));
+            ContenedorHoras3DBlackStar.Children.Add(CrearBotonFormato("Black Star 3D"));
 
             var listpelicula = App.Peliculas.Where(x => x.TituloOriginal == lblnombre.Content.ToString());
             int lc_keypel = 0;
@@ -366,101 +392,115 @@ namespace Portal.Kiosco.Properties.Views
                 HashSet<string> fechasProcesadas = new HashSet<string>();
                 HashSet<string> horasProcesadas = new HashSet<string>();
                 //Validar respuesta
-                if (lc_result.Substring(0, 1) == "0")
+                if (lc_result.StartsWith("0"))
                 {
-                    //Quitar switch
-                    lc_result = lc_result.Replace("0-", "");
-                    ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                    //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
-                    ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
-                    ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
-                    var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
 
-
-                    foreach (var listProgramacion in listpelicula)
+                    //Validar respuesta
+                    if (lc_result.Substring(0, 1) == "0")
                     {
-                        foreach (var listfecha in listProgramacion.DiasDisponibles)
-                        {
-                            if (listfecha.fecunv != null)
-                            {
-                                foreach (var hora in listfecha.horafun)
-                                {
-                                    if (!horasProcesadas.Contains(hora.fecvin))
-                                    {
-                                        //horasProcesadas.Add(hora.horario);
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-", "");
+                        ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                        //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                        ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
+                        ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
+                        var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
 
-                                        //if (listProgramacion.tipoSala.Contains("GENERAL"))
-                                        //{
-                                        //    ContenedorHorasGeneral.Children.Add(CrearBotonHora(hora.horario, hora.));
-                                        //}
-                                        //if (listProgramacion.tipoSala.Contains("3D"))
-                                        //{
-                                        //    ContenedorHoras3D.Children.Add(CrearBotonHora(hora.horario, hora.militar));
-                                        //}
-                                        //if (listProgramacion.tipoSala.Contains("SUPERNOVA"))
-                                        //{
-                                        //    ContenedorHorasSupernova.Children.Add(CrearBotonHora(hora.horario, hora.militar));
-                                        //}
-                                        //if (listProgramacion.tipoSala.Contains("4DX"))
-                                        //{
-                                        //    ContenedorHoras4DX.Children.Add(CrearBotonHora(hora.horario, hora.militar));
-                                        //}
-                                        //if (listProgramacion.tipoSala.Contains("BLACK STAR"))
-                                        //{
-                                        //    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(hora.horario, hora.militar));
-                                        //}
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-
-
-                    if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
-                    {
-                        foreach (var itemZonas in Zonas)
+                        if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
                         {
                             foreach (var item in ob_lisprg)
                             {
-                                if (item.hora != null && item.hora.Count > 0)
+                                foreach (var itemZonas in Zonas)
                                 {
-                                    foreach (var item2 in item.hora)
+
+                                    if (item.hora != null && item.hora.Count > 0)
                                     {
-                                        foreach (var item3 in item2.TipoZonaOld)
+                                        foreach (var item2 in item.hora)
                                         {
-                                            if (itemZonas.Value == item3.nombreZona)
+                                            DateTime FechaHoraInicio = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy") + " " + item2.militar.Substring(0, 2) + ":" + item2.militar.Substring(2, 2) + ":00");
+                                            DateTime FechaHoraTermino = DateTime.ParseExact(DateTime.Now.ToString("HH:mm"), "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+
+                                            if (DateTime.Now.ToString("yyyyMMdd") == App.Pelicula.FechaSel)
                                             {
-                                                foreach (var item4 in item3.TipoSilla)
+                                                if (App.MinDifHora != "0")
                                                 {
-                                                    if (item4.Tarifa.Count > 0)
+                                                    //Diferencia de tiempo entre hora funcion y hora del dia 
+                                                    TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
+                                                    var diferenciaenminutos = diferencia.TotalMinutes;
+
+                                                    if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
                                                     {
-                                                        foreach (var item5 in item4.Tarifa)
-                                                        {
-                                                            App.ValorTarifa = Convert.ToDecimal(item5.valor);
-                                                            App.KeyTarifa = Convert.ToDecimal(item5.codigoTarifa);
-                                                            App.NombreTarifa = item5.nombreTarifa + ";" + item5.valor.ToString();
-                                                            App.TipoSilla = item4.nombreTipoSilla;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (item4.nombreTipoSilla != "Discapacitado")
-                                                        {
-                                                            // Código relacionado con la ausencia de tarifas
-                                                        }
+                                                        //if (!zonasProcesadas.Contains(itemZonas.Key))
+                                                        //{
+                                                           
+                                                            if (itemZonas.Key.Contains("GENERAL"))
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+                                                            if (itemZonas.Key == "3D")
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+
+                                                            if (itemZonas.Key.Contains("Black Star"))
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+                                                            if (itemZonas.Key.Contains("Black Star 3D"))
+                                                            {
+                                                                if (!horasProcesadas.Contains(item2.horario))
+                                                                    ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                            }
+                                                            horasProcesadas.Add(item2.horario);
+                                                            zonasProcesadas.Add(itemZonas.Key);
+                                                        //}
                                                     }
                                                 }
+                                                isfecha = 1;
                                             }
+                                            else
+                                            {
+                                                if (isfecha == 0)
+                                                {
+                                                    //if (!zonasProcesadas.Contains(itemZonas.Key))
+                                                    //{
+                                                      
+                                                        if (itemZonas.Key.Contains("GENERAL"))
+                                                        {
+                                                            if (!horasProcesadas.Contains(item2.horario))
+                                                                ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                        }
+                                                        if (itemZonas.Key == "3D")
+                                                        {
+                                                            if (!horasProcesadas.Contains(item2.horario))
+                                                                ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                        }
+
+                                                        if (itemZonas.Key.Contains("Black Star"))
+                                                        {
+                                                            if (!horasProcesadas.Contains(item2.horario))
+                                                                ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                        }
+                                                        if (itemZonas.Key.Contains("Black Star 3D"))
+                                                        {
+                                                            if (!horasProcesadas.Contains(item2.horario))
+                                                                ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
+                                                        }
+                                                        horasProcesadas.Add(item2.horario);
+                                                        zonasProcesadas.Add(itemZonas.Key);
+                                                    //}
+                                                }
+                                            }
+
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        // Código relacionado con la falta de datos en ViewBag
+
                     }
                 }
             }
@@ -470,135 +510,139 @@ namespace Portal.Kiosco.Properties.Views
         {
             try
             {
-            
-            int lc_keypel = 0;
-            int lc_auxpel = 0;
-            int lc_keytea = 0;
-            int lc_auxtea = 0;
-            int lc_swtflg = 0;
-            string Variables41TPF = string.Empty;
-            string lc_auxitem = string.Empty;
-            string lc_fecitem = string.Empty;
-            string lc_flgpre = "S";
-            string pr_tippel = "";
 
-            string lc_result = string.Empty;
-            string lc_srvpar = string.Empty;
+                int lc_keypel = 0;
+                int lc_auxpel = 0;
+                int lc_keytea = 0;
+                int lc_auxtea = 0;
+                int lc_swtflg = 0;
+                string Variables41TPF = string.Empty;
+                string lc_auxitem = string.Empty;
+                string lc_fecitem = string.Empty;
+                string lc_flgpre = "S";
+                string pr_tippel = "";
 
-            DateTime dt_fecpro;
+                string lc_result = string.Empty;
+                string lc_srvpar = string.Empty;
 
-            List<DateCartelera> ob_fechas = new List<DateCartelera>();
+                DateTime dt_fecpro;
 
-            XmlDocument ob_xmldoc = new XmlDocument();
-            //Billboard ob_bilmov = new Billboard();
-            General ob_fncgrl = new General();
+                List<DateCartelera> ob_fechas = new List<DateCartelera>();
 
-            APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
-            Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
-            Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
-            List<sala> ob_lisprg = new List<sala>();
+                XmlDocument ob_xmldoc = new XmlDocument();
+                //Billboard ob_bilmov = new Billboard();
+                General ob_fncgrl = new General();
 
-            //Obtener información de la web
-            var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == App.Pelicula.TituloOriginal);
-            var fechaSel = App.Pelicula.FechaSel.Substring(3);
-            var horaSel = App.Pelicula.HoraSel;
+                APIPortalKiosco.Entities.Cartelera ob_carprg = new APIPortalKiosco.Entities.Cartelera();
+                Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
+                Dictionary<string, object> ob_lsala = new Dictionary<string, object>();
+                List<sala> ob_lisprg = new List<sala>();
+
+                //Obtener información de la web
+                var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == App.Pelicula.TituloOriginal);
+                var fechaSel = App.Pelicula.FechaSel.Substring(3);
+                var horaSel = App.Pelicula.HoraSel;
                 var horaMilitar = App.Pelicula.HoraMilitar;
                 if (peliculaDias != null)
-            {
-                foreach (var dias in peliculaDias)
                 {
-                    foreach (var fecha in dias.DiasDisponibles)
+                    foreach (var dias in peliculaDias)
                     {
-                        if (fecha.fecunv == fechaSel)
+                        foreach (var fecha in dias.DiasDisponibles)
                         {
-                            foreach (var hora in fecha.horafun)
+                            if (fecha.fecunv == fechaSel)
                             {
-                                if (horaSel == hora.horunv)
+                                foreach (var hora in fecha.horafun)
                                 {
-                                    App.Pelicula.Id = dias.Id;
-                                    App.TipoSala = dias.tipoSala;
+                                    if (horaSel == hora.horunv)
+                                    {
+                                        App.Pelicula.Id = dias.Id;
+                                        App.TipoSala = dias.tipoSala;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            ob_carprg.Teatro = App.idCine;
-            ob_carprg.tercero = App.ValorTercero;
-            ob_carprg.IdPelicula = App.Pelicula.Id;
-            ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
-            ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
-            ob_carprg.FgPelicula = "2";
-            ob_carprg.CfPelicula = "No";
+                ob_carprg.Teatro = App.idCine;
+                ob_carprg.tercero = App.ValorTercero;
+                ob_carprg.IdPelicula = App.Pelicula.Id;
+                ob_carprg.FcPelicula = App.Pelicula.FechaSel.Substring(3);//pr_tippel == "Preventa" ? pr_fecprg : ViewBag.Cartelera[0].FecSt;
+                ob_carprg.TpPelicula = App.TipoSala == null ? "Normal" : App.TipoSala;
+                ob_carprg.FgPelicula = "2";
+                ob_carprg.CfPelicula = "No";
 
-            //Generar y encriptar JSON para servicio PRE
-            lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
-            lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
-            lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
-            lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
-            lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
-            lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
-            lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
+                //Generar y encriptar JSON para servicio PRE
+                lc_srvpar = ob_fncgrl.JsonConverter(ob_carprg);
+                lc_srvpar = lc_srvpar.Replace("teatro", "Teatro");
+                lc_srvpar = lc_srvpar.Replace("idPelicula", "IdPelicula");
+                lc_srvpar = lc_srvpar.Replace("fcPelicula", "FcPelicula");
+                lc_srvpar = lc_srvpar.Replace("tpPelicula", "TpPelicula");
+                lc_srvpar = lc_srvpar.Replace("fgPelicula", "FgPelicula");
+                lc_srvpar = lc_srvpar.Replace("cfPelicula", "CfPelicula");
 
-            //Encriptar Json
-            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+                //Encriptar Json
+                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-            //Consumir servicio
+                //Consumir servicio
 
-            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
-            if (lc_result.StartsWith("0"))
-            {
-
-                HashSet<string> fechasProcesadas = new HashSet<string>();
-                HashSet<string> horasProcesadas = new HashSet<string>();
-                //Validar respuesta
-                if (lc_result.Substring(0, 1) == "0")
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+                if (lc_result.StartsWith("0"))
                 {
-                    //Quitar switch
-                    lc_result = lc_result.Replace("0-", "");
-                    ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                    //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
-                    ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
-                    ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
-                    var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
 
-                    if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
+                    HashSet<string> fechasProcesadas = new HashSet<string>();
+                    HashSet<string> horasProcesadas = new HashSet<string>();
+                    //Validar respuesta
+                    if (lc_result.Substring(0, 1) == "0")
                     {
-                        foreach (var itemZonas in Zonas)
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-", "");
+                        ob_diclst = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                        //ob_bilmov = (Billboard)JsonConvert.DeserializeObject(ob_diclst["Billboard"].ToString(), (typeof(Billboard)));
+                        ob_lsala = (Dictionary<string, object>)JsonConvert.DeserializeObject(ob_diclst["GetHora"].ToString(), (typeof(Dictionary<string, object>)));
+                        ob_lisprg = (List<sala>)JsonConvert.DeserializeObject(ob_lsala["Lsala"].ToString(), (typeof(List<sala>)));
+                        var Zonas = (Dictionary<string, string>)JsonConvert.DeserializeObject(ob_lsala["Zonas"].ToString(), (typeof(Dictionary<string, string>)));
+
+                        if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
                         {
-                            foreach (var item in ob_lisprg)
+                            foreach (var itemZonas in Zonas)
                             {
-                                if (item.hora != null && item.hora.Count > 0)
+                                if (itemZonas.Key == App.TipoSilla.Replace("_", " "))
                                 {
-                                    foreach (var item2 in item.hora)
+                                    foreach (var item in ob_lisprg)
                                     {
-                                        if (item2.militar == horaMilitar)
+                                        if (item.hora != null && item.hora.Count > 0)
                                         {
-                                            foreach (var item3 in item2.TipoZonaOld)
+                                            foreach (var item2 in item.hora)
                                             {
-                                                if (itemZonas.Value == item3.nombreZona)
+                                                if (item2.militar == horaMilitar)
                                                 {
-                                                    foreach (var item4 in item3.TipoSilla)
+                                                    foreach (var item3 in item2.TipoZonaOld)
                                                     {
-                                                        if (item4.Tarifa.Count > 0)
+                                                        if (itemZonas.Value == item3.nombreZona)
                                                         {
-                                                            foreach (var item5 in item4.Tarifa)
+                                                            foreach (var item4 in item3.TipoSilla)
                                                             {
-                                                                App.ValorTarifa = Convert.ToDecimal(item5.valor);
-                                                                App.KeyTarifa = Convert.ToDecimal(item5.codigoTarifa);
-                                                                App.NombreTarifa = item5.nombreTarifa + ";" + item5.valor.ToString();
-                                                                App.TipoSilla = item4.nombreTipoSilla;
-                                                                App.Pelicula.numeroSala = item.numeroSala;
-                                                                borSiguente.Visibility = Visibility.Visible;
-                                                                App.Pelicula.HoraMilitar = item2.militar;
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            if (item4.nombreTipoSilla != "Discapacitado")
-                                                            {
-                                                                // Código relacionado con la ausencia de tarifas
+                                                                if (item4.Tarifa.Count > 0)
+                                                                {
+                                                                    foreach (var item5 in item4.Tarifa)
+                                                                    {
+                                                                        App.ValorTarifa = Convert.ToDecimal(item5.valor);
+                                                                        App.KeyTarifa = Convert.ToDecimal(item5.codigoTarifa);
+                                                                        App.NombreTarifa = item5.nombreTarifa + ";" + item5.valor.ToString();
+                                                                        App.TipoSilla = item4.nombreTipoSilla;
+                                                                        App.Pelicula.numeroSala = item.numeroSala;
+                                                                        borSiguente.Visibility = Visibility.Visible;
+                                                                        App.Pelicula.HoraMilitar = item2.militar;
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (item4.nombreTipoSilla != "Discapacitado")
+                                                                    {
+                                                                        // Código relacionado con la ausencia de tarifas
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -606,18 +650,18 @@ namespace Portal.Kiosco.Properties.Views
                                             }
                                         }
                                     }
+
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        // Código relacionado con la falta de datos en ViewBag
+                        else
+                        {
+                            // Código relacionado con la falta de datos en ViewBag
+                        }
                     }
                 }
             }
-            }
-            catch (Exception e) {   }
+            catch (Exception e) { }
         }
 
 
@@ -714,7 +758,7 @@ namespace Portal.Kiosco.Properties.Views
             return nuevoBorder;
         }
 
-        private Border CrearBotonHora(string hora, string idFuncion)
+        private Border CrearBotonHora(string hora, string idFuncion, string tipotarifa)
         {
 
             Button btn = new Button();
@@ -737,7 +781,7 @@ namespace Portal.Kiosco.Properties.Views
             border.BorderThickness = new Thickness(1);
             border.BorderBrush = Brushes.Black;
             border.Child = btn;
-
+            border.Name = tipotarifa.Replace(" ", "_");
 
             // Agregar efecto de sombra al botón
             DropShadowEffect shadowEffect = new DropShadowEffect();
@@ -771,7 +815,7 @@ namespace Portal.Kiosco.Properties.Views
         private void btnSeleccionHora_Click(object sender, RoutedEventArgs e)
         {
 
-           
+
             //ResetarStylos();
             string buttonName = "";
             Button clickedButton = sender as Button;
@@ -915,6 +959,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 buttonBorder.BorderBrush = Brushes.Red;
                 buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+                App.TipoSilla = buttonBorder.Name.ToString();
             }
             //App.Pelicula.HoraUsuario = clickedButton.Content.ToString();
 
@@ -978,7 +1023,7 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
             }
-             
+
             if (buttonBorder != null)
             {
                 buttonBorder.BorderBrush = Brushes.Red;

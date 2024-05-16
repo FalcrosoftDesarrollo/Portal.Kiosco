@@ -1940,6 +1940,7 @@ namespace Portal.Kiosco
                         {
                             //Devolver a vista
                             MessageBox.Show("", "Debe seleccionar un ítem de la categoría para continuar");
+
                             //return View(ob_datpro);
                         }
                     }

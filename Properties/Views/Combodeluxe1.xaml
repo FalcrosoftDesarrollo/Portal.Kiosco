@@ -241,10 +241,10 @@
                                         </Grid.RowDefinitions>
 
                                         <Border Grid.Row="0">
-                                            <Label Width="391" Height="43" VerticalAlignment="Top"   Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
+                                            <Label Width="391" Height="43" VerticalAlignment="Top" Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
                                         </Border>
                                         <Border Grid.Row="1">
-                                            <StackPanel Orientation="Vertical"  Name="radioAdicionales" >
+                                            <StackPanel Orientation="Vertical" Name="radioAdicionales" >
                                                 <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
                                                 <RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>

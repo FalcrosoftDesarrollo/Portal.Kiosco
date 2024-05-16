@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml;
@@ -26,6 +27,7 @@ namespace Portal.Kiosco.Properties.Views
         private int sillasSeleccionadas = 0;
         private string zonaseleccionada = "";
         private BolVenta bolVentaSala;
+        private bool isError;
         public LayoutAsientos(IOptions<MyConfig> config)
         {
             try
@@ -122,26 +124,29 @@ namespace Portal.Kiosco.Properties.Views
 
             var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
             Room(App.BolVentaRoom);
-            if (lblTotal.Content == "TOTAL: $0")
+            if (isError == false)
             {
-                MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                if (lblTotal.Content == "TOTAL: $0")
+                {
+                    MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-            if (pelicula != null && pelicula.Formato != null && pelicula.Formato.Contains("3D"))
-            {
-                isThreadActive = false;
-                Gafas3D openWindows = new Gafas3D();
-                openWindows.Show();
-                this.Close();
+                if (pelicula != null && pelicula.Formato != null && pelicula.Formato.Contains("3D"))
+                {
+                    isThreadActive = false;
+                    Gafas3D openWindows = new Gafas3D();
+                    openWindows.Show();
+                    this.Close();
 
-            }
-            else
-            {
-                isThreadActive = false;
-                AlgoParaComer openWindows = new AlgoParaComer();
-                openWindows.Show();
-                this.Close();
+                }
+                else
+                {
+                    isThreadActive = false;
+                    AlgoParaComer openWindows = new AlgoParaComer();
+                    openWindows.Show();
+                    this.Close();
+                }
             }
         }
 
@@ -473,7 +478,8 @@ namespace Portal.Kiosco.Properties.Views
                     Button button = new Button();
                     string lc_valmos = string.Concat(ubicacion.FilRelativa, ubicacion.ColRelativa);
                     string lc_values = string.Concat(ubicacion.EstadoSilla, "_", ubicacion.FilRelativa, "_", ubicacion.ColRelativa, "_", ubicacion.Fila, "_", ubicacion.Columna, "_");
-                    
+
+                    App.TipoSilla.Replace("_", " ");
 
                     button.Content = lc_valmos;
                     button.Name = lc_values;
@@ -490,51 +496,81 @@ namespace Portal.Kiosco.Properties.Views
                     border.CornerRadius = new CornerRadius(5);
                     border.Margin = new Thickness(0, 0, 1, 1);
                     border.BorderThickness = new Thickness(1);
-
-
-
-                    switch (ubicacion.TipoSilla.ToLower())
+                    Label label = new Label();
+                    var tipozona = App.TipoSilla.Replace("_", " ");
+                    if (ubicacion.TipoZona.ToLower() != tipozona.ToLower())
                     {
-                        case "pasillo":
-                            button.Background = System.Windows.Media.Brushes.White;
-                            button.BorderBrush = System.Windows.Media.Brushes.White;
-                            button.Visibility = Visibility.Hidden;
-                            break;
-                        case "discapacitado":
-                            button.Background = System.Windows.Media.Brushes.LightSkyBlue;
-                            button.BorderBrush = System.Windows.Media.Brushes.LightSkyBlue;
-                            button.Foreground = System.Windows.Media.Brushes.Black;
-                            break;
-                        default:
-                            switch (ubicacion.EstadoSilla)
-                            {
-                                case "S":
+                        border.Background = System.Windows.Media.Brushes.Red;
+                        label.Content = lc_valmos;
+                        label.Background = System.Windows.Media.Brushes.Red;
+                        label.Foreground = System.Windows.Media.Brushes.White;
+                        label.FontSize = 14;
+                        label.HorizontalAlignment = HorizontalAlignment.Center;
+                        label.VerticalAlignment = VerticalAlignment.Center;
+                        label.FontWeight = FontWeights.Bold;
+
+                        border.Child = label;
+                    }
+                    else
+                    {
+                        switch (ubicacion.EstadoSilla)
+                        {
+                            case "S":
+                                if (ubicacion.TipoSilla == "Discapacitado")
+                                {
+                                    button.Background = System.Windows.Media.Brushes.Blue;
+                                    button.BorderBrush = System.Windows.Media.Brushes.Blue;
+                                    button.Foreground = System.Windows.Media.Brushes.White;
+                                }
+                                else
+                                {
                                     button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
                                     button.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
                                     button.Foreground = System.Windows.Media.Brushes.Black;
-                                    break;
-                                case "B":
-                                case "R":
-                                case "O":
-                                    button.Background = System.Windows.Media.Brushes.Yellow;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Yellow;
-                                    button.Foreground = System.Windows.Media.Brushes.Black;
-                                    break;
-                                case "X":
-                                    button.Background = System.Windows.Media.Brushes.Green;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Green;
-                                    button.Foreground = System.Windows.Media.Brushes.Black;
-                                    break;
-                                default:
-                                    button.Background = System.Windows.Media.Brushes.Red;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Red;
-                                    button.Foreground = System.Windows.Media.Brushes.Black;
-                                    break;
-                            }
-                            break;
+                                }
+
+
+                                border.Child = button;
+                                break;
+                            case "B":
+                                border.Visibility = Visibility.Hidden;
+                                break;
+                            case "R":
+                                border.Visibility = Visibility.Hidden;
+                                break;
+                            case "O":
+                                border.Background = System.Windows.Media.Brushes.Yellow;
+                                //button.Background = System.Windows.Media.Brushes.Yellow;
+                                //button.BorderBrush = System.Windows.Media.Brushes.Yellow;
+                                //button.Foreground = System.Windows.Media.Brushes.Black;
+                                label.Content = lc_valmos;
+                                label.Background = System.Windows.Media.Brushes.Yellow;
+                                label.Foreground = System.Windows.Media.Brushes.Black;
+
+                                label.FontSize = 14;
+                                label.FontWeight = FontWeights.Bold;
+
+                                label.HorizontalAlignment = HorizontalAlignment.Center;
+                                label.VerticalAlignment = VerticalAlignment.Center;
+                                border.Child = label;
+                                break;
+                            case "X":
+                                button.Background = System.Windows.Media.Brushes.Green;
+                                button.BorderBrush = System.Windows.Media.Brushes.Green;
+                                button.Foreground = System.Windows.Media.Brushes.Black;
+                                border.Child = button;
+                                break;
+                            default:
+                                button.Background = System.Windows.Media.Brushes.Red;
+                                button.BorderBrush = System.Windows.Media.Brushes.Red;
+                                button.Foreground = System.Windows.Media.Brushes.Black;
+                                border.Child = button;
+                                break;
+                        }
                     }
 
-                    border.Child = button;
+
+
 
 
                     ContenedorSala.Rows = bolVenta.FilSala;
@@ -576,27 +612,27 @@ namespace Portal.Kiosco.Properties.Views
                     // Encuentra el primer índice vacío en el arreglo de sillas seleccionadas
                     int index = Array.IndexOf(sillasSeleccionadasArray, null);
                     App.BolVentaRoom.SelUbicaciones = App.BolVentaRoom.SelUbicaciones + button.Name.ToString() + ";";
-                    zonaseleccionada = button.Name.ToString();
+                    //zonaseleccionada = button.Name.ToString();
 
-                    Ubicaciones[,] ubicaciones = App.BolVentaRoom.MapaSala;
+                    //Ubicaciones[,] ubicaciones = App.BolVentaRoom.MapaSala;
 
-                    for (int i = 0; i < ubicaciones.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < ubicaciones.GetLength(1); j++)
-                        {
-                            Ubicaciones ubicacion = ubicaciones[i, j];
-                            string lc_values = string.Concat(ubicacion.EstadoSilla, "_", ubicacion.FilRelativa, "_", ubicacion.ColRelativa, "_", ubicacion.Fila, "_", ubicacion.Columna, "_");
+                    //for (int i = 0; i < ubicaciones.GetLength(0); i++)
+                    //{
+                    //    for (int j = 0; j < ubicaciones.GetLength(1); j++)
+                    //    {
+                    //        Ubicaciones ubicacion = ubicaciones[i, j];
+                    //        string lc_values = string.Concat(ubicacion.EstadoSilla, "_", ubicacion.FilRelativa, "_", ubicacion.ColRelativa, "_", ubicacion.Fila, "_", ubicacion.Columna, "_");
 
-                            if (zonaseleccionada == lc_values)
-                            {
-                                CalcularTarifa(ubicacion.TipoZona);
-                                break;
-                            }
+                    //        if (zonaseleccionada == lc_values)
+                    //        {
+                    //            CalcularTarifa(ubicacion.TipoZona);
+                    //            break;
+                    //        }
 
-                        }
-                    }
+                    //    }
+                    //}
 
-                   
+
                     // Almacena el contenido del botón en el arreglo de sillas seleccionadas
                     sillasSeleccionadasArray[index] = silla;
 
@@ -609,14 +645,15 @@ namespace Portal.Kiosco.Properties.Views
                 else
                 {
                     MessageBox.Show("Solo se pueden seleccionar hasta " + App.CantidadBoletas + " sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    isError = true;
                 }
 
                 // Actualiza el contenido del UniformGrid con las sillas seleccionadas
 
 
-            
 
-                
+
+
 
                 ActualizarInterfazSillasSeleccionadas();
             }
@@ -741,6 +778,7 @@ namespace Portal.Kiosco.Properties.Views
                         if (ob_diclst.ContainsKey("Validación"))
                         {
                             MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            isError = true;
 
                         }
                         else
@@ -860,8 +898,10 @@ namespace Portal.Kiosco.Properties.Views
 
                     //Validar cantidad de sillas
                     if (pr_bolvta.Ubicaciones.Count > Convert.ToInt32(App.CantSillasBol))
+                    {
                         MessageBox.Show("Solo se pueden seleccionar hasta " + App.CantSillasBol + " sillas por transacción.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                        isError = true;
+                    }
                     //Generar y encriptar JSON para servicio
                     lc_srvpar = ob_fncgrl.JsonConverter(pr_bolvta);
 
@@ -909,6 +949,8 @@ namespace Portal.Kiosco.Properties.Views
                             if (ob_auxrta.ContainsKey("Validación"))
                             {
                                 //MessageBox.Show("");
+                                isError = true;
+
                             }
                             else
                             {
@@ -958,6 +1000,7 @@ namespace Portal.Kiosco.Properties.Views
                                     else
                                     {
                                         MessageBox.Show(ob_auxrta["Respuesta"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                                     }
                                 }
                             }
@@ -977,6 +1020,9 @@ namespace Portal.Kiosco.Properties.Views
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                isError = true;
+
+
             }
         }
     }
