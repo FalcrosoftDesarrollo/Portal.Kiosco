@@ -20,7 +20,7 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
             ((App)Application.Current).ResetearTimer();
             App.IsFecha = false;
-            this.KeyDown += Principal_KeyDown; // Manejador de eventos para teclas presionadas
+            this.KeyDown += Principal_KeyDown;
             App.Pelicula = new Pelicula();
             App.ProductosSeleccionados = new List<Producto>();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
@@ -36,12 +36,9 @@ namespace Portal.Kiosco.Properties.Views
             }
             return instance;
         }
- 
-
 
         private void Principal_KeyDown(object sender, KeyEventArgs e)
         {
-            // Verificar si se presionó Control + Escape
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
                 if (e.Key == Key.D)
@@ -53,17 +50,17 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnBoleteria_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "B";
             isThreadActive = false;
             App.IsBoleteriaConfiteria = false;
             ComoCompra openWindows = new ComoCompra();
             openWindows.Show();
             this.Close();
-
-
         }
 
         private async void btnConfiteria_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "P";
             isThreadActive = false;
             App.IsBoleteriaConfiteria = true;
             ComoCompra openWindows = new ComoCompra();

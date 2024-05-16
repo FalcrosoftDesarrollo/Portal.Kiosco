@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
         Title="BoletaFactura" Height="1000" Width="540">
+
     <Grid Background="White">
 
         <Grid.RowDefinitions>
@@ -14,30 +15,29 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
-
         <Border BorderThickness="1" Margin="10,10,10,10" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <StackPanel Width="400">
                 <TextBlock Text=" " Name="NomEmpresa" FontSize="16" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+
                 <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
                     <TextBlock Text="NIT: " FontWeight="Bold" HorizontalAlignment="Center"/>
                     <TextBlock Text="900.090.098-0" FontWeight="Bold" HorizontalAlignment="Center"/>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
                     <TextBlock Text="PROCINAL PARQUE FABRICATO" FontSize="15" FontWeight="Black" HorizontalAlignment="Center"/>
-
                 </StackPanel>
+
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Matriz:" FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text=" " Name="NomEmpresa2" HorizontalAlignment="Left"/>
-
                 </StackPanel>
+
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Sucursal: " FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text=" " Name="Sucursal" HorizontalAlignment="Left"/>
 
                 </StackPanel>
-
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Detalle de documento: "  FontWeight="Bold" HorizontalAlignment="Left"/>
@@ -47,19 +47,19 @@
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Detalle de documento: " FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="320-014-000874403" HorizontalAlignment="Left"/>
-
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Fecha:     " FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="" Name="FechaFac" HorizontalAlignment="Left"/>
-
                 </StackPanel>
+
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Resolucion de facturacion:" FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="18764059689843 del 10/11/2023" HorizontalAlignment="Left"/>
                     <TextBlock Text="desde PF 748662 hasta PF 2000000" HorizontalAlignment="Left"/>
-
                 </StackPanel>
+
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Factura de Venta:" FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="PF 000874403" HorizontalAlignment="Left"/>
@@ -70,16 +70,14 @@
                         <TextBlock Text="Cliente: " FontWeight="Bold" HorizontalAlignment="Left"/>
                         <TextBlock Text="CONSUMIDOR FINAL" HorizontalAlignment="Left"/>
                     </StackPanel>
+                    
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Ced. I/NIT: " FontWeight="Bold" HorizontalAlignment="Left"/>
                         <TextBlock Text="99999999999999999" HorizontalAlignment="Left"/>
                     </StackPanel>
-                    
-
-
                 </StackPanel>
+
                 <StackPanel Orientation="Vertical" Margin="10" x:Name="ContenedorFac">
-                    <!-- Encabezado de la tabla -->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -89,13 +87,14 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <TextBlock Grid.Column="0" Text="CANT" FontWeight="Bold" Margin="5"/>
                         <TextBlock Grid.Column="1" Text="PRODUCTO" FontWeight="Bold" Margin="5"/>
                         <TextBlock Grid.Column="2" Text="IM" FontWeight="Bold" Margin="5"/>
                         <TextBlock Grid.Column="3" Text="PRECIO" FontWeight="Bold" Margin="5"/>
                         <TextBlock Grid.Column="4" Text="TOTAL" FontWeight="Bold" Margin="5"/>
                     </Grid>
-                    <!-- Datos de la tabla -->
+
                     <Grid x:Name="TablaProductos">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -105,73 +104,66 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <!-- Fila 1 -->
+                        
                         <TextBlock x:Name="Cantidad1" Grid.Column="0" Text="" Margin="5"/>
                         <TextBlock x:Name="Producto1" Grid.Column="1" Text="" Margin="5"/>
                         <TextBlock x:Name="Imagen1" Grid.Column="2" Text="" Margin="5"/>
                         <TextBlock x:Name="Precio1" Grid.Column="3" Text="" Margin="5"/>
                         <TextBlock x:Name="Total1" Grid.Column="4" Text="" Margin="5"/>
-
-
                     </Grid>
-
                 </StackPanel>
+
                 <Border BorderThickness="0,1,0,1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <!-- Columna 1 -->
                         <StackPanel>
-                            <!-- Contenido de la columna 1 -->
                             <TextBlock Text="SUBTOTAL: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="SUBTOTAL: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="TOTAL:" FontWeight="Bold" HorizontalAlignment="Left"/>
                         </StackPanel>
-                        <!-- Columna 2 -->
+                        
                         <StackPanel Margin="30,0,30,0"/>
+                        
                         <StackPanel >
-
-                            <!-- Contenido de la columna 2 -->
                             <TextBlock Text="$0" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>
                         </StackPanel>
-
                     </StackPanel>
-
                 </Border>
+
                 <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Valor pagado: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="$0"   HorizontalAlignment="Left"/>
+                    <TextBlock Text="Valor pagado: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="$0" HorizontalAlignment="Left"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Cajero: "  FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock  Text="KIOSCO PROCINAL" HorizontalAlignment="Left"/>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Caja: "  FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock  Text="CN4" HorizontalAlignment="Left"/>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="5" >
                     <TextBlock Text="Auditoria Interna: "  FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock  Text="80115" HorizontalAlignment="Left"/>
                 </StackPanel>
-
             </StackPanel>
         </Border>
 
         <Border Grid.Row="1">
             <Image Name="imgqr" />
         </Border>
-        
 
         <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10,10,10,10" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <TextBlock Text="Solo se permite el ingreso a las instalaciones de Cinemas"  HorizontalAlignment="Center"/>
             <TextBlock Text="Procinal, de productos que hayan sido comprados en"  HorizontalAlignment="Center"/>
             <TextBlock Text="nuestras confiterias o cafes del cinema"  HorizontalAlignment="Center"/>
             <TextBlock Text="Gracias"  HorizontalAlignment="Center"/>
-
         </StackPanel>
     </Grid>
 </Window>

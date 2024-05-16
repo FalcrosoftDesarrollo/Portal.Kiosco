@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
         Title="Combodeluxe2" Height="1080" Width="1920"
-        Background="White"
- 
-        >
+        Background="White">
+    
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -19,6 +18,7 @@
                         <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
+                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="false">
                                 <Setter Property="Opacity" Value="0.8" />
@@ -42,14 +42,10 @@
                                BorderThickness="0"
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
-                               IsTabStop="False" 
-                               
+                               IsTabStop="False"                      
                                Minimum="0" 
-                               Orientation="Vertical" 
-                               
-                               
-                              />
-
+                               Orientation="Vertical"                           
+                            />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -65,16 +61,15 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="247" />
-                            <ColumnDefinition />
+                            <ColumnDefinition/>
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        <!-- logo -->
+                        
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -101,27 +96,25 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-
-
-                        <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
                             <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-                                <Run Text="SALIR"/>
+                                    <Run Text="SALIR"/>
 
                                 </TextBlock>
+
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
+
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-
-
                     </Grid>
                 </Border>
+                
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -149,6 +142,7 @@
                                 <Border Grid.Column="1">
                                     <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\rectangle241.png"></Image>
                                 </Border>
+                                
                                 <Border Grid.Column="3">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -170,6 +164,7 @@
                                         <Border Grid.Row="0">
                                             <Label Width="373" Height="46" VerticalAlignment="Top" Content="Elige Perro o Sánduche" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left"/>
                                         </Border>
+                                        
                                         <Border Grid.Row="1">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -178,22 +173,25 @@
                                                     <ColumnDefinition Width="169"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#d9d9d9" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="Perro Caliente" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                        
                                         <Border Grid.Row="3">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -202,25 +200,29 @@
                                                     <ColumnDefinition Width="121"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="Sánduche" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                        
                                         <Border Grid.Row="5">
                                             <Label Width="235" Height="46" VerticalAlignment="Top" Content="Elige la bebida" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
                                         </Border>
+                                        
                                         <Border Grid.Row="6">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -229,22 +231,25 @@
                                                     <ColumnDefinition Width="202"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="1 Botella de agua" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                        
                                         <Border Grid.Row="8">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -253,22 +258,25 @@
                                                     <ColumnDefinition Width="213"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="1 Fuze Tea 400 ml" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                        
                                         <Border Grid.Row="10">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -277,22 +285,25 @@
                                                     <ColumnDefinition Width="186"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#d9d9d9" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
-                                                    <Label  Content="1 Gaseosa 22oz" FontSize="24" VerticalContentAlignment="Top"/>
+                                                    <Label Content="1 Gaseosa 22oz" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                        
                                         <Border Grid.Row="12">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -301,17 +312,19 @@
                                                     <ColumnDefinition Width="142"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="1 Jugo Hit" FontSize="24" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"/>
                                                 </Border>
@@ -319,6 +332,7 @@
                                         </Border>
                                     </Grid>
                                 </Border>
+                                
                                 <Border Grid.Column="5">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -338,6 +352,7 @@
                                         <Border Grid.Row="0">
                                             <Label Width="159" Height="43" VerticalAlignment="Top" Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
                                         </Border>
+                                        
                                         <Border Grid.Row="1">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -346,22 +361,25 @@
                                                     <ColumnDefinition Width="290"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#f30613" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="Porción tocineta $4.600" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                        
                                         <Border Grid.Row="3">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -376,11 +394,12 @@
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="Porción queso tajado $4.600" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
@@ -395,22 +414,25 @@
                                                     <ColumnDefinition Width="344"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+                                                
                                                 <Border CornerRadius="100" Background="#d9d9d9" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+                                                
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="Porción queso nacho $4.600" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                        
                                         <Border Grid.Row="7">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -419,6 +441,7 @@
                                                     <ColumnDefinition Width="324"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+
                                                 <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
@@ -428,14 +451,14 @@
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="Porción guacamole $4.600" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
-
                                         </Border>
+                                        
                                         <Border Grid.Row="9">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -444,27 +467,29 @@
                                                     <ColumnDefinition Width="324"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
+
                                                 <Border CornerRadius="100" Background="#D9D9D9" HorizontalAlignment="Left" Width="40" Height="40" >
                                                     <Button Background="Transparent" BorderThickness="0">
                                                         <Button.Effect>
                                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                                         </Button.Effect>
                                                     </Button>
+
                                                     <Border.Effect>
                                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                                     </Border.Effect>
-
                                                 </Border>
+
                                                 <Border Grid.Column="2">
                                                     <Label HorizontalAlignment="Left" Content="Porción sour cream $4.600" FontSize="24" VerticalContentAlignment="Top"/>
                                                 </Border>
                                             </Grid>
-
                                         </Border>
                                     </Grid>
                                 </Border>
                             </Grid>
                         </Border>
+                        
                         <Border Grid.Row="2">
                             <Grid>
                                 <Border Width="830" Height="80" HorizontalAlignment="Right" Margin="0,0,54,0">
@@ -479,25 +504,24 @@
                                                 </Border>
                                             </Grid>
                                         </Border>
+
                                         <Border>
                                             <Grid Width="374" HorizontalAlignment="Right">
                                                 <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
                                                     <Button Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                                 </Border>
+
                                                 <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
                                                     <Button Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
-
                                     </Grid>
                                 </Border>
                             </Grid>
-
                         </Border>
                     </Grid>
                 </Border>
-                <!-- Centro -->
             </Grid>
         </Border>
     </Grid>

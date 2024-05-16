@@ -43,13 +43,9 @@
                                HorizontalAlignment="Right" 
                                Margin="0,2,0,2" 
                                IsTabStop="False" 
-                               
                                Minimum="0" 
-                               Orientation="Vertical" 
-                               
-                               
-                              />
-
+                               Orientation="Vertical"                                                            
+                            />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -65,8 +61,6 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                
-                <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -75,7 +69,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        <!-- logo -->
+
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -102,42 +96,33 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-
-
-                        <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
+                            <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159">
                                 <TextBlock TextAlignment="Center">
-                                <Run Text="SALIR"/>
-
+                                    <Run Text="SALIR"/>
                                 </TextBlock>
+
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
+
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-
-
                     </Grid>
                 </Border>
 
-                <!-- Centro -->
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="152"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-
-                        
                         <Border Height="65" Width="450">
                             <Label Content="¿Qué quieres ver?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48"/>
                         </Border>
-                        
-
 
                         <Border Grid.Row="1" Width="1800" >
                             <ScrollViewer  PanningMode="Both" 
@@ -145,19 +130,15 @@
                               PreviewMouseUp="ScrollViewer_PreviewMouseUp"
                               PreviewTouchDown="ScrollViewer_PreviewTouchDown"
                               PreviewTouchUp="ScrollViewer_PreviewTouchUp"
-                              PreviewMouseMove="ScrollViewer_PreviewMouseMove" Margin="0,-27,0,0">     
+                              PreviewMouseMove="ScrollViewer_PreviewMouseMove" Margin="0,-27,0,0">
                                 <WrapPanel x:Name="ContenedorPeliculas">
 
                                 </WrapPanel>
                             </ScrollViewer>
-
-
                         </Border>
-
                     </Grid>
                 </Border>
             </Grid>
         </Border>
     </Grid>
 </Window>
-

@@ -64,7 +64,6 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <!--Row Navbar Superior -->
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -73,7 +72,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        <!-- logo -->
+                        
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -100,29 +99,24 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-
-
-                        <!--Boton Salir-->
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
                             <Button x:Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-<Run Text="SALIR"/>
-
+                                    <Run Text="SALIR"/>
                                 </TextBlock>
+
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
+
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-
-
                     </Grid>
                 </Border>
 
-                <!-- Centro -->
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -138,27 +132,25 @@
                                     <Grid>
                                         <Label Content="Boletas" HorizontalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="40" Height="50" Margin="410,63,207,62"/>
                                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\boletas.png" Height="106" Width="134" HorizontalAlignment="Left" Margin="205,0,0,0" Stretch="Fill" />
-
                                         <Button Background="Transparent" BorderThickness="0"/>
                                     </Grid>
                                 </Border>
+                                
                                 <Border Background="#F5F5F5" Width="886" Height="169" CornerRadius="10" Margin="0,0,0,23">
                                     <Grid>
                                         <Label Content="Gafas" HorizontalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="40" Height="50" Margin="410,63,207,62"/>
                                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\frame.png" Height="78" Width="140" HorizontalAlignment="Left" Margin="205,0,0,0" Stretch="Fill" />
-
                                         <Button Background="Transparent" BorderThickness="0"/>
                                     </Grid>
                                 </Border>
+
                                 <Border Background="#F5F5F5" Width="886" Height="169" CornerRadius="10">
                                     <Grid>
                                         <Label Content="Alimentos" HorizontalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="40" Height="50" Margin="410,63,207,62"/>
                                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\group4.png" Height="126.22" Width="159.72" HorizontalAlignment="Left" Margin="205,0,0,0" Stretch="Fill" />
-
                                         <Button Background="Transparent" BorderThickness="0"/>
                                     </Grid>
                                 </Border>
-
                             </WrapPanel>
                         </Border>
 
@@ -168,23 +160,25 @@
 
                         <Border Grid.Column="1" Width="374" Height="197" VerticalAlignment="Bottom" Margin="0,0,54,55">
                             <Grid>
-
                                 <Border Width="180" Height="80" Background="#F30613" VerticalAlignment="Bottom" HorizontalAlignment="Left" CornerRadius="10">
                                     <Button Content="IMPRIMIR" Click="btnImprimir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"  >
                                         <Button.Effect>
                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                         </Button.Effect>
                                     </Button>
+
                                     <Border.Effect>
                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                     </Border.Effect>
                                 </Border>
+
                                 <Border Width="180" Height="80" Background="#F30613" VerticalAlignment="Bottom" HorizontalAlignment="Right" CornerRadius="10">
                                     <Button Content="ENVIAR" Name="btnEnviar" Click="btnEnviar_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"  >
                                         <Button.Effect>
                                             <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                         </Button.Effect>
                                     </Button>
+
                                     <Border.Effect>
                                         <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                                     </Border.Effect>
@@ -192,10 +186,8 @@
 
                                 <Image Width="99" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="44,0,0,0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\impresora.png"/>
                                 <Image Width="99" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,37,0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\telefonoEnviar.png"/>
-
                             </Grid>
                         </Border>
-
                     </Grid>
                 </Border>
             </Grid>

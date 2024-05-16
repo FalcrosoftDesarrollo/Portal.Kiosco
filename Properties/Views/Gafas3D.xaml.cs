@@ -1,7 +1,5 @@
-﻿using APIPortalKiosco.Data;
-using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading;
@@ -11,9 +9,7 @@ using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para F8.xaml
-    /// </summary>
+
     public partial class Gafas3D : Window
     {
         private const int PrecioUnitario = 3000;
@@ -26,9 +22,11 @@ namespace Portal.Kiosco.Properties.Views
         {
             InitializeComponent();
             DataContext = ((App)Application.Current);
+            lblPrecio.Content = "$ 3.000";
+
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-            lblPrecio.Content = "$ 3.000";
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -41,7 +39,7 @@ namespace Portal.Kiosco.Properties.Views
         }
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -50,9 +48,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true; 
                     }
                     else
                     {
@@ -64,7 +61,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -78,7 +75,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen;
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -87,7 +84,6 @@ namespace Portal.Kiosco.Properties.Views
             LayoutAsientos openWindows = new LayoutAsientos(config);
             this.Close();
             openWindows.Show();
-
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
@@ -112,13 +108,9 @@ namespace Portal.Kiosco.Properties.Views
 
                 if (nombreBoton == "+" && gafasSeleccionadas < 10)
                 {
-
                     int index = Array.IndexOf(gafasSeleccionadasArray, null);
-
                     gafasSeleccionadasArray[index] = nombreBoton;
-
                     gafasSeleccionadas++;
-
                     ultimoIndex = index;
 
                     lblCantidad.Content = gafasSeleccionadas;
@@ -132,11 +124,7 @@ namespace Portal.Kiosco.Properties.Views
                 else if (nombreBoton == "-" && gafasSeleccionadas > 0 && ultimoIndex >= 0)
                 {
                     gafasSeleccionadasArray[ultimoIndex] = null;
-
-                    // Decrementa el contador de gafas seleccionadas
                     gafasSeleccionadas--;
-
-                    // Busca el nuevo índice de la última gafa seleccionada
                     ultimoIndex = Array.LastIndexOf(gafasSeleccionadasArray, "+");
 
                     lblCantidad.Content = gafasSeleccionadas;
@@ -160,7 +148,6 @@ namespace Portal.Kiosco.Properties.Views
         {
             App.RoomReverse();
             var openWindow = new Principal();
-
             openWindow.Show();
             this.Close();
         }

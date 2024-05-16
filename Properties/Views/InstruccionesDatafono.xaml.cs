@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Timers;
 using System.Windows;
@@ -8,9 +7,6 @@ using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Frame15.xaml
-    /// </summary>
     public partial class InstruccionesDatafono : Window
     {
         private bool isThreadActive = true;
@@ -30,12 +26,8 @@ namespace Portal.Kiosco.Properties.Views
                 lblnombre.Content = "!HOLA INVITADO";
             }
 
-            // Codigo de datafono
-            // 
-
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
 
             //var consumo = new TEFII_NET.trx.TEFTransactionManager();
             Thread thread = new Thread(() =>
@@ -48,22 +40,20 @@ namespace Portal.Kiosco.Properties.Views
             thread.IsBackground = true;
             thread.Start();
 
-            Loaded += InstruccionesDatafono_Loaded; // Suscribir al evento Loaded
-
+            Loaded += InstruccionesDatafono_Loaded;
         }
 
         private void InstruccionesDatafono_Loaded(object sender, RoutedEventArgs e)
         {
-            timer = new System.Timers.Timer(3000); // 10000 milisegundos = 10 segundos
+            timer = new System.Timers.Timer(3000);
             timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = false; // Para que solo se dispare una vez
+            timer.AutoReset = false;
             timer.Start();
         }
 
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            // Llamar al método LLamadoDatafono después de que haya pasado el tiempo de espera
             Dispatcher.Invoke(() =>
             {
                 LLamadoDatafono();
@@ -73,15 +63,12 @@ namespace Portal.Kiosco.Properties.Views
 
         public void LLamadoDatafono()
         {
-            // Construir la trama de entrada para la función 01 (Compra con tarjeta)
-
             var subtotal = Convert.ToInt64(Convert.ToInt64(App.TotalPagar) * 0.19);
             var total = Convert.ToInt64(App.TotalPagar) - subtotal;
             var responseSection = "";
             var respuesta = App.RunProgramAndWait("01," + total.ToString() + ",100,CAJA" + App.PuntoVenta + ",TRX" + App.Secuencia + "," + subtotal + ",0,KIOSCO,0,0,");
             int start = respuesta.IndexOf("Response:");
 
-            // Encontrar la posición de "*"
             int end = respuesta.IndexOf("*", start);
 
             if (start != -1 && end != -1)
@@ -104,14 +91,12 @@ namespace Portal.Kiosco.Properties.Views
             else 
             {
                 this.Close();
-            }
-           
+            }   
         }
-
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -120,9 +105,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true; 
                     }
                     else
                     {
@@ -134,7 +118,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+                            
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -148,7 +132,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen; 
         }
 
 

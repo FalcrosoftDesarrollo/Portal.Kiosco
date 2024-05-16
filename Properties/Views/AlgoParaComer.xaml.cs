@@ -8,9 +8,6 @@ using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Frame9.xaml
-    /// </summary>
     public partial class AlgoParaComer : Window
     {
         private readonly IOptions<MyConfig> config;
@@ -42,7 +39,7 @@ namespace Portal.Kiosco.Properties.Views
         }
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false; 
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -51,9 +48,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -65,7 +61,6 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -79,7 +74,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen;
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
@@ -88,41 +83,20 @@ namespace Portal.Kiosco.Properties.Views
             Principal openWindows = new Principal();
             openWindows.Show();
             this.Close();
-
-        }
-
-        private async void btnVolver_Click(object sender, RoutedEventArgs e)
-        {
-            isThreadActive = false;
-            AlgoParaComer openWindows = new AlgoParaComer();
-            openWindows.Show();
-            this.Close();
-        }
-
-        private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
-        {
-            isThreadActive = false;
-            Combos openWindows = new Combos();
-            openWindows.Show();
-            this.Close();
-
         }
 
         private async void btnCombos_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "M";
             isThreadActive = false;
             Combos openWindows = new Combos();
             openWindows.Show();
             this.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private async void btnResumen_Click(object sender, RoutedEventArgs e)
         {
+            App.TipoCompra = "B";
             isThreadActive = false;
             ResumenCompra openWindows = new ResumenCompra(config);
             openWindows.Show();

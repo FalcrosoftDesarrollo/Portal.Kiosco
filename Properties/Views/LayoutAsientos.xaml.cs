@@ -9,21 +9,17 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Frame7DEF.xaml
-    /// </summary>
     public partial class LayoutAsientos : Window
     {
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
-        public static string[] sillasSeleccionadasArray = new string[10]; // Arreglo para almacenar las sillas seleccionadas
+        public static string[] sillasSeleccionadasArray = new string[10]; 
         private int sillasSeleccionadas = 0;
         private string zonaseleccionada = "";
         private BolVenta bolVentaSala;
@@ -38,6 +34,7 @@ namespace Portal.Kiosco.Properties.Views
                 ContenedorSala.Children.Clear();
                 GenerarSala();
                 DataContext = ((App)Application.Current);
+
                 if (App.ob_diclst.Count > 0)
                 {
                     lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -47,8 +44,6 @@ namespace Portal.Kiosco.Properties.Views
                     lblnombre.Content = "!HOLA INVITADO";
                 }
 
-                //lblFecha.Content = App.Pelicula.FechaUsuario;
-                //lblHora.Content = App.Pelicula.HoraUsuario;
                 lblSala.Content = App.Pelicula.numeroSala;
                 lblNombrePelicula.Content = App.Pelicula.Nombre;
 
@@ -69,7 +64,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; // Variable local para indicar si la ventana principal está abierta
+            bool isMainWindowOpen = false;
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -78,9 +73,8 @@ namespace Portal.Kiosco.Properties.Views
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
-                        // Enfocar la ventana principal si está abierta y visible
                         principal.Activate();
-                        isMainWindowOpen = true; // Marcar que la ventana principal está abierta
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -92,7 +86,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            // Cerrar todas las demás ventanas excepto la ventana principal
+                    
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -108,7 +102,7 @@ namespace Portal.Kiosco.Properties.Views
 
 
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen;
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -121,9 +115,9 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-
             var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
             Room(App.BolVentaRoom);
+
             if (isError == false)
             {
                 if (lblTotal.Content == "TOTAL: $0")
@@ -138,7 +132,6 @@ namespace Portal.Kiosco.Properties.Views
                     Gafas3D openWindows = new Gafas3D();
                     openWindows.Show();
                     this.Close();
-
                 }
                 else
                 {
@@ -152,10 +145,8 @@ namespace Portal.Kiosco.Properties.Views
 
         public void GenerarSala()
         {
-
             try
             {
-
                 int lc_maxcol = 0;
                 int lc_maxfil = 0;
                 int lc_idxrow = 0;
@@ -300,8 +291,6 @@ namespace Portal.Kiosco.Properties.Views
                 ob_datprg.MapaSala = mt_datsal;
                 App.BolVentaRoom = ob_datprg;
 
-
-
                 AgregarUbicacionAlWrapPanel(ob_datprg);
             }
             catch (Exception ex) { MessageBox.Show("No se logro generar la sala de la funcion", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
@@ -312,7 +301,6 @@ namespace Portal.Kiosco.Properties.Views
         {
             try
             {
-
                 int lc_keypel = 0;
                 int lc_auxpel = 0;
                 int lc_keytea = 0;
@@ -483,27 +471,24 @@ namespace Portal.Kiosco.Properties.Views
 
                     button.Content = lc_valmos;
                     button.Name = lc_values;
-
-
-
-                    // Suscribe el evento Click al botón
                     button.Click += Button_Click;
-
-                    // Definir un nuevo estilo
                     button.Style = (Style)FindResource("AvailableSeat");
 
                     Border border = new Border();
                     border.CornerRadius = new CornerRadius(5);
                     border.Margin = new Thickness(0, 0, 1, 1);
                     border.BorderThickness = new Thickness(1);
+
                     Label label = new Label();
+
                     var tipozona = App.TipoSilla.Replace("_", " ");
+
                     if (ubicacion.TipoZona.ToLower() != tipozona.ToLower())
                     {
-                        border.Background = System.Windows.Media.Brushes.Red;
+                        border.Background = Brushes.Red;
                         label.Content = lc_valmos;
-                        label.Background = System.Windows.Media.Brushes.Red;
-                        label.Foreground = System.Windows.Media.Brushes.White;
+                        label.Background = Brushes.Red;
+                        label.Foreground = Brushes.White;
                         label.FontSize = 14;
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
@@ -518,17 +503,16 @@ namespace Portal.Kiosco.Properties.Views
                             case "S":
                                 if (ubicacion.TipoSilla == "Discapacitado")
                                 {
-                                    button.Background = System.Windows.Media.Brushes.Blue;
-                                    button.BorderBrush = System.Windows.Media.Brushes.Blue;
-                                    button.Foreground = System.Windows.Media.Brushes.White;
+                                    button.Background = Brushes.Blue;
+                                    button.BorderBrush = Brushes.Blue;
+                                    button.Foreground = Brushes.White;
                                 }
                                 else
                                 {
                                     button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
                                     button.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
-                                    button.Foreground = System.Windows.Media.Brushes.Black;
+                                    button.Foreground = Brushes.Black;
                                 }
-
 
                                 border.Child = button;
                                 break;
@@ -539,13 +523,10 @@ namespace Portal.Kiosco.Properties.Views
                                 border.Visibility = Visibility.Hidden;
                                 break;
                             case "O":
-                                border.Background = System.Windows.Media.Brushes.Yellow;
-                                //button.Background = System.Windows.Media.Brushes.Yellow;
-                                //button.BorderBrush = System.Windows.Media.Brushes.Yellow;
-                                //button.Foreground = System.Windows.Media.Brushes.Black;
+                                border.Background = Brushes.Yellow;
                                 label.Content = lc_valmos;
-                                label.Background = System.Windows.Media.Brushes.Yellow;
-                                label.Foreground = System.Windows.Media.Brushes.Black;
+                                label.Background = Brushes.Yellow;
+                                label.Foreground = Brushes.Black;
 
                                 label.FontSize = 14;
                                 label.FontWeight = FontWeights.Bold;
@@ -555,23 +536,19 @@ namespace Portal.Kiosco.Properties.Views
                                 border.Child = label;
                                 break;
                             case "X":
-                                button.Background = System.Windows.Media.Brushes.Green;
-                                button.BorderBrush = System.Windows.Media.Brushes.Green;
-                                button.Foreground = System.Windows.Media.Brushes.Black;
+                                button.Background = Brushes.Green;
+                                button.BorderBrush = Brushes.Green;
+                                button.Foreground = Brushes.Black;
                                 border.Child = button;
                                 break;
                             default:
-                                button.Background = System.Windows.Media.Brushes.Red;
-                                button.BorderBrush = System.Windows.Media.Brushes.Red;
-                                button.Foreground = System.Windows.Media.Brushes.Black;
+                                button.Background = Brushes.Red;
+                                button.BorderBrush = Brushes.Red;
+                                button.Foreground = Brushes.Black;
                                 border.Child = button;
                                 break;
                         }
                     }
-
-
-
-
 
                     ContenedorSala.Rows = bolVenta.FilSala;
                     ContenedorSala.Columns = bolVenta.ColSala;
@@ -588,58 +565,27 @@ namespace Portal.Kiosco.Properties.Views
             {
                 string silla = button.Content.ToString();
 
-                // Verifica si la silla ya está seleccionada
                 if (sillasSeleccionadasArray.Contains(silla))
                 {
-                    // Si la silla ya está seleccionada, la elimina de la selección
-
-                    // Encuentra el índice de la silla seleccionada en el arreglo
                     int index = Array.IndexOf(sillasSeleccionadasArray, silla);
 
-                    // Elimina la silla seleccionada del arreglo
                     sillasSeleccionadasArray[index] = null;
 
-                    // Cambia el color del botón a su estado original
                     button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
 
-                    // Decrementa el contador de sillas seleccionadas
                     sillasSeleccionadas--;
                 }
                 else if (sillasSeleccionadas < Convert.ToInt32(App.CantSillasBol))
                 {
-                    // Si la silla no está seleccionada y el límite de selección no ha sido alcanzado
 
-                    // Encuentra el primer índice vacío en el arreglo de sillas seleccionadas
                     int index = Array.IndexOf(sillasSeleccionadasArray, null);
+
                     App.BolVentaRoom.SelUbicaciones = App.BolVentaRoom.SelUbicaciones + button.Name.ToString() + ";";
-                    //zonaseleccionada = button.Name.ToString();
-
-                    //Ubicaciones[,] ubicaciones = App.BolVentaRoom.MapaSala;
-
-                    //for (int i = 0; i < ubicaciones.GetLength(0); i++)
-                    //{
-                    //    for (int j = 0; j < ubicaciones.GetLength(1); j++)
-                    //    {
-                    //        Ubicaciones ubicacion = ubicaciones[i, j];
-                    //        string lc_values = string.Concat(ubicacion.EstadoSilla, "_", ubicacion.FilRelativa, "_", ubicacion.ColRelativa, "_", ubicacion.Fila, "_", ubicacion.Columna, "_");
-
-                    //        if (zonaseleccionada == lc_values)
-                    //        {
-                    //            CalcularTarifa(ubicacion.TipoZona);
-                    //            break;
-                    //        }
-
-                    //    }
-                    //}
-
-
-                    // Almacena el contenido del botón en el arreglo de sillas seleccionadas
+                  
                     sillasSeleccionadasArray[index] = silla;
 
-                    // Cambia el color del botón a rojo
                     button.Background = Brushes.Red;
 
-                    // Incrementa el contador de sillas seleccionadas
                     sillasSeleccionadas++;
                 }
                 else
@@ -648,30 +594,20 @@ namespace Portal.Kiosco.Properties.Views
                     isError = true;
                 }
 
-                // Actualiza el contenido del UniformGrid con las sillas seleccionadas
-
-
-
-
-
-
                 ActualizarInterfazSillasSeleccionadas();
             }
         }
 
         private void ActualizarInterfazSillasSeleccionadas()
         {
-            // Borra todos los elementos existentes en el UniformGrid
             ContenedorBoletas.Children.Clear();
 
-            // Recorre el arreglo de sillas seleccionadas y agrega cada una al UniformGrid
             for (int i = 0; i < sillasSeleccionadasArray.Length; i++)
             {
                 string silla = sillasSeleccionadasArray[i];
 
                 if (silla != null)
                 {
-                    // Crea un nuevo Label para la silla
                     Label labelSilla = new Label();
                     labelSilla.Content = silla;
                     labelSilla.FontFamily = new FontFamily("Myanmar Khyay");
@@ -679,7 +615,6 @@ namespace Portal.Kiosco.Properties.Views
                     labelSilla.VerticalAlignment = VerticalAlignment.Center;
                     labelSilla.HorizontalAlignment = HorizontalAlignment.Center;
 
-                    // Crea un nuevo Label para la cantidad (siempre será 1)
                     Label labelCantidad = new Label();
                     labelCantidad.Content = App.ValorTarifa.ToString("C0");
                     labelCantidad.FontFamily = new FontFamily("Myanmar Khyay");
@@ -687,13 +622,11 @@ namespace Portal.Kiosco.Properties.Views
                     labelCantidad.VerticalAlignment = VerticalAlignment.Center;
                     labelCantidad.HorizontalAlignment = HorizontalAlignment.Center;
 
-                    // Agrega los Labels al UniformGrid
                     ContenedorBoletas.Children.Add(labelSilla);
                     ContenedorBoletas.Children.Add(labelCantidad);
                 }
             }
 
-            // Muestra el total actualizado
             if (sillasSeleccionadas == 0)
             {
                 lblTotal.Content = Convert.ToDecimal("0").ToString("C0");
@@ -711,7 +644,6 @@ namespace Portal.Kiosco.Properties.Views
             Principal openWindows = new Principal();
             openWindows.Show();
             this.Close();
-
         }
 
         public void Room(BolVenta pr_bolvta)
@@ -924,13 +856,11 @@ namespace Portal.Kiosco.Properties.Views
                     lc_srvpar = lc_srvpar.Replace("ubicaciones", "Ubicaciones");
                     lc_srvpar = lc_srvpar.Replace("NombrePelicula", "Descripcion");
 
-
                     //Encriptar Json GRU
                     lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
                     //Consumir servicio GRU
                     lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scogru/"), lc_srvpar);
-
 
                     //Validar respuesta GRU
                     if (lc_result.Substring(0, 1) == "0")
@@ -950,7 +880,6 @@ namespace Portal.Kiosco.Properties.Views
                             {
                                 //MessageBox.Show("");
                                 isError = true;
-
                             }
                             else
                             {
