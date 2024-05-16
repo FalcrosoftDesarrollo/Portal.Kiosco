@@ -126,6 +126,8 @@ namespace Portal.Kiosco.Properties.Views
                 TipoCompra = App.TipoCompra,
                 KeySecuencia = App.Secuencia,
                 SwtVenta = "V",
+                SwitchCashback = "S",
+                Valor = App.TotalPagar,
             };
             App.Payment(producto);
         }

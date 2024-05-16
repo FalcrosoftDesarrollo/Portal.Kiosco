@@ -40,7 +40,7 @@ namespace Portal.Kiosco
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; 
+            bool isMainWindowOpen = false;
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -76,7 +76,7 @@ namespace Portal.Kiosco
                 });
             }
 
-            return isMainWindowOpen; 
+            return isMainWindowOpen;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -189,6 +189,12 @@ namespace Portal.Kiosco
 
                             Usuario = App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
                             App.EmailEli = App.ob_diclst["Login"].ToString();
+                            App.NombreEli = App.ob_diclst["Nombre"].ToString();
+                            App.ApellidoEli = App.ob_diclst["Apellido"].ToString();
+                            App.NroDocumento = App.ob_diclst["Documento"].ToString();
+                            App.Direccion = App.ob_diclst["Direccion"].ToString();
+                            App.TelefonoEli = App.ob_diclst["Celular"].ToString();
+
                             if (Usuario != "")
                             {
                                 getnuevapantalla();
@@ -202,7 +208,7 @@ namespace Portal.Kiosco
                     System.Windows.MessageBox.Show(ex.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                Thread.Sleep(100); 
+                Thread.Sleep(100);
             }
         }
     }
