@@ -18,12 +18,17 @@ namespace Portal.Kiosco.Properties.Views
     {
         private readonly IOptions<MyConfig> config;
         private IConfiguration configuration;
-        private int ContadorProductos = 1;
+        private int ContadorProductos = 0;
         private List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria, int cantidad)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal, int)>();
         private List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria, int cantidad)> datosFinalesComida = new List<(decimal, string, decimal, string, decimal, int)>();
         private bool isThreadActive = true;
-        
-
+        private int contadorProdModificados = 1;
+        private List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria, int cantidad)> opcionSeleccionadabebidasDetalle = new List<(decimal, string, decimal, string, decimal, int)>();
+        private List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria, int cantidad)> opcionSeleccionadacomidasDetalle = new List<(decimal, string, decimal, string, decimal, int)>();
+        private decimal preciodefault = 0;
+        private decimal preciobebida = 0;
+        private decimal preciocomida = 0;
+        private decimal precioAdicionales = 0;
         public Combodeluxe1()
         {
             InitializeComponent();
@@ -199,7 +204,7 @@ namespace Portal.Kiosco.Properties.Views
                     }
 
                 }
-                ContadorProductos++;
+                //ContadorProductos++;
             }
             ProductosAdicionales();
         }
@@ -228,19 +233,14 @@ namespace Portal.Kiosco.Properties.Views
             var descripcion = radioButton.Content.ToString();
             var codigo = radioButton.Name.Substring(1);
 
-            var preciodefault = datosFinalesComida
-    .Where(x => x.frecuenciaComida == "default")
-    .Sum(x => x.PrecioFinalComida);
-            decimal preciobebida = 0;
-            decimal preciocomida = 0;
-            decimal precioAdicionales = 0;
+            preciodefault = datosFinalesComida
+            .Where(x => x.frecuenciaComida == "default")
+            .Sum(x => x.PrecioFinalComida);
 
             var opcionSeleccionadabebidas = 0;
             var opcionSeleccionadacomidas = 0;
-
-
-            List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria, int cantidad)> opcionSeleccionadabebidasDetalle = new List<(decimal, string, decimal, string, decimal, int)>();
-            List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria, int cantidad)> opcionSeleccionadacomidasDetalle = new List<(decimal, string, decimal, string, decimal, int)>();
+            opcionSeleccionadabebidasDetalle.Clear();
+            opcionSeleccionadacomidasDetalle.Clear();
 
             foreach (var child in radioComidas.Children)
             {
@@ -252,6 +252,8 @@ namespace Portal.Kiosco.Properties.Views
                     opcionSeleccionadacomidasDetalle.Add(producto);
                 }
             }
+
+
 
             foreach (var child in radiobebidas.Children)
             {
@@ -280,346 +282,391 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-
-            var datosselecionado = string.Empty;
-            var productosSeleccionados = App.ProductosSeleccionados;
-            
-
-            foreach (var productocambiado in productosSeleccionados)
-            {
-                
-                var productonew = new Producto();
-
-                if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 0)
-                {
-                    productonew = productocambiado;
-                    productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                    productonew.CanCategoria_1 = 1;
-                    productonew.CanCategoria_2 = 0;
-                    productonew.CanCategoria_3 = 0;
-                    productonew.CanCategoria_4 = 0;
-                    productonew.CanCategoria_5 = 0;
-
-                    productonew.Cantidad = 1;
-                    productonew.Cantidad1 = 1;
-                    productonew.Cantidad11 = 0;
-                    productonew.Cantidad111 = 0;
-                    productonew.Cantidad1111 = 0;
-
-                    productonew.Cantidad2 = 0;
-                    productonew.Cantidad22 = 0;
-                    productonew.Cantidad222 = 0;
-                    productonew.Cantidad2222 = 0;
-
-                    productonew.Cantidad3 = 0;
-                    productonew.Cantidad33 = 0;
-                    productonew.Cantidad333 = 0;
-                    productonew.Cantidad3333 = 0;
-
-                    productonew.Cantidad4 = 0;
-                    productonew.Cantidad44 = 0;
-                    productonew.Cantidad444 = 0;
-                    productonew.Cantidad4444 = 0;
-
-                    productonew.Cantidad5 = 0;
-                    productonew.Cantidad55 = 0;
-                    productonew.Cantidad555 = 0;
-                    productonew.Cantidad5555 = 0;
-
-                    foreach (var bebidas in opcionSeleccionadabebidasDetalle)
-                    {
-                        datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
-                    }
-
-                    productonew.Check1 = datosselecionado;
-
-                    productonew.ProCantidad_1 = 1;
-                    productonew.ProCantidad_2 = 0;
-                    productonew.ProCantidad_3 = 0;
-                    productonew.ProCantidad_4 = 0;
-                    productonew.ProCantidad_5 = 0;
-
-                    productonew.ProCategoria_1 = opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria;
-                    productonew.ProCategoria_2 = 0;
-                    productonew.ProCategoria_3 = 0;
-                    productonew.ProCategoria_4 = 0;
-                    productonew.ProCategoria_5 = 0;
-
-                    productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella;
-                    productonew.ProProducto_2 = 0;
-                    productonew.ProProducto_3 = 0;
-                    productonew.ProProducto_4 = 0;
-                    productonew.ProProducto_5 = 0;
-
-                    productonew.OrdenView = 0;
-                    productonew.NombreEli = App.NombreEli;
-                    productonew.EmailEli = App.EmailEli;
-                    productonew.KeyTeatro = App.idCine;
-                    productonew.KeySecuencia = "0";
-                    productonew.Tipo = "C";
-                    productonew.TipoCompra = "P";
-                    productonew.TelefonoEli = App.TelefonoEli;
-                    productonew.SwitchAdd = "N";
-                    productonew.SwtVenta = "V";
-
-                }
-
-                if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 0)
-                {
-                    productonew = productocambiado;
-                    productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                    productonew.CanCategoria_1 = 2;
-                    productonew.CanCategoria_2 = 0;
-                    productonew.CanCategoria_3 = 0;
-                    productonew.CanCategoria_4 = 0;
-                    productonew.CanCategoria_5 = 0;
-
-                    productonew.Cantidad = 1;
-                    productonew.Cantidad1 = 1;
-                    productonew.Cantidad11 = 1;
-                    productonew.Cantidad111 = 0;
-                    productonew.Cantidad1111 = 0;
-
-                    productonew.Cantidad2 = 0;
-                    productonew.Cantidad22 = 0;
-                    productonew.Cantidad222 = 0;
-                    productonew.Cantidad2222 = 0;
-
-                    productonew.Cantidad3 = 0;
-                    productonew.Cantidad33 = 0;
-                    productonew.Cantidad333 = 0;
-                    productonew.Cantidad3333 = 0;
-
-                    productonew.Cantidad4 = 0;
-                    productonew.Cantidad44 = 0;
-                    productonew.Cantidad444 = 0;
-                    productonew.Cantidad4444 = 0;
-
-                    productonew.Cantidad5 = 0;
-                    productonew.Cantidad55 = 0;
-                    productonew.Cantidad555 = 0;
-                    productonew.Cantidad5555 = 0;
-
-                    foreach (var bebidas in opcionSeleccionadabebidasDetalle)
-                    {
-                        datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
-                    }
-
-                    productonew.Check1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[0].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[0].PrecioFinalBotella;
-                    productonew.Check11 = opcionSeleccionadabebidasDetalle[1].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[1].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[1].PrecioFinalBotella;
-
-                    productonew.KeySecuencia = "0";
-                    productonew.OrdenView = 0;
-
-                    productonew.ProCantidad_1 = 1;
-                    productonew.ProCantidad_2 = 1;
-                    productonew.ProCantidad_3 = 0;
-                    productonew.ProCantidad_4 = 0;
-                    productonew.ProCantidad_5 = 0;
-
-                    productonew.ProCategoria_1 = opcionSeleccionadabebidasDetalle[0].categoria;
-                    productonew.ProCategoria_2 = 0;
-                    productonew.ProCategoria_3 = 0;
-                    productonew.ProCategoria_4 = 0;
-                    productonew.ProCategoria_5 = 0;
-
-                    productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella;
-                    productonew.ProProducto_2 = opcionSeleccionadabebidasDetalle[1].CodigoBotella;
-                    productonew.ProProducto_3 = 0;
-                    productonew.ProProducto_4 = 0;
-                    productonew.ProProducto_5 = 0;
-
-                    productonew.NombreEli = App.NombreEli;
-                    productonew.EmailEli = App.EmailEli;
-                    productonew.KeyTeatro = App.idCine;
-                    productonew.Tipo = "C";
-                    productonew.TipoCompra = "P";
-                    productonew.TelefonoEli = App.TelefonoEli;
-                    productonew.SwitchAdd = "N";
-                    productonew.SwtVenta = "V";
-
-                }
-
-                if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 1)
-                {
-
-                    productonew = productocambiado;
-                    productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                    productonew.CanCategoria_1 = 1;
-                    productonew.CanCategoria_2 = 1;
-                    productonew.CanCategoria_3 = 0;
-                    productonew.CanCategoria_4 = 0;
-                    productonew.CanCategoria_5 = 0;
-
-                    productonew.Cantidad = 1;
-                    productonew.Cantidad1 = 1;
-                    productonew.Cantidad11 = 0;
-                    productonew.Cantidad111 = 0;
-                    productonew.Cantidad1111 = 0;
-
-                    productonew.Cantidad2 = 1;
-                    productonew.Cantidad22 = 0;
-                    productonew.Cantidad222 = 0;
-                    productonew.Cantidad2222 = 0;
-
-                    productonew.Cantidad3 = 0;
-                    productonew.Cantidad33 = 0;
-                    productonew.Cantidad333 = 0;
-                    productonew.Cantidad3333 = 0;
-
-                    productonew.Cantidad4 = 0;
-                    productonew.Cantidad44 = 0;
-                    productonew.Cantidad444 = 0;
-                    productonew.Cantidad4444 = 0;
-
-                    productonew.Cantidad5 = 0;
-                    productonew.Cantidad55 = 0;
-                    productonew.Cantidad555 = 0;
-                    productonew.Cantidad5555 = 0;
-
-                    foreach (var bebidas in opcionSeleccionadabebidasDetalle)
-                    {
-                        datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
-                    }
-
-                    productonew.Check1 = datosselecionado;
-
-                    foreach (var comidas in opcionSeleccionadacomidasDetalle)
-                    {
-                        datosselecionado = comidas.CodigoComida.ToString() + "-" + comidas.NombreFinalComida.ToString() + "+Categoria:" + comidas.categoria + "-Precio:" + comidas.PrecioFinalComida;
-                    }
-
-                    productonew.Check2 = datosselecionado;
-
-                    productonew.ProCantidad_1 = 1;
-                    productonew.ProCantidad_2 = 0;
-                    productonew.ProCantidad_3 = 0;
-                    productonew.ProCantidad_4 = 0;
-                    productonew.ProCantidad_5 = 0;
-
-                    productonew.ProCategoria_1 = opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria;
-                    productonew.ProCategoria_2 = opcionSeleccionadabebidasDetalle.FirstOrDefault().categoria;
-                    productonew.ProCategoria_3 = 0;
-                    productonew.ProCategoria_4 = 0;
-                    productonew.ProCategoria_5 = 0;
-
-                    productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella;
-                    productonew.ProProducto_2 = 0;
-                    productonew.ProProducto_3 = 0;
-                    productonew.ProProducto_4 = 0;
-                    productonew.ProProducto_5 = 0;
-
-                    productonew.OrdenView = 0;
-                    productonew.NombreEli = App.NombreEli;
-                    productonew.EmailEli = App.EmailEli;
-                    productonew.KeyTeatro = App.idCine;
-                    productonew.KeySecuencia = "0";
-                    productonew.Tipo = "C";
-                    productonew.TipoCompra = "P";
-                    productonew.TelefonoEli = App.TelefonoEli;
-                    productonew.SwitchAdd = "N";
-                    productonew.SwtVenta = "V";                 
-
-                }
-
-                if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 2)
-                {
-                    productonew = productocambiado;
-                    productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                    productonew.CanCategoria_1 = 2;
-                    productonew.CanCategoria_2 = 2;
-                    productonew.CanCategoria_3 = 0;
-                    productonew.CanCategoria_4 = 0;
-                    productonew.CanCategoria_5 = 0;
-
-                    productonew.Cantidad = 1;
-                    productonew.Cantidad1 = 1;
-                    productonew.Cantidad11 = 1;
-                    productonew.Cantidad111 = 0;
-                    productonew.Cantidad1111 = 0;
-
-                    productonew.Cantidad2 = 1;
-                    productonew.Cantidad22 = 1;
-                    productonew.Cantidad222 = 0;
-                    productonew.Cantidad2222 = 0;
-
-                    productonew.Cantidad3 = 0;
-                    productonew.Cantidad33 = 0;
-                    productonew.Cantidad333 = 0;
-                    productonew.Cantidad3333 = 0;
-
-                    productonew.Cantidad4 = 0;
-                    productonew.Cantidad44 = 0;
-                    productonew.Cantidad444 = 0;
-                    productonew.Cantidad4444 = 0;
-
-                    productonew.Cantidad5 = 0;
-                    productonew.Cantidad55 = 0;
-                    productonew.Cantidad555 = 0;
-                    productonew.Cantidad5555 = 0;
-
-                    foreach (var comidas in opcionSeleccionadacomidasDetalle)
-                    {
-                        datosselecionado = comidas.CodigoComida.ToString() + "-" + comidas.NombreFinalComida.ToString() + "+Categoria:" + comidas.categoria + "-Precio:" + comidas.PrecioFinalComida;
-                    }
-
-                    productonew.Check1 = opcionSeleccionadacomidasDetalle[0].CodigoComida + "-" + opcionSeleccionadacomidasDetalle[0].NombreFinalComida + "+Categoria:" + opcionSeleccionadacomidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadacomidasDetalle[0].PrecioFinalComida;
-                    productonew.Check11 = opcionSeleccionadacomidasDetalle[1].CodigoComida + "-" + opcionSeleccionadacomidasDetalle[1].NombreFinalComida + "+Categoria:" + opcionSeleccionadacomidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadacomidasDetalle[1].PrecioFinalComida;
-
-                    foreach (var bebidas in opcionSeleccionadabebidasDetalle)
-                    {
-                        datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
-                    }
-
-                    productonew.Check2 = opcionSeleccionadabebidasDetalle[0].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[0].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[0].PrecioFinalBotella;
-                    productonew.Check22 = opcionSeleccionadabebidasDetalle[1].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[1].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[1].PrecioFinalBotella;
-
-                    productonew.ProCantidad_1 = 1;
-                    productonew.ProCantidad_2 = 1;
-                    productonew.ProCantidad_3 = 0;
-                    productonew.ProCantidad_4 = 0;
-                    productonew.ProCantidad_5 = 0;
-
-                    productonew.ProCategoria_1 = opcionSeleccionadabebidasDetalle[0].categoria;
-                    productonew.ProCategoria_2 = opcionSeleccionadabebidasDetalle[1].categoria;
-                    productonew.ProCategoria_3 = 0;
-                    productonew.ProCategoria_4 = 0;
-                    productonew.ProCategoria_5 = 0;
-
-                    productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella;
-                    productonew.ProProducto_2 = opcionSeleccionadabebidasDetalle[1].CodigoBotella;
-                    productonew.ProProducto_3 = 0;
-                    productonew.ProProducto_4 = 0;
-                    productonew.ProProducto_5 = 0;
-
-                    productonew.KeySecuencia = "0";
-                    productonew.NombreEli = App.NombreEli;
-                    productonew.EmailEli = App.EmailEli;
-                    productonew.KeyTeatro = App.idCine;
-                    productonew.Tipo = "C";
-                    productonew.TipoCompra = "P";
-                    productonew.TelefonoEli = App.TelefonoEli;
-                    productonew.SwitchAdd = "N";
-                    productonew.SwtVenta = "V";
-
-                }
-
-                App.ProductosCambiados.Add(productonew);
-                var productocambiadoCod = productocambiado.Codigo;
-
-                // Buscar el producto en la lista de ProductosSeleccionados por su código
-                var productoAEliminar = productosSeleccionados.FirstOrDefault(p => p.Codigo == productocambiadoCod);
-
-                // Si el producto existe en la lista, elimínalo
-                if (productoAEliminar != null)
-                {
-                    productosSeleccionados.Remove(productoAEliminar);
-                }
-            }
-
             totalLabel.Content = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString("C0");
         }
 
+        public void ProductosModificados()
+        {
+
+            if (opcionSeleccionadabebidasDetalle.Count == 0 && opcionSeleccionadabebidasDetalle.Count == 0)
+            {
+
+                var preciodefault = datosFinalesComida
+        .Where(x => x.frecuenciaComida == "default")
+        .Sum(x => x.PrecioFinalComida);
+
+                var opcionSeleccionadabebidas = 0;
+                var opcionSeleccionadacomidas = 0;
+                opcionSeleccionadabebidasDetalle.Clear();
+                opcionSeleccionadacomidasDetalle.Clear();
+
+                // Recorrer los RadioButtons en radioComidas
+                foreach (var child in radioComidas.Children)
+                {
+                    if (child is RadioButton radioButtonComida && radioButtonComida.IsChecked == true)
+                    {
+                        opcionSeleccionadacomidas = Convert.ToInt32(radioButtonComida.Name.Substring(2));
+                        var producto = datosFinalesComida.FirstOrDefault(x => x.CodigoComida == opcionSeleccionadacomidas);
+                        if (producto.CodigoComida != null)
+                        {
+                            preciocomida += producto.PrecioFinalComida;
+                            opcionSeleccionadacomidasDetalle.Add(producto);
+                        }
+                    }
+                }
+
+                // Recorrer los RadioButtons en radiobebidas
+                foreach (var child in radiobebidas.Children)
+                {
+                    if (child is RadioButton radioButtonBebidas && radioButtonBebidas.IsChecked == true)
+                    {
+                        opcionSeleccionadabebidas = Convert.ToInt32(radioButtonBebidas.Name.Substring(2));
+                        var producto = datosFinalesBotella.FirstOrDefault(x => x.CodigoBotella == opcionSeleccionadabebidas);
+                        if (producto.CodigoBotella != null)
+                        {
+                            preciobebida += producto.PrecioFinalBotella;
+                            opcionSeleccionadabebidasDetalle.Add(producto);
+                        }
+                    }
+                }
+
+                // Recorrer los RadioButtons en radioAdicionales
+                foreach (var child in radioAdicionales.Children)
+                {
+                    if (child is RadioButton radioButtonAdicionales && radioButtonAdicionales.IsChecked == true)
+                    {
+                        string opcionSeleccionada = radioButtonAdicionales.Name.Substring(1);
+                        precioAdicionales = buscarPrecioAdicionales(opcionSeleccionada);
+                    }
+                }
+
+            }
+
+
+            var datosselecionado = string.Empty;
+            var productosSeleccionados = App.ProductosSeleccionados;
+            var productosCambiados = App.ProductosCambiados;
+            var itemContador = 1;
+
+            foreach (var productocambiado in productosSeleccionados)
+            {
+                var productonew = new Producto();
+
+                if (contadorProdModificados == itemContador)
+                {
+                    if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 0)
+                    {
+                        productonew = productocambiado;
+                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
+                        productonew.CanCategoria_1 = 1;
+                        productonew.CanCategoria_2 = 0;
+                        productonew.CanCategoria_3 = 0;
+                        productonew.CanCategoria_4 = 0;
+                        productonew.CanCategoria_5 = 0;
+
+                        productonew.Cantidad = 1;
+                        productonew.Cantidad1 = 1;
+                        productonew.Cantidad11 = 0;
+                        productonew.Cantidad111 = 0;
+                        productonew.Cantidad1111 = 0;
+
+                        productonew.Cantidad2 = 0;
+                        productonew.Cantidad22 = 0;
+                        productonew.Cantidad222 = 0;
+                        productonew.Cantidad2222 = 0;
+
+                        productonew.Cantidad3 = 0;
+                        productonew.Cantidad33 = 0;
+                        productonew.Cantidad333 = 0;
+                        productonew.Cantidad3333 = 0;
+
+                        productonew.Cantidad4 = 0;
+                        productonew.Cantidad44 = 0;
+                        productonew.Cantidad444 = 0;
+                        productonew.Cantidad4444 = 0;
+
+                        productonew.Cantidad5 = 0;
+                        productonew.Cantidad55 = 0;
+                        productonew.Cantidad555 = 0;
+                        productonew.Cantidad5555 = 0;
+
+                        foreach (var bebidas in opcionSeleccionadabebidasDetalle)
+                        {
+                            datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
+                        }
+
+                        productonew.Check1 = datosselecionado;
+
+                        productonew.ProCantidad_1 = 1;
+                        productonew.ProCantidad_2 = 0;
+                        productonew.ProCantidad_3 = 0;
+                        productonew.ProCantidad_4 = 0;
+                        productonew.ProCantidad_5 = 0;
+
+                        productonew.ProCategoria_1 = opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria;
+                        productonew.ProCategoria_2 = 0;
+                        productonew.ProCategoria_3 = 0;
+                        productonew.ProCategoria_4 = 0;
+                        productonew.ProCategoria_5 = 0;
+
+                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella;
+                        productonew.ProProducto_2 = 0;
+                        productonew.ProProducto_3 = 0;
+                        productonew.ProProducto_4 = 0;
+                        productonew.ProProducto_5 = 0;
+
+                        productonew.OrdenView = 0;
+                        productonew.NombreEli = App.NombreEli;
+                        productonew.EmailEli = App.EmailEli;
+                        productonew.KeyTeatro = App.idCine;
+                        productonew.KeySecuencia = "0";
+                        productonew.Tipo = "C";
+                        productonew.TipoCompra = "P";
+                        productonew.TelefonoEli = App.TelefonoEli;
+                        productonew.SwitchAdd = "N";
+                        productonew.SwtVenta = "V";
+
+                    }
+
+                    if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 0)
+                    {
+                        productonew = productocambiado;
+                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
+                        productonew.CanCategoria_1 = 2;
+                        productonew.CanCategoria_2 = 0;
+                        productonew.CanCategoria_3 = 0;
+                        productonew.CanCategoria_4 = 0;
+                        productonew.CanCategoria_5 = 0;
+
+                        productonew.Cantidad = 1;
+                        productonew.Cantidad1 = 1;
+                        productonew.Cantidad11 = 1;
+                        productonew.Cantidad111 = 0;
+                        productonew.Cantidad1111 = 0;
+
+                        productonew.Cantidad2 = 0;
+                        productonew.Cantidad22 = 0;
+                        productonew.Cantidad222 = 0;
+                        productonew.Cantidad2222 = 0;
+
+                        productonew.Cantidad3 = 0;
+                        productonew.Cantidad33 = 0;
+                        productonew.Cantidad333 = 0;
+                        productonew.Cantidad3333 = 0;
+
+                        productonew.Cantidad4 = 0;
+                        productonew.Cantidad44 = 0;
+                        productonew.Cantidad444 = 0;
+                        productonew.Cantidad4444 = 0;
+
+                        productonew.Cantidad5 = 0;
+                        productonew.Cantidad55 = 0;
+                        productonew.Cantidad555 = 0;
+                        productonew.Cantidad5555 = 0;
+
+                        foreach (var bebidas in opcionSeleccionadabebidasDetalle)
+                        {
+                            datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
+                        }
+
+                        productonew.Check1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[0].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[0].PrecioFinalBotella;
+                        productonew.Check11 = opcionSeleccionadabebidasDetalle[1].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[1].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[1].PrecioFinalBotella;
+
+                        productonew.KeySecuencia = "0";
+                        productonew.OrdenView = 0;
+
+                        productonew.ProCantidad_1 = 1;
+                        productonew.ProCantidad_2 = 1;
+                        productonew.ProCantidad_3 = 0;
+                        productonew.ProCantidad_4 = 0;
+                        productonew.ProCantidad_5 = 0;
+
+                        productonew.ProCategoria_1 = opcionSeleccionadabebidasDetalle[0].categoria;
+                        productonew.ProCategoria_2 = 0;
+                        productonew.ProCategoria_3 = 0;
+                        productonew.ProCategoria_4 = 0;
+                        productonew.ProCategoria_5 = 0;
+
+                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella;
+                        productonew.ProProducto_2 = opcionSeleccionadabebidasDetalle[1].CodigoBotella;
+                        productonew.ProProducto_3 = 0;
+                        productonew.ProProducto_4 = 0;
+                        productonew.ProProducto_5 = 0;
+
+                        productonew.NombreEli = App.NombreEli;
+                        productonew.EmailEli = App.EmailEli;
+                        productonew.KeyTeatro = App.idCine;
+                        productonew.Tipo = "C";
+                        productonew.TipoCompra = "P";
+                        productonew.TelefonoEli = App.TelefonoEli;
+                        productonew.SwitchAdd = "N";
+                        productonew.SwtVenta = "V";
+
+                    }
+
+                    if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 1)
+                    {
+
+                        productonew = productocambiado;
+                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
+                        productonew.CanCategoria_1 = 1;
+                        productonew.CanCategoria_2 = 1;
+                        productonew.CanCategoria_3 = 0;
+                        productonew.CanCategoria_4 = 0;
+                        productonew.CanCategoria_5 = 0;
+
+                        productonew.Cantidad = 1;
+                        productonew.Cantidad1 = 1;
+                        productonew.Cantidad11 = 0;
+                        productonew.Cantidad111 = 0;
+                        productonew.Cantidad1111 = 0;
+
+                        productonew.Cantidad2 = 1;
+                        productonew.Cantidad22 = 0;
+                        productonew.Cantidad222 = 0;
+                        productonew.Cantidad2222 = 0;
+
+                        productonew.Cantidad3 = 0;
+                        productonew.Cantidad33 = 0;
+                        productonew.Cantidad333 = 0;
+                        productonew.Cantidad3333 = 0;
+
+                        productonew.Cantidad4 = 0;
+                        productonew.Cantidad44 = 0;
+                        productonew.Cantidad444 = 0;
+                        productonew.Cantidad4444 = 0;
+
+                        productonew.Cantidad5 = 0;
+                        productonew.Cantidad55 = 0;
+                        productonew.Cantidad555 = 0;
+                        productonew.Cantidad5555 = 0;
+
+                        datosselecionado = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella.ToString() + "-" + opcionSeleccionadabebidasDetalle.FirstOrDefault().NombreFinalBotella.ToString() + "+Categoria:" + opcionSeleccionadabebidasDetalle.FirstOrDefault().categoria + "-Precio:" + opcionSeleccionadabebidasDetalle.FirstOrDefault().PrecioFinalBotella;
+
+                        productonew.Check1 = datosselecionado;
+
+                        datosselecionado = opcionSeleccionadacomidasDetalle.FirstOrDefault().CodigoComida.ToString() + "-" + opcionSeleccionadacomidasDetalle.FirstOrDefault().NombreFinalComida.ToString() + "+Categoria:" + opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria + "-Precio:" + opcionSeleccionadacomidasDetalle.FirstOrDefault().PrecioFinalComida;
+
+                        productonew.Check2 = datosselecionado;
+
+                        productonew.ProCantidad_1 = 1;
+                        productonew.ProCantidad_2 = 0;
+                        productonew.ProCantidad_3 = 0;
+                        productonew.ProCantidad_4 = 0;
+                        productonew.ProCantidad_5 = 0;
+
+                        productonew.ProCategoria_1 = opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria;
+                        productonew.ProCategoria_2 = opcionSeleccionadabebidasDetalle.FirstOrDefault().categoria;
+                        productonew.ProCategoria_3 = 0;
+                        productonew.ProCategoria_4 = 0;
+                        productonew.ProCategoria_5 = 0;
+
+                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella;
+                        productonew.ProProducto_2 = 0;
+                        productonew.ProProducto_3 = 0;
+                        productonew.ProProducto_4 = 0;
+                        productonew.ProProducto_5 = 0;
+
+                        productonew.OrdenView = 0;
+                        productonew.NombreEli = App.NombreEli;
+                        productonew.EmailEli = App.EmailEli;
+                        productonew.KeyTeatro = App.idCine;
+                        productonew.KeySecuencia = "0";
+                        productonew.Tipo = "C";
+                        productonew.TipoCompra = "P";
+                        productonew.TelefonoEli = App.TelefonoEli;
+                        productonew.SwitchAdd = "N";
+                        productonew.SwtVenta = "V";
+
+                    }
+
+                    if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 2)
+                    {
+                        productonew = productocambiado;
+                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
+                        productonew.CanCategoria_1 = 2;
+                        productonew.CanCategoria_2 = 2;
+                        productonew.CanCategoria_3 = 0;
+                        productonew.CanCategoria_4 = 0;
+                        productonew.CanCategoria_5 = 0;
+
+                        productonew.Cantidad = 1;
+                        productonew.Cantidad1 = 1;
+                        productonew.Cantidad11 = 1;
+                        productonew.Cantidad111 = 0;
+                        productonew.Cantidad1111 = 0;
+
+                        productonew.Cantidad2 = 1;
+                        productonew.Cantidad22 = 1;
+                        productonew.Cantidad222 = 0;
+                        productonew.Cantidad2222 = 0;
+
+                        productonew.Cantidad3 = 0;
+                        productonew.Cantidad33 = 0;
+                        productonew.Cantidad333 = 0;
+                        productonew.Cantidad3333 = 0;
+
+                        productonew.Cantidad4 = 0;
+                        productonew.Cantidad44 = 0;
+                        productonew.Cantidad444 = 0;
+                        productonew.Cantidad4444 = 0;
+
+                        productonew.Cantidad5 = 0;
+                        productonew.Cantidad55 = 0;
+                        productonew.Cantidad555 = 0;
+                        productonew.Cantidad5555 = 0;
+
+                        foreach (var comidas in opcionSeleccionadacomidasDetalle)
+                        {
+                            datosselecionado = comidas.CodigoComida.ToString() + "-" + comidas.NombreFinalComida.ToString() + "+Categoria:" + comidas.categoria + "-Precio:" + comidas.PrecioFinalComida;
+                        }
+
+                        productonew.Check1 = opcionSeleccionadacomidasDetalle[0].CodigoComida + "-" + opcionSeleccionadacomidasDetalle[0].NombreFinalComida + "+Categoria:" + opcionSeleccionadacomidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadacomidasDetalle[0].PrecioFinalComida;
+                        productonew.Check11 = opcionSeleccionadacomidasDetalle[1].CodigoComida + "-" + opcionSeleccionadacomidasDetalle[1].NombreFinalComida + "+Categoria:" + opcionSeleccionadacomidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadacomidasDetalle[1].PrecioFinalComida;
+
+                        foreach (var bebidas in opcionSeleccionadabebidasDetalle)
+                        {
+                            datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
+                        }
+
+                        productonew.Check2 = opcionSeleccionadabebidasDetalle[0].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[0].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[0].PrecioFinalBotella;
+                        productonew.Check22 = opcionSeleccionadabebidasDetalle[1].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[1].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[1].PrecioFinalBotella;
+
+                        productonew.ProCantidad_1 = 1;
+                        productonew.ProCantidad_2 = 1;
+                        productonew.ProCantidad_3 = 0;
+                        productonew.ProCantidad_4 = 0;
+                        productonew.ProCantidad_5 = 0;
+
+                        productonew.ProCategoria_1 = opcionSeleccionadabebidasDetalle[0].categoria;
+                        productonew.ProCategoria_2 = opcionSeleccionadabebidasDetalle[1].categoria;
+                        productonew.ProCategoria_3 = 0;
+                        productonew.ProCategoria_4 = 0;
+                        productonew.ProCategoria_5 = 0;
+
+                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella;
+                        productonew.ProProducto_2 = opcionSeleccionadabebidasDetalle[1].CodigoBotella;
+                        productonew.ProProducto_3 = 0;
+                        productonew.ProProducto_4 = 0;
+                        productonew.ProProducto_5 = 0;
+
+                        productonew.KeySecuencia = "0";
+                        productonew.NombreEli = App.NombreEli;
+                        productonew.EmailEli = App.EmailEli;
+                        productonew.KeyTeatro = App.idCine;
+                        productonew.Tipo = "C";
+                        productonew.TipoCompra = "P";
+                        productonew.TelefonoEli = App.TelefonoEli;
+                        productonew.SwitchAdd = "N";
+                        productonew.SwtVenta = "V";
+
+                    }
+
+                    App.agregarProducto(productonew);
+                }
+                itemContador++;
+            }
+        }
 
         public decimal buscarPrecioAdicionales(string opcionSeleccionada)
         {
@@ -823,7 +870,9 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            if (ContadorProductos > App.ProductosSeleccionados.Count())
+            
+
+            if (ContadorProductos == App.ProductosSeleccionados.Count())
             {
                 isThreadActive = false;
                 ResumenCompra openWindows = new ResumenCompra(config);
@@ -832,8 +881,11 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
+                ProductosModificados();
+                contadorProdModificados++;
                 CrearCombosYbebidas(App.ProductosSeleccionados);
                 ProductosAdicionales();
+                ContadorProductos++;
             }
         }
 
