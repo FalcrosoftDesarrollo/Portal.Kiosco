@@ -18,17 +18,46 @@ namespace Portal.Kiosco.Properties.Views
     {
         private readonly IOptions<MyConfig> config;
         private IConfiguration configuration;
-        private int ContadorProductos = 0;
-        private List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria, int cantidad)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal, int)>();
-        private List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria, int cantidad)> datosFinalesComida = new List<(decimal, string, decimal, string, decimal, int)>();
+        private int ContadorProductos = 1;
+        //private List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria, int cantidad)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal, int)>();
+        //private List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria, int cantidad)> datosFinalesComida = new List<(decimal, string, decimal, string, decimal, int)>();
+
+        private List<Bebida> datosFinalesBotella = new List<Bebida>();
+        private List<Comida> datosFinalesComida = new List<Comida>();
+
         private bool isThreadActive = true;
         private int contadorProdModificados = 1;
-        private List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria, int cantidad)> opcionSeleccionadabebidasDetalle = new List<(decimal, string, decimal, string, decimal, int)>();
-        private List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria, int cantidad)> opcionSeleccionadacomidasDetalle = new List<(decimal, string, decimal, string, decimal, int)>();
+        private List<Bebida> opcionSeleccionadabebidasDetalle = new List<Bebida>();
+        private List<Comida> opcionSeleccionadacomidasDetalle = new List<Comida>();
         private decimal preciodefault = 0;
         private decimal preciobebida = 0;
         private decimal preciocomida = 0;
         private decimal precioAdicionales = 0;
+
+        public class Bebida
+        {
+            public decimal CodigoBotella { get; set; }
+            public string NombreFinalBotella { get; set; }
+            public decimal PrecioFinalBotella { get; set; }
+            public string frecuenciaBotella { get; set; }
+            public decimal categoria { get; set; }
+            public int cantidad { get; set; }
+
+
+        }
+        public class Comida
+        {
+
+            public decimal CodigoComida { get; set; }
+            public string NombreFinalComida { get; set; }
+            public decimal PrecioFinalComida { get; set; }
+            public string frecuenciaComida { get; set; }
+            public decimal categoria { get; set; }
+            public int cantidad { get; set; }
+
+
+        }
+
         public Combodeluxe1()
         {
             InitializeComponent();
@@ -41,8 +70,8 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "!HOLA INVITADO";
             }
+
             CrearCombosYbebidas(App.ProductosSeleccionados);
-            ProductosAdicionales();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             Thread thread = new Thread(() =>
@@ -112,7 +141,7 @@ namespace Portal.Kiosco.Properties.Views
             int CodigoComidas = 246;
 
 
-            string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\appsettings.json";
+            string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json";
 
             var builder = new ConfigurationBuilder()
                 .AddJsonFile(appSettingsPath, optional: true, reloadOnChange: true);
@@ -204,10 +233,11 @@ namespace Portal.Kiosco.Properties.Views
                     }
 
                 }
-                //ContadorProductos++;
+                ContadorProductos++;
             }
             ProductosAdicionales();
         }
+
 
         public void ProductosAdicionales()
         {
@@ -220,12 +250,154 @@ namespace Portal.Kiosco.Properties.Views
                 radioButton.Name = "v" + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
                 radioButton.FontSize = 24; // Establece el tamaño de fuente como un valor numérico
                 radioButton.HorizontalAlignment = HorizontalAlignment.Left; // Establece la alineación horizontal
-                radioButton.GroupName = "Adicionales";
                 radioAdicionales.Children.Add(radioButton); // Agrega el botón de radio al contenedor
-                // Agregar el evento Checked
-                radioButton.Checked += RadioButton_Checked;
+                                                            // Agregar el evento Click
+
             }
         }
+
+
+        public void ProductosAdicionalesSeleccion()
+        {
+            int contadorAdicionales = 1;
+            var adicionales = new Adiciones();
+            var snacks = App.SnacksWeb;
+
+            foreach (var child in radioAdicionales.Children)
+            {
+                if (child is RadioButton radioButtonAdicionales && radioButtonAdicionales.IsChecked == true)
+                {
+                    foreach (var itemRecetaCategoria in snacks)
+                    {
+                        if (contadorAdicionales > 6) break;
+
+                        string cantidadProp = $"Cantidad_{contadorAdicionales}";
+                        string codigoProp = $"Codigo_{contadorAdicionales}";
+                        string descripcionProp = $"Descripcion_{contadorAdicionales}";
+                        string precioProp = $"Precio_{contadorAdicionales}";
+
+                        // Convertir el valor 1 a decimal
+                        adicionales.GetType().GetProperty(cantidadProp)?.SetValue(adicionales, Convert.ToDecimal(1));
+                        adicionales.GetType().GetProperty(codigoProp)?.SetValue(adicionales, itemRecetaCategoria.Codigo);
+                        adicionales.GetType().GetProperty(descripcionProp)?.SetValue(adicionales, itemRecetaCategoria.Descripcion);
+
+                        var precioGeneral = itemRecetaCategoria.Precios.FirstOrDefault()?.General;
+                        if (precioGeneral != null)
+                        {
+                            adicionales.GetType().GetProperty(precioProp)?.SetValue(adicionales, Convert.ToDecimal(precioGeneral));
+                        }
+
+                        App.AddProduct(adicionales);
+
+                        string opcionSeleccionada = radioButtonAdicionales.Name.Substring(1);
+                        precioAdicionales = buscarPrecioAdicionales(opcionSeleccionada);
+
+                        contadorAdicionales++;
+                    }
+                }
+            }
+        }
+
+
+
+        //public void ProductosAdicionalesSeleccion(object sender, RoutedEventArgs e)
+        //{
+        //    int contadorAdicionales = 1;
+        //    var adicionales = new Adiciones();
+        //    var snacks = App.SnacksWeb;
+
+        //    foreach (var child in radioAdicionales.Children)
+        //    {
+        //        if (child is RadioButton radioButtonAdicionales && radioButtonAdicionales.IsChecked == true)
+        //        {
+
+        //            foreach (var itemRecetaCategoria in snacks)
+        //            {
+
+        //                if (contadorAdicionales == 1)
+        //                {
+        //                    adicionales.Cantidad_1 = 1;
+        //                    adicionales.Codigo_1 = itemRecetaCategoria.Codigo;
+        //                    adicionales.Descripcion_1 = itemRecetaCategoria.Descripcion;
+        //                    foreach (var item in itemRecetaCategoria.Precios)
+        //                    {
+        //                        adicionales.Precio_1 = Convert.ToDecimal(item.General);
+        //                    }
+
+        //                    App.AddProduct(adicionales);
+
+        //                }
+
+        //                if (contadorAdicionales == 2)
+        //                {
+        //                    adicionales.Cantidad_2 = 1;
+        //                    adicionales.Codigo_2 = itemRecetaCategoria.Codigo;
+        //                    adicionales.Descripcion_2 = itemRecetaCategoria.Descripcion;
+        //                    foreach (var item in itemRecetaCategoria.Precios)
+        //                    {
+        //                        adicionales.Precio_2 = Convert.ToDecimal(item.General);
+        //                    }
+        //                    App.AddProduct(adicionales);
+        //                }
+
+        //                if (contadorAdicionales == 3)
+        //                {
+        //                    adicionales.Cantidad_3 = 1;
+        //                    adicionales.Codigo_3 = itemRecetaCategoria.Codigo;
+        //                    adicionales.Descripcion_3 = itemRecetaCategoria.Descripcion;
+        //                    foreach (var item in itemRecetaCategoria.Precios)
+        //                    {
+        //                        adicionales.Precio_3 = Convert.ToDecimal(item.General);
+        //                    }
+        //                    App.AddProduct(adicionales);
+        //                }
+
+        //                if (contadorAdicionales == 4)
+        //                {
+        //                    adicionales.Cantidad_4 = 1;
+        //                    adicionales.Codigo_4 = itemRecetaCategoria.Codigo;
+        //                    adicionales.Descripcion_4 = itemRecetaCategoria.Descripcion;
+        //                    foreach (var item in itemRecetaCategoria.Precios)
+        //                    {
+        //                        adicionales.Precio_4 = Convert.ToDecimal(item.General);
+        //                    }
+        //                    App.AddProduct(adicionales);
+        //                }
+
+        //                if (contadorAdicionales == 5)
+        //                {
+        //                    adicionales.Cantidad_5 = 1;
+        //                    adicionales.Codigo_5 = itemRecetaCategoria.Codigo;
+        //                    adicionales.Descripcion_5 = itemRecetaCategoria.Descripcion;
+        //                    foreach (var item in itemRecetaCategoria.Precios)
+        //                    {
+        //                        adicionales.Precio_5 = Convert.ToDecimal(item.General);
+        //                    }
+        //                    App.AddProduct(adicionales);
+        //                }
+
+        //                if (contadorAdicionales == 6)
+        //                {
+        //                    adicionales.Cantidad_6 = 1;
+        //                    adicionales.Codigo_6 = itemRecetaCategoria.Codigo;
+        //                    adicionales.Descripcion_6 = itemRecetaCategoria.Descripcion;
+        //                    foreach (var item in itemRecetaCategoria.Precios)
+        //                    {
+        //                        adicionales.Precio_5 = Convert.ToDecimal(item.General);
+        //                    }
+        //                    App.AddProduct(adicionales);
+        //                }
+
+
+        //            }
+
+        //            string opcionSeleccionada = radioButtonAdicionales.Name.Substring(1);
+        //            precioAdicionales = buscarPrecioAdicionales(opcionSeleccionada);
+
+        //            contadorAdicionales++;
+        //        }
+        //    }
+        //}
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -253,8 +425,6 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-
-
             foreach (var child in radiobebidas.Children)
             {
 
@@ -271,36 +441,22 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-            foreach (var child in radioAdicionales.Children)
-            {
-                if (child is RadioButton radioButtonAdicionales && radioButtonAdicionales.IsChecked == true)
-                {
-                    // Se encontró un RadioButton seleccionado
-                    string opcionSeleccionada = radioButtonAdicionales.Name.Substring(1);
-                    precioAdicionales = buscarPrecioAdicionales(opcionSeleccionada);
-
-                }
-            }
-
             totalLabel.Content = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString("C0");
         }
 
         public void ProductosModificados()
         {
-
-            if (opcionSeleccionadabebidasDetalle.Count == 0 && opcionSeleccionadabebidasDetalle.Count == 0)
+            if (opcionSeleccionadabebidasDetalle.Count == 0 && opcionSeleccionadacomidasDetalle.Count == 0)
             {
-
                 var preciodefault = datosFinalesComida
-        .Where(x => x.frecuenciaComida == "default")
-        .Sum(x => x.PrecioFinalComida);
+                    .Where(x => x.frecuenciaComida == "default")
+                    .Sum(x => x.PrecioFinalComida);
 
                 var opcionSeleccionadabebidas = 0;
                 var opcionSeleccionadacomidas = 0;
                 opcionSeleccionadabebidasDetalle.Clear();
                 opcionSeleccionadacomidasDetalle.Clear();
 
-                // Recorrer los RadioButtons en radioComidas
                 foreach (var child in radioComidas.Children)
                 {
                     if (child is RadioButton radioButtonComida && radioButtonComida.IsChecked == true)
@@ -315,7 +471,6 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
 
-                // Recorrer los RadioButtons en radiobebidas
                 foreach (var child in radiobebidas.Children)
                 {
                     if (child is RadioButton radioButtonBebidas && radioButtonBebidas.IsChecked == true)
@@ -329,23 +484,10 @@ namespace Portal.Kiosco.Properties.Views
                         }
                     }
                 }
-
-                // Recorrer los RadioButtons en radioAdicionales
-                foreach (var child in radioAdicionales.Children)
-                {
-                    if (child is RadioButton radioButtonAdicionales && radioButtonAdicionales.IsChecked == true)
-                    {
-                        string opcionSeleccionada = radioButtonAdicionales.Name.Substring(1);
-                        precioAdicionales = buscarPrecioAdicionales(opcionSeleccionada);
-                    }
-                }
-
             }
-
 
             var datosselecionado = string.Empty;
             var productosSeleccionados = App.ProductosSeleccionados;
-            var productosCambiados = App.ProductosCambiados;
             var itemContador = 1;
 
             foreach (var productocambiado in productosSeleccionados)
@@ -356,310 +498,29 @@ namespace Portal.Kiosco.Properties.Views
                 {
                     if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 0)
                     {
-                        productonew = productocambiado;
-                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                        productonew.CanCategoria_1 = 1;
-                        productonew.CanCategoria_2 = 0;
-                        productonew.CanCategoria_3 = 0;
-                        productonew.CanCategoria_4 = 0;
-                        productonew.CanCategoria_5 = 0;
-
-                        productonew.Cantidad = 1;
-                        productonew.Cantidad1 = 1;
-                        productonew.Cantidad11 = 0;
-                        productonew.Cantidad111 = 0;
-                        productonew.Cantidad1111 = 0;
-
-                        productonew.Cantidad2 = 0;
-                        productonew.Cantidad22 = 0;
-                        productonew.Cantidad222 = 0;
-                        productonew.Cantidad2222 = 0;
-
-                        productonew.Cantidad3 = 0;
-                        productonew.Cantidad33 = 0;
-                        productonew.Cantidad333 = 0;
-                        productonew.Cantidad3333 = 0;
-
-                        productonew.Cantidad4 = 0;
-                        productonew.Cantidad44 = 0;
-                        productonew.Cantidad444 = 0;
-                        productonew.Cantidad4444 = 0;
-
-                        productonew.Cantidad5 = 0;
-                        productonew.Cantidad55 = 0;
-                        productonew.Cantidad555 = 0;
-                        productonew.Cantidad5555 = 0;
-
-                        foreach (var bebidas in opcionSeleccionadabebidasDetalle)
-                        {
-                            datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
-                        }
-
-                        productonew.Check1 = datosselecionado;
-
-                        productonew.ProCantidad_1 = 1;
-                        productonew.ProCantidad_2 = 0;
-                        productonew.ProCantidad_3 = 0;
-                        productonew.ProCantidad_4 = 0;
-                        productonew.ProCantidad_5 = 0;
-
-                        productonew.ProCategoria_1 = opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria;
-                        productonew.ProCategoria_2 = 0;
-                        productonew.ProCategoria_3 = 0;
-                        productonew.ProCategoria_4 = 0;
-                        productonew.ProCategoria_5 = 0;
-
-                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella;
-                        productonew.ProProducto_2 = 0;
-                        productonew.ProProducto_3 = 0;
-                        productonew.ProProducto_4 = 0;
-                        productonew.ProProducto_5 = 0;
-
-                        productonew.OrdenView = 0;
-                        productonew.NombreEli = App.NombreEli;
-                        productonew.EmailEli = App.EmailEli;
-                        productonew.KeyTeatro = App.idCine;
-                        productonew.KeySecuencia = "0";
-                        productonew.Tipo = "C";
-                        productonew.TipoCompra = "P";
-                        productonew.TelefonoEli = App.TelefonoEli;
-                        productonew.SwitchAdd = "N";
-                        productonew.SwtVenta = "V";
-
+                        var bebidaDetalle = opcionSeleccionadabebidasDetalle.FirstOrDefault();
+                        productonew = UpdateProduct(productocambiado, preciodefault + bebidaDetalle.PrecioFinalBotella, 1, bebidaDetalle, null, null, null);
                     }
-
-                    if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 0)
-                    {
-                        productonew = productocambiado;
-                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                        productonew.CanCategoria_1 = 2;
-                        productonew.CanCategoria_2 = 0;
-                        productonew.CanCategoria_3 = 0;
-                        productonew.CanCategoria_4 = 0;
-                        productonew.CanCategoria_5 = 0;
-
-                        productonew.Cantidad = 1;
-                        productonew.Cantidad1 = 1;
-                        productonew.Cantidad11 = 1;
-                        productonew.Cantidad111 = 0;
-                        productonew.Cantidad1111 = 0;
-
-                        productonew.Cantidad2 = 0;
-                        productonew.Cantidad22 = 0;
-                        productonew.Cantidad222 = 0;
-                        productonew.Cantidad2222 = 0;
-
-                        productonew.Cantidad3 = 0;
-                        productonew.Cantidad33 = 0;
-                        productonew.Cantidad333 = 0;
-                        productonew.Cantidad3333 = 0;
-
-                        productonew.Cantidad4 = 0;
-                        productonew.Cantidad44 = 0;
-                        productonew.Cantidad444 = 0;
-                        productonew.Cantidad4444 = 0;
-
-                        productonew.Cantidad5 = 0;
-                        productonew.Cantidad55 = 0;
-                        productonew.Cantidad555 = 0;
-                        productonew.Cantidad5555 = 0;
-
-                        foreach (var bebidas in opcionSeleccionadabebidasDetalle)
-                        {
-                            datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
-                        }
-
-                        productonew.Check1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[0].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[0].PrecioFinalBotella;
-                        productonew.Check11 = opcionSeleccionadabebidasDetalle[1].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[1].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[1].PrecioFinalBotella;
-
-                        productonew.KeySecuencia = "0";
-                        productonew.OrdenView = 0;
-
-                        productonew.ProCantidad_1 = 1;
-                        productonew.ProCantidad_2 = 1;
-                        productonew.ProCantidad_3 = 0;
-                        productonew.ProCantidad_4 = 0;
-                        productonew.ProCantidad_5 = 0;
-
-                        productonew.ProCategoria_1 = opcionSeleccionadabebidasDetalle[0].categoria;
-                        productonew.ProCategoria_2 = 0;
-                        productonew.ProCategoria_3 = 0;
-                        productonew.ProCategoria_4 = 0;
-                        productonew.ProCategoria_5 = 0;
-
-                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella;
-                        productonew.ProProducto_2 = opcionSeleccionadabebidasDetalle[1].CodigoBotella;
-                        productonew.ProProducto_3 = 0;
-                        productonew.ProProducto_4 = 0;
-                        productonew.ProProducto_5 = 0;
-
-                        productonew.NombreEli = App.NombreEli;
-                        productonew.EmailEli = App.EmailEli;
-                        productonew.KeyTeatro = App.idCine;
-                        productonew.Tipo = "C";
-                        productonew.TipoCompra = "P";
-                        productonew.TelefonoEli = App.TelefonoEli;
-                        productonew.SwitchAdd = "N";
-                        productonew.SwtVenta = "V";
-
-                    }
-
-                    if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 1)
+                    else if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 0)
                     {
 
-                        productonew = productocambiado;
-                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                        productonew.CanCategoria_1 = 1;
-                        productonew.CanCategoria_2 = 1;
-                        productonew.CanCategoria_3 = 0;
-                        productonew.CanCategoria_4 = 0;
-                        productonew.CanCategoria_5 = 0;
-
-                        productonew.Cantidad = 1;
-                        productonew.Cantidad1 = 1;
-                        productonew.Cantidad11 = 0;
-                        productonew.Cantidad111 = 0;
-                        productonew.Cantidad1111 = 0;
-
-                        productonew.Cantidad2 = 1;
-                        productonew.Cantidad22 = 0;
-                        productonew.Cantidad222 = 0;
-                        productonew.Cantidad2222 = 0;
-
-                        productonew.Cantidad3 = 0;
-                        productonew.Cantidad33 = 0;
-                        productonew.Cantidad333 = 0;
-                        productonew.Cantidad3333 = 0;
-
-                        productonew.Cantidad4 = 0;
-                        productonew.Cantidad44 = 0;
-                        productonew.Cantidad444 = 0;
-                        productonew.Cantidad4444 = 0;
-
-                        productonew.Cantidad5 = 0;
-                        productonew.Cantidad55 = 0;
-                        productonew.Cantidad555 = 0;
-                        productonew.Cantidad5555 = 0;
-
-                        datosselecionado = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella.ToString() + "-" + opcionSeleccionadabebidasDetalle.FirstOrDefault().NombreFinalBotella.ToString() + "+Categoria:" + opcionSeleccionadabebidasDetalle.FirstOrDefault().categoria + "-Precio:" + opcionSeleccionadabebidasDetalle.FirstOrDefault().PrecioFinalBotella;
-
-                        productonew.Check1 = datosselecionado;
-
-                        datosselecionado = opcionSeleccionadacomidasDetalle.FirstOrDefault().CodigoComida.ToString() + "-" + opcionSeleccionadacomidasDetalle.FirstOrDefault().NombreFinalComida.ToString() + "+Categoria:" + opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria + "-Precio:" + opcionSeleccionadacomidasDetalle.FirstOrDefault().PrecioFinalComida;
-
-                        productonew.Check2 = datosselecionado;
-
-                        productonew.ProCantidad_1 = 1;
-                        productonew.ProCantidad_2 = 0;
-                        productonew.ProCantidad_3 = 0;
-                        productonew.ProCantidad_4 = 0;
-                        productonew.ProCantidad_5 = 0;
-
-                        productonew.ProCategoria_1 = opcionSeleccionadacomidasDetalle.FirstOrDefault().categoria;
-                        productonew.ProCategoria_2 = opcionSeleccionadabebidasDetalle.FirstOrDefault().categoria;
-                        productonew.ProCategoria_3 = 0;
-                        productonew.ProCategoria_4 = 0;
-                        productonew.ProCategoria_5 = 0;
-
-                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle.FirstOrDefault().CodigoBotella;
-                        productonew.ProProducto_2 = 0;
-                        productonew.ProProducto_3 = 0;
-                        productonew.ProProducto_4 = 0;
-                        productonew.ProProducto_5 = 0;
-
-                        productonew.OrdenView = 0;
-                        productonew.NombreEli = App.NombreEli;
-                        productonew.EmailEli = App.EmailEli;
-                        productonew.KeyTeatro = App.idCine;
-                        productonew.KeySecuencia = "0";
-                        productonew.Tipo = "C";
-                        productonew.TipoCompra = "P";
-                        productonew.TelefonoEli = App.TelefonoEli;
-                        productonew.SwitchAdd = "N";
-                        productonew.SwtVenta = "V";
-
+                        var bebidaDetalle1 = opcionSeleccionadabebidasDetalle[0];
+                        var bebidaDetalle2 = opcionSeleccionadabebidasDetalle[1];
+                        productonew = UpdateProduct(productocambiado, preciodefault + bebidaDetalle1.PrecioFinalBotella + bebidaDetalle2.PrecioFinalBotella, 2, bebidaDetalle1, null, bebidaDetalle2, null);
                     }
-
-                    if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 2)
+                    else if (opcionSeleccionadabebidasDetalle.Count == 1 && opcionSeleccionadacomidasDetalle.Count == 1)
                     {
-                        productonew = productocambiado;
-                        productonew.Valor = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString();
-                        productonew.CanCategoria_1 = 2;
-                        productonew.CanCategoria_2 = 2;
-                        productonew.CanCategoria_3 = 0;
-                        productonew.CanCategoria_4 = 0;
-                        productonew.CanCategoria_5 = 0;
-
-                        productonew.Cantidad = 1;
-                        productonew.Cantidad1 = 1;
-                        productonew.Cantidad11 = 1;
-                        productonew.Cantidad111 = 0;
-                        productonew.Cantidad1111 = 0;
-
-                        productonew.Cantidad2 = 1;
-                        productonew.Cantidad22 = 1;
-                        productonew.Cantidad222 = 0;
-                        productonew.Cantidad2222 = 0;
-
-                        productonew.Cantidad3 = 0;
-                        productonew.Cantidad33 = 0;
-                        productonew.Cantidad333 = 0;
-                        productonew.Cantidad3333 = 0;
-
-                        productonew.Cantidad4 = 0;
-                        productonew.Cantidad44 = 0;
-                        productonew.Cantidad444 = 0;
-                        productonew.Cantidad4444 = 0;
-
-                        productonew.Cantidad5 = 0;
-                        productonew.Cantidad55 = 0;
-                        productonew.Cantidad555 = 0;
-                        productonew.Cantidad5555 = 0;
-
-                        foreach (var comidas in opcionSeleccionadacomidasDetalle)
-                        {
-                            datosselecionado = comidas.CodigoComida.ToString() + "-" + comidas.NombreFinalComida.ToString() + "+Categoria:" + comidas.categoria + "-Precio:" + comidas.PrecioFinalComida;
-                        }
-
-                        productonew.Check1 = opcionSeleccionadacomidasDetalle[0].CodigoComida + "-" + opcionSeleccionadacomidasDetalle[0].NombreFinalComida + "+Categoria:" + opcionSeleccionadacomidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadacomidasDetalle[0].PrecioFinalComida;
-                        productonew.Check11 = opcionSeleccionadacomidasDetalle[1].CodigoComida + "-" + opcionSeleccionadacomidasDetalle[1].NombreFinalComida + "+Categoria:" + opcionSeleccionadacomidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadacomidasDetalle[1].PrecioFinalComida;
-
-                        foreach (var bebidas in opcionSeleccionadabebidasDetalle)
-                        {
-                            datosselecionado = bebidas.CodigoBotella.ToString() + "-" + bebidas.NombreFinalBotella.ToString() + "+Categoria:" + bebidas.categoria + "-Precio:" + bebidas.PrecioFinalBotella;
-                        }
-
-                        productonew.Check2 = opcionSeleccionadabebidasDetalle[0].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[0].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[0].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[0].PrecioFinalBotella;
-                        productonew.Check22 = opcionSeleccionadabebidasDetalle[1].CodigoBotella + "-" + opcionSeleccionadabebidasDetalle[1].NombreFinalBotella + "+Categoria:" + opcionSeleccionadabebidasDetalle[1].categoria + "-Precio:" + opcionSeleccionadabebidasDetalle[1].PrecioFinalBotella;
-
-                        productonew.ProCantidad_1 = 1;
-                        productonew.ProCantidad_2 = 1;
-                        productonew.ProCantidad_3 = 0;
-                        productonew.ProCantidad_4 = 0;
-                        productonew.ProCantidad_5 = 0;
-
-                        productonew.ProCategoria_1 = opcionSeleccionadabebidasDetalle[0].categoria;
-                        productonew.ProCategoria_2 = opcionSeleccionadabebidasDetalle[1].categoria;
-                        productonew.ProCategoria_3 = 0;
-                        productonew.ProCategoria_4 = 0;
-                        productonew.ProCategoria_5 = 0;
-
-                        productonew.ProProducto_1 = opcionSeleccionadabebidasDetalle[0].CodigoBotella;
-                        productonew.ProProducto_2 = opcionSeleccionadabebidasDetalle[1].CodigoBotella;
-                        productonew.ProProducto_3 = 0;
-                        productonew.ProProducto_4 = 0;
-                        productonew.ProProducto_5 = 0;
-
-                        productonew.KeySecuencia = "0";
-                        productonew.NombreEli = App.NombreEli;
-                        productonew.EmailEli = App.EmailEli;
-                        productonew.KeyTeatro = App.idCine;
-                        productonew.Tipo = "C";
-                        productonew.TipoCompra = "P";
-                        productonew.TelefonoEli = App.TelefonoEli;
-                        productonew.SwitchAdd = "N";
-                        productonew.SwtVenta = "V";
-
+                        var bebidaDetalle = opcionSeleccionadabebidasDetalle.FirstOrDefault();
+                        var comidaDetalle = opcionSeleccionadacomidasDetalle.FirstOrDefault();
+                        productonew = UpdateProduct(productocambiado, preciodefault + bebidaDetalle.PrecioFinalBotella + comidaDetalle.PrecioFinalComida, 1, bebidaDetalle, comidaDetalle, null, null);
+                    }
+                    else if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 2)
+                    {
+                        var bebidaDetalle1 = opcionSeleccionadabebidasDetalle[0];
+                        var bebidaDetalle2 = opcionSeleccionadabebidasDetalle[1];
+                        var comidaDetalle1 = opcionSeleccionadacomidasDetalle[0];
+                        var comidaDetalle2 = opcionSeleccionadacomidasDetalle[1];
+                        productonew = UpdateProduct(productocambiado, preciodefault + bebidaDetalle1.PrecioFinalBotella + bebidaDetalle2.PrecioFinalBotella + comidaDetalle1.PrecioFinalComida + comidaDetalle2.PrecioFinalComida, 2, bebidaDetalle1, comidaDetalle1, bebidaDetalle2, comidaDetalle2);
                     }
 
                     App.agregarProducto(productonew);
@@ -667,6 +528,71 @@ namespace Portal.Kiosco.Properties.Views
                 itemContador++;
             }
         }
+
+        private Producto UpdateProduct(Producto originalProduct, decimal finalPrice, int bebidaCount, Bebida bebidaDetalle1, Comida comidaDetalle1 = null, dynamic bebidaDetalle2 = null, dynamic comidaDetalle2 = null)
+        {
+            var newProduct = new Producto
+            {
+                Valor = finalPrice.ToString(),
+                CanCategoria_1 = bebidaCount,
+                CanCategoria_2 = comidaDetalle1 != null ? 1 : 0,
+                CanCategoria_3 = bebidaCount > 1 ? 1 : 0,
+                CanCategoria_4 = comidaDetalle2 != null ? 1 : 0,
+                CanCategoria_5 = 0,
+                Cantidad = 1,
+                Cantidad1 = 1,
+                Cantidad11 = bebidaCount > 1 ? 1 : 0,
+                Cantidad111 = 0,
+                Cantidad1111 = 0,
+                Cantidad2 = comidaDetalle1 != null ? 1 : 0,
+                Cantidad22 = comidaDetalle2 != null ? 1 : 0,
+                Cantidad222 = 0,
+                Cantidad2222 = 0,
+                Cantidad3 = 0,
+                Cantidad33 = 0,
+                Cantidad333 = 0,
+                Cantidad3333 = 0,
+                Cantidad4 = 0,
+                Cantidad44 = 0,
+                Cantidad444 = 0,
+                Cantidad4444 = 0,
+                Cantidad5 = 0,
+                Cantidad55 = 0,
+                Cantidad555 = 0,
+                Cantidad5555 = 0,
+                Check1 = $"{bebidaDetalle1.CodigoBotella}-{bebidaDetalle1.NombreFinalBotella}+Categoria:{bebidaDetalle1.categoria}-Precio:{bebidaDetalle1.PrecioFinalBotella}",
+                Check11 = bebidaDetalle2 != null ? $"{bebidaDetalle2.CodigoBotella}-{bebidaDetalle2.NombreFinalBotella}+Categoria:{bebidaDetalle2.categoria}-Precio:{bebidaDetalle2.PrecioFinalBotella}" : null,
+                Check2 = comidaDetalle1 != null ? $"{comidaDetalle1.CodigoComida}-{comidaDetalle1.NombreFinalComida}+Categoria:{comidaDetalle1.categoria}-Precio:{comidaDetalle1.PrecioFinalComida}" : null,
+                Check22 = comidaDetalle2 != null ? $"{comidaDetalle2.CodigoComida}-{comidaDetalle2.NombreFinalComida}+Categoria:{comidaDetalle2.categoria}-Precio:{comidaDetalle2.PrecioFinalComida}" : null,
+                ProCantidad_1 = 1,
+                ProCantidad_2 = bebidaDetalle2 != null ? 1 : 0,
+                ProCantidad_3 = 0,
+                ProCantidad_4 = 0,
+                ProCantidad_5 = 0,
+                ProCategoria_1 = bebidaDetalle1.categoria,
+                ProCategoria_2 = comidaDetalle1?.categoria ?? 0,
+                ProCategoria_3 = bebidaDetalle2?.categoria ?? 0,
+                ProCategoria_4 = comidaDetalle2?.categoria ?? 0,
+                ProCategoria_5 = 0,
+                ProProducto_1 = bebidaDetalle1.CodigoBotella,
+                ProProducto_2 = bebidaDetalle2?.CodigoBotella ?? 0,
+                ProProducto_3 = 0,
+                ProProducto_4 = 0,
+                ProProducto_5 = 0,
+                OrdenView = 0,
+                NombreEli = App.NombreEli,
+                EmailEli = App.EmailEli,
+                KeyTeatro = App.idCine,
+                KeySecuencia = "0",
+                Tipo = "C",
+                TipoCompra = "P",
+                TelefonoEli = App.TelefonoEli,
+                SwitchAdd = "N",
+                SwtVenta = "V"
+            };
+            return newProduct;
+        }
+
 
         public decimal buscarPrecioAdicionales(string opcionSeleccionada)
         {
@@ -690,8 +616,8 @@ namespace Portal.Kiosco.Properties.Views
 
         public decimal buscarprecio(List<Producto> productos, Decimal Codigo)
         {
-            datosFinalesBotella = new List<(decimal, string, decimal, string, decimal, int)>();
-            datosFinalesComida = new List<(decimal, string, decimal, string, decimal, int)>();
+            datosFinalesBotella = new List<Bebida>();
+            datosFinalesComida = new List<Comida>();
 
             List<Producto> ob_return = new List<Producto>();
             Dictionary<string, object> ob_diclst = new Dictionary<string, object>();
@@ -725,8 +651,20 @@ namespace Portal.Kiosco.Properties.Views
                                 {
                                     Precios += (itempre.General * itepro.Cantidad);
                                 };
-                                datosFinalesComida.Add((itepro.Codigo, itepro.Descripcion, Precios, "true", itepro.Codigo, Convert.ToInt32(itepro.Cantidad)));
 
+                                var comida = new Comida()
+                                { 
+
+                                    CodigoComida =  itepro.Codigo,
+                                    NombreFinalComida=   itepro.Descripcion,
+                                    PrecioFinalComida =  Precios,
+                                    frecuenciaComida =   "true",
+                                    categoria =  itepro.Codigo,
+                                    cantidad = Convert.ToInt32(itepro.Cantidad)
+
+                                };
+
+                                datosFinalesComida.Add((comida));
                                 break;
 
                             case "C": //COMBOS
@@ -754,7 +692,20 @@ namespace Portal.Kiosco.Properties.Views
 
                                             };
                                             precio_Combo.Add(preitem);
-                                            datosFinalesComida.Add((itemprer.Codigo, itemprer.Descripcion, itempre.General, "default", itemprer.Codigo, Convert.ToInt32(itepro.Cantidad)));
+
+                                            var comidac = new Comida()
+                                            {
+
+                                                CodigoComida = itepro.Codigo,
+                                                NombreFinalComida = itepro.Descripcion,
+                                                PrecioFinalComida = Precios,
+                                                frecuenciaComida = "default",
+                                                categoria = itepro.Codigo,
+                                                cantidad = Convert.ToInt32(itepro.Cantidad)
+
+                                            };
+                                            
+                                            datosFinalesComida.Add((comidac));
                                             Precios += (itempre.General * itemprer.Cantidad);
                                         };
                                     }
@@ -784,7 +735,19 @@ namespace Portal.Kiosco.Properties.Views
                                                 Precios += precioFinalBotella * itecat.Cantidad;
                                             }
 
-                                            datosFinalesBotella.Add((CodioBotella, NombreFinalBotella, precioFinalBotella, frecuenciaBotella, itecat.Codigo, 1));
+                                            var bebida = new Bebida()
+                                            {
+
+                                                CodigoBotella = CodioBotella,
+                                                NombreFinalBotella = NombreFinalBotella,
+                                                PrecioFinalBotella = precioFinalBotella,
+                                                frecuenciaBotella = frecuenciaBotella,
+                                                categoria = itecat.Codigo,
+                                                cantidad = 1
+
+                                            };
+
+                                            datosFinalesBotella.Add(bebida);
 
                                         }
                                     }
@@ -801,7 +764,19 @@ namespace Portal.Kiosco.Properties.Views
                                                 Precios += precioFinalComida * itecat.Cantidad;
                                             }
 
-                                            datosFinalesComida.Add((CodioComida, NombreFinalComida, precioFinalComida, frecuenciaComida, itecat.Codigo, 1));
+                                            var comidar = new Comida()
+                                            {
+
+                                                CodigoComida = CodioComida,
+                                                NombreFinalComida = NombreFinalComida,
+                                                PrecioFinalComida = precioFinalComida,
+                                                frecuenciaComida = frecuenciaComida,
+                                                categoria = itecat.Codigo,
+                                                cantidad = 1
+
+                                            };
+
+                                            datosFinalesComida.Add(comidar);
 
                                         }
                                     }
@@ -870,23 +845,23 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            
+            ProductosAdicionales();
 
-            if (ContadorProductos == App.ProductosSeleccionados.Count())
+            if (ContadorProductos  < App.ProductosSeleccionados.Count() + 1)
             {
-                isThreadActive = false;
-                ResumenCompra openWindows = new ResumenCompra(config);
-                openWindows.Show();
-                this.Close();
+                ProductosModificados();
+                ProductosAdicionalesSeleccion();
+                contadorProdModificados++;
+                CrearCombosYbebidas(App.ProductosSeleccionados);
             }
             else
             {
-                ProductosModificados();
-                contadorProdModificados++;
-                CrearCombosYbebidas(App.ProductosSeleccionados);
-                ProductosAdicionales();
-                ContadorProductos++;
-            }
+                    isThreadActive = false;
+                    ResumenCompra openWindows = new ResumenCompra(config);
+                    openWindows.Show();
+                    this.Close();
+                }
+            
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)

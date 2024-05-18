@@ -36,7 +36,8 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
+            
+         
 
             Thread thread = new Thread(() =>
             {

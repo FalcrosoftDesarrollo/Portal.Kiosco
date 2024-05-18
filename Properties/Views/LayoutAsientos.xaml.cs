@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -46,7 +47,8 @@ namespace Portal.Kiosco.Properties.Views
 
                 lblSala.Content = App.Pelicula.numeroSala;
                 lblNombrePelicula.Content = App.Pelicula.Nombre;
-
+                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));  
+                lblHora.Content = App.Pelicula.HoraUsuario;
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                 Thread thread = new Thread(() =>
@@ -60,6 +62,24 @@ namespace Portal.Kiosco.Properties.Views
                 thread.Start();
             }
             catch (Exception e) { }
+        }
+
+         
+
+        public static string FormatearFecha(string fecha)
+        {
+            if (fecha.Length != 8)
+            {
+                throw new ArgumentException("La fecha debe estar en el formato YYYYMMDD");
+            }
+
+            // Convertir la cadena a un objeto DateTime
+            DateTime fechaDateTime = DateTime.ParseExact(fecha, "yyyyMMdd", CultureInfo.InvariantCulture);
+
+            // Formatear la fecha en el formato "MMM dd"
+            string fechaFormateada = fechaDateTime.ToString("MMM dd", CultureInfo.InvariantCulture);
+
+            return fechaFormateada;
         }
 
         private bool ComprobarTiempo()

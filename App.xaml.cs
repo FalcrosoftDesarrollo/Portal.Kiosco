@@ -117,8 +117,15 @@ namespace Portal.Kiosco
 
             try
             {
+
+                string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json";
+
+                var builder = new ConfigurationBuilder()
+                    .AddJsonFile(appSettingsPath, optional: true, reloadOnChange: true);
+
+
                 var configuration = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile("kiosco.json")
                     .Build();
                 var appSettingsSection = configuration.GetSection("MyConfig");
 
@@ -147,8 +154,8 @@ namespace Portal.Kiosco
                 PortalWebDB = appSettingsSection["PortalWebDB"];
                 UrlCorreo = appSettingsSection["UrlCorreo"];
                 TelefonoEli = appSettingsSection["Telefono"];
-
                 var xmlPath = appSettingsSection["Variables41"];
+                
                 if (string.IsNullOrEmpty(xmlPath))
                 {
                     throw new ApplicationException("XML path for 'Variables41' is missing or empty.");
@@ -174,6 +181,8 @@ namespace Portal.Kiosco
                 HandleStartupError(ex, "An unexpected error occurred while starting the application. Please try again.");
             }
         }
+
+        
 
         private void HandleStartupError(Exception ex, string userMessage)
         {
@@ -1846,7 +1855,7 @@ namespace Portal.Kiosco
                         CanCategoria4 = pr_datpro.CanCategoria_4,
                         CanCategoria5 = pr_datpro.CanCategoria_5,
                         FechaRegistro = DateTime.Now,
-                        KeyTeatro = Convert.ToDecimal(App.Secuencia),
+                        KeyTeatro = Convert.ToDecimal(App.idCine),
                         SwitchAdd = pr_datpro.SwitchAdd
                     };
 
@@ -2319,5 +2328,167 @@ namespace Portal.Kiosco
             }
 
         }
+
+        public static void AddProduct(Adiciones pr_addpro)
+        {
+            #region VARIABLES LOCALES
+            Producto ob_datpro = new Producto();
+            General ob_fncgrl = new General();
+            #endregion
+
+            try
+            {
+                var ClientFrecnt = App.ClienteFrecuente;
+
+                //inicializar instancia de BD
+                using (var context = new DataDB(config))
+                {
+                    //Recorrido para saber si hay cantidades válidas para agregar a carrito
+                    int lc_idxiii = 1;
+                    while (lc_idxiii <= 6)
+                    {
+                        switch (lc_idxiii)
+                        {
+                            case 1:
+                                //Validar cantidad producto
+                                if (pr_addpro.Cantidad_1 <= 0)
+                                {
+                                    lc_idxiii++;
+                                    continue;
+                                }
+
+                                //Asignar valores de vista
+                                ob_datpro.Valor = pr_addpro.Precio_1.ToString();
+                                ob_datpro.Codigo = pr_addpro.Codigo_1;
+                                ob_datpro.Cantidad = pr_addpro.Cantidad_1;
+                                ob_datpro.Descripcion = pr_addpro.Descripcion_1;
+                                break;
+
+                            case 2:
+                                //Validar cantidad producto
+                                if (pr_addpro.Cantidad_2 <= 0)
+                                {
+                                    lc_idxiii++;
+                                    continue;
+                                }
+
+                                //Asignar valores de vista
+                                ob_datpro.Valor = pr_addpro.Precio_2.ToString();
+                                ob_datpro.Codigo = pr_addpro.Codigo_2;
+                                ob_datpro.Cantidad = pr_addpro.Cantidad_2;
+                                ob_datpro.Descripcion = pr_addpro.Descripcion_2;
+                                break;
+
+                            case 3:
+                                //Validar cantidad producto
+                                if (pr_addpro.Cantidad_3 <= 0)
+                                {
+                                    lc_idxiii++;
+                                    continue;
+                                }
+
+                                //Asignar valores de vista
+                                ob_datpro.Valor = pr_addpro.Precio_3.ToString();
+                                ob_datpro.Codigo = pr_addpro.Codigo_3;
+                                ob_datpro.Cantidad = pr_addpro.Cantidad_3;
+                                ob_datpro.Descripcion = pr_addpro.Descripcion_3;
+                                break;
+
+                            case 4:
+                                //Validar cantidad producto
+                                if (pr_addpro.Cantidad_4 <= 0)
+                                {
+                                    lc_idxiii++;
+                                    continue;
+                                }
+
+                                //Asignar valores de vista
+                                ob_datpro.Valor = pr_addpro.Precio_4.ToString();
+                                ob_datpro.Codigo = pr_addpro.Codigo_4;
+                                ob_datpro.Cantidad = pr_addpro.Cantidad_4;
+                                ob_datpro.Descripcion = pr_addpro.Descripcion_4;
+                                break;
+
+                            case 5:
+                                //Validar cantidad producto
+                                if (pr_addpro.Cantidad_5 <= 0)
+                                {
+                                    lc_idxiii++;
+                                    continue;
+                                }
+
+                                //Asignar valores de vista
+                                ob_datpro.Valor = pr_addpro.Precio_5.ToString();
+                                ob_datpro.Codigo = pr_addpro.Codigo_5;
+                                ob_datpro.Cantidad = pr_addpro.Cantidad_5;
+                                ob_datpro.Descripcion = pr_addpro.Descripcion_5;
+                                break;
+
+                            case 6:
+                                //Validar cantidad producto
+                                if (pr_addpro.Cantidad_6 <= 0)
+                                {
+                                    lc_idxiii++;
+                                    continue;
+                                }
+
+                                //Asignar valores de vista
+                                ob_datpro.Valor = pr_addpro.Precio_6.ToString();
+                                ob_datpro.Codigo = pr_addpro.Codigo_6;
+                                ob_datpro.Cantidad = pr_addpro.Cantidad_6;
+                                ob_datpro.Descripcion = pr_addpro.Descripcion_6;
+                                break;
+                        }
+
+                        //Agregar valores a yabla RetailSales
+                        var retailSales = new RetailSales
+                        {
+                            Tipo = "P",
+                            Precio = Convert.ToDecimal(ob_datpro.Valor),
+                            Cantidad = ob_datpro.Cantidad,
+                            Secuencia = pr_addpro.Secuencia,
+                            PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
+                            KeyProducto = ob_datpro.Codigo,
+                            Descripcion = ob_datpro.Descripcion,
+                            ProProducto1 = ob_datpro.ProProducto_1,
+                            ProProducto2 = ob_datpro.ProProducto_2,
+                            ProProducto3 = ob_datpro.ProProducto_3,
+                            ProProducto4 = ob_datpro.ProProducto_4,
+                            ProProducto5 = ob_datpro.ProProducto_5,
+                            CanProducto1 = ob_datpro.ProCantidad_1,
+                            CanProducto2 = ob_datpro.ProCantidad_2,
+                            CanProducto3 = ob_datpro.ProCantidad_3,
+                            CanProducto4 = ob_datpro.ProCantidad_4,
+                            CanProducto5 = ob_datpro.ProCantidad_5,
+                            ProCategoria1 = ob_datpro.ProCategoria_1,
+                            ProCategoria2 = ob_datpro.ProCategoria_2,
+                            ProCategoria3 = ob_datpro.ProCategoria_3,
+                            ProCategoria4 = ob_datpro.ProCategoria_4,
+                            ProCategoria5 = ob_datpro.ProCategoria_5,
+                            CanCategoria1 = ob_datpro.CanCategoria_1,
+                            CanCategoria2 = ob_datpro.CanCategoria_2,
+                            CanCategoria3 = ob_datpro.CanCategoria_3,
+                            CanCategoria4 = ob_datpro.CanCategoria_4,
+                            CanCategoria5 = ob_datpro.CanCategoria_5,
+                            FechaRegistro = DateTime.Now,
+                            KeyTeatro = Convert.ToDecimal(App.idCine)
+                        };
+
+                        //Adicionar y guardar registro a tabla
+                        context.RetailSales.Add(retailSales);
+                        context.SaveChanges();
+                        lc_idxiii++;
+                    }
+                }
+
+            }
+            catch (Exception lc_syserr)
+            {
+                MessageBox.Show(lc_syserr.Message.Contains("Inner") ? lc_syserr.InnerException.Message : "null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
+
+
 }

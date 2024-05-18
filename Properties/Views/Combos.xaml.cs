@@ -48,7 +48,7 @@ namespace Portal.Kiosco.Properties.Views
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -66,7 +66,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; 
+            bool isMainWindowOpen = false;
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
@@ -76,7 +76,7 @@ namespace Portal.Kiosco.Properties.Views
                     if (principal != null && principal.Visibility == Visibility.Visible)
                     {
                         principal.Activate();
-                        isMainWindowOpen = true; 
+                        isMainWindowOpen = true;
                     }
                     else
                     {
@@ -88,7 +88,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                            
+
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -102,7 +102,7 @@ namespace Portal.Kiosco.Properties.Views
                 });
             }
 
-            return isMainWindowOpen; 
+            return isMainWindowOpen;
         }
 
 
@@ -1215,7 +1215,7 @@ namespace Portal.Kiosco.Properties.Views
 
             imagenes.Children.Clear();
 
-          
+
             string urlRetailImg = App.UrlRetailImg;
 
             if (productos != null)
@@ -1564,7 +1564,7 @@ namespace Portal.Kiosco.Properties.Views
             countLabel.Content = currentValue.ToString();
             var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)));
 
-            string totalString = totalLabel.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim(); 
+            string totalString = totalLabel.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
             decimal totalAnterior = decimal.Parse(totalString);
             decimal nuevoTotal = totalAnterior + precio;
             totalLabel.Content = nuevoTotal.ToString("C0");
@@ -1610,6 +1610,9 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
+
+        
+
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             if (totalLabel.Content.ToString() != "0")
@@ -1617,6 +1620,7 @@ namespace Portal.Kiosco.Properties.Views
                 var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");
                 if (ProductosSeleccionados != null)
                 {
+                    App.ProductosCambiados = new List<Producto>();
                     isThreadActive = false;
                     Combodeluxe1 openWindows = new Combodeluxe1();
                     openWindows.Show();

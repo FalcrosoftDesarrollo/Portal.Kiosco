@@ -215,7 +215,7 @@
                                     <Button Background="Transparent"  Name="btnPagoTarjeta" Click="btnPagoTarjeta_Click" BorderThickness="0" Content="PAGAR CON TARJETA" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>
                                 </Border>
 
-                                <Border  Width="350" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
+                                <Border  Width="350" Height="80" VerticalAlignment="Bottom" Name="borderPagarCash" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
                                     <Button Background="Transparent" Name="btnPagarCash" Click="btnPagarCash_Click" BorderThickness="0" Content="PAGAR CON CASHBACK" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>
                                 </Border>
                             </Grid>

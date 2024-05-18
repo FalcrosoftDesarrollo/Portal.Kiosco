@@ -79,8 +79,6 @@ namespace Portal.Kiosco.Properties.Views
             return isMainWindowOpen;
         }
 
-
-
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
