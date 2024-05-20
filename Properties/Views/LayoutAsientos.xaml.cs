@@ -524,9 +524,18 @@ namespace Portal.Kiosco.Properties.Views
                             case "S":
                                 if (ubicacion.TipoSilla == "Discapacitado")
                                 {
-                                    button.Background = Brushes.Blue;
-                                    button.BorderBrush = Brushes.Blue;
-                                    button.Foreground = Brushes.White;
+                                    
+                                    label.Content = lc_valmos;
+                                    label.Background = Brushes.Blue;
+                                    label.Foreground = Brushes.White;
+
+                                    label.FontSize = 14;
+                                    label.FontWeight = FontWeights.Bold;
+
+                                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                                    label.VerticalAlignment = VerticalAlignment.Center;
+                                    border.Child = label;
+
                                 }
                                 else
                                 {
