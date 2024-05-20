@@ -78,7 +78,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
-                lblnombre.Content = "!HOLA INVITADO";
+                lblnombre.Content = "!HOLA INVITADO¡";
             }
 
             CrearCombosYbebidas(App.ProductosSeleccionados);

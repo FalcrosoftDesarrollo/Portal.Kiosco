@@ -31,7 +31,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
-                lblnombre.Content = "!HOLA INVITADO";
+                lblnombre.Content = "!HOLA INVITADO¡";
             }
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));

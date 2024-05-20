@@ -43,7 +43,7 @@ namespace Portal.Kiosco.Properties.Views
             }
             else
             {
-                lblnombre.Content = "!HOLA INVITADO";
+                lblnombre.Content = "!HOLA INVITADO¡";
             }
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
@@ -704,13 +704,14 @@ namespace Portal.Kiosco.Properties.Views
                                                                     App.Pelicula.numeroSala = item.numeroSala;
                                                                     borSiguente.Visibility = Visibility.Visible;
                                                                     App.Pelicula.HoraMilitar = item2.militar;
+                                                                    break;
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                borSiguente.Visibility = Visibility.Hidden;
-                                                                MessageBox.Show("La funcion no tiene una tarifa asignada");
-                                                                errorgeneral = true;
+                                                                //borSiguente.Visibility = Visibility.Hidden;
+                                                                //MessageBox.Show("La funcion no tiene una tarifa asignada");
+                                                                //errorgeneral = true;
                                                                 break;
                                                             }
                                                         }
