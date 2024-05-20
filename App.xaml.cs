@@ -1901,7 +1901,7 @@ namespace Portal.Kiosco
             }
             catch (Exception lc_syserr)
             {
-
+                MessageBox.Show("Error al guardar el producto selecionado");
             }
         }
 

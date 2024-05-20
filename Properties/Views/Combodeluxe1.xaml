@@ -238,7 +238,7 @@
                                         </Border>
 
                                         <Border Grid.Row="1">
-                                            <StackPanel Orientation="Vertical" Name="radioAdicionales" >
+                                            <StackPanel Orientation="Vertical" Name="checkBoxAdicionales" >
                                                 <!--<RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
