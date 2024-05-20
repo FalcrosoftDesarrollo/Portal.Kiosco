@@ -1632,14 +1632,7 @@ namespace Portal.Kiosco.Properties.Views
                 var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");
                 if (ProductosSeleccionados != null)
                 {
-                    App.ProductosCambiados = new List<Producto>();
-
-                    var productos = App.ProductosSeleccionados;
-
-                    foreach (var producto in productos.Where(x => x.Tipo == "P"))
-                    {
-                        App.agregarProducto(producto);
-                    }
+                  
 
                     isThreadActive = false;
                     Combodeluxe1 openWindows = new Combodeluxe1();
@@ -1649,6 +1642,14 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
+                    App.ProductosCambiados = new List<Producto>();
+
+                    var productos = App.ProductosSeleccionados;
+
+                    foreach (var producto in productos.Where(x => x.Tipo == "P"))
+                    {
+                        App.agregarProducto(producto);
+                    }
                     isThreadActive = false;
                     ResumenCompra openWindows = new ResumenCompra(config);
                     openWindows.Show();
