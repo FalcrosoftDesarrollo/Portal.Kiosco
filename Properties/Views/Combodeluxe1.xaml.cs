@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Org.BouncyCastle.Asn1.Mozilla;
+using Org.BouncyCastle.Tls.Crypto.Impl.BC;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Portal.Kiosco.Properties.Views
         private readonly IOptions<MyConfig> config;
         private IConfiguration configuration;
         private int ContadorProductos = 1;
+        private int ContadorProductosPantallas = 0;
 
         private List<Bebida> datosFinalesBotella = new List<Bebida>();
         private List<Comida> datosFinalesComida = new List<Comida>();
@@ -37,11 +39,13 @@ namespace Portal.Kiosco.Properties.Views
         private decimal preciobebida = 0;
         private decimal preciocomida = 0;
         private decimal precioAdicionales = 0;
+        private decimal productoactual = 0;
 
         private decimal precioAntesAdicionales = 0;
 
         public class Bebida
         {
+            public decimal CodigoCombo { get; set; }
             public decimal CodigoBotella { get; set; }
             public string NombreFinalBotella { get; set; }
             public decimal PrecioFinalBotella { get; set; }
@@ -53,7 +57,7 @@ namespace Portal.Kiosco.Properties.Views
         }
         public class Comida
         {
-
+            public decimal CodigoCombo { get; set; }
             public decimal CodigoComida { get; set; }
             public string NombreFinalComida { get; set; }
             public decimal PrecioFinalComida { get; set; }
@@ -141,13 +145,14 @@ namespace Portal.Kiosco.Properties.Views
             radiobebidas.Children.Clear();
             radioComidas.Children.Clear();
             checkBoxAdicionales.Children.Clear();
-
+            
             Producto ob_datpro = new Producto();
 
             int CodigoBebidas = 1244;
             int CodigoBebidas2 = 2444;
             int CodigoComidas = 246;
-
+            datosFinalesComidaRadio = new List<Comida>();
+            datosFinalesBotellaRadio = new List<Bebida>();
 
             string urlRetailImg = App.UrlRetailImg;
             decimal Precios = 0;
@@ -163,34 +168,35 @@ namespace Portal.Kiosco.Properties.Views
                         if (itemReceta.Tipo == "P")
                         {
 
-
-
-                            ob_datpro.Codigo = itemReceta.Codigo;
-                            ob_datpro.Descripcion = itemReceta.Descripcion;
-                            ob_datpro.Tipo = itemReceta.Tipo;
-                            ob_datpro.Precios = itemReceta.Precios;
-
-
-
-                            foreach (var itempre in itemReceta.Precios)
+                            if (ContadorProductos == itemContador)
                             {
-                                Precios = (itempre.General * itemReceta.Cantidad);
 
-                                var comida = new Comida()
+                                ob_datpro.Codigo = itemReceta.Codigo;
+                                ob_datpro.Descripcion = itemReceta.Descripcion;
+                                ob_datpro.Tipo = itemReceta.Tipo;
+                                ob_datpro.Precios = itemReceta.Precios;
+
+
+
+                                foreach (var itempre in itemReceta.Precios)
                                 {
+                                    Precios = (itempre.General * itemReceta.Cantidad);
 
-                                    CodigoComida = itemReceta.Codigo,
-                                    NombreFinalComida = itemReceta.Descripcion,
-                                    PrecioFinalComida = Precios,
-                                    frecuenciaComida = "default",
-                                    categoria = itemReceta.Codigo,
-                                    cantidad = Convert.ToInt32(itemReceta.Cantidad)
+                                    var comida = new Comida()
+                                    {
+                                        CodigoCombo = item.Codigo,
+                                        CodigoComida = itemReceta.Codigo,
+                                        NombreFinalComida = itemReceta.Descripcion,
+                                        PrecioFinalComida = Precios,
+                                        frecuenciaComida = "default",
+                                        categoria = itemReceta.Codigo,
+                                        cantidad = Convert.ToInt32(itemReceta.Cantidad)
 
+                                    };
+
+                                    datosFinalesComidaRadio.Add((comida));
                                 };
-
-                                datosFinalesComidaRadio.Add((comida));
-                            };
-
+                            }
                         }
                     }
 
@@ -244,7 +250,7 @@ namespace Portal.Kiosco.Properties.Views
 
                                                 var comidar = new Comida()
                                                 {
-
+                                                    CodigoCombo = item.Codigo,
                                                     CodigoComida = CodioComida,
                                                     NombreFinalComida = NombreFinalComida,
                                                     PrecioFinalComida = precioFinalComida,
@@ -290,7 +296,7 @@ namespace Portal.Kiosco.Properties.Views
 
                                                 var bebida = new Bebida()
                                                 {
-
+                                                    CodigoCombo = item.Codigo,
                                                     CodigoBotella = CodioBotella,
                                                     NombreFinalBotella = NombreFinalBotella,
                                                     PrecioFinalBotella = precioFinalBotella,
@@ -318,6 +324,7 @@ namespace Portal.Kiosco.Properties.Views
 
                 }
                 ContadorProductos++;
+                ContadorProductosPantallas++;
             }
             ProductosAdicionales();
         }
@@ -413,10 +420,6 @@ namespace Portal.Kiosco.Properties.Views
                         }
                     }
                 }
-
-                // Enviar el objeto adicionales
-
-
                 contadorAdicionales++;
             }
 
@@ -905,31 +908,29 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            ProductosAdicionales();
+          
 
-            if (ContadorProductos == 2)
+            if (ContadorProductosPantallas <= (App.ProductosSeleccionados.Count()))
             {
+                ProductosAdicionales();
                 ProductosModificados();
                 ProductosAdicionalesSeleccion();
                 contadorProdModificados++;
-                CrearCombosYbebidas(App.ProductosSeleccionados);
+                if (ContadorProductosPantallas == (App.ProductosSeleccionados.Count()))
+                {
+                    isThreadActive = false;
+                    ResumenCompra openWindows = new ResumenCompra(config);
+                    openWindows.Show();
+                    this.Close();
+                }
+                else 
+                {
+                    CrearCombosYbebidas(App.ProductosSeleccionados);
+                }
+                
+                return;
             }
-
-            if (ContadorProductos < App.ProductosSeleccionados.Count() + 1)
-            {
-                ProductosModificados();
-                ProductosAdicionalesSeleccion();
-                contadorProdModificados++;
-                CrearCombosYbebidas(App.ProductosSeleccionados);
-            }
-            else
-            {
-                isThreadActive = false;
-                ResumenCompra openWindows = new ResumenCompra(config);
-                openWindows.Show();
-                this.Close();
-            }
-
+          
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
