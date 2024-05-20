@@ -583,6 +583,8 @@ namespace Portal.Kiosco.Properties.Views
                     .Sum(x => x.PrecioFinalComida) + bebidaDetalle1.PrecioFinalBotella + bebidaDetalle2.PrecioFinalBotella + comidaDetalle1.PrecioFinalComida + comidaDetalle2.PrecioFinalComida, 2, bebidaDetalle1, comidaDetalle1, bebidaDetalle2, comidaDetalle2);
                     }
 
+                    productonew.KeySecuencia = App.Secuencia;
+
                     App.agregarProducto(productonew);
                 }
                 itemContador++;

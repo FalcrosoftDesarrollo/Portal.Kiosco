@@ -55,7 +55,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -87,27 +87,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DataDB.cs",
-              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\DataDB.cs",
-              "RelativeDocumentMoniker": "..\\APIPortalWebMed.Entities\\DataDB.cs",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\DataDB.cs",
-              "RelativeToolTip": "..\\APIPortalWebMed.Entities\\DataDB.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAAAD0AAAA/AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-18T20:17:49.913Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "APIPortalKiosco.Entities",
+              "Title": "APIPortalKiosco.Entities.csproj",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\APIPortalKiosco.Entities.csproj",
               "RelativeDocumentMoniker": "..\\APIPortalWebMed.Entities\\APIPortalKiosco.Entities.csproj",
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\APIPortalKiosco.Entities.csproj",
               "RelativeToolTip": "..\\APIPortalWebMed.Entities\\APIPortalKiosco.Entities.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-05-18T20:17:06.768Z"
+              "WhenOpened": "2024-05-18T20:17:06.768Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -117,7 +106,7 @@
               "RelativeDocumentMoniker": "Properties\\Views\\Combodeluxe1.xaml.cs",
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Combodeluxe1.xaml.cs",
               "RelativeToolTip": "Properties\\Views\\Combodeluxe1.xaml.cs",
-              "ViewState": "AQIAAAMCAAAAAAAAAAAgwBoCAAAMAAAA",
+              "ViewState": "AQIAABkCAAAAAAAAAAAgwEsCAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-17T18:40:45.512Z",
               "EditorCaption": ""
@@ -128,9 +117,9 @@
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\App.xaml.cs",
-              "RelativeToolTip": "App.xaml.cs",
-              "ViewState": "AQIAAAYHAAAAAAAAAAAAACcHAABFAAAA",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\App.xaml.cs*",
+              "RelativeToolTip": "App.xaml.cs*",
+              "ViewState": "AQIAAKgGAAAAAAAAAAAgwMAGAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-18T20:32:51.241Z",
               "EditorCaption": ""
@@ -155,9 +144,22 @@
               "RelativeDocumentMoniker": "Properties\\Views\\ResumenCompra.xaml.cs",
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ResumenCompra.xaml.cs",
               "RelativeToolTip": "Properties\\Views\\ResumenCompra.xaml.cs",
-              "ViewState": "AQIAAMoAAAAAAAAAAAAgwO4AAAAlAAAA",
+              "ViewState": "AQIAAKwAAAAAAAAAAAAgwO4AAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-17T21:07:40.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DataDB.cs",
+              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\DataDB.cs",
+              "RelativeDocumentMoniker": "..\\APIPortalWebMed.Entities\\DataDB.cs",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\DataDB.cs",
+              "RelativeToolTip": "..\\APIPortalWebMed.Entities\\DataDB.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAAAD0AAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-18T20:17:49.913Z",
               "EditorCaption": ""
             },
             {
@@ -170,7 +172,8 @@
               "RelativeToolTip": "Properties\\Views\\BoletaFactura.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAMIBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-18T20:25:12.26Z"
+              "WhenOpened": "2024-05-18T20:25:12.26Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -195,7 +198,8 @@
               "RelativeToolTip": "..\\APIPortalWebMed.Entities\\Cinefans.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-18T15:59:49.009Z"
+              "WhenOpened": "2024-05-18T15:59:49.009Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -207,7 +211,8 @@
               "RelativeToolTip": "kiosco.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-18T14:36:04.956Z"
+              "WhenOpened": "2024-05-18T14:36:04.956Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -218,7 +223,8 @@
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ResumenCompra.xaml",
               "RelativeToolTip": "Properties\\Views\\ResumenCompra.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-17T21:07:54.176Z"
+              "WhenOpened": "2024-05-17T21:07:54.176Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -229,7 +235,8 @@
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\SeleccionarFuncion.xaml",
               "RelativeToolTip": "Properties\\Views\\SeleccionarFuncion.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-17T18:46:00.967Z"
+              "WhenOpened": "2024-05-17T18:46:00.967Z",
+              "EditorCaption": ""
             }
           ]
         }

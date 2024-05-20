@@ -1726,7 +1726,7 @@ namespace Portal.Kiosco
 
                 #region SERVICIO SCOSEC
                 lc_secsec = pr_datpro.KeySecuencia;
-                if (lc_secsec == "0")
+                if (lc_secsec == "0" || lc_secsec == null)
                 {
                     //Asignar valores SEC
                     ob_secsec.Punto = Convert.ToInt32(App.PuntoVenta);
