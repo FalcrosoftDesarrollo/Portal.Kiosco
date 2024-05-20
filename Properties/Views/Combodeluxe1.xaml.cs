@@ -555,7 +555,8 @@ namespace Portal.Kiosco.Properties.Views
             var opcionSeleccionadacomidas = 0;
             opcionSeleccionadabebidasDetalle.Clear();
             opcionSeleccionadacomidasDetalle.Clear();
-
+            preciobebida = 0;
+            preciocomida = 0;
             foreach (var child in radioComidas.Children)
             {
                 if (child is RadioButton radioButtonComida && radioButtonComida.IsChecked == true)
