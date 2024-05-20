@@ -600,7 +600,7 @@ namespace Portal.Kiosco.Properties.Views
             var tituloriginal = App.Pelicula.TituloOriginal;
             var fechaSel = App.Pelicula.FechaSel.Substring(3);
             var peliculaDias = App.Peliculas.Where(p => p.TituloOriginal == tituloriginal).ToList();
-            
+
             var horaSel = App.Pelicula.HoraSel;
             var horaMilitar = App.Pelicula.HoraMilitar;
             if (peliculaDias != null)
@@ -617,7 +617,7 @@ namespace Portal.Kiosco.Properties.Views
                                 {
                                     App.Pelicula.Id = dias.Id;
                                     App.TipoSala = hora.tipSala;
-                                    App.TipoSilla = hora.tipSala.Replace(" ", "_");
+                                    App.TipoSilla = hora.tipSala;
                                     break;
                                 }
                             }
@@ -625,7 +625,7 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
             }
-
+            var TipoSilla = App.TipoSilla;
             ob_carprg.Teatro = App.idCine;
             ob_carprg.tercero = App.ValorTercero;
             ob_carprg.IdPelicula = App.Pelicula.Id;
@@ -667,12 +667,14 @@ namespace Portal.Kiosco.Properties.Views
 
                     if (Zonas != null && Zonas.Count > 0 && ob_lisprg != null)
                     {
-                        foreach (var itemZonas in Zonas)
+                        foreach (var item in ob_lisprg)
                         {
-                            if (itemZonas.Key.ToLower() == App.TipoSilla.Replace("_", " ").ToLower())
+                            foreach (var itemZonas in Zonas)
                             {
-                                foreach (var item in ob_lisprg)
+                                if (item.tipoSala.ToLower() == App.TipoSilla.ToLower())
                                 {
+
+
                                     if (item.hora != null && item.hora.Count > 0)
                                     {
                                         foreach (var item2 in item.hora)
@@ -707,15 +709,17 @@ namespace Portal.Kiosco.Properties.Views
                                                 }
                                             }
                                         }
+
+
                                     }
                                 }
                             }
+                            //}
+                            //catch (Exception e) { }
                         }
                     }
                 }
             }
-            //}
-            //catch (Exception e) { }
         }
 
         private async void btnSelectFecha_Click(object sender, RoutedEventArgs e)
@@ -1099,7 +1103,7 @@ namespace Portal.Kiosco.Properties.Views
                         }
                     }
 
-                  
+
                 }
             }
 

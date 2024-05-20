@@ -95,7 +95,7 @@ namespace Portal.Kiosco
         public static string CodMedioPagoCB { get; set; }
         public static string NroDocumento { get; set; }
         public static string Direccion { get; set; }
-
+        public static string Clave { get; set; }
         public string TiempoRestanteGlobal
         {
             get { return _tiempoRestanteGlobal; }
@@ -2174,8 +2174,8 @@ namespace Portal.Kiosco
             {
 
                 //Asignar Valores
-                ob_servicio.Clave = "1103"; // Session.GetString("Passwrd");
-                ob_servicio.Correo = "monicajannethd2012@gmail.com"; // Session.GetString("Usuario");
+                ob_servicio.Clave =App.Clave; // Session.GetString("Passwrd");
+                ob_servicio.Correo = App.EmailEli; // Session.GetString("Usuario");
                 ob_servicio.Fecha1 = Convert.ToString(DateTime.Now.Year - 1) + "0101";
                 ob_servicio.Fecha2 = Convert.ToString(DateTime.Now.Year + 1) + "1231";
                 ob_servicio.tercero = App.ValorTercero;

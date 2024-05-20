@@ -184,7 +184,8 @@ namespace Portal.Kiosco
                                 lc_result = lc_result.Replace("[", "");
                                 lc_result = lc_result.Replace("]", "");
 
-                                App.ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result.Replace("0-[", "["), (typeof(Dictionary<string, string>)));
+                                var respuesta  = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result.Replace("0-[", "["), (typeof(Dictionary<string, string>)));
+                                App.ob_diclst = respuesta;
                             }
 
                             Usuario = App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
@@ -194,6 +195,7 @@ namespace Portal.Kiosco
                             App.NroDocumento = App.ob_diclst["Documento"].ToString();
                             App.Direccion = App.ob_diclst["Direccion"].ToString();
                             App.TelefonoEli = App.ob_diclst["Celular"].ToString();
+                            App.Clave = App.ob_diclst["Clave"].ToString();
 
                             if (Usuario != "")
                             {
@@ -205,7 +207,8 @@ namespace Portal.Kiosco
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(ex.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("Usuario no registrado en el sistema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    break;
                 }
 
                 Thread.Sleep(100);
