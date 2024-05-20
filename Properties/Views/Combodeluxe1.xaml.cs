@@ -3,13 +3,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Org.BouncyCastle.Asn1.Mozilla;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -34,6 +37,8 @@ namespace Portal.Kiosco.Properties.Views
         private decimal preciobebida = 0;
         private decimal preciocomida = 0;
         private decimal precioAdicionales = 0;
+
+        private decimal precioAntesAdicionales = 0;
 
         public class Bebida
         {
@@ -73,6 +78,8 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             CrearCombosYbebidas(App.ProductosSeleccionados);
+
+
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             Thread thread = new Thread(() =>
@@ -142,16 +149,7 @@ namespace Portal.Kiosco.Properties.Views
             int CodigoComidas = 246;
 
 
-            string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json";
-
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile(appSettingsPath, optional: true, reloadOnChange: true);
-
-            configuration = builder.Build();
-
-            var myConfigSection = configuration.GetSection("MyConfig");
-
-            string urlRetailImg = myConfigSection["UrlRetailImg"];
+            string urlRetailImg = App.UrlRetailImg;
             decimal Precios = 0;
             if (productos != null)
             {
@@ -195,7 +193,7 @@ namespace Portal.Kiosco.Properties.Views
 
                         }
                     }
-                    
+
                     if (item.Tipo == "C")
                     {
                         if (ContadorProductos == itemContador)
@@ -207,37 +205,9 @@ namespace Portal.Kiosco.Properties.Views
                             var precio = buscarprecio(productos, Convert.ToDecimal(item.Codigo));
 
                             totalLabel.Content = precio.ToString("C0");
-
+                            precioAntesAdicionales = precio;
                             lblCombo.Content = item.Descripcion + " #" + ContadorProductos.ToString();
 
-
-
-                            //List<Precios> precio_Combo = new List<Precios>();
-
-                            //foreach (var itemprer in item.Receta)
-                            //{
-                            //    if (itemprer.Precios != null)
-                            //    {
-                            //        foreach (var itempre in itemprer.Precios)
-                            //        { 
-                            //            var comidac = new Comida()
-                            //            {
-
-                            //                CodigoComida = item.Codigo,
-                            //                NombreFinalComida = item.Descripcion,
-                            //                PrecioFinalComida = Precios,
-                            //                frecuenciaComida = "default",
-                            //                categoria = item.Codigo,
-                            //                cantidad = Convert.ToInt32(item.Cantidad)
-
-                            //            };
-
-                            //            datosFinalesComidaRadio.Add((comidac));
-                            //            Precios += (itempre.General * itemprer.Cantidad);
-                            //        };
-                            //    }
-                            //}
-                            //int lc_variii = 1;
                             foreach (var itemReceta in item.Receta)
                             {
                                 var cantidad = itemReceta.Cantidad;
@@ -246,93 +216,93 @@ namespace Portal.Kiosco.Properties.Views
                                 for (int lc_variii = 0; lc_variii < cantidad; lc_variii++)
                                 {
                                     if (itemReceta.RecetaCategoria != null)
-                                {
-                                    if (CodigoComidas == itemReceta.Codigo)
                                     {
-                                        foreach (var itemRecetaCategoria in itemReceta.RecetaCategoria)
+                                        if (CodigoComidas == itemReceta.Codigo)
                                         {
-                                            var radioButton = new RadioButton();
-                                            radioButton.Content = itemRecetaCategoria.Descripcion;
-                                            radioButton.Name = "v" + lc_variii.ToString() + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
-                                            radioButton.FontSize = 24; // Establece el tamaño de fuente como un valor numérico
-                                            radioButton.HorizontalAlignment = HorizontalAlignment.Left; // Establece la alineación horizontal
-                                            radioButton.GroupName = "Comida" + lc_variii.ToString();
-                                            if (itemRecetaCategoria.Frecuente == "True")
+                                            foreach (var itemRecetaCategoria in itemReceta.RecetaCategoria)
                                             {
-                                                radioButton.IsChecked = true;
+                                                var radioButton = new RadioButton();
+                                                radioButton.Content = itemRecetaCategoria.Descripcion;
+                                                radioButton.Name = "v" + lc_variii.ToString() + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
+                                                radioButton.FontSize = 24; // Establece el tamaño de fuente como un valor numérico
+                                                radioButton.HorizontalAlignment = HorizontalAlignment.Left; // Establece la alineación horizontal
+                                                radioButton.GroupName = "Comida" + lc_variii.ToString();
+                                                if (itemRecetaCategoria.Frecuente == "True")
+                                                {
+                                                    radioButton.IsChecked = true;
+                                                }
+                                                radioComidas.Children.Add(radioButton); // Agrega el botón de radio al contenedor
+
+
+                                                radioButton.Checked += RadioButton_Checked;
+
+                                                var CodioComida = itemRecetaCategoria.Codigo;
+                                                var NombreFinalComida = itemRecetaCategoria.Descripcion.ToString();
+                                                var precioFinalComida = itemRecetaCategoria.Precios.Sum(precio => precio.General);
+                                                var frecuenciaComida = itemRecetaCategoria.Frecuente.ToString();
+
+
+                                                var comidar = new Comida()
+                                                {
+
+                                                    CodigoComida = CodioComida,
+                                                    NombreFinalComida = NombreFinalComida,
+                                                    PrecioFinalComida = precioFinalComida,
+                                                    frecuenciaComida = frecuenciaComida,
+                                                    categoria = itemReceta.Codigo,
+                                                    cantidad = Convert.ToInt32(itemRecetaCategoria.Cantidad)
+
+                                                };
+
+                                                datosFinalesComidaRadio.Add(comidar);
+
+                                                //lc_variii++;
                                             }
-                                            radioComidas.Children.Add(radioButton); // Agrega el botón de radio al contenedor
-
-
-                                            radioButton.Checked += RadioButton_Checked;
-
-                                            var CodioComida = itemRecetaCategoria.Codigo;
-                                            var NombreFinalComida = itemRecetaCategoria.Descripcion.ToString();
-                                            var precioFinalComida = itemRecetaCategoria.Precios.Sum(precio => precio.General);
-                                            var frecuenciaComida = itemRecetaCategoria.Frecuente.ToString();
-
-
-                                            var comidar = new Comida()
-                                            {
-
-                                                CodigoComida = CodioComida,
-                                                NombreFinalComida = NombreFinalComida,
-                                                PrecioFinalComida = precioFinalComida,
-                                                frecuenciaComida = frecuenciaComida,
-                                                categoria = itemReceta.Codigo,
-                                                cantidad = Convert.ToInt32(itemRecetaCategoria.Cantidad)
-
-                                            };
-
-                                            datosFinalesComidaRadio.Add(comidar);
-
-                                            //lc_variii++;
                                         }
-                                    }
 
-                                    if (CodigoBebidas2 == itemReceta.Codigo || CodigoBebidas == itemReceta.Codigo)
-                                    {
-                                        //lc_variii = 1;
-                                        foreach (var itemRecetaCategoria in itemReceta.RecetaCategoria)
+                                        if (CodigoBebidas2 == itemReceta.Codigo || CodigoBebidas == itemReceta.Codigo)
                                         {
-                                            var radioButton = new RadioButton();
-                                            radioButton.Content = itemRecetaCategoria.Descripcion;
-                                            radioButton.FontSize = 24;
-                                            radioButton.Name = "v" + lc_variii.ToString() + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
-                                            radioButton.HorizontalAlignment = HorizontalAlignment.Left;
-                                            radioButton.GroupName = "Bebida" + lc_variii.ToString();
-                                            if (itemRecetaCategoria.Frecuente == "True")
+                                            //lc_variii = 1;
+                                            foreach (var itemRecetaCategoria in itemReceta.RecetaCategoria)
                                             {
-                                                radioButton.IsChecked = true;
-                                            }
-                                            radiobebidas.Children.Add(radioButton);
+                                                var radioButton = new RadioButton();
+                                                radioButton.Content = itemRecetaCategoria.Descripcion;
+                                                radioButton.FontSize = 24;
+                                                radioButton.Name = "v" + lc_variii.ToString() + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
+                                                radioButton.HorizontalAlignment = HorizontalAlignment.Left;
+                                                radioButton.GroupName = "Bebida" + lc_variii.ToString();
+                                                if (itemRecetaCategoria.Frecuente == "True")
+                                                {
+                                                    radioButton.IsChecked = true;
+                                                }
+                                                radiobebidas.Children.Add(radioButton);
 
-                                            radioButton.Checked += RadioButton_Checked;
-
-                                          
+                                                radioButton.Checked += RadioButton_Checked;
 
 
 
-                                            var CodioBotella = itemRecetaCategoria.Codigo;
-                                            var NombreFinalBotella = itemRecetaCategoria.Descripcion.ToString();
-                                            var precioFinalBotella = itemRecetaCategoria.Precios.Sum(precio => precio.General);
-                                            var frecuenciaBotella = itemRecetaCategoria.Frecuente.ToString();
 
-                                            var bebida = new Bebida()
-                                            {
 
-                                                CodigoBotella = CodioBotella,
-                                                NombreFinalBotella = NombreFinalBotella,
-                                                PrecioFinalBotella = precioFinalBotella,
-                                                frecuenciaBotella = frecuenciaBotella,
-                                                categoria = itemReceta.Codigo,
-                                                cantidad = Convert.ToInt32(itemRecetaCategoria.Cantidad)
+                                                var CodioBotella = itemRecetaCategoria.Codigo;
+                                                var NombreFinalBotella = itemRecetaCategoria.Descripcion.ToString();
+                                                var precioFinalBotella = itemRecetaCategoria.Precios.Sum(precio => precio.General);
+                                                var frecuenciaBotella = itemRecetaCategoria.Frecuente.ToString();
 
-                                            };
+                                                var bebida = new Bebida()
+                                                {
 
-                                            datosFinalesBotellaRadio.Add(bebida);
+                                                    CodigoBotella = CodioBotella,
+                                                    NombreFinalBotella = NombreFinalBotella,
+                                                    PrecioFinalBotella = precioFinalBotella,
+                                                    frecuenciaBotella = frecuenciaBotella,
+                                                    categoria = itemReceta.Codigo,
+                                                    cantidad = Convert.ToInt32(itemRecetaCategoria.Cantidad)
 
-                                            //lc_variii++;
+                                                };
+
+                                                datosFinalesBotellaRadio.Add(bebida);
+
+                                                //lc_variii++;
                                             }
 
                                         }
@@ -352,128 +322,6 @@ namespace Portal.Kiosco.Properties.Views
             ProductosAdicionales();
         }
 
-        //public void CrearCombosYbebidas(List<Producto> productos)
-        //{
-        //    radiobebidas.Children.Clear();
-        //    radioComidas.Children.Clear();
-        //    checkBoxAdicionales.Children.Clear();
-
-        //    int CodigoBebidas = 1244;
-        //    int CodigoBebidas2 = 2444;
-        //    int CodigoComidas = 246;
-
-        //    string appSettingsPath = "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json";
-
-        //    var builder = new ConfigurationBuilder()
-        //        .AddJsonFile(appSettingsPath, optional: true, reloadOnChange: true);
-
-        //    configuration = builder.Build();
-
-        //    var myConfigSection = configuration.GetSection("MyConfig");
-
-        //    string urlRetailImg = myConfigSection["UrlRetailImg"];
-        //    decimal Precios = 0;
-
-        //    if (productos != null)
-        //    {
-        //        int itemContador = 1;
-        //        foreach (var item in productos)
-        //        {
-        //            if (item.Tipo == "P")
-        //            {
-        //                var comida = new Comida()
-        //                {
-        //                    CodigoComida = item.Codigo,
-        //                    NombreFinalComida = item.Descripcion,
-        //                    PrecioFinalComida = item.Precios.Sum(p => p.General * item.Cantidad),
-        //                    frecuenciaComida = "true",
-        //                    categoria = item.Codigo,
-        //                    cantidad = Convert.ToInt32(item.Cantidad)
-        //                };
-
-        //                datosFinalesComida.Add(comida);
-        //            }
-
-        //            if (item.Tipo == "C")
-        //            {
-        //                if (ContadorProductos == itemContador)
-        //                {
-        //                    string lc_auxcod = item.Codigo.ToString();
-        //                    string lc_auximg = $"{urlRetailImg}{lc_auxcod.Substring(0, lc_auxcod.Length - 2)}.jpg";
-
-        //                    ImgCombo.Source = new BitmapImage(new Uri(lc_auximg));
-        //                    var precio = buscarprecio(productos, Convert.ToDecimal(item.Codigo));
-        //                    totalLabel.Content = precio.ToString("C0");
-        //                    lblCombo.Content = $"{item.Descripcion} #{ContadorProductos}";
-
-        //                    foreach (var itemReceta in item.Receta)
-        //                    {
-        //                        decimal cantidad = itemReceta.Cantidad;
-
-        //                        var comidac = new Comida()
-        //                        {
-        //                            CodigoComida = itemReceta.Codigo,
-        //                            NombreFinalComida = itemReceta.Descripcion,
-        //                            PrecioFinalComida = itemReceta.Precios.Sum(p => p.General),
-        //                            frecuenciaComida = "default",
-        //                            categoria = itemReceta.Codigo,
-        //                            cantidad = convert.toint32(cantidad
-        //                        };
-
-        //                        datosFinalesComida.Add(comidac);
-
-        //                        for (int i = 0; i < cantidad; i++)
-        //                        {
-        //                            if (itemReceta.RecetaCategoria != null)
-        //                            {
-        //                                foreach (var itemRecetaCategoria in itemReceta.RecetaCategoria)
-        //                                {
-        //                                    var radioButton = new RadioButton
-        //                                    {
-        //                                        Content = itemRecetaCategoria.Descripcion,
-        //                                        Name = $"v{i}{itemRecetaCategoria.Codigo}",
-        //                                        FontSize = 24,
-        //                                        HorizontalAlignment = HorizontalAlignment.Left,
-        //                                        GroupName = (itemReceta.Codigo == CodigoComidas ? "Comida" : "Bebida") + i,
-        //                                        IsChecked = itemRecetaCategoria.Frecuente == "True"
-        //                                    };
-
-        //                                    if (itemReceta.Codigo == CodigoComidas)
-        //                                    {
-        //                                        radioComidas.Children.Add(radioButton);
-        //                                    }
-        //                                    else if (itemReceta.Codigo == CodigoBebidas || itemReceta.Codigo == CodigoBebidas2)
-        //                                    {
-        //                                        radiobebidas.Children.Add(radioButton);
-        //                                    }
-
-        //                                    radioButton.Checked += RadioButton_Checked;
-
-        //                                    var bebida = new Bebida()
-        //                                    {
-        //                                        CodigoBotella = itemRecetaCategoria.Codigo,
-        //                                        NombreFinalBotella = itemRecetaCategoria.Descripcion,
-        //                                        PrecioFinalBotella = itemRecetaCategoria.Precios.Sum(p => p.General),
-        //                                        frecuenciaBotella = itemRecetaCategoria.Frecuente,
-        //                                        categoria = itemReceta.Codigo,
-        //                                        cantidad = 1
-        //                                    };
-
-        //                                    datosFinalesBotella.Add(bebida);
-        //                                }
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //                itemContador++;
-        //            }
-        //        }
-        //        ContadorProductos++;
-        //    }
-        //    ProductosAdicionales();
-        //}
-
-
         public void ProductosAdicionales()
         {
             var snacks = App.SnacksWeb;
@@ -485,11 +333,49 @@ namespace Portal.Kiosco.Properties.Views
                 checkBox.Name = "v" + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
                 checkBox.FontSize = 24; // Establece el tamaño de fuente como un valor numérico
                 checkBox.HorizontalAlignment = HorizontalAlignment.Left; // Establece la alineación horizontal
+                checkBox.Checked += CheckBox_Checked;
+                checkBox.Unchecked += CheckBox_Unchecked;
+
                 checkBoxAdicionales.Children.Add(checkBox); // Agrega el botón de radio al contenedor
                                                             // Agregar el evento Checked
 
             }
         }
+
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            buscarprecioadicionales();
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            buscarprecioadicionales();
+        }
+
+        public void buscarprecioadicionales()
+        {
+            var snacks = App.SnacksWeb;
+            precioAdicionales = 0;
+            foreach (var itemRecetaCategoria in snacks)
+            {
+                foreach (var child in checkBoxAdicionales.Children)
+                {
+                    if (child is CheckBox checkBoxAdicionales && checkBoxAdicionales.IsChecked == true)
+                    {
+                        if (checkBoxAdicionales.Name.Substring(1) == Convert.ToInt32(itemRecetaCategoria.Codigo).ToString())
+                        {
+                            precioAdicionales += itemRecetaCategoria.Precios.FirstOrDefault().General;
+
+                        }
+                    }
+                }
+            }
+
+            totalLabel.Content = (precioAdicionales + precioAntesAdicionales).ToString("C0");
+
+        }
+
 
         public void ProductosAdicionalesSeleccion()
         {
@@ -546,7 +432,7 @@ namespace Portal.Kiosco.Properties.Views
             var radioButton = (RadioButton)sender;
             var descripcion = radioButton.Content.ToString();
             var codigo = radioButton.Name.Substring(1);
-
+            var snacks = App.SnacksWeb;
             preciodefault = datosFinalesComidaRadio
             .Where(x => x.frecuenciaComida == "default")
             .Sum(x => x.PrecioFinalComida);
@@ -557,6 +443,7 @@ namespace Portal.Kiosco.Properties.Views
             opcionSeleccionadacomidasDetalle.Clear();
             preciobebida = 0;
             preciocomida = 0;
+            precioAdicionales = 0;
             foreach (var child in radioComidas.Children)
             {
                 if (child is RadioButton radioButtonComida && radioButtonComida.IsChecked == true)
@@ -568,10 +455,10 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-            foreach (var child in radiobebidas.Children)
+            foreach (var child in checkBoxAdicionales.Children)
             {
 
-                if (child is RadioButton radioButtonBebidas)
+                if (child is CheckBox radioButtonBebidas)
                 {
                     if (radioButtonBebidas.IsChecked == true)
                     {
@@ -583,6 +470,23 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
             }
+
+
+            foreach (var itemRecetaCategoria in snacks)
+            {
+                foreach (var child in checkBoxAdicionales.Children)
+                {
+                    if (child is CheckBox checkBoxAdicionales && checkBoxAdicionales.IsChecked == true)
+                    {
+                        if (checkBoxAdicionales.Name.Substring(1) == Convert.ToInt32(itemRecetaCategoria.Codigo).ToString())
+                        {
+                            precioAdicionales += itemRecetaCategoria.Precios.FirstOrDefault().General;
+
+                        }
+                    }
+                }
+            }
+
 
             totalLabel.Content = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString("C0");
         }
@@ -620,7 +524,7 @@ namespace Portal.Kiosco.Properties.Views
                     {
                         opcionSeleccionadabebidas = Convert.ToInt32(radioButtonBebidas.Name.Substring(2));
                         var producto = datosFinalesBotellaRadio.FirstOrDefault(x => x.CodigoBotella == opcionSeleccionadabebidas);
-                        if (producto!= null)
+                        if (producto != null)
                         {
                             preciobebida += producto.PrecioFinalBotella;
                             opcionSeleccionadabebidasDetalle.Add(producto);
@@ -818,9 +722,9 @@ namespace Portal.Kiosco.Properties.Views
                                     datosFinalesComida.Add((comida));
                                 };
 
-                              
 
-                            
+
+
                                 break;
 
                             case "C": //COMBOS
