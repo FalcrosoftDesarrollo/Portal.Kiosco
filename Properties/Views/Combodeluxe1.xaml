@@ -190,7 +190,7 @@
                                             <Label Height="46" VerticalAlignment="Top" Content="Elige Perro o Sánduche" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" Margin="0,0,-66,0"/>
                                         </Border>
                                         <Border Grid.Row="1"  >
-                                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,16">
                                                 <StackPanel Orientation="Vertical" Name="radioComidas" Margin="0,0,17,0">
                                                     <!--<RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
                                                     <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>-->
@@ -211,7 +211,7 @@
                                                     <RowDefinition Height="3*"/>
                                                 </Grid.RowDefinitions>
 
-                                                <ScrollViewer VerticalScrollBarVisibility="Auto"  >
+                                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,18"  >
                                                     <StackPanel Orientation="Vertical"  Name="radiobebidas" Grid.RowSpan="2" >
                                                         <!--<RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
                                                         <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>

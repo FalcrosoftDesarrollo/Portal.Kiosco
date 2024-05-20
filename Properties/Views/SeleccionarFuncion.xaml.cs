@@ -23,6 +23,7 @@ namespace Portal.Kiosco.Properties.Views
         public List<UIElement> elementosConservadosGeneral;
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
+        private bool errorgeneral = false;
 
         public SeleccionarFuncion()
         {
@@ -603,6 +604,11 @@ namespace Portal.Kiosco.Properties.Views
 
             var horaSel = App.Pelicula.HoraSel;
             var horaMilitar = App.Pelicula.HoraMilitar;
+
+            if (horaMilitar == null) 
+            {
+                horaMilitar = App.Pelicula.HoraSel;
+            } 
             if (peliculaDias != null)
             {
                 foreach (var dias in peliculaDias)
@@ -702,7 +708,9 @@ namespace Portal.Kiosco.Properties.Views
                                                             }
                                                             else
                                                             {
-                                                                //MessageBox.Show("La funcion no tiene una tarifa asignada");
+                                                                MessageBox.Show("La funcion no tiene una tarifa asignada");
+                                                                errorgeneral = true;
+                                                                break;
                                                             }
                                                         }
                                                     }

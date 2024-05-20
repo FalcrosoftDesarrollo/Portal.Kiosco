@@ -213,8 +213,12 @@ namespace Portal.Kiosco.Properties.Views
                     App.TipoCompra = "M";
             }
 
+
+
             GenerateResumen(ListCarritoR, ListCarritoB);
         }
+
+        
 
         public void GenerateResumen(List<RetailSales> ListCarritoR, List<ReportSales> ListCarritoB)
         {

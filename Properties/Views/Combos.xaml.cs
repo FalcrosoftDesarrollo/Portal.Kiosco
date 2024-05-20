@@ -1604,14 +1604,26 @@ namespace Portal.Kiosco.Properties.Views
 
                     if (currentValue == 0)
                     {
-                        App.ProductosSeleccionados.Remove(productoAEliminar);
+                        var productos = App.ProductosSeleccionados;
+                        var prodctos = productos.Remove(productoAEliminar);
+                        if (prodctos == true)
+                        {
+                            App.ProductosSeleccionados = productos;
+                        }
+                        else
+                        {
+
+                        }
+
                     }
                 }
+
+
             }
         }
 
 
-        
+
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
@@ -1621,6 +1633,14 @@ namespace Portal.Kiosco.Properties.Views
                 if (ProductosSeleccionados != null)
                 {
                     App.ProductosCambiados = new List<Producto>();
+
+                    var productos = App.ProductosSeleccionados;
+
+                    foreach (var producto in productos.Where(x => x.Tipo == "P"))
+                    {
+                        App.agregarProducto(producto);
+                    }
+
                     isThreadActive = false;
                     Combodeluxe1 openWindows = new Combodeluxe1();
                     openWindows.Show();
