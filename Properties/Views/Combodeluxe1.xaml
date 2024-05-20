@@ -238,14 +238,16 @@
                                         </Border>
 
                                         <Border Grid.Row="1">
-                                            <StackPanel Orientation="Vertical" Name="checkBoxAdicionales" >
-                                                <!--<RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto"  >
+                                                <StackPanel Orientation="Vertical" Name="checkBoxAdicionales" >
+                                                    <!--<RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
                                                 <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>-->
-                                            </StackPanel>
+                                                </StackPanel>
+                                            </ScrollViewer>
                                         </Border>
                                     </Grid>
                                 </Border>

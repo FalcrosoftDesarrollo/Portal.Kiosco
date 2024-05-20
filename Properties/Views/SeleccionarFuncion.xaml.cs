@@ -708,6 +708,7 @@ namespace Portal.Kiosco.Properties.Views
                                                             }
                                                             else
                                                             {
+                                                                borSiguente.Visibility = Visibility.Hidden;
                                                                 MessageBox.Show("La funcion no tiene una tarifa asignada");
                                                                 errorgeneral = true;
                                                                 break;
