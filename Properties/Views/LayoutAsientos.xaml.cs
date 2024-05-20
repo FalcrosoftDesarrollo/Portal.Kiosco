@@ -524,7 +524,7 @@ namespace Portal.Kiosco.Properties.Views
                             case "S":
                                 if (ubicacion.TipoSilla == "Discapacitado")
                                 {
-                                    
+                                    border.Background = Brushes.Blue;
                                     label.Content = lc_valmos;
                                     label.Background = Brushes.Blue;
                                     label.Foreground = Brushes.White;
@@ -542,9 +542,10 @@ namespace Portal.Kiosco.Properties.Views
                                     button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
                                     button.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
                                     button.Foreground = Brushes.Black;
+                                    border.Child = button;
                                 }
 
-                                border.Child = button;
+                                
                                 break;
                             case "B":
                                 border.Visibility = Visibility.Hidden;
