@@ -1648,6 +1648,11 @@ namespace Portal.Kiosco.Properties.Views
 
                     foreach (var producto in productos.Where(x => x.Tipo == "P"))
                     {
+                        producto.SwitchAdd = "N";
+                        foreach (var precio in producto.Precios) 
+                        {
+                            producto.Valor = precio.General.ToString();
+                        }
                         App.agregarProducto(producto);
                     }
                     isThreadActive = false;
