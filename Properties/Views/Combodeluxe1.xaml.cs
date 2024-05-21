@@ -458,10 +458,10 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-            foreach (var child in checkBoxAdicionales.Children)
+            foreach (var child in radiobebidas.Children)
             {
 
-                if (child is CheckBox radioButtonBebidas)
+                if (child is RadioButton radioButtonBebidas)
                 {
                     if (radioButtonBebidas.IsChecked == true)
                     {

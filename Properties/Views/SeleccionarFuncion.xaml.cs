@@ -704,6 +704,7 @@ namespace Portal.Kiosco.Properties.Views
                                                                     App.Pelicula.numeroSala = item.numeroSala;
                                                                     borSiguente.Visibility = Visibility.Visible;
                                                                     App.Pelicula.HoraMilitar = item2.militar;
+                                                                    errorgeneral = true;
                                                                     break;
                                                                 }
                                                             }
@@ -711,7 +712,7 @@ namespace Portal.Kiosco.Properties.Views
                                                             {
                                                                 //borSiguente.Visibility = Visibility.Hidden;
                                                                 //MessageBox.Show("La funcion no tiene una tarifa asignada");
-                                                                //errorgeneral = true;
+                                                               
                                                                 break;
                                                             }
                                                         }
@@ -1062,6 +1063,10 @@ namespace Portal.Kiosco.Properties.Views
             }
             clickedButton.Foreground = Brushes.White;
             CalcularTarifa();
+
+            if (errorgeneral == false) {
+                MessageBox.Show("Tarifa no programada para la pelicula ");
+            }
         }
 
         private void btnSeleccionFecha_Click(object sender, RoutedEventArgs e)
