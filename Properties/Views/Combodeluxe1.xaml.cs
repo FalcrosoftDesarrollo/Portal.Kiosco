@@ -138,7 +138,7 @@ namespace Portal.Kiosco.Properties.Views
 
             return isMainWindowOpen; // Devolver el valor booleano
         }
-
+        private decimal CodigoProducto;
         public void CrearCombosYbebidas(List<Producto> productos)
         {
 
@@ -170,7 +170,7 @@ namespace Portal.Kiosco.Properties.Views
 
                             if (ContadorProductos == itemContador)
                             {
-
+                                CodigoProducto = item.Codigo;
                                 ob_datpro.Codigo = itemReceta.Codigo;
                                 ob_datpro.Descripcion = itemReceta.Descripcion;
                                 ob_datpro.Tipo = itemReceta.Tipo;
@@ -391,7 +391,8 @@ namespace Portal.Kiosco.Properties.Views
             var snacks = App.SnacksWeb;
             adicionales.Secuencia = Convert.ToDecimal(App.Secuencia);
             adicionales.Tipo = "P";
-            
+            adicionales.SwitchVenta = "";
+
             foreach (var itemRecetaCategoria in snacks)
             {
                 if (contadorAdicionales > 6) break;
@@ -542,6 +543,8 @@ namespace Portal.Kiosco.Properties.Views
                     .Where(x => x.frecuenciaComida == "default")
                     .Sum(x => x.PrecioFinalComida);
 
+
+
             var datosselecionado = string.Empty;
             var productosSeleccionados = App.ProductosSeleccionados;
             var itemContador = 1;
@@ -549,6 +552,8 @@ namespace Portal.Kiosco.Properties.Views
             foreach (var productocambiado in productosSeleccionados)
             {
                 var productonew = new Producto();
+
+
 
                 if (contadorProdModificados == itemContador)
                 {
@@ -586,7 +591,8 @@ namespace Portal.Kiosco.Properties.Views
                     }
 
                     productonew.KeySecuencia = App.Secuencia;
-
+                    productonew.SwitchAdd = "S";
+                    productonew.Codigo = CodigoProducto;
                     App.agregarProducto(productonew);
                 }
                 itemContador++;
