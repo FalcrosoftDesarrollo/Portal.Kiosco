@@ -389,6 +389,7 @@ namespace Portal.Kiosco.Properties.Views
             int contadorAdicionales = 1;
             var adicionales = new Adiciones();
             var snacks = App.SnacksWeb;
+            adicionales.Secuencia = App.Secuencia;
 
             foreach (var itemRecetaCategoria in snacks)
             {
