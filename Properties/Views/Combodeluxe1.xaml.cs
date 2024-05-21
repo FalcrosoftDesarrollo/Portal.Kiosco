@@ -390,8 +390,7 @@ namespace Portal.Kiosco.Properties.Views
             var adicionales = new Adiciones();
             var snacks = App.SnacksWeb;
             adicionales.Secuencia = Convert.ToDecimal(App.Secuencia);
-            adicionales.Tipo = "P";
-            adicionales.SwitchVenta = "";
+            adicionales.Tipo = "P"; 
 
             foreach (var itemRecetaCategoria in snacks)
             {

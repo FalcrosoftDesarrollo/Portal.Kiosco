@@ -2472,7 +2472,8 @@ namespace Portal.Kiosco
                             CanCategoria4 = ob_datpro.CanCategoria_4,
                             CanCategoria5 = ob_datpro.CanCategoria_5,
                             FechaRegistro = DateTime.Now,
-                            KeyTeatro = Convert.ToDecimal(App.idCine)
+                            KeyTeatro = Convert.ToDecimal(App.idCine),
+                            SwitchAdd = " "
                         };
 
                         //Adicionar y guardar registro a tabla
