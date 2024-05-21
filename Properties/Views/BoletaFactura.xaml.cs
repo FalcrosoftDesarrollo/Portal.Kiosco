@@ -28,12 +28,15 @@ namespace Portal.Kiosco.Properties.Views
             NomEmpresa.Text = App.NomEmpresa;
             NomEmpresa2.Text = App.NomEmpresa;
             var combos = App.ProductosSeleccionados;
-    
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
                 {
-                    ComprobarTiempo();
+                    if (ComprobarTiempo())
+                    {
+                        break;
+                    }
                 }
             });
             thread.IsBackground = true;

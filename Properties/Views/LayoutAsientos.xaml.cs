@@ -55,7 +55,10 @@ namespace Portal.Kiosco.Properties.Views
                 {
                     while (isThreadActive)
                     {
-                        ComprobarTiempo();
+                        if (ComprobarTiempo())
+                        {
+                            break;
+                        }
                     }
                 });
                 thread.IsBackground = true;

@@ -1830,7 +1830,7 @@ namespace Portal.Kiosco
                     {
                         Tipo = pr_datpro.Tipo,
                         Precio = Convert.ToDecimal(pr_datpro.Valor),
-                        Cantidad = App.ProductosSeleccionados.Count(),
+                        Cantidad = pr_datpro.Cantidad,
                         Secuencia = Convert.ToDecimal(lc_secsec),
                         PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
                         KeyProducto = pr_datpro.Codigo,

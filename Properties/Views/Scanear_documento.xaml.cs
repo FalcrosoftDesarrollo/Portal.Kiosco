@@ -31,7 +31,10 @@ namespace Portal.Kiosco
             {
                 while (isThreadActive)
                 {
-                    ComprobarTiempo();
+                    if (ComprobarTiempo())
+                    {
+                        break;
+                    }
                 }
             });
             thread.IsBackground = true;

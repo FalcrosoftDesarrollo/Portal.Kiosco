@@ -90,7 +90,10 @@ namespace Portal.Kiosco.Properties.Views
             {
                 while (isThreadActive)
                 {
-                    ComprobarTiempo();
+                    if (ComprobarTiempo())
+                    {
+                        break;
+                    }
                 }
             });
             thread.IsBackground = true;
@@ -592,6 +595,7 @@ namespace Portal.Kiosco.Properties.Views
                     productonew.KeySecuencia = App.Secuencia;
                     productonew.SwitchAdd = "S";
                     productonew.Codigo = CodigoProducto;
+                    productonew.Cantidad = 1;
                     App.agregarProducto(productonew);
                 }
                 itemContador++;
