@@ -1322,7 +1322,7 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-        public decimal SelPrecio(int SelectProd, decimal Codigo)
+        public decimal SelPrecio(int SelectProd, decimal Codigo, string accion)
         {
 
             var producto = new List<Producto>();
@@ -1332,7 +1332,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 case 1:
 
-                    Precios = buscarprecio(App.CombosWeb, Codigo);
+                    Precios = buscarprecio(App.CombosWeb, Codigo, accion);
                     elementosCombos.Clear();
 
                     foreach (UIElement elemento in imagenes.Children)
@@ -1343,7 +1343,7 @@ namespace Portal.Kiosco.Properties.Views
                     break;
 
                 case 2:
-                    Precios = buscarprecio(App.AlimentosWeb, Codigo);
+                    Precios = buscarprecio(App.AlimentosWeb, Codigo, accion);
                     elementosAlimentos.Clear();
 
                     foreach (UIElement elemento in imagenes.Children)
@@ -1354,7 +1354,7 @@ namespace Portal.Kiosco.Properties.Views
                     break;
 
                 case 3:
-                    Precios = buscarprecio(App.BebidasWeb, Codigo);
+                    Precios = buscarprecio(App.BebidasWeb, Codigo, accion);
                     elementosBebidas.Clear();
 
                     foreach (UIElement elemento in imagenes.Children)
@@ -1365,7 +1365,7 @@ namespace Portal.Kiosco.Properties.Views
                     break;
 
                 case 4:
-                    Precios = buscarprecio(App.SnacksWeb, Codigo);
+                    Precios = buscarprecio(App.SnacksWeb, Codigo, accion);
                     elementosSnack.Clear();
 
                     foreach (UIElement elemento in imagenes.Children)
@@ -1382,7 +1382,7 @@ namespace Portal.Kiosco.Properties.Views
             return Precios;
         }
 
-        public decimal buscarprecio(List<Producto> productos, Decimal Codigo)
+        public decimal buscarprecio(List<Producto> productos, Decimal Codigo, string accion)
         {
             List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal)>();
             List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria)> datosFinalesComida = new List<(decimal, string, decimal, string, decimal)>();
@@ -1543,7 +1543,11 @@ namespace Portal.Kiosco.Properties.Views
                             break;
                     }
 
-                    App.ProductosSeleccionados.Add(itepro);
+                    if (accion == "S")
+                    {
+                        App.ProductosSeleccionados.Add(itepro);
+                    }
+
 
                     break;
                 }
@@ -1562,7 +1566,7 @@ namespace Portal.Kiosco.Properties.Views
             int currentValue = int.Parse(countLabel.Content.ToString());
             currentValue++;
             countLabel.Content = currentValue.ToString();
-            var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)));
+            var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)), "S");
 
             string totalString = totalLabel.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
             decimal totalAnterior = decimal.Parse(totalString);
@@ -1571,11 +1575,10 @@ namespace Portal.Kiosco.Properties.Views
 
 
             string codigo = countLabel.Name.Substring(3);
-            var productoARemover = App.ProductosSeleccionados.FirstOrDefault(prod => prod.Codigo.ToString() == codigo);
-            if (productoARemover != null)
-            {
-                App.ProductosSeleccionados.Remove(productoARemover);
-            }
+            var productoAEliminar = App.ProductosSeleccionados.FirstOrDefault(producto => producto.Codigo == Convert.ToDecimal(countLabel.Name.Substring(3)));
+
+            var codigoProducto = Convert.ToDecimal(countLabel.Name.Substring(3));
+
         }
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
@@ -1584,16 +1587,17 @@ namespace Portal.Kiosco.Properties.Views
             Border parentBorder = (Border)button.Parent;
             Grid innerGrid = (Grid)parentBorder.Parent;
             Label countLabel = (Label)innerGrid.Children[1];
-
+            var result = new List<Producto>();
             int currentValue = int.Parse(countLabel.Content.ToString());
-            if (currentValue > 0)
+            if (currentValue >= 0)
             {
                 currentValue--;
                 countLabel.Content = currentValue.ToString();
 
-                var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)));
+                var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)), "");
 
-                var productoAEliminar = App.ProductosSeleccionados.FirstOrDefault(producto => producto.Codigo == Convert.ToDecimal(countLabel.Name.Substring(3)));
+                var codigoProducto = Convert.ToDecimal(countLabel.Name.Substring(3));
+                var productoAEliminar = App.ProductosSeleccionados.FirstOrDefault(producto => producto.Codigo == codigoProducto);
 
                 if (productoAEliminar != null)
                 {
@@ -1602,21 +1606,33 @@ namespace Portal.Kiosco.Properties.Views
                     decimal nuevoTotal = totalAnterior - precio;
                     totalLabel.Content = nuevoTotal.ToString("C0");
 
-                    if (currentValue == 0)
+
+                    var productos = App.ProductosSeleccionados;
+
+
+                    bool eliminado = false;
+
+                    foreach (var item in productos)
                     {
-                        var productos = App.ProductosSeleccionados;
-                        var prodctos = productos.Remove(productoAEliminar);
-                        if (prodctos == true)
+                        if (item.Codigo == codigoProducto && !eliminado)
                         {
-                            App.ProductosSeleccionados = productos;
+                            eliminado = true; // Marcar que ya hemos eliminado un producto con el código especificado
                         }
                         else
                         {
-
+                            result.Add(item); // Añadir el producto a la nueva lista
                         }
-
                     }
+
+                    App.ProductosSeleccionados = result; // Actualizar la lista de productos seleccionados
+
                 }
+
+                if (currentValue < 0)
+                {
+                    countLabel.Content = "0";
+                }
+
 
 
             }
@@ -1632,7 +1648,7 @@ namespace Portal.Kiosco.Properties.Views
                 var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");
                 if (ProductosSeleccionados != null)
                 {
-                  
+
 
                     isThreadActive = false;
                     Combodeluxe1 openWindows = new Combodeluxe1();
@@ -1649,7 +1665,7 @@ namespace Portal.Kiosco.Properties.Views
                     foreach (var producto in productos.Where(x => x.Tipo == "P"))
                     {
                         producto.SwitchAdd = "N";
-                        foreach (var precio in producto.Precios) 
+                        foreach (var precio in producto.Precios)
                         {
                             producto.Valor = precio.General.ToString();
                         }

@@ -18,6 +18,9 @@ namespace Portal.Kiosco.Properties.Views
             App.ob_diclst = new System.Collections.Generic.Dictionary<string, string>();
             App.IsFecha = false;
             App.ProductosSeleccionados = new List<Producto>();
+            App.Secuencia = "0";
+            App.ProductosCambiados = new List<Producto>();
+            
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
