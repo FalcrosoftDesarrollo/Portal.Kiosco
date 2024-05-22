@@ -197,12 +197,17 @@ namespace Portal.Kiosco.Properties.Views
                 lc_secsec = Convert.ToDecimal(secuencia);
                 using (var context = new DataDB(config))
                 {
+                    try { 
                     var RetailSales = context.RetailSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == Convert.ToDecimal(PuntoVenta)).Where(x => x.KeyTeatro == Convert.ToDecimal(KeyTeatro)).ToList();
                     ListCarritoR = RetailSales;
                     var SwitchAddBtn = RetailSales.Any(x => x.SwitchAdd == "S");
-
-                    var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
+                    } catch (Exception e){ }
+                    try
+                    {
+                        var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
                     ListCarritoB = ReportSales;
+                    }
+                    catch (Exception e) { }
                 }
 
                 if (ListCarritoB.Count != 0 && ListCarritoR.Count == 0)
