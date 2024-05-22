@@ -302,7 +302,7 @@
                                                 <StackPanel Height="212" Width="1172">
                                                     
                                                     
-                                                    <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="32" Content="Ghostbusters: Apocalípsis Fantasma " />
+                                                    <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="24" Content="Ghostbusters: Apocalípsis Fantasma " />
                                                     <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
                                                     <Label Name="lblClasificacion" FontFamily="Myanmar Khyay" FontSize="24" Content="Clasificación: 7 años" Height="38"/>
                                                     <Label Name="lblGenero" FontFamily="Myanmar Khyay" FontSize="24" Content="Género: Aventura, Comedia, Fantasía" Height="38"/>

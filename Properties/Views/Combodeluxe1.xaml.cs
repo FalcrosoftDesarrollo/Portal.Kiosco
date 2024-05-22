@@ -164,7 +164,7 @@ namespace Portal.Kiosco.Properties.Views
                 var itemContador = 1;
                 radioComidas.Children.Clear();
                 radiobebidas.Children.Clear();
-                foreach (var item in productos)
+                foreach (var item in productos.Where(x => x.Tipo == "C"))
                 {
                     foreach (var itemReceta in item.Receta)
                     {
@@ -921,15 +921,15 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-          
 
-            if (ContadorProductosPantallas <= (App.ProductosSeleccionados.Count()))
+            int contadorPantallas = App.ProductosSeleccionados.Count() - App.ProductosSeleccionados.Where(x => x.Tipo == "P").Count();
+            if (ContadorProductosPantallas <= contadorPantallas)
             {
                 ProductosAdicionales();
                 ProductosModificados();
                 ProductosAdicionalesSeleccion();
                 contadorProdModificados++;
-                if (ContadorProductosPantallas == (App.ProductosSeleccionados.Count()))
+                if (ContadorProductosPantallas == contadorPantallas)
                 {
                     isThreadActive = false;
                     ResumenCompra openWindows = new ResumenCompra(config);
