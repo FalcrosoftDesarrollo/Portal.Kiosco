@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APIPortalKiosco.Entities;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Timers;
@@ -86,6 +87,16 @@ namespace Portal.Kiosco.Properties.Views
             }
             if (responseSection.Replace("Response:","").Substring(0, 3).Replace(",", "") == "00")
             {
+                Producto producto = new Producto
+                {
+                    TipoCompra = App.TipoCompra,
+                    KeySecuencia = App.Secuencia,
+                    SwtVenta = "V",
+                    SwitchCashback = "S",
+                    Valor = App.TotalPagar,
+                };
+                App.Payment(producto);
+
                 App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
                 var openWindows = new BoletasGafasAlimentos();
                 openWindows.Show();

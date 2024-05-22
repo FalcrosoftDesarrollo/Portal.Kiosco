@@ -1,4 +1,6 @@
-﻿using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Data;
+using APIPortalKiosco.Entities;
+using Microsoft.Extensions.Options;
 using QRCoder;
 using System;
 using System.Collections.Generic;
@@ -10,17 +12,18 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Portal.Kiosco.Properties.Views
 {
     public partial class BoletaFactura : Window
     {
         private bool isThreadActive = true;
-
-        public BoletaFactura()
+        private readonly IOptions<MyConfig> config;
+        public BoletaFactura(IOptions<MyConfig> config)
         {
             InitializeComponent();
-            GenerateResumen();
+            ListCarrito();
             CargarQr();
 
             FechaFac.Text = DateTime.Now.ToString();
@@ -28,15 +31,12 @@ namespace Portal.Kiosco.Properties.Views
             NomEmpresa.Text = App.NomEmpresa;
             NomEmpresa2.Text = App.NomEmpresa;
             var combos = App.ProductosSeleccionados;
-
+    
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
                 {
-                    if (ComprobarTiempo())
-                    {
-                        break;
-                    }
+                    ComprobarTiempo();
                 }
             });
             thread.IsBackground = true;
@@ -77,37 +77,100 @@ namespace Portal.Kiosco.Properties.Views
                             }
                         }
                     }
-
                 });
             }
 
             return isMainWindowOpen;
         }
 
+        private void ListCarrito()
+        {
+            #region VARIABLES LOCALES
+            decimal lc_secsec = 0;
+            var PuntoVenta = App.PuntoVenta;
+            var KeyTeatro = App.idCine;
+            string secuencia = "";
+            #endregion
 
-        public void GenerateResumen()
+            //Validar secuencia y asignar valores
+            App.TipoCompra = "V";
+            secuencia = App.Secuencia;
+            List<RetailSales> ListCarritoR = new List<RetailSales>();
+            List<ReportSales> ListCarritoB = new List<ReportSales>();
+
+            if (secuencia != null)
+            {
+                //Obtener productos carrito de compra
+                lc_secsec = Convert.ToDecimal(secuencia);
+                using (var context = new DataDB(config))
+                {
+                    var RetailSales = context.RetailSales.Where(x => x.Secuencia == lc_secsec).Where(x => x.PuntoVenta == Convert.ToDecimal(PuntoVenta)).Where(x => x.KeyTeatro == Convert.ToDecimal(KeyTeatro)).ToList();
+                    ListCarritoR = RetailSales;
+                    var SwitchAddBtn = RetailSales.Any(x => x.SwitchAdd == "S");
+
+                    var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
+                    ListCarritoB = ReportSales;
+                }
+
+                if (ListCarritoB.Count != 0 && ListCarritoR.Count == 0)
+                    App.TipoCompra = "B";
+                if (ListCarritoB.Count == 0 && ListCarritoR.Count != 0)
+                    App.TipoCompra = "P";
+                if (ListCarritoB.Count != 0 && ListCarritoR.Count != 0)
+                    App.TipoCompra = "M";
+            }
+
+            GenerateResumen(ListCarritoR, ListCarritoB);
+        }
+
+        public void GenerateResumen(List<RetailSales> ListCarritoR, List<ReportSales> ListCarritoB)
         {
             decimal totalcombos = 0;
-            GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
+            decimal codigo = 0;
+            string nombre = "";
+            decimal precio = 0;
+            decimal cantidad = 0;
+
+            if (App.Pelicula.Nombre != "")
+            {
+                GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
+            }
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
-            GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
+
+            if (App.CantidadGafas.ToString() != "0")
+            {
+                GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
+            }
+
             totalcombos += 0;
-            var combos = App.ProductosSeleccionados;
-            var combosAgrupados = combos.GroupBy(c => c.Codigo);
+
+            var combos = ListCarritoR;
+
+            var combosAgrupados = combos.GroupBy(c => c.KeyProducto);
 
             foreach (var grupoCombos in combosAgrupados)
             {
-                decimal codigo = grupoCombos.Key;
-                string nombre = buscarNombre(combos, codigo);
-                decimal precio = buscarprecio(combos, codigo);
-                int cantidad = grupoCombos.Count();
-                decimal total = (Convert.ToDecimal(precio) * cantidad);
+                foreach (var item in grupoCombos)
+                {
+                    codigo = item.KeyProducto;
+                    nombre = item.Descripcion;
+                    precio = item.Precio;
+                    cantidad = item.Cantidad;
+                }
+
+                string totalString = TotalFac.Text.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
+                decimal totalAnterior = decimal.Parse(totalString);
+                decimal nuevoTotal = totalAnterior + precio;
+
+                decimal total = nuevoTotal * cantidad;
                 totalcombos += total;
+
                 GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
-            TotalFac.Text = "TOTAL A PAGAR: " + totalcombos.ToString("C", new CultureInfo("es-CO"));
+            TotalFac.Text = totalcombos.ToString("C0");
         }
+
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
         {

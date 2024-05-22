@@ -88,7 +88,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnImprimir_Click(object sender, RoutedEventArgs e)
         {
-            Window ventanaSecundaria = new BoletaFactura();
+            Window ventanaSecundaria = new BoletaFactura(config);
 
             UIElement contenidoVisual = ventanaSecundaria.Content as UIElement;
 

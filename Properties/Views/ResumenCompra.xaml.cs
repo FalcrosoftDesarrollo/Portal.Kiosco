@@ -39,10 +39,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 while (isThreadActive)
                 {
-                    if (ComprobarTiempo())
-                    {
-                        break;
-                    }
+                    ComprobarTiempo();
                 }
             });
             thread.IsBackground = true;
@@ -89,7 +86,7 @@ namespace Portal.Kiosco.Properties.Views
 
             return isMainWindowOpen;
         }
-
+ 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
@@ -110,19 +107,19 @@ namespace Portal.Kiosco.Properties.Views
         {
             isThreadActive = false;
 
-            decimal totalDecimal;
-            if (decimal.TryParse(TotalResumen.Content.ToString(), NumberStyles.Currency, CultureInfo.GetCultureInfo("es-CO"), out totalDecimal))
-            {
-                var total = Convert.ToString(Convert.ToInt32(totalDecimal));
-                App.TotalPagar = total.ToString();
-            }
-            else
-            {
-                Console.WriteLine("No se pudo convertir la cadena en un valor decimal.");
-            }
+            //decimal totalDecimal;
+            //if (decimal.TryParse(TotalResumen.Content.ToString(), NumberStyles.Currency, CultureInfo.GetCultureInfo("es-CO"), out totalDecimal))
+            //{
+            //    var total = Convert.ToString(Convert.ToInt32(totalDecimal));
+            //    App.TotalPagar = total.ToString();
+            //}
+            //else
+            //{
+            //    Console.WriteLine("No se pudo convertir la cadena en un valor decimal.");
+            //}
 
-            StartMonitoringDatafono();
-            var openWindows = new InstruccionesDatafono();
+            //StartMonitoringDatafono();
+            var openWindows = new BoletasGafasAlimentos();
             openWindows.Show();
             this.Close();
 
@@ -221,8 +218,6 @@ namespace Portal.Kiosco.Properties.Views
             GenerateResumen(ListCarritoR, ListCarritoB);
         }
 
-
-
         public void GenerateResumen(List<RetailSales> ListCarritoR, List<ReportSales> ListCarritoB)
         {
             decimal totalcombos = 0;
@@ -231,9 +226,9 @@ namespace Portal.Kiosco.Properties.Views
             decimal precio = 0;
             decimal cantidad = 0;
 
-            if (!string.IsNullOrEmpty(App.Pelicula.Nombre))
+            if (App.Pelicula.Nombre != "")
             {
-                GenerateResumenCategoria("Boletas", string.IsNullOrEmpty(App.Pelicula.Nombre) ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
+                GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
             }
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
 
@@ -242,44 +237,36 @@ namespace Portal.Kiosco.Properties.Views
                 GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
             }
 
-            totalcombos = 0;
+            totalcombos += 0;
 
             var combos = ListCarritoR;
-            var combosAgrupados = new Dictionary<decimal, (string Descripcion, decimal Precio, decimal CantidadTotal)>();
 
-            foreach (var item in combos)
-            {
-                if (combosAgrupados.ContainsKey(item.KeyProducto))
-                {
-                    // Actualizar las cantidades si el producto ya está en el diccionario
-                    var existingCombo = combosAgrupados[item.KeyProducto];
-                    existingCombo.CantidadTotal += 1;
-                    combosAgrupados[item.KeyProducto] = existingCombo;
-                }
-                else
-                {
-                    // Agregar nuevo producto al diccionario
-                    combosAgrupados[item.KeyProducto] = (item.Descripcion, item.Precio, item.Cantidad);
-                }
-            }
+            var combosAgrupados = combos.GroupBy(c => c.KeyProducto);
 
             foreach (var grupoCombos in combosAgrupados)
             {
-                codigo = grupoCombos.Key;
-                nombre = grupoCombos.Value.Descripcion;
-                precio = grupoCombos.Value.Precio;
-                decimal cantidadTotal = grupoCombos.Value.CantidadTotal;
+                foreach (var item in grupoCombos)
+                {
+                    codigo = item.KeyProducto;
+                    nombre = item.Descripcion;
+                    precio = item.Precio;
+                    cantidad = item.Cantidad;
+                }
+               
+                string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
+                decimal totalAnterior = decimal.Parse(totalString);
+                decimal nuevoTotal = totalAnterior + precio;
 
-                decimal total = precio * cantidadTotal;
+                decimal total = nuevoTotal * cantidad;
                 totalcombos += total;
 
-                GenerateResumenCategoria("Combos", nombre, precio, cantidadTotal.ToString(), total);
+                GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
             TotalResumen.Content = totalcombos.ToString("C0");
+
             App.TotalPagar = totalcombos.ToString();
         }
-
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
         {
@@ -429,7 +416,6 @@ namespace Portal.Kiosco.Properties.Views
                                         Precios += (itempre.General * itemprer.Cantidad);
                                     };
                                 }
-
                             }
 
                             ob_datpro.Precios = precio_Combo;
@@ -448,7 +434,7 @@ namespace Portal.Kiosco.Properties.Views
                                         
                                         var precioFinalBotella = i.Precios.Sum(precio => precio.General);
                                         var frecuenciaBotella = i.Frecuente.ToString();
-                                        // Hacer algo con precioFinalCombo
+                                        
                                         if (Convert.ToBoolean(frecuenciaBotella) == true)
                                         {
                                             Precios += precioFinalBotella;
@@ -469,7 +455,7 @@ namespace Portal.Kiosco.Properties.Views
                                         {
                                             Precios += precioFinalComida;
                                         }
-                                        // Hacer algo con precioFinalCombo
+                                        
                                         datosFinalesComida.Add((CodioComida, NombreFinalComida, precioFinalComida, frecuenciaComida, itecat.Codigo));
                                     }
                                 }

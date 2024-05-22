@@ -1559,16 +1559,31 @@ namespace Portal.Kiosco
                 {
 
                     //Obtener valores de rta cashback y consultar registro en la bd
-                    lc_secsec = App.Secuencia;
-                    lc_keytea = App.idCine;
-                    lc_coreli = App.EmailEli;
-                    lc_valtra = ref_payco.Substring(ref_payco.IndexOf(":") + 1);
-                    lc_status = "Cashback";
-                    lc_idsepy = "Cashback:SEC-" + App.Secuencia;
-                    lc_fectra = DateTime.Now.ToString();
-                    lc_refepy = App.PuntoVenta + "-" + App.Secuencia;
-                    lc_bankpy = "CashBack Procinal";
+                    if (ref_payco.Contains("Cashback"))
+                    {
+                        lc_secsec = App.Secuencia;
+                        lc_keytea = App.idCine;
+                        lc_coreli = App.EmailEli;
+                        lc_valtra = ref_payco.Substring(ref_payco.IndexOf(":") + 1);
+                        lc_status = "Cashback";
+                        lc_idsepy = "Cashback:SEC-" + App.Secuencia;
+                        lc_fectra = DateTime.Now.ToString();
+                        lc_refepy = App.PuntoVenta + "-" + App.Secuencia;
+                        lc_bankpy = "CashBack Procinal";
+                    }
+                    else 
+                    {
 
+                        lc_secsec = App.Secuencia;
+                        lc_keytea = App.idCine;
+                        lc_coreli = App.EmailEli;
+                        lc_valtra = ref_payco.Substring(ref_payco.IndexOf(":") + 1);
+                        lc_status = "Credibank";
+                        lc_idsepy = "Credibank:SEC-" + App.Secuencia;
+                        lc_fectra = DateTime.Now.ToString();
+                        lc_refepy = App.PuntoVenta + "-" + App.Secuencia;
+                        lc_bankpy = "Pago Credibank Procinal";
+                    }
 
                     //Inicializar instancia de BD
                     using (var context = new DataDB(config))
