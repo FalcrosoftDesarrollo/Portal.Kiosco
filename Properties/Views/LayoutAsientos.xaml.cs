@@ -38,7 +38,7 @@ namespace Portal.Kiosco.Properties.Views
 
                 if (App.ob_diclst.Count > 0)
                 {
-                    lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+                    lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
                 }
                 else
                 {
@@ -704,7 +704,7 @@ namespace Portal.Kiosco.Properties.Views
 
             try
             {
-                var secuencia = App.Secuencia;
+                var secuencia = App.Secuencia == "0" ? null : App.Secuencia;
                 if (secuencia != null)
                 {
                     lc_auxsec = App.Secuencia.ToString();

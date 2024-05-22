@@ -22,7 +22,7 @@ namespace Portal.Kiosco.Properties.Views
 
             if (App.ob_diclst.Count > 0)
             {
-                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
             }
             else
             {
@@ -130,8 +130,21 @@ namespace Portal.Kiosco.Properties.Views
                 SwtVenta = "V",
                 SwitchCashback = "S",
                 Valor = App.TotalPagar,
+                
             };
             App.Payment(producto);
+
+            if (App.respuestagenerica == "Error")
+            {
+                MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else 
+            {
+                isThreadActive = false;
+                var openWindows = new BoletasGafasAlimentos();
+                openWindows.Show();
+                this.Close();
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Portal.Kiosco.Properties.Views
 
             if (App.ob_diclst.Count > 0)
             {
-                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
+                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
             }
             else
             {

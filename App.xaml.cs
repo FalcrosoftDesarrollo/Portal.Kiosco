@@ -21,6 +21,8 @@ namespace Portal.Kiosco
 {
     public partial class App : Application, INotifyPropertyChanged
     {
+        
+        public static string respuestagenerica { get; set; }
         public static string UrlRetailImg { get; set; }
         public static bool IsUserAuthenticated { get; set; }
         public static CineFansData DatosCineFans { get; set; }
@@ -156,7 +158,7 @@ namespace Portal.Kiosco
                 UrlCorreo = appSettingsSection["UrlCorreo"];
                 TelefonoEli = appSettingsSection["Telefono"];
                 var xmlPath = appSettingsSection["Variables41"];
-                
+
                 if (string.IsNullOrEmpty(xmlPath))
                 {
                     throw new ApplicationException("XML path for 'Variables41' is missing or empty.");
@@ -183,7 +185,7 @@ namespace Portal.Kiosco
             }
         }
 
-        
+
 
         private void HandleStartupError(Exception ex, string userMessage)
         {
@@ -575,6 +577,7 @@ namespace Portal.Kiosco
         public static void Payment(Producto pr_datpro)
         {
             #region VARIABLES LOCALES
+           
             int lc_swtcat = 0;
             int lc_idearr = 0;
             int lc_cntubi = 0;
@@ -950,13 +953,13 @@ namespace Portal.Kiosco
                             //Validar pago cashback
                             if (pr_datpro.SwitchCashback == "S")
                             {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(config.Value.CodMedioPagoCB);
+                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
                                 ob_intvta.PagoInterno = Convert.ToDouble(lc_valpro);
                                 ob_intvta.PagoCredito = 0;
                             }
                             else
                             {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(config.Value.CodMedioPago);
+                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
                                 ob_intvta.PagoInterno = 0;
                                 ob_intvta.PagoCredito = Convert.ToDouble(lc_valpro);
                             }
@@ -1222,13 +1225,13 @@ namespace Portal.Kiosco
                         //Validar pago cashback
                         if (pr_datpro.SwitchCashback == "S")
                         {
-                            ob_intvta.CodMedioPago = Convert.ToInt32(config.Value.CodMedioPagoCB);
+                            ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
                             ob_intvta.PagoInterno = Convert.ToDouble(lc_boltot);
                             ob_intvta.PagoCredito = 0;
                         }
                         else
                         {
-                            ob_intvta.CodMedioPago = Convert.ToInt32(config.Value.CodMedioPago);
+                            ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
                             ob_intvta.PagoInterno = 0;
                             ob_intvta.PagoCredito = Convert.ToDouble(lc_boltot);
                         }
@@ -1332,6 +1335,7 @@ namespace Portal.Kiosco
                     if (ob_diclst.ContainsKey("Validación"))
                     {
                         MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        App.respuestagenerica = "Error";
                     }
                     else
                     {
@@ -1372,7 +1376,7 @@ namespace Portal.Kiosco
                                     transaction.SaveChanges();
                                 }
 
-                                MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                             else
                             {
@@ -1451,12 +1455,14 @@ namespace Portal.Kiosco
 
                                     try
                                     {
-                                        MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                                     }
                                     catch (Exception ex)
                                     {
                                         MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        App.respuestagenerica = "Error";
+                                        
                                     }
                                 }
                             }
@@ -1476,9 +1482,12 @@ namespace Portal.Kiosco
                     string ref_payco = "CashBack:" + Total.ToString();
 
                     App.Responses(ref_payco);
+                
                 }
                 else
                 {
+                    App.respuestagenerica = "Error";   
+                 
                     //var secretKey = config.Value.secretKey;
                     //var queryString = $"{pr_datpro.KeySecuencia}{pr_datpro.SwtVenta}{Total}{Impuesto_1}{Impuesto_2}{Base}{CashBack_Acumulado}";
                     //var computedSignature = ComputeSignature(queryString, secretKey);
@@ -1559,7 +1568,7 @@ namespace Portal.Kiosco
                 {
 
                     //Obtener valores de rta cashback y consultar registro en la bd
-                    if (ref_payco.Contains("Cashback"))
+                    if (ref_payco.Contains("CashBack"))
                     {
                         lc_secsec = App.Secuencia;
                         lc_keytea = App.idCine;
@@ -1571,7 +1580,7 @@ namespace Portal.Kiosco
                         lc_refepy = App.PuntoVenta + "-" + App.Secuencia;
                         lc_bankpy = "CashBack Procinal";
                     }
-                    else 
+                    else
                     {
 
                         lc_secsec = App.Secuencia;
@@ -1634,7 +1643,7 @@ namespace Portal.Kiosco
                         ob_repsle.FechaModificado = DateTime.Now;
 
                         ob_repsle.EmailEli = App.EmailEli;
-                        ob_repsle.NombreEli = App.NombreEli+ " " + App.ApellidoEli;
+                        ob_repsle.NombreEli = App.NombreEli + " " + App.ApellidoEli;
                         ob_repsle.TelefonoEli = App.TelefonoEli;
                         ob_repsle.DocumentoEli = App.NroDocumento;
 
@@ -1660,43 +1669,53 @@ namespace Portal.Kiosco
                 {
                     //Obtener resumen de compra
                     //ViewBag.ListB = ViewBag.ListCarritoB;
-
-                    using (var context = new DataDB(config))
+                    try
                     {
-                        var rs = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == Convert.ToDecimal(lc_keytea)).Where(x => x.Tipo == "C").ToList();
-                        List<RetailSales> retailsales = rs
-                            .GroupBy(l => l.KeyProducto)
-                            .Select(cl => new RetailSales
-                            {
-                                Descripcion = cl.First().Descripcion,
-                                Cantidad = cl.Sum(c => c.Cantidad),
-                                Precio = cl.Sum(c => c.Precio)
-                            }).ToList();
 
-                        foreach (var vr_itevta in retailsales)
+                        using (var context = new DataDB(config))
                         {
-                            //Adicionar a lista
-                            ob_ordite.Add(new OrderItem
+                            var rs = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == Convert.ToDecimal(lc_keytea)).Where(x => x.Tipo == "C").ToList();
+                            List<RetailSales> retailsales = rs
+                                .GroupBy(l => l.KeyProducto)
+                                .Select(cl => new RetailSales
+                                {
+                                    Descripcion = cl.First().Descripcion,
+                                    Cantidad = cl.Sum(c => c.Cantidad),
+                                    Precio = cl.Sum(c => c.Precio)
+                                }).ToList();
+
+                            foreach (var vr_itevta in retailsales)
                             {
-                                Precio = vr_itevta.Precio,
-                                Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
-                                Descripcion = vr_itevta.Descripcion
-                            });
-                        }
+                                //Adicionar a lista
+                                ob_ordite.Add(new OrderItem
+                                {
+                                    Precio = vr_itevta.Precio,
+                                    Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
+                                    Descripcion = vr_itevta.Descripcion
+                                });
+                            }
 
-                        rs = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == Convert.ToDecimal(lc_keytea)).Where(x => x.Tipo != "C").ToList();
+                            rs = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == lc_puntea).Where(x => x.KeyTeatro == Convert.ToDecimal(lc_keytea)).Where(x => x.Tipo != "C").ToList();
 
-                        foreach (var vr_itevta in rs)
-                        {
-                            //Adicionar a lista
-                            ob_ordite.Add(new OrderItem
+                            foreach (var vr_itevta in rs)
                             {
-                                Precio = vr_itevta.Precio * Convert.ToInt32(vr_itevta.Cantidad),
-                                Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
-                                Descripcion = vr_itevta.Descripcion
-                            });
-                        }
+                                //Adicionar a lista
+                                ob_ordite.Add(new OrderItem
+                                {
+                                    Precio = vr_itevta.Precio * Convert.ToInt32(vr_itevta.Cantidad),
+                                    Cantidad = Convert.ToInt32(vr_itevta.Cantidad),
+                                    Descripcion = vr_itevta.Descripcion
+                                });
+                            }
 
+                        }
+                        App.respuestagenerica = "Exito";
+                         
+                    }
+                    catch (Exception e)
+                    {
+                        App.respuestagenerica = "Error";
+                    
                     }
 
                 }
@@ -2190,7 +2209,7 @@ namespace Portal.Kiosco
             {
 
                 //Asignar Valores
-                ob_servicio.Clave =App.Clave; // Session.GetString("Passwrd");
+                ob_servicio.Clave = App.Clave; // Session.GetString("Passwrd");
                 ob_servicio.Correo = App.EmailEli; // Session.GetString("Usuario");
                 ob_servicio.Fecha1 = Convert.ToString(DateTime.Now.Year - 1) + "0101";
                 ob_servicio.Fecha2 = Convert.ToString(DateTime.Now.Year + 1) + "1231";

@@ -210,7 +210,9 @@ namespace Portal.Kiosco
                 }
                 catch (Exception ex)
                 {
+                    TextDocumento.Text = "";
                     System.Windows.MessageBox.Show("Usuario no registrado en el sistema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Thread.Sleep(100);
                     break;
                 }
 
