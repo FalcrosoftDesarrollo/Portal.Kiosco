@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portal.Kiosco", "Portal.Kio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIPortalKiosco.Entities", "..\APIPortalWebMed.Entities\APIPortalKiosco.Entities.csproj", "{AC27309A-D606-42D1-85EE-8422FDB5ED88}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupKiosco", "..\SetupKiosco\SetupKiosco.vdproj", "{44EB8350-7709-45EA-BA52-6337EA5E0F02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{AC27309A-D606-42D1-85EE-8422FDB5ED88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC27309A-D606-42D1-85EE-8422FDB5ED88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC27309A-D606-42D1-85EE-8422FDB5ED88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44EB8350-7709-45EA-BA52-6337EA5E0F02}.Debug|Any CPU.ActiveCfg = Debug
+		{44EB8350-7709-45EA-BA52-6337EA5E0F02}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

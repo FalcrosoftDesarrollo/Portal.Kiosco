@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\transicion.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\transicion.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\combos.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\combos.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:kiosco.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\properties\\views\\seleccionarfuncion.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\seleccionarfuncion.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,7 +35,7 @@
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\layoutasientos.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\instruccionesdatafono.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\properties\\views\\instruccionesdatafono.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\instruccionesdatafono.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -35,10 +47,6 @@
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\comocompra.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\properties\\views\\combos.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\combos.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\properties\\views\\combodeluxe2.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\combodeluxe2.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -47,11 +55,11 @@
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\combodeluxe1.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\cartelera.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\properties\\views\\cartelera.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\cartelera.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\algoparacomer.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\properties\\views\\algoparacomer.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\algoparacomer.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -63,11 +71,7 @@
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:kiosco.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\comocompra.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\properties\\views\\comocompra.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\comocompra.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
@@ -92,7 +96,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -120,59 +124,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PagoCashback.xaml.cs",
-              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\PagoCashback.xaml.cs",
-              "RelativeDocumentMoniker": "Properties\\Views\\PagoCashback.xaml.cs",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\PagoCashback.xaml.cs",
-              "RelativeToolTip": "Properties\\Views\\PagoCashback.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAACFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T19:11:08.268Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ResumenCompra.xaml.cs",
-              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ResumenCompra.xaml.cs",
-              "RelativeDocumentMoniker": "Properties\\Views\\ResumenCompra.xaml.cs",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ResumenCompra.xaml.cs",
-              "RelativeToolTip": "Properties\\Views\\ResumenCompra.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAACFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T22:06:22.6Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Scanear_documento.xaml.cs",
-              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Scanear_documento.xaml.cs",
-              "RelativeDocumentMoniker": "Properties\\Views\\Scanear_documento.xaml.cs",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Scanear_documento.xaml.cs",
-              "RelativeToolTip": "Properties\\Views\\Scanear_documento.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAANQAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T23:55:27.258Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "transicion.xaml",
+              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\transicion.xaml",
+              "RelativeDocumentMoniker": "Properties\\Views\\transicion.xaml",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\transicion.xaml",
+              "RelativeToolTip": "Properties\\Views\\transicion.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-24T20:52:40.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "SeleccionarFuncion.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\SeleccionarFuncion.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\SeleccionarFuncion.xaml.cs",
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\SeleccionarFuncion.xaml.cs",
               "RelativeToolTip": "Properties\\Views\\SeleccionarFuncion.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACkAAACFAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T22:05:41.068Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-20T22:05:41.068Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "LayoutAsientos.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\LayoutAsientos.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\LayoutAsientos.xaml.cs",
@@ -185,7 +161,69 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "kiosco.json",
+              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json",
+              "RelativeDocumentMoniker": "kiosco.json",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json",
+              "RelativeToolTip": "kiosco.json",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-21T17:32:51.314Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PagoCashback.xaml.cs",
+              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\PagoCashback.xaml.cs",
+              "RelativeDocumentMoniker": "Properties\\Views\\PagoCashback.xaml.cs",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\PagoCashback.xaml.cs",
+              "RelativeToolTip": "Properties\\Views\\PagoCashback.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAACFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T19:11:08.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Combos.xaml.cs",
+              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Combos.xaml.cs",
+              "RelativeDocumentMoniker": "Properties\\Views\\Combos.xaml.cs",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Combos.xaml.cs",
+              "RelativeToolTip": "Properties\\Views\\Combos.xaml.cs",
+              "ViewState": "AQIAAFkFAAAAAAAAAAAlwHwFAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T22:06:22.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Scanear_documento.xaml.cs",
+              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Scanear_documento.xaml.cs",
+              "RelativeDocumentMoniker": "Properties\\Views\\Scanear_documento.xaml.cs",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Scanear_documento.xaml.cs",
+              "RelativeToolTip": "Properties\\Views\\Scanear_documento.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAANQAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T23:55:27.258Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "ResumenCompra.xaml.cs",
+              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ResumenCompra.xaml.cs",
+              "RelativeDocumentMoniker": "Properties\\Views\\ResumenCompra.xaml.cs",
+              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ResumenCompra.xaml.cs",
+              "RelativeToolTip": "Properties\\Views\\ResumenCompra.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAACFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T22:06:22.6Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "InstruccionesDatafono.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\InstruccionesDatafono.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\InstruccionesDatafono.xaml.cs",
@@ -193,12 +231,11 @@
               "RelativeToolTip": "Properties\\Views\\InstruccionesDatafono.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAACFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T19:10:52.941Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T19:10:52.941Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "CorreoTecladoFlotante.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\CorreoTecladoFlotante.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\CorreoTecladoFlotante.xaml.cs",
@@ -206,12 +243,11 @@
               "RelativeToolTip": "Properties\\Views\\CorreoTecladoFlotante.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T19:10:45.407Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T19:10:45.407Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "ComoCompra.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ComoCompra.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\ComoCompra.xaml.cs",
@@ -219,25 +255,11 @@
               "RelativeToolTip": "Properties\\Views\\ComoCompra.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T23:10:55.953Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-20T23:10:55.953Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Combos.xaml.cs",
-              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Combos.xaml.cs",
-              "RelativeDocumentMoniker": "Properties\\Views\\Combos.xaml.cs",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Combos.xaml.cs",
-              "RelativeToolTip": "Properties\\Views\\Combos.xaml.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAACIAAACFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T22:06:22.65Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Combodeluxe2.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Combodeluxe2.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\Combodeluxe2.xaml.cs",
@@ -245,12 +267,11 @@
               "RelativeToolTip": "Properties\\Views\\Combodeluxe2.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAACFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T19:10:29.845Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T19:10:29.845Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "Combodeluxe1.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Combodeluxe1.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\Combodeluxe1.xaml.cs",
@@ -258,12 +279,11 @@
               "RelativeToolTip": "Properties\\Views\\Combodeluxe1.xaml.cs",
               "ViewState": "AQIAACoAAAAAAAAAAAAAAEgAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T12:29:47.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T12:29:47.064Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "Cartelera.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Cartelera.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\Cartelera.xaml.cs",
@@ -271,12 +291,11 @@
               "RelativeToolTip": "Properties\\Views\\Cartelera.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAABYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-22T15:03:07.992Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-22T15:03:07.992Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "AlgoParaComer.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\AlgoParaComer.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\AlgoParaComer.xaml.cs",
@@ -284,12 +303,11 @@
               "RelativeToolTip": "Properties\\Views\\AlgoParaComer.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAACFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-22T16:23:44.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-22T16:23:44.538Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "BoletaFactura.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\BoletaFactura.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\BoletaFactura.xaml.cs",
@@ -297,12 +315,11 @@
               "RelativeToolTip": "Properties\\Views\\BoletaFactura.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACoAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T23:41:10.855Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-20T23:41:10.855Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
@@ -315,32 +332,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "kiosco.json",
-              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json",
-              "RelativeDocumentMoniker": "kiosco.json",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json",
-              "RelativeToolTip": "kiosco.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAB0AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-21T17:32:51.314Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "ComoCompra.xaml",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ComoCompra.xaml",
               "RelativeDocumentMoniker": "Properties\\Views\\ComoCompra.xaml",
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\ComoCompra.xaml",
               "RelativeToolTip": "Properties\\Views\\ComoCompra.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-22T14:42:02.265Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-22T14:42:02.265Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "BoletasGafasAlimentos.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\BoletasGafasAlimentos.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\BoletasGafasAlimentos.xaml.cs",
@@ -352,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "RetVenta.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\RetVenta.cs",
               "RelativeDocumentMoniker": "..\\APIPortalWebMed.Entities\\RetVenta.cs",
@@ -364,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Principal.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Principal.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\Principal.xaml.cs",
@@ -376,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "EntityDB.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\APIPortalWebMed.Entities\\EntityDB.cs",
               "RelativeDocumentMoniker": "..\\APIPortalWebMed.Entities\\EntityDB.cs",
