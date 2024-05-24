@@ -32,7 +32,7 @@ namespace Portal.Kiosco.Properties.Views
             CargarFechasDesdeXml();
             imgPelicula.Source = new BitmapImage(new Uri(App.Pelicula.Imagen));
             lblClasificacion.Content = "Clasificación: " + App.Pelicula.Censura;
-            lblNombre.Content = App.Pelicula.Nombre;
+            lblNombre.Content = App.Pelicula.TituloOriginal;
             lblnombre.IsEnabled = false;
             lblDuracion.Content = "Duración: " + App.Pelicula.Duracion + " min";
             lblGenero.Content = "Genero: " + App.Pelicula.Genero;

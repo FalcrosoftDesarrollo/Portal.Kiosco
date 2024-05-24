@@ -179,7 +179,7 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="353"/>
+                                        <ColumnDefinition Width="380"/>
                                         <ColumnDefinition Width="54"/>
                                         <ColumnDefinition Width="1300"/>
                                     </Grid.ColumnDefinitions>

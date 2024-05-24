@@ -1253,7 +1253,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     Border innerBorder = new Border();
                     innerBorder.HorizontalAlignment = HorizontalAlignment.Center;
-                    innerBorder.Width = 250;
+                    innerBorder.Width = 200;
                     Grid.SetRow(innerBorder, 1);
                     Grid.SetColumnSpan(innerBorder, 3);
                     grid.Children.Add(innerBorder);
@@ -1635,14 +1635,8 @@ namespace Portal.Kiosco.Properties.Views
                 {
                     countLabel.Content = "0";
                 }
-
-
-
             }
         }
-
-
-
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
@@ -1651,13 +1645,10 @@ namespace Portal.Kiosco.Properties.Views
                 var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");
                 if (ProductosSeleccionados != null)
                 {
-
-
                     isThreadActive = false;
                     Combodeluxe1 openWindows = new Combodeluxe1();
                     openWindows.Show();
                     this.Close();
-
                 }
                 else
                 {
@@ -1674,11 +1665,11 @@ namespace Portal.Kiosco.Properties.Views
                         }
                         App.agregarProducto(producto);
                     }
+
                     isThreadActive = false;
                     ResumenCompra openWindows = new ResumenCompra(config);
                     openWindows.Show();
                     this.Close();
-
                 }
             }
             else

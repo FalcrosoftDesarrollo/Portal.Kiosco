@@ -184,9 +184,6 @@ namespace Portal.Kiosco
                 HandleStartupError(ex, "An unexpected error occurred while starting the application. Please try again.");
             }
         }
-
-
-
         private void HandleStartupError(Exception ex, string userMessage)
         {
             // Log the exception
@@ -348,7 +345,6 @@ namespace Portal.Kiosco
                                 Nombre = (string)peliculaNode.Attribute("nombre"),
                                 Tipo = (string)peliculaNode.Attribute("tipo"),
                                 Sinopsis = (string)peliculaNode.Attribute("sinopsis"),
-                                // Acceso a TituloOriginal como atributo del elemento data
                                 TituloOriginal = (string)peliculaNode.Element("data").Attribute("TituloOriginal"),
                                 Imagen = (string)peliculaNode.Element("data").Attribute("Imagen"),
                                 RutaCartelera = (string)peliculaNode.Element("data").Attribute("RutaCartelera"),

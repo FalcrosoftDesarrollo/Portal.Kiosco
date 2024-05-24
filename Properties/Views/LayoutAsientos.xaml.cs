@@ -38,15 +38,15 @@ namespace Portal.Kiosco.Properties.Views
 
                 if (App.ob_diclst.Count > 0)
                 {
-                    lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
+                    lblnombre.Content = "¡HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
                 }
                 else
                 {
-                    lblnombre.Content = "!HOLA INVITADO¡";
+                    lblnombre.Content = "¡HOLA INVITADO!";
                 }
 
-                lblSala.Content = App.Pelicula.numeroSala;
-                lblNombrePelicula.Content = App.Pelicula.Nombre;
+                lblSala.Content = "Sala " + App.Pelicula.numeroSala;
+                lblNombrePelicula.Content = App.Pelicula.TituloOriginal;
                 lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));  
                 lblHora.Content = App.Pelicula.HoraUsuario;
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));

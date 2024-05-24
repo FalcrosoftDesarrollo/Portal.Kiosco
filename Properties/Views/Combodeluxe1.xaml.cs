@@ -74,11 +74,11 @@ namespace Portal.Kiosco.Properties.Views
             DataContext = ((App)Application.Current);
             if (App.ob_diclst.Count > 0)
             {
-                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
+                lblnombre.Content = "¡HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
             }
             else
             {
-                lblnombre.Content = "!HOLA INVITADO¡";
+                lblnombre.Content = "¡HOLA INVITADO!";
             }
 
             CrearCombosYbebidas(App.ProductosSeleccionados);

@@ -27,11 +27,11 @@ namespace Portal.Kiosco.Properties.Views
 
             if (App.ob_diclst.Count > 0)
             {
-                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
+                lblnombre.Content = "¡HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
             }
             else
             {
-                lblnombre.Content = "!HOLA INVITADO¡";
+                lblnombre.Content = "¡HOLA INVITADO!";
             }
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
