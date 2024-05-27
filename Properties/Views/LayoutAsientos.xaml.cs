@@ -20,7 +20,7 @@ namespace Portal.Kiosco.Properties.Views
     {
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
-        public static string[] sillasSeleccionadasArray = new string[10]; 
+        public static string[] sillasSeleccionadasArray = new string[10];
         private int sillasSeleccionadas = 0;
         private string zonaseleccionada = "";
         private BolVenta bolVentaSala;
@@ -35,7 +35,8 @@ namespace Portal.Kiosco.Properties.Views
                 ContenedorSala.Children.Clear();
                 GenerarSala();
                 DataContext = ((App)Application.Current);
-
+                btnSiguiente.Visibility = Visibility.Hidden;
+                App.IsFecha = false;
                 if (App.ob_diclst.Count > 0)
                 {
                     lblnombre.Content = "¡HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
@@ -45,9 +46,9 @@ namespace Portal.Kiosco.Properties.Views
                     lblnombre.Content = "¡HOLA INVITADO!";
                 }
 
-                lblSala.Content = "Sala " + App.Pelicula.numeroSala;
+                lblSala.Content = App.Pelicula.numeroSala;
                 lblNombrePelicula.Content = App.Pelicula.TituloOriginal;
-                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));  
+                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));
                 lblHora.Content = App.Pelicula.HoraUsuario;
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
@@ -67,7 +68,7 @@ namespace Portal.Kiosco.Properties.Views
             catch (Exception e) { }
         }
 
-         
+
 
         public static string FormatearFecha(string fecha)
         {
@@ -109,7 +110,7 @@ namespace Portal.Kiosco.Properties.Views
                                 principal.Show();
                                 isMainWindowOpen = true;
                             }
-                    
+
                             foreach (Window window in Application.Current.Windows)
                             {
                                 if (window != principal && window != this)
@@ -146,7 +147,7 @@ namespace Portal.Kiosco.Properties.Views
                 if (lblTotal.Content == "TOTAL: $0")
                 {
                     MessageBox.Show("UPS! Aun no ha seleccionado ninguna ubicación", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                   
+
                     return;
                 }
 
@@ -317,7 +318,13 @@ namespace Portal.Kiosco.Properties.Views
 
                 AgregarUbicacionAlWrapPanel(ob_datprg);
             }
-            catch (Exception ex) { MessageBox.Show("No se logro generar la sala de la funcion", "Error", MessageBoxButton.OK, MessageBoxImage.Error); isError = true; }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se logro generar la sala de la funcion", "Error", MessageBoxButton.OK, MessageBoxImage.Error); isError = true;
+                var openWindows = new SeleccionarFuncion();
+                openWindows.Show();
+                this.Close();
+            }
 
         }
 
@@ -548,7 +555,7 @@ namespace Portal.Kiosco.Properties.Views
                                     border.Child = button;
                                 }
 
-                                
+
                                 break;
                             case "B":
                                 border.Visibility = Visibility.Hidden;
@@ -615,7 +622,7 @@ namespace Portal.Kiosco.Properties.Views
                     int index = Array.IndexOf(sillasSeleccionadasArray, null);
 
                     App.BolVentaRoom.SelUbicaciones = App.BolVentaRoom.SelUbicaciones + button.Name.ToString() + ";";
-                  
+
                     sillasSeleccionadasArray[index] = silla;
 
                     button.Background = Brushes.Red;
@@ -663,10 +670,12 @@ namespace Portal.Kiosco.Properties.Views
 
             if (sillasSeleccionadas == 0)
             {
+                btnSiguiente.Visibility = Visibility.Visible;
                 lblTotal.Content = Convert.ToDecimal("0").ToString("C0");
             }
             else
             {
+                btnSiguiente.Visibility = Visibility.Visible;
                 lblTotal.Content = (sillasSeleccionadas * App.ValorTarifa).ToString("C0");
                 App.CantidadBoletas = Convert.ToDecimal(sillasSeleccionadas);
             }

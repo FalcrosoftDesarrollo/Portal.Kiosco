@@ -221,7 +221,11 @@
                                                         </Border>
 
                                                         <Border CornerRadius="10" Background="#F5F5F5">
-                                                            <Label Name="lblSala" FontFamily="Myanmar Khyay" FontSize="16" Content="Hora" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                <Label Content="Sala:" FontFamily="Myanmar Khyay" FontSize="16" />
+                                                                <Label Name="lblSala" FontFamily="Myanmar Khyay" FontSize="16" Content="Sala" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            </StackPanel>
                                                         </Border>
                                                     </UniformGrid>
                                                 </Grid>
@@ -349,7 +353,7 @@
                                                 <Button Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                             </Border>
 
-                                            <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
+                                            <Border Width="180" Height="80" Name="btnSiguiente"  HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
                                                 <Button Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                             </Border>
                                         </Grid>
