@@ -826,45 +826,39 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnSeleccionHora_Click(object sender, RoutedEventArgs e)
         {
-            string buttonName = "";
+            // Obtener información del botón clickeado
             Button clickedButton = sender as Button;
-            buttonName = clickedButton.Name.ToString();
-            App.Pelicula.HoraSel = clickedButton.Name.ToString().Substring(3);
+            string buttonName = clickedButton.Name.ToString();
+            App.Pelicula.HoraSel = buttonName.Substring(3);
             App.Pelicula.HoraUsuario = clickedButton.Content.ToString();
             Border buttonBorder = FindParent<Border>(clickedButton);
 
-            var wrapPanelName = "";
-            var formato = "";
+            // Obtener información de la película seleccionada
             var TituloOriginal = App.Pelicula.TituloOriginal;
             var DiasDisponibles = App.Peliculas.Where(p => p.TituloOriginal == TituloOriginal).ToList();
             var FechaSel = App.Pelicula.FechaSel;
-            var HoraSel = App.Pelicula.HoraSel;
-            var apppelicula = App.Pelicula;
 
+            // Buscar información específica de la película y asignarla a la aplicación
             foreach (var pel in App.Peliculas)
             {
-                if (pel.TituloOriginal == App.Pelicula.TituloOriginal)
+                if (pel.TituloOriginal == TituloOriginal)
                 {
                     foreach (var diaSel in pel.DiasDisponibles)
                     {
-                        if (App.Pelicula.FechaSel.Substring(3) == diaSel.fecunv)
+                        if (FechaSel.Substring(3) == diaSel.fecunv)
                         {
                             foreach (var sala in diaSel.horafun)
                             {
-                                if (App.Pelicula.Id == pel.Id)
+                                if (App.Pelicula.Id == pel.Id && clickedButton.Content.ToString() == sala.horario)
                                 {
-                                    if (clickedButton.Content.ToString() == sala.horario)
-                                    {
-                                        App.NombreFec = diaSel.fecham;
-                                        App.Imagen = pel.Imagen;
-                                        App.Censura = pel.Censura;
-                                        App.Pelicula.tipoSala = sala.tipSala;
-                                        App.TipoSala = sala.tipSala;
-                                        App.Pelicula.numeroSala = sala.numSala;
-                                        App.Pelicula.HoraMilitar = sala.horunv;
-
-                                        break;
-                                    }
+                                    App.NombreFec = diaSel.fecham;
+                                    App.Imagen = pel.Imagen;
+                                    App.Censura = pel.Censura;
+                                    App.Pelicula.tipoSala = sala.tipSala;
+                                    App.TipoSala = sala.tipSala;
+                                    App.Pelicula.numeroSala = sala.numSala;
+                                    App.Pelicula.HoraMilitar = sala.horunv;
+                                    break;
                                 }
                             }
                         }
@@ -872,8 +866,39 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-            Panel contenedor = ContenedorHorasGeneral;
-            foreach (var control in contenedor.Children)
+            // Estilizar botones en diferentes paneles
+            EstilizarBotonesEnPanel(ContenedorHorasGeneral, "General", "General");
+            EstilizarBotonesEnPanel(ContenedorHoras3D, "3D", "3D");
+            EstilizarBotonesEnPanel(ContenedorHorasBlackStar, "BlackStar", "BlackStar");
+            EstilizarBotonesEnPanel(ContenedorHoras3DBlackStar, "BlackStar3D", "BlackStar3D");
+            EstilizarBotonesEnPanel(ContenedorHoras3DSuperNova, "EDSupernova", "EDSupernova");
+            EstilizarBotonesEnPanel(ContenedorHorasSupernova, "Supernova", "Supernova");
+            EstilizarBotonesEnPanel(ContenedorHoras3D4DX, "3D4DX", "3D4DX");
+            EstilizarBotonesEnPanel(ContenedorHoras4DX, "4DX", "4DX");
+
+            // Establecer el borde del botón clickeado
+            if (buttonBorder != null)
+            {
+                buttonBorder.BorderBrush = Brushes.Red;
+                buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+                App.TipoSilla = buttonBorder.Name.ToString();
+            }
+
+            // Actualizar la apariencia del botón clickeado
+            clickedButton.Foreground = Brushes.White;
+
+            // Calcular tarifa y manejar errores
+            CalcularTarifa();
+            if (errorgeneral == false)
+            {
+                MessageBox.Show("Tarifa no programada para la película");
+            }
+        }
+
+        // Función para estilizar botones en un panel
+        private void EstilizarBotonesEnPanel(Panel panel, string nombreContiene, string nombreNoContiene)
+        {
+            foreach (var control in panel.Children)
             {
                 if (control is Border)
                 {
@@ -881,10 +906,11 @@ namespace Portal.Kiosco.Properties.Views
                     if (border.Child is Button)
                     {
                         Button btn = (Button)border.Child;
-                        if (btn.Content.ToString() != "General")
+                        if (!btn.Content.ToString().Contains(nombreContiene))
                         {
-                            if (border.Name != "General")
+                            if (!border.Name.Replace(" ", "").Contains(nombreNoContiene))
                             {
+                                // Establecer estilos
                                 border.Width = 115;
                                 border.Height = 46;
                                 border.Background = Brushes.White;
@@ -894,9 +920,7 @@ namespace Portal.Kiosco.Properties.Views
                                 border.BorderBrush = Brushes.Black;
                             }
 
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
+                            // Establecer estilos del botón
                             btn.Width = 115;
                             btn.Height = 46;
                             btn.FontFamily = new FontFamily("Myanmar Khyay");
@@ -906,284 +930,6 @@ namespace Portal.Kiosco.Properties.Views
                         }
                     }
                 }
-            }
-
-            Panel contenedor3d = ContenedorHoras3D;
-
-            foreach (var control3d in contenedor3d.Children)
-            {
-                if (control3d is Border)
-                {
-                    Border border = (Border)control3d;
-                    if (border.Child is Button)
-                    {
-                        Button btn = (Button)border.Child;
-                        if (!btn.Content.ToString().Contains("3D"))
-                        {
-                            if (!border.Name.Replace(" ", "").Contains("3D"))
-                            {
-                                border.Width = 115;
-                                border.Height = 46;
-                                border.Background = Brushes.White;
-                                border.CornerRadius = new CornerRadius(5);
-                                border.Margin = new Thickness(0, 0, 6, 7);
-                                border.BorderThickness = new Thickness(1);
-                                border.BorderBrush = Brushes.Black;
-                            }
-
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
-                            btn.Width = 115;
-                            btn.Height = 46;
-                            btn.FontFamily = new FontFamily("Myanmar Khyay");
-                            btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red;
-                            btn.BorderBrush = Brushes.Black;
-                        }
-                    }
-                }
-            }
-
-            Panel contenedorBlackStar = ContenedorHorasBlackStar;
-
-            foreach (var controlBlackStar in contenedorBlackStar.Children)
-            {
-                if (controlBlackStar is Border)
-                {
-                    Border border = (Border)controlBlackStar;
-                    if (border.Child is Button)
-                    {
-                        Button btn = (Button)border.Child;
-                        if (!btn.Content.ToString().Contains("BlackStar"))
-                        {
-                            if (!border.Name.Replace(" ", "").Contains("BlackStar"))
-                            {
-                                border.Width = 115;
-                                border.Height = 46;
-                                border.Background = Brushes.White;
-                                border.CornerRadius = new CornerRadius(5);
-                                border.Margin = new Thickness(0, 0, 6, 7);
-                                border.BorderThickness = new Thickness(1);
-                                border.BorderBrush = Brushes.Black;
-                            }
-
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
-                            btn.Width = 115;
-                            btn.Height = 46;
-                            btn.FontFamily = new FontFamily("Myanmar Khyay");
-                            btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red;
-                            btn.BorderBrush = Brushes.Black;
-                        }
-                    }
-                }
-            }
-
-
-            Panel contenedor3DBlackStar = ContenedorHoras3DBlackStar;
-
-            foreach (var control3DBlackStar in contenedor3DBlackStar.Children)
-            {
-                if (control3DBlackStar is Border)
-                {
-                    Border border = (Border)control3DBlackStar;
-                    if (border.Child is Button)
-                    {
-                        Button btn = (Button)border.Child;
-                        if (!btn.Content.ToString().Contains("BlackStar3D"))
-                        {
-                            if (!border.Name.Replace(" ", "").Contains("BlackStar3D"))
-                            {
-                                border.Width = 115;
-                                border.Height = 46;
-                                border.Background = Brushes.White;
-                                border.CornerRadius = new CornerRadius(5);
-                                border.Margin = new Thickness(0, 0, 6, 7);
-                                border.BorderThickness = new Thickness(1);
-                                border.BorderBrush = Brushes.Black;
-                            }
-
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
-                            btn.Width = 115;
-                            btn.Height = 46;
-                            btn.FontFamily = new FontFamily("Myanmar Khyay");
-                            btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red;
-                            btn.BorderBrush = Brushes.Black;
-                        }
-                    }
-                }
-            }
-
-            Panel contenedorHoras3DSuperNova = ContenedorHoras3DSuperNova;
-
-            foreach (var control3DBlackStar in contenedorHoras3DSuperNova.Children)
-            {
-                if (control3DBlackStar is Border)
-                {
-                    Border border = (Border)control3DBlackStar;
-                    if (border.Child is Button)
-                    {
-                        Button btn = (Button)border.Child;
-                        if (!btn.Content.ToString().Contains("EDSupernova"))
-                        {
-                            if (!border.Name.Replace(" ", "").Contains("EDSupernova"))
-                            {
-                                border.Width = 115;
-                                border.Height = 46;
-                                border.Background = Brushes.White;
-                                border.CornerRadius = new CornerRadius(5);
-                                border.Margin = new Thickness(0, 0, 6, 7);
-                                border.BorderThickness = new Thickness(1);
-                                border.BorderBrush = Brushes.Black;
-                            }
-
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
-                            btn.Width = 115;
-                            btn.Height = 46;
-                            btn.FontFamily = new FontFamily("Myanmar Khyay");
-                            btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red;
-                            btn.BorderBrush = Brushes.Black;
-                        }
-                    }
-                }
-            }
-
-            Panel contenedorHorasSuperNova = ContenedorHorasSupernova;
-
-            foreach (var control3DBlackStar in contenedorHorasSuperNova.Children)
-            {
-                if (control3DBlackStar is Border)
-                {
-                    Border border = (Border)control3DBlackStar;
-                    if (border.Child is Button)
-                    {
-                        Button btn = (Button)border.Child;
-                        if (!btn.Content.ToString().Contains("Supernova"))
-                        {
-                            if (!border.Name.Replace(" ", "").Contains("Supernova"))
-                            {
-                                border.Width = 115;
-                                border.Height = 46;
-                                border.Background = Brushes.White;
-                                border.CornerRadius = new CornerRadius(5);
-                                border.Margin = new Thickness(0, 0, 6, 7);
-                                border.BorderThickness = new Thickness(1);
-                                border.BorderBrush = Brushes.Black;
-                            }
-
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
-                            btn.Width = 115;
-                            btn.Height = 46;
-                            btn.FontFamily = new FontFamily("Myanmar Khyay");
-                            btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red;
-                            btn.BorderBrush = Brushes.Black;
-                        }
-                    }
-                }
-            }
-
-            Panel contenedorHoras3D4DX = ContenedorHoras3D4DX;
-
-            foreach (var control3DBlackStar in contenedorHoras3D4DX.Children)
-            {
-                if (control3DBlackStar is Border)
-                {
-                    Border border = (Border)control3DBlackStar;
-                    if (border.Child is Button)
-                    {
-                        Button btn = (Button)border.Child;
-                        if (!btn.Content.ToString().Replace(" ", "").Contains("3D4DX"))
-                        {
-                            if (!border.Name.Replace(" ", "").Replace("border","").Contains("3D4DX"))
-                            {
-                                border.Width = 115;
-                                border.Height = 46;
-                                border.Background = Brushes.White;
-                                border.CornerRadius = new CornerRadius(5);
-                                border.Margin = new Thickness(0, 0, 6, 7);
-                                border.BorderThickness = new Thickness(1);
-                                border.BorderBrush = Brushes.Black;
-                            }
-
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
-                            btn.Width = 115;
-                            btn.Height = 46;
-                            btn.FontFamily = new FontFamily("Myanmar Khyay");
-                            btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red;
-                            btn.BorderBrush = Brushes.Black;
-                        }
-                    }
-                }
-            }
-
-          
-
-            Panel contenedorHoras4DX = ContenedorHoras4DX;
-
-            foreach (var control3DBlackStar in ContenedorHoras4DX.Children)
-            {
-                if (control3DBlackStar is Border)
-                {
-                    Border border = (Border)control3DBlackStar;
-                    if (border.Child is Button)
-                    {
-                        Button btn = (Button)border.Child;
-                        if (!btn.Content.ToString().Contains("4DX"))
-                        {
-                            if (!border.Name.Replace(" ", "").Contains("4DX"))
-                            {
-                                border.Width = 115;
-                                border.Height = 46;
-                                border.Background = Brushes.White;
-                                border.CornerRadius = new CornerRadius(5);
-                                border.Margin = new Thickness(0, 0, 6, 7);
-                                border.BorderThickness = new Thickness(1);
-                                border.BorderBrush = Brushes.Black;
-                            }
-
-                            object contenido = btn.Content;
-                            string nombre = btn.Name;
-
-                            btn.Width = 115;
-                            btn.Height = 46;
-                            btn.FontFamily = new FontFamily("Myanmar Khyay");
-                            btn.FontSize = 14;
-                            btn.Foreground = Brushes.Red;
-                            btn.BorderBrush = Brushes.Black;
-                        }
-                    }
-                }
-            }
-
-
-
-            if (buttonBorder != null)
-            {
-                buttonBorder.BorderBrush = Brushes.Red;
-                buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
-                App.TipoSilla = buttonBorder.Name.ToString();
-            }
-            clickedButton.Foreground = Brushes.White;
-            CalcularTarifa();
-
-            if (errorgeneral == false)
-            {
-                MessageBox.Show("Tarifa no programada para la pelicula ");
             }
         }
 
