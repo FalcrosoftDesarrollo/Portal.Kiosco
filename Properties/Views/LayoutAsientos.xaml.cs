@@ -514,18 +514,9 @@ namespace Portal.Kiosco.Properties.Views
 
                     var tipozona = App.TipoSilla.Replace("_", " ");
 
-                    if (ubicacion.TipoZona.ToLower() != tipozona.ToLower())
+                    if (ubicacion.TipoSilla == "pasillo")
                     {
-                        border.Background = Brushes.Red;
-                        label.Content = lc_valmos;
-                        label.Background = Brushes.Red;
-                        label.Foreground = Brushes.White;
-                        label.FontSize = 14;
-                        label.HorizontalAlignment = HorizontalAlignment.Center;
-                        label.VerticalAlignment = VerticalAlignment.Center;
-                        label.FontWeight = FontWeights.Bold;
-
-                        border.Child = label;
+                        border.Visibility = Visibility.Hidden;
                     }
                     else
                     {
@@ -558,7 +549,17 @@ namespace Portal.Kiosco.Properties.Views
 
                                 break;
                             case "B":
-                                border.Visibility = Visibility.Hidden;
+                                border.Background = Brushes.Red;
+                                label.Content = lc_valmos;
+                                label.Background = Brushes.Red;
+                                label.Foreground = Brushes.White;
+
+                                label.FontSize = 14;
+                                label.FontWeight = FontWeights.Bold;
+
+                                label.HorizontalAlignment = HorizontalAlignment.Center;
+                                label.VerticalAlignment = VerticalAlignment.Center;
+                                border.Child = label;
                                 break;
                             case "R":
                                 border.Visibility = Visibility.Hidden;
@@ -583,10 +584,17 @@ namespace Portal.Kiosco.Properties.Views
                                 border.Child = button;
                                 break;
                             default:
-                                button.Background = Brushes.Red;
-                                button.BorderBrush = Brushes.Red;
-                                button.Foreground = Brushes.Black;
-                                border.Child = button;
+                                border.Background = Brushes.Red;
+                                label.Content = lc_valmos;
+                                label.Background = Brushes.Red;
+                                label.Foreground = Brushes.White;
+
+                                label.FontSize = 14;
+                                label.FontWeight = FontWeights.Bold;
+
+                                label.HorizontalAlignment = HorizontalAlignment.Center;
+                                label.VerticalAlignment = VerticalAlignment.Center;
+                                border.Child = label;
                                 break;
                         }
                     }
