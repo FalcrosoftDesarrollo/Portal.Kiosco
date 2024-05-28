@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -13,12 +12,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Xml;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace Portal.Kiosco.Properties.Views
 {
     public partial class SeleccionarFuncion : Window
     {
+        private Button botonPreviamenteSeleccionadoHora;
         public List<UIElement> elementosConservados3D;
         public List<UIElement> elementosConservadosGeneral;
         private readonly IOptions<MyConfig> config;
@@ -361,7 +360,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-
         public void CalcularTarifa()
         {
             var tituloriginal = App.Pelicula.TituloOriginal;
@@ -632,71 +630,56 @@ namespace Portal.Kiosco.Properties.Views
 
         private void AgregarBotonesPorFormato(dynamic item3, string horario, string militar, string formato, string zonaKey)
         {
-            //if (!horasProcesadas.Contains(horario))
-            //{
-                if (formato == "Digital 3D")
+            if (formato == "Digital 3D")
+            {
+                if (item3.tipoSala.Contains("GENERAL"))
                 {
-                    if (item3.tipoSala.Contains("GENERAL"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHoras3D.Children.Add(CrearBotonHora(horario, militar, "GENERAL3D"));
-                    }
-                    if (item3.tipoSala.Contains("Black Star"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
-                    }
-                    if (item3.tipoSala.Contains("Black Star 3D"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
-                    }
-                    if (item3.tipoSala.Contains("SUPERNOVA"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(horario, militar, "SUPERNOVA"));
-                    }
-                    if (item3.tipoSala.Contains("4DX"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHoras3D4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
-                    }
+                    ContenedorHoras3D.Children.Add(CrearBotonHora(horario, militar, "GENERAL3D"));
                 }
-
-                if (formato == "Digital 2D")
+                if (item3.tipoSala.Contains("Black Star"))
                 {
-                    if (item3.tipoSala.Contains("GENERAL"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(horario, militar, zonaKey));
-                    }
-                    if (item3.tipoSala.Contains("Black Star"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
-                    }
-                    if (item3.tipoSala.Contains("Black Star 3D"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
-                    }
-                    if (item3.tipoSala.Contains("SUPERNOVA"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHorasSupernova.Children.Add(CrearBotonHora(horario, militar, "Supernova"));
-                    }
-                    if (item3.tipoSala.Contains("4DX"))
-                    {
-                    //if (!horasProcesadas.Contains(horario))
-                        ContenedorHoras4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
-                    }
+                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
                 }
+                if (item3.tipoSala.Contains("Black Star 3D"))
+                {
+                    ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
+                }
+                if (item3.tipoSala.Contains("SUPERNOVA"))
+                {
+                    ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(horario, militar, "SUPERNOVA"));
+                }
+                if (item3.tipoSala.Contains("4DX"))
+                {
+                    ContenedorHoras3D4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
+                }
+            }
 
-                horasProcesadas.Add(horario);
-            //}
+            if (formato == "Digital 2D")
+            {
+                if (item3.tipoSala.Contains("GENERAL"))
+                {
+                    ContenedorHorasGeneral.Children.Add(CrearBotonHora(horario, militar, zonaKey));
+                }
+                if (item3.tipoSala.Contains("Black Star"))
+                {
+                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
+                }
+                if (item3.tipoSala.Contains("Black Star 3D"))
+                {
+                    ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
+                }
+                if (item3.tipoSala.Contains("SUPERNOVA"))
+                {
+                    ContenedorHorasSupernova.Children.Add(CrearBotonHora(horario, militar, "Supernova"));
+                }
+                if (item3.tipoSala.Contains("4DX"))
+                {
+                    ContenedorHoras4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
+                }
+            }
+
+            horasProcesadas.Add(horario);
         }
-
-
 
         private async void btnSelectFecha_Click(object sender, RoutedEventArgs e)
         {
@@ -753,7 +736,7 @@ namespace Portal.Kiosco.Properties.Views
             ContenedorFechas.Children.Add(border);
         }
 
-        public Border CrearBotonFormato(string ContenidoFormato)
+        public Border CrearBotonFormato(string ContenidoFormato) 
         {
             Button nuevoBoton = new Button();
             nuevoBoton.Content = ContenidoFormato;
@@ -763,7 +746,6 @@ namespace Portal.Kiosco.Properties.Views
             nuevoBoton.FontFamily = new FontFamily("Myanmar Khyay");
             nuevoBoton.FontSize = 14;
             nuevoBoton.HorizontalContentAlignment = HorizontalAlignment.Center;
-
             Border nuevoBorder = new Border();
             nuevoBorder.CornerRadius = new CornerRadius(10);
             nuevoBorder.Background = Brushes.White;
@@ -826,19 +808,35 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnSeleccionHora_Click(object sender, RoutedEventArgs e)
         {
-            // Obtener información del botón clickeado
             Button clickedButton = sender as Button;
+
+            if (botonPreviamenteSeleccionadoHora != null && botonPreviamenteSeleccionadoHora != clickedButton)
+            {
+                Border previousButtonBorder = FindParent<Border>(botonPreviamenteSeleccionadoHora);
+                if (previousButtonBorder != null)
+                {
+                    previousButtonBorder.Background = Brushes.White;
+                    botonPreviamenteSeleccionadoHora.Foreground = Brushes.Red;
+                }
+            }
+
+            Border buttonBorder = FindParent<Border>(clickedButton);
+
+            if (buttonBorder != null)
+            {
+                buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
+                clickedButton.Foreground = Brushes.White;
+            }
+
+            botonPreviamenteSeleccionadoHora = clickedButton;
+
             string buttonName = clickedButton.Name.ToString();
             App.Pelicula.HoraSel = buttonName.Substring(3);
             App.Pelicula.HoraUsuario = clickedButton.Content.ToString();
-            Border buttonBorder = FindParent<Border>(clickedButton);
 
-            // Obtener información de la película seleccionada
             var TituloOriginal = App.Pelicula.TituloOriginal;
             var DiasDisponibles = App.Peliculas.Where(p => p.TituloOriginal == TituloOriginal).ToList();
             var FechaSel = App.Pelicula.FechaSel;
-
-            // Buscar información específica de la película y asignarla a la aplicación
             foreach (var pel in App.Peliculas)
             {
                 if (pel.TituloOriginal == TituloOriginal)
@@ -866,28 +864,6 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-            // Estilizar botones en diferentes paneles
-            EstilizarBotonesEnPanel(ContenedorHorasGeneral, "General", "General");
-            EstilizarBotonesEnPanel(ContenedorHoras3D, "3D", "3D");
-            EstilizarBotonesEnPanel(ContenedorHorasBlackStar, "BlackStar", "BlackStar");
-            EstilizarBotonesEnPanel(ContenedorHoras3DBlackStar, "BlackStar3D", "BlackStar3D");
-            EstilizarBotonesEnPanel(ContenedorHoras3DSuperNova, "EDSupernova", "EDSupernova");
-            EstilizarBotonesEnPanel(ContenedorHorasSupernova, "Supernova", "Supernova");
-            EstilizarBotonesEnPanel(ContenedorHoras3D4DX, "3D4DX", "3D4DX");
-            EstilizarBotonesEnPanel(ContenedorHoras4DX, "4DX", "4DX");
-
-            // Establecer el borde del botón clickeado
-            if (buttonBorder != null)
-            {
-                buttonBorder.BorderBrush = Brushes.Red;
-                buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
-                App.TipoSilla = buttonBorder.Name.ToString();
-            }
-
-            // Actualizar la apariencia del botón clickeado
-            clickedButton.Foreground = Brushes.White;
-
-            // Calcular tarifa y manejar errores
             CalcularTarifa();
             if (errorgeneral == false)
             {
@@ -895,7 +871,6 @@ namespace Portal.Kiosco.Properties.Views
             }
         }
 
-        // Función para estilizar botones en un panel
         private void EstilizarBotonesEnPanel(Panel panel, string nombreContiene, string nombreNoContiene)
         {
             foreach (var control in panel.Children)
@@ -903,6 +878,7 @@ namespace Portal.Kiosco.Properties.Views
                 if (control is Border)
                 {
                     Border border = (Border)control;
+
                     if (border.Child is Button)
                     {
                         Button btn = (Button)border.Child;
@@ -910,7 +886,6 @@ namespace Portal.Kiosco.Properties.Views
                         {
                             if (!border.Name.Replace(" ", "").Contains(nombreNoContiene))
                             {
-                                // Establecer estilos
                                 border.Width = 115;
                                 border.Height = 46;
                                 border.Background = Brushes.White;
@@ -920,7 +895,6 @@ namespace Portal.Kiosco.Properties.Views
                                 border.BorderBrush = Brushes.Black;
                             }
 
-                            // Establecer estilos del botón
                             btn.Width = 115;
                             btn.Height = 46;
                             btn.FontFamily = new FontFamily("Myanmar Khyay");
@@ -939,7 +913,6 @@ namespace Portal.Kiosco.Properties.Views
             string buttonName = "";
             Button clickedButton = sender as Button;
             buttonName = clickedButton.Name;
-
             Border buttonBorder = FindParent<Border>(clickedButton);
             clickedButton.Foreground = Brushes.White;
             App.Pelicula.FechaSel = buttonName;
@@ -956,8 +929,8 @@ namespace Portal.Kiosco.Properties.Views
                     Border border = (Border)control;
                     if (border.Child is Button)
                     {
-
                         Button btn = (Button)border.Child;
+
                         if (btn.Content.ToString() != "General")
                         {
                             if (border.Name != "General")
@@ -981,8 +954,6 @@ namespace Portal.Kiosco.Properties.Views
                             btn.Foreground = Brushes.Red;
                         }
                     }
-
-
                 }
             }
 
@@ -991,6 +962,7 @@ namespace Portal.Kiosco.Properties.Views
                 buttonBorder.BorderBrush = Brushes.Red;
                 buttonBorder.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
             }
+
             clickedButton.Foreground = Brushes.White;
             clickedButton.Foreground = Brushes.White;
             CargarFechasDesdeSelect();
