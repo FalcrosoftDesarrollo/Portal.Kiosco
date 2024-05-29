@@ -234,7 +234,7 @@ namespace Portal.Kiosco.Properties.Views
 
             if (App.Pelicula.Nombre != "")
             {
-                GenerateResumenCategoria("Boletas", App.Pelicula.Nombre == null || App.Pelicula.Nombre == "" ? "Sin Pelicula" : App.Pelicula.Nombre, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
+                GenerateResumenCategoria("Boletas", App.Pelicula.TituloOriginal == null || App.Pelicula.TituloOriginal == "" ? "Sin Pelicula" : App.Pelicula.TituloOriginal, App.ValorTarifa, App.CantidadBoletas.ToString(), App.CantidadBoletas * App.ValorTarifa);
             }
             totalcombos += (App.CantidadBoletas * App.ValorTarifa);
 

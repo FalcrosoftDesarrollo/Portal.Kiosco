@@ -18,6 +18,7 @@ namespace Portal.Kiosco.Properties.Views
 {
     public partial class SeleccionarFuncion : Window
     {
+        
         private Button botonPreviamenteSeleccionadoHora;
         public List<UIElement> elementosConservados3D;
         public List<UIElement> elementosConservadosGeneral;
@@ -115,7 +116,6 @@ namespace Portal.Kiosco.Properties.Views
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-
             isThreadActive = false;
             LayoutAsientos openWindows = new LayoutAsientos(config);
             openWindows.Show();
@@ -330,8 +330,6 @@ namespace Portal.Kiosco.Properties.Views
                                     {
                                         foreach (var item2 in item.hora.Where(x => x.militar == horaMilitar))
                                         {
-                                            //if (item2.militar == horaMilitar)
-                                            //{
                                             foreach (var item3 in item2.TipoZonaOld)
                                             {
                                                 if (Zonas.Values.Contains(item3.nombreZona))
@@ -355,13 +353,11 @@ namespace Portal.Kiosco.Properties.Views
                                                         }
                                                         else
                                                         {
-                                                            // Manejo de error: la función no tiene una tarifa asignada
                                                             break;
                                                         }
                                                     }
                                                 }
                                             }
-                                            //}
                                         }
                                     }
                                 }
@@ -673,7 +669,7 @@ namespace Portal.Kiosco.Properties.Views
             border.CornerRadius = new CornerRadius(5);
             border.Margin = new Thickness(0, 0, 6, 7);
             border.BorderThickness = new Thickness(1);
-            border.BorderBrush = Brushes.Black;
+            border.BorderBrush = Brushes.Red;
             border.Child = btn;
             border.Name = tipotarifa.Replace(" ", "_");
 
@@ -738,23 +734,18 @@ namespace Portal.Kiosco.Properties.Views
             var pelicula = App.Peliculas.Where(x => x.TituloOriginal == TituloOriginal ).ToList();
             foreach (var pel in pelicula)
             {
-
                 foreach (var diaSel in pel.DiasDisponibles.Where(x => x.fecunv == FechaSel.Substring(3)))
                 {
-
                     foreach (var sala in diaSel.horafun.Where(x=> x.horario == clickedButton.Content.ToString() && x.fecvin == FechaSel.Substring(3)))
-                    {
-                       
-                            App.NombreFec = diaSel.fecham;
-                            App.Imagen = pel.Imagen;
-                            App.Censura = pel.Censura;
-                            App.Pelicula.tipoSala = sala.tipSala;
-                            App.TipoSala = sala.tipSala;
-                            App.Pelicula.numeroSala = sala.numSala;
-                            App.Pelicula.HoraMilitar = sala.horunv;
-                            break;
-                    
-
+                    {                     
+                        App.NombreFec = diaSel.fecham;
+                        App.Imagen = pel.Imagen;
+                        App.Censura = pel.Censura;
+                        App.Pelicula.tipoSala = sala.tipSala;
+                        App.TipoSala = sala.tipSala;
+                        App.Pelicula.numeroSala = sala.numSala;
+                        App.Pelicula.HoraMilitar = sala.horunv;
+                        break;
                     }
 
                 }

@@ -99,6 +99,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void CargarPeliculasDesdeXml()
         {
+
             try
             {
                 int fila = 0;
