@@ -160,7 +160,11 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnPagarCash_Click(object sender, RoutedEventArgs e)
         {
+
+            
             App.CineFans();
+            var saldo = App.Saldo;
+            var total = App.TotalPagar;
             if (Convert.ToDecimal(App.Saldo) < Convert.ToDecimal(App.TotalPagar))
             {
                 MessageBox.Show("Ups! Tu cashback disponible es inferior al monto total de la compra", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

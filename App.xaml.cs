@@ -186,23 +186,17 @@ namespace Portal.Kiosco
         }
         private void HandleStartupError(Exception ex, string userMessage)
         {
-            // Log the exception
             LogError(ex);
 
-            // Show the user-friendly message
             MessageBox.Show(userMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            // Terminate the application
             Application.Current.Shutdown();
         }
 
         private void LogError(Exception ex)
         {
-            // Assuming you have a logger set up, e.g., NLog, log4net, Serilog, etc.
-            // Example using Console for simplicity:
             Console.WriteLine($"Error: {ex.Message}\nStack Trace: {ex.StackTrace}");
         }
-
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -238,7 +232,6 @@ namespace Portal.Kiosco
             tiempoRestante = TimeSpan.FromSeconds(900);
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
         }
-
 
         public List<Pelicula> ObtenerPeliculas(XDocument carteleraXML, string keyteatro)
         {
@@ -581,66 +574,96 @@ namespace Portal.Kiosco
                 //Tipo de venta
                 switch (lc_tipven)
                 {
-                    case "B": // VENTA BOLETAS
+                    case "B": //VENTA BOLETAS
+                              //Obtener boletas carrito de compra
                         using (var context = new DataDB(config))
                         {
-                            var reportSales = context.ReportSales
-                                .Where(x => x.Secuencia == lc_secsec.ToString() && x.KeyPunto == PuntoVenta && x.KeyTeatro == KeyTeatro)
-                                .ToList();
 
-                            if (reportSales.Any())
+                            var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
+                            foreach (var vr_itevta in ReportSales)
                             {
-                                var vr_itevta = reportSales.First();
-
                                 ob_intvta.Sala = Convert.ToInt32(vr_itevta.KeySala);
                                 ob_intvta.Funcion = Convert.ToInt32(vr_itevta.HorProg.Substring(0, 2));
                                 ob_intvta.Pelicula = Convert.ToInt32(vr_itevta.KeyPelicula);
-                                ob_intvta.FechaFun = $"{vr_itevta.FecProg.Substring(0, 4)}-{vr_itevta.FecProg.Substring(4, 2)}-{vr_itevta.FecProg.Substring(6, 2)}";
+                                ob_intvta.FechaFun = string.Concat(vr_itevta.FecProg.Substring(0, 4), "-", vr_itevta.FecProg.Substring(4, 2), "-", vr_itevta.FecProg.Substring(6, 2));
                                 ob_intvta.InicioFun = Convert.ToInt32(vr_itevta.HorProg);
 
                                 lc_boltot = vr_itevta.Precio;
                                 lc_ubiprg = vr_itevta.SelUbicaciones;
                                 lc_keytar = Convert.ToInt32(vr_itevta.KeyTarifa);
+                            }
 
-                                // Procesamiento de ubicaciones
-                                ls_lstubi = lc_ubiprg.Split(';').Select(item => item.Trim('_')).ToList();
-                                ob_ubiprg = ls_lstubi.Select(item =>
-                              {
-                                  var parts = item.Split('_');
-                                  return new Ubicaciones
-                                  {
-                                      Fila = parts[3],
-                                      Columna = Convert.ToInt32(parts[4]),
-                                      Tarifa = lc_keytar,
-                                      FilRelativa = parts[1],
-                                      ColRelativa = Convert.ToInt32(parts[2]),
-                                      TipoSilla = "",
-                                      TipoZona = "",
-                                      EstadoSilla = ""
-                                  };
-                              }).ToList();
+                            //Obtener ubicaciones de vista
+                            char[] ar_charst = lc_ubiprg.ToCharArray();
+                            for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
+                            {
+                                //Concatenar caracteres
+                                lc_auxitm += ar_charst[lc_iditem].ToString();
 
-                                // Adición de elementos a la lista
-                                ob_ordite.Add(new OrderItem
+                                //Obtener parámetro
+                                if (ar_charst[lc_iditem].ToString() == ";")
                                 {
-                                    Precio = Convert.ToDecimal(lc_boltot),
-                                    Cantidad = ob_ubiprg.Count,
-                                    Descripcion = $"{lc_despel}-{string.Join(";", ob_ubiprg.Select(u => $"Fila: {u.FilRelativa} Columna: {u.ColRelativa}"))}",
-                                    KeyProducto = ob_intvta.Pelicula
-                                });
+                                    ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
+                                    lc_auxitm = string.Empty;
+                                }
+                            }
 
-                                // Asignación de valores
-                                ob_intvta.Productos = ob_proven;
-                                ob_intvta.Ubicaciones = ob_ubiprg;
-                                ob_intvta.Accion = pr_datpro.SwtVenta;
-                                ob_intvta.TotalVenta = lc_boltot;
+                            //Cargar ubicaciones al modelo JSON
+                            lc_auxitm = string.Empty;
+                            foreach (var item in ls_lstubi)
+                            {
+                                lc_idearr = 0;
+                                char[] ar_chars2 = item.ToCharArray();
+                                for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                                {
+                                    //Concatenar caracteres
+                                    lc_auxitm += ar_chars2[lc_iditem].ToString();
 
-                                // Validación de pago cashback
-                                ob_intvta.CodMedioPago = pr_datpro.SwitchCashback == "S" ? Convert.ToInt32(App.CodMedioPagoCB) : Convert.ToInt32(App.CodMedioPago);
-                                ob_intvta.PagoInterno = pr_datpro.SwitchCashback == "S" ? Convert.ToDouble(pr_datpro.Valor) : 0;
-                                ob_intvta.PagoCredito = pr_datpro.SwitchCashback == "S" ? 0 : Convert.ToDouble(pr_datpro.Valor);
+                                    //Obtener parámetro
+                                    if (ar_chars2[lc_iditem].ToString() == "_")
+                                    {
+                                        ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
+
+                                        lc_idearr++;
+                                        lc_auxitm = string.Empty;
+                                    }
+                                }
+
+                                lc_cntubi++;
+                                lc_ubilbl += string.Concat("Fila: ", ls_lstsel[1], " Columna: ", ls_lstsel[2], ";");
+                                ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = lc_keytar, FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
+                            }
+
+                            //Adicionar a lista
+                            ob_ordite.Add(new OrderItem
+                            {
+                                Precio = Convert.ToDecimal(lc_boltot),
+                                Cantidad = lc_cntubi,
+                                Descripcion = string.Concat(lc_despel, "-", lc_ubilbl),
+                                KeyProducto = ob_intvta.Pelicula
+                            });
+
+                            //Asignar valores
+                            ob_intvta.Productos = ob_proven;
+                            ob_intvta.Ubicaciones = ob_ubiprg;
+                            ob_intvta.Accion = pr_datpro.SwtVenta;
+                            ob_intvta.TotalVenta = lc_boltot;
+
+                            //Validar pago cashback
+                            if (pr_datpro.SwitchCashback == "S")
+                            {
+                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
+                                ob_intvta.PagoInterno = Convert.ToDouble(pr_datpro.Valor);
+                                ob_intvta.PagoCredito = 0;
+                            }
+                            else
+                            {
+                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
+                                ob_intvta.PagoInterno = 0;
+                                ob_intvta.PagoCredito = Convert.ToDouble(pr_datpro.Valor);
                             }
                         }
+
                         break;
 
                     case "P": //VENTA RETAIL
@@ -661,9 +684,9 @@ namespace Portal.Kiosco
 
                         //Consumir servicio PRE
                         if (clientFrecnt == "No")
-                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
+                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
                         else
-                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
+                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
 
                         //Validar respuesta
                         if (lc_result.Substring(0, 1) == "0")
@@ -818,6 +841,7 @@ namespace Portal.Kiosco
                                     }
                                 }
 
+                                //Asignar valor total de productos
                                 lc_valpro += vr_itevta.Precio * vr_itevta.Cantidad;
                             }
 
@@ -869,9 +893,9 @@ namespace Portal.Kiosco
 
                         //Consumir servicio PRE
                         if (clientFrecnt == "No")
-                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
+                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
                         else
-                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
+                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
 
                         //Validar respuesta
                         if (lc_result.Substring(0, 1) == "0")
@@ -1203,7 +1227,7 @@ namespace Portal.Kiosco
                 lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
                 //Consumir servicio
-                lc_result =await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
+                lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
 
                 if (lc_result.Substring(0, 1) == "0")
                 {
@@ -2061,8 +2085,6 @@ namespace Portal.Kiosco
             }
         }
 
-
-
         public async static void CineFans()
         {
             #region VARIABLES LOCALES
@@ -2099,8 +2121,6 @@ namespace Portal.Kiosco
 
                 //Encriptar Json
                 lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-
 
                 #region SCOHIS
                 //Consumir servicio
@@ -2212,7 +2232,8 @@ namespace Portal.Kiosco
                             continue;
 
                         var precio = (decimal)precioProp.GetValue(pr_addpro);
-                        var codigo = (string)codigoProp.GetValue(pr_addpro);
+                        var codigo = (decimal)codigoProp.GetValue(pr_addpro);
+                        codigo.ToString();
                         var descripcion = (string)descripcionProp.GetValue(pr_addpro);
 
                         var retailSales = new RetailSales

@@ -390,25 +390,16 @@ namespace Portal.Kiosco.Properties.Views
                 string descripcionProp = $"Descripcion_{contadorAdicionales}";
                 string precioProp = $"Precio_{contadorAdicionales}";
 
-                // Asignar valores a las propiedades de tipo string
                 adicionales.GetType().GetProperty(descripcionProp)?.SetValue(adicionales, itemRecetaCategoria.Descripcion);
 
-                // Asignar valores a las propiedades de tipo decimal
-                var codigoValue = Convert.ToDecimal(itemRecetaCategoria.Codigo);
+                var codigoValue = itemRecetaCategoria.Codigo;
                 adicionales.GetType().GetProperty(codigoProp)?.SetValue(adicionales, codigoValue);
 
                 var precioGeneral = itemRecetaCategoria.Precios.FirstOrDefault()?.General;
                 if (precioGeneral != null)
                 {
-                    try
-                    {
-                        var precioValue = Convert.ToDecimal(precioGeneral);
-                        adicionales.GetType().GetProperty(precioProp)?.SetValue(adicionales, precioValue);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error al convertir precioGeneral: {ex.Message}");
-                    }
+                    var precioValue = precioGeneral;
+                    adicionales.GetType().GetProperty(precioProp)?.SetValue(adicionales, precioValue);
                 }
 
                 foreach (var child in checkBoxAdicionales.Children)

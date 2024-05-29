@@ -1,6 +1,9 @@
-﻿using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Data;
+using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
