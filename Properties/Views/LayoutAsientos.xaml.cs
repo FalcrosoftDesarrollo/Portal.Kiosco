@@ -825,7 +825,7 @@ namespace Portal.Kiosco.Properties.Views
                     pr_bolvta.KeyPelicula = App.Pelicula.Id;
                     pr_bolvta.KeySecuencia = lc_auxsec;
                     pr_bolvta.NombreFec = App.NombreFec;
-                    pr_bolvta.Censura = App.Censura;
+                    pr_bolvta.Censura = App.Pelicula.Censura;
                     pr_bolvta.Tercero = App.ValorTercero;
                     pr_bolvta.Imagen = App.Imagen;
                     pr_bolvta.Secuencia = Convert.ToInt32(lc_auxsec);
@@ -930,6 +930,7 @@ namespace Portal.Kiosco.Properties.Views
                             if (ob_auxrta.ContainsKey("Validación"))
                             {
                                 //MessageBox.Show("");
+                                MessageBox.Show("Error en la seleccion de la hubicación", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 isError = true;
                             }
                             else

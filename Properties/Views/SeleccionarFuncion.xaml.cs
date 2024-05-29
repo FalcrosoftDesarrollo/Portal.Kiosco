@@ -224,7 +224,7 @@ namespace Portal.Kiosco.Properties.Views
                                                         {
                                                             if (App.MinDifHora != "0")
                                                             {
-                                                                
+
                                                                 TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
                                                                 if (diferencia.TotalMinutes > Convert.ToDouble(App.MinDifHora))
                                                                 {
@@ -237,7 +237,7 @@ namespace Portal.Kiosco.Properties.Views
                                                         {
                                                             if (isfecha == 0)
                                                             {
-                                                                
+
                                                                 AgregarBotonesPorFormato(item, item2.horario, item2.militar, formato, itemZonas.Key);
                                                                 horasProcesadas.Add(item2.horario);
                                                                 zonasProcesadas.Add(itemZonas.Key);
@@ -633,7 +633,7 @@ namespace Portal.Kiosco.Properties.Views
             ContenedorFechas.Children.Add(border);
         }
 
-        public Border CrearBotonFormato(string ContenidoFormato) 
+        public Border CrearBotonFormato(string ContenidoFormato)
         {
             Button nuevoBoton = new Button();
             nuevoBoton.Content = ContenidoFormato;
@@ -734,30 +734,29 @@ namespace Portal.Kiosco.Properties.Views
             var TituloOriginal = App.Pelicula.TituloOriginal;
             var DiasDisponibles = App.Peliculas.Where(p => p.TituloOriginal == TituloOriginal).ToList();
             var FechaSel = App.Pelicula.FechaSel;
-            foreach (var pel in App.Peliculas)
+
+            var pelicula = App.Peliculas.Where(x => x.TituloOriginal == TituloOriginal ).ToList();
+            foreach (var pel in pelicula)
             {
-                if (pel.TituloOriginal == TituloOriginal)
+
+                foreach (var diaSel in pel.DiasDisponibles.Where(x => x.fecunv == FechaSel.Substring(3)))
                 {
-                    foreach (var diaSel in pel.DiasDisponibles)
+
+                    foreach (var sala in diaSel.horafun.Where(x=> x.horario == clickedButton.Content.ToString() && x.fecvin == FechaSel.Substring(3)))
                     {
-                        if (FechaSel.Substring(3) == diaSel.fecunv)
-                        {
-                            foreach (var sala in diaSel.horafun)
-                            {
-                                if (App.Pelicula.Id == pel.Id && clickedButton.Content.ToString() == sala.horario)
-                                {
-                                    App.NombreFec = diaSel.fecham;
-                                    App.Imagen = pel.Imagen;
-                                    App.Censura = pel.Censura;
-                                    App.Pelicula.tipoSala = sala.tipSala;
-                                    App.TipoSala = sala.tipSala;
-                                    App.Pelicula.numeroSala = sala.numSala;
-                                    App.Pelicula.HoraMilitar = sala.horunv;
-                                    break;
-                                }
-                            }
-                        }
+                       
+                            App.NombreFec = diaSel.fecham;
+                            App.Imagen = pel.Imagen;
+                            App.Censura = pel.Censura;
+                            App.Pelicula.tipoSala = sala.tipSala;
+                            App.TipoSala = sala.tipSala;
+                            App.Pelicula.numeroSala = sala.numSala;
+                            App.Pelicula.HoraMilitar = sala.horunv;
+                            break;
+                    
+
                     }
+
                 }
             }
 
