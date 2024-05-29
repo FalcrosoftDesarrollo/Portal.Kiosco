@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -121,7 +122,7 @@ namespace Portal.Kiosco.Properties.Views
             this.Close();
         }
 
-        public void CargarFechasDesdeSelect()
+        public async void CargarFechasDesdeSelect()
         {
             borSiguente.Visibility = Visibility.Hidden;
             HashSet<string> zonasProcesadas = new HashSet<string>();
@@ -167,6 +168,7 @@ namespace Portal.Kiosco.Properties.Views
                     ob_carprg.Teatro = App.idCine;
                     ob_carprg.tercero = App.ValorTercero;
                     ob_carprg.IdPelicula = pelicula.Id;
+                    string formato = pelicula.Formato;
                     ob_carprg.FcPelicula = fechasel;
                     ob_carprg.TpPelicula = fechas.horafun.FirstOrDefault().tipSala; //   App.TipoSala == null ? "Normal" : App.TipoSala;
                     ob_carprg.FgPelicula = "2";
@@ -184,7 +186,7 @@ namespace Portal.Kiosco.Properties.Views
                     //Encriptar Json
                     lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-                    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
+                    lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scocar/"), lc_srvpar);
                     if (lc_result.StartsWith("0"))
                     {
                         if (lc_result.StartsWith("0"))
@@ -222,61 +224,11 @@ namespace Portal.Kiosco.Properties.Views
                                                         {
                                                             if (App.MinDifHora != "0")
                                                             {
-                                                                //Diferencia de tiempo entre hora funcion y hora del dia 
+                                                                
                                                                 TimeSpan diferencia = FechaHoraInicio - FechaHoraTermino;
-                                                                var diferenciaenminutos = diferencia.TotalMinutes;
-
-                                                                if (diferenciaenminutos > Convert.ToDouble(App.MinDifHora))
+                                                                if (diferencia.TotalMinutes > Convert.ToDouble(App.MinDifHora))
                                                                 {
-                                                                    if (pelicula.Formato == "Digital 3D")
-                                                                    {
-                                                                        if (item.tipoSala.Contains("GENERAL"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, "GENERAL3D"));
-                                                                        }
-                                                                        if (item.tipoSala.Contains("Black Star"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
-                                                                        }
-                                                                        if (item.tipoSala.Contains("Black Star 3D"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "EDBlackStar"));
-                                                                        }
-                                                                        if (item.tipoSala.Contains("SUPERNOVA"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(item2.horario, item2.militar, "EDBlackStar"));
-                                                                        }
-                                                                    }
-
-                                                                    if (pelicula.Formato == "Digital 2D")
-                                                                    {
-                                                                        if (item.tipoSala.Contains("GENERAL"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                        }
-                                                                        if (item.tipoSala.Contains("Black Star"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
-                                                                        }
-                                                                        if (item.tipoSala.Contains("Black Star 3D"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "EDBlackStar"));
-                                                                        }
-                                                                        if (item.tipoSala.Contains("SUPERNOVA"))
-                                                                        {
-                                                                            if (!horasProcesadas.Contains(item2.horario))
-                                                                                ContenedorHorasSupernova.Children.Add(CrearBotonHora(item2.horario, item2.militar, "EDBlackStar"));
-                                                                        }
-                                                                    }
-                                                                    horasProcesadas.Add(item2.horario);
-                                                                    zonasProcesadas.Add(itemZonas.Key);
+                                                                    AgregarBotonesPorFormato(item, item2.horario, item2.militar, formato, itemZonas.Key);
                                                                 }
                                                             }
                                                             isfecha = 1;
@@ -285,63 +237,8 @@ namespace Portal.Kiosco.Properties.Views
                                                         {
                                                             if (isfecha == 0)
                                                             {
-                                                                if (pelicula.Formato == "Digital 3D")
-                                                                {
-                                                                    if (item.tipoSala.Contains("GENERAL"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3D.Children.Add(CrearBotonHora(item2.horario, item2.militar, "GENERAL3D"));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("Black Star"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("Black Star 3D"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "EDBlackStar"));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("SUPERNOVA"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(item2.horario, item2.militar, "Supernova"));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("4DX"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3D4DX.Children.Add(CrearBotonHora(item2.horario, item2.militar, "P4DX"));
-                                                                    }
-                                                                }
-
-                                                                if (pelicula.Formato == "Digital 2D")
-                                                                {
-                                                                    if (item.tipoSala.Contains("GENERAL"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasGeneral.Children.Add(CrearBotonHora(item2.horario, item2.militar, itemZonas.Key));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("Black Star"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "BlackStar"));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("Black Star 3D"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(item2.horario, item2.militar, "EDBlackStar"));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("SUPERNOVA"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHorasSupernova.Children.Add(CrearBotonHora(item2.horario, item2.militar, "Supernova"));
-                                                                    }
-                                                                    if (item.tipoSala.Contains("4DX"))
-                                                                    {
-                                                                        if (!horasProcesadas.Contains(item2.horario))
-                                                                            ContenedorHoras4DX.Children.Add(CrearBotonHora(item2.horario, item2.militar, "P4DX"));
-                                                                    }
-                                                                }
+                                                                
+                                                                AgregarBotonesPorFormato(item, item2.horario, item2.militar, formato, itemZonas.Key);
                                                                 horasProcesadas.Add(item2.horario);
                                                                 zonasProcesadas.Add(itemZonas.Key);
                                                             }

@@ -499,7 +499,7 @@ namespace Portal.Kiosco.Properties.Views
             totalLabel.Content = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString("C0");
         }
 
-        public void ProductosModificados()
+        public async void ProductosModificados()
         {
             if (opcionSeleccionadabebidasDetalle.Count == 0 && opcionSeleccionadacomidasDetalle.Count == 0)
             {

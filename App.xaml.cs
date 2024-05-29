@@ -21,7 +21,7 @@ namespace Portal.Kiosco
 {
     public partial class App : Application, INotifyPropertyChanged
     {
-        
+
         public static string respuestagenerica { get; set; }
         public static string UrlRetailImg { get; set; }
         public static bool IsUserAuthenticated { get; set; }
@@ -239,87 +239,6 @@ namespace Portal.Kiosco
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
         }
 
-        private string DiaMes(string pr_daynum, string pr_flag)
-        {
-            #region VARIABLES LOCALES
-            string lc_daystr = string.Empty;
-            #endregion
-
-            if (pr_flag == "D")
-            {
-                //Selección de día.
-                switch (pr_daynum)
-                {
-                    case "Sunday":
-                        lc_daystr = "DOM";
-                        break;
-                    case "Monday":
-                        lc_daystr = "LUN";
-                        break;
-                    case "Tuesday":
-                        lc_daystr = "MAR";
-                        break;
-                    case "Wednesday":
-                        lc_daystr = "MIE";
-                        break;
-                    case "Thursday":
-                        lc_daystr = "JUE";
-                        break;
-                    case "Friday":
-                        lc_daystr = "VIE";
-                        break;
-                    case "Saturday":
-                        lc_daystr = "SAB";
-                        break;
-                }
-            }
-            else
-            {
-                //Selección de día.
-                switch (pr_daynum)
-                {
-                    case "01":
-                        lc_daystr = "ENERO";
-                        break;
-                    case "02":
-                        lc_daystr = "FEBRERO";
-                        break;
-                    case "03":
-                        lc_daystr = "MARZO";
-                        break;
-                    case "04":
-                        lc_daystr = "ABRIL";
-                        break;
-                    case "05":
-                        lc_daystr = "MAYO";
-                        break;
-                    case "06":
-                        lc_daystr = "JUNIO";
-                        break;
-                    case "07":
-                        lc_daystr = "JULIO";
-                        break;
-                    case "08":
-                        lc_daystr = "AGOSTO";
-                        break;
-                    case "09":
-                        lc_daystr = "SEPTIEMBRE";
-                        break;
-                    case "10":
-                        lc_daystr = "OCTUBRE";
-                        break;
-                    case "11":
-                        lc_daystr = "NOVIEMBRE";
-                        break;
-                    case "12":
-                        lc_daystr = "DICIEMBRE";
-                        break;
-                }
-            }
-
-            //Devovler Valores
-            return lc_daystr;
-        }
 
         public List<Pelicula> ObtenerPeliculas(XDocument carteleraXML, string keyteatro)
         {
@@ -570,10 +489,10 @@ namespace Portal.Kiosco
             }
         }
 
-        public static void Payment(Producto pr_datpro)
+        public async static void Payment(Producto pr_datpro)
         {
             #region VARIABLES LOCALES
-           
+
             int lc_swtcat = 0;
             int lc_idearr = 0;
             int lc_cntubi = 0;
@@ -662,96 +581,66 @@ namespace Portal.Kiosco
                 //Tipo de venta
                 switch (lc_tipven)
                 {
-                    case "B": //VENTA BOLETAS
-                        //Obtener boletas carrito de compra
+                    case "B": // VENTA BOLETAS
                         using (var context = new DataDB(config))
                         {
+                            var reportSales = context.ReportSales
+                                .Where(x => x.Secuencia == lc_secsec.ToString() && x.KeyPunto == PuntoVenta && x.KeyTeatro == KeyTeatro)
+                                .ToList();
 
-                            var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
-                            foreach (var vr_itevta in ReportSales)
+                            if (reportSales.Any())
                             {
+                                var vr_itevta = reportSales.First();
+
                                 ob_intvta.Sala = Convert.ToInt32(vr_itevta.KeySala);
                                 ob_intvta.Funcion = Convert.ToInt32(vr_itevta.HorProg.Substring(0, 2));
                                 ob_intvta.Pelicula = Convert.ToInt32(vr_itevta.KeyPelicula);
-                                ob_intvta.FechaFun = string.Concat(vr_itevta.FecProg.Substring(0, 4), "-", vr_itevta.FecProg.Substring(4, 2), "-", vr_itevta.FecProg.Substring(6, 2));
+                                ob_intvta.FechaFun = $"{vr_itevta.FecProg.Substring(0, 4)}-{vr_itevta.FecProg.Substring(4, 2)}-{vr_itevta.FecProg.Substring(6, 2)}";
                                 ob_intvta.InicioFun = Convert.ToInt32(vr_itevta.HorProg);
 
                                 lc_boltot = vr_itevta.Precio;
                                 lc_ubiprg = vr_itevta.SelUbicaciones;
                                 lc_keytar = Convert.ToInt32(vr_itevta.KeyTarifa);
-                            }
 
-                            //Obtener ubicaciones de vista
-                            char[] ar_charst = lc_ubiprg.ToCharArray();
-                            for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
-                            {
-                                //Concatenar caracteres
-                                lc_auxitm += ar_charst[lc_iditem].ToString();
+                                // Procesamiento de ubicaciones
+                                ls_lstubi = lc_ubiprg.Split(';').Select(item => item.Trim('_')).ToList();
+                                ob_ubiprg = ls_lstubi.Select(item =>
+                              {
+                                  var parts = item.Split('_');
+                                  return new Ubicaciones
+                                  {
+                                      Fila = parts[3],
+                                      Columna = Convert.ToInt32(parts[4]),
+                                      Tarifa = lc_keytar,
+                                      FilRelativa = parts[1],
+                                      ColRelativa = Convert.ToInt32(parts[2]),
+                                      TipoSilla = "",
+                                      TipoZona = "",
+                                      EstadoSilla = ""
+                                  };
+                              }).ToList();
 
-                                //Obtener parámetro
-                                if (ar_charst[lc_iditem].ToString() == ";")
+                                // Adición de elementos a la lista
+                                ob_ordite.Add(new OrderItem
                                 {
-                                    ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
-                                    lc_auxitm = string.Empty;
-                                }
-                            }
+                                    Precio = Convert.ToDecimal(lc_boltot),
+                                    Cantidad = ob_ubiprg.Count,
+                                    Descripcion = $"{lc_despel}-{string.Join(";", ob_ubiprg.Select(u => $"Fila: {u.FilRelativa} Columna: {u.ColRelativa}"))}",
+                                    KeyProducto = ob_intvta.Pelicula
+                                });
 
-                            //Cargar ubicaciones al modelo JSON
-                            lc_auxitm = string.Empty;
-                            foreach (var item in ls_lstubi)
-                            {
-                                lc_idearr = 0;
-                                char[] ar_chars2 = item.ToCharArray();
-                                for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
-                                {
-                                    //Concatenar caracteres
-                                    lc_auxitm += ar_chars2[lc_iditem].ToString();
+                                // Asignación de valores
+                                ob_intvta.Productos = ob_proven;
+                                ob_intvta.Ubicaciones = ob_ubiprg;
+                                ob_intvta.Accion = pr_datpro.SwtVenta;
+                                ob_intvta.TotalVenta = lc_boltot;
 
-                                    //Obtener parámetro
-                                    if (ar_chars2[lc_iditem].ToString() == "_")
-                                    {
-                                        ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
-
-                                        lc_idearr++;
-                                        lc_auxitm = string.Empty;
-                                    }
-                                }
-
-                                lc_cntubi++;
-                                lc_ubilbl += string.Concat("Fila: ", ls_lstsel[1], " Columna: ", ls_lstsel[2], ";");
-                                ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = lc_keytar, FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
-                            }
-
-                            //Adicionar a lista
-                            ob_ordite.Add(new OrderItem
-                            {
-                                Precio = Convert.ToDecimal(lc_boltot),
-                                Cantidad = lc_cntubi,
-                                Descripcion = string.Concat(lc_despel, "-", lc_ubilbl),
-                                KeyProducto = ob_intvta.Pelicula
-                            });
-
-                            //Asignar valores
-                            ob_intvta.Productos = ob_proven;
-                            ob_intvta.Ubicaciones = ob_ubiprg;
-                            ob_intvta.Accion = pr_datpro.SwtVenta;
-                            ob_intvta.TotalVenta = lc_boltot;
-
-                            //Validar pago cashback
-                            if (pr_datpro.SwitchCashback == "S")
-                            {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
-                                ob_intvta.PagoInterno = Convert.ToDouble(pr_datpro.Valor);
-                                ob_intvta.PagoCredito = 0;
-                            }
-                            else
-                            {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
-                                ob_intvta.PagoInterno = 0;
-                                ob_intvta.PagoCredito = Convert.ToDouble(pr_datpro.Valor);
+                                // Validación de pago cashback
+                                ob_intvta.CodMedioPago = pr_datpro.SwitchCashback == "S" ? Convert.ToInt32(App.CodMedioPagoCB) : Convert.ToInt32(App.CodMedioPago);
+                                ob_intvta.PagoInterno = pr_datpro.SwitchCashback == "S" ? Convert.ToDouble(pr_datpro.Valor) : 0;
+                                ob_intvta.PagoCredito = pr_datpro.SwitchCashback == "S" ? 0 : Convert.ToDouble(pr_datpro.Valor);
                             }
                         }
-
                         break;
 
                     case "P": //VENTA RETAIL
@@ -772,9 +661,9 @@ namespace Portal.Kiosco
 
                         //Consumir servicio PRE
                         if (clientFrecnt == "No")
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
+                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
                         else
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
+                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
 
                         //Validar respuesta
                         if (lc_result.Substring(0, 1) == "0")
@@ -929,7 +818,6 @@ namespace Portal.Kiosco
                                     }
                                 }
 
-                                //Asignar valor total de productos
                                 lc_valpro += vr_itevta.Precio * vr_itevta.Cantidad;
                             }
 
@@ -981,9 +869,9 @@ namespace Portal.Kiosco
 
                         //Consumir servicio PRE
                         if (clientFrecnt == "No")
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
+                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
                         else
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
+                            lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
 
                         //Validar respuesta
                         if (lc_result.Substring(0, 1) == "0")
@@ -1315,7 +1203,7 @@ namespace Portal.Kiosco
                 lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
                 //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
+                lc_result =await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
 
                 if (lc_result.Substring(0, 1) == "0")
                 {
@@ -1458,7 +1346,7 @@ namespace Portal.Kiosco
                                     {
                                         MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                         App.respuestagenerica = "Error";
-                                        
+
                                     }
                                 }
                             }
@@ -1478,12 +1366,12 @@ namespace Portal.Kiosco
                     string ref_payco = "CashBack:" + Total.ToString();
 
                     App.Responses(ref_payco);
-                
+
                 }
                 else
                 {
-                    App.respuestagenerica = "Error";   
-                 
+                    App.respuestagenerica = "Error";
+
                     //var secretKey = config.Value.secretKey;
                     //var queryString = $"{pr_datpro.KeySecuencia}{pr_datpro.SwtVenta}{Total}{Impuesto_1}{Impuesto_2}{Base}{CashBack_Acumulado}";
                     //var computedSignature = ComputeSignature(queryString, secretKey);
@@ -1706,12 +1594,12 @@ namespace Portal.Kiosco
 
                         }
                         App.respuestagenerica = "Exito";
-                         
+
                     }
                     catch (Exception e)
                     {
                         App.respuestagenerica = "Error";
-                    
+
                     }
 
                 }
@@ -1734,7 +1622,7 @@ namespace Portal.Kiosco
             }
         }
 
-        public static void agregarProducto(Producto pr_datpro)
+        public async static void agregarProducto(Producto pr_datpro)
         {
             #region VARIABLES LOCALES
             string lc_result = string.Empty;
@@ -1808,125 +1696,28 @@ namespace Portal.Kiosco
                 }
                 #endregion
 
-                //Validar Categoria 
-                if (pr_datpro.Tipo == "A")
+
+
+                if (pr_datpro.Tipo == "A" && pr_datpro.Check != null)
                 {
-                    if (pr_datpro.Check != null)
-                    {
-                        pr_datpro.ProCategoria_1 = Convert.ToDecimal(pr_datpro.Check);
-                        pr_datpro.Check1 = "0";
-                        pr_datpro.Check2 = "0";
-                        pr_datpro.Check3 = "0";
-                        pr_datpro.Check4 = "0";
-                        pr_datpro.Check5 = "0";
-
-                        pr_datpro.CanCategoria_1 = pr_datpro.Cantidad;
-                        pr_datpro.Cantidad1 = 0;
-                        pr_datpro.Cantidad2 = 0;
-                        pr_datpro.Cantidad3 = 0;
-                        pr_datpro.Cantidad4 = 0;
-                        pr_datpro.Cantidad5 = 0;
-                    }
-                    else
-                    {
-                        //Obtener detalle del producto seleccionado
-                        ob_datpro = GetDetails(pr_datpro);
-                        if (ob_datpro.Codigo == -1)
-                        {
-                            //Cargar mensaje de error
-                            lc_auxite = ob_datpro.Descripcion;
-                            ///*ModelState.AddModelError*/("", lc_auxite);
-
-                            //Devolver a vista
-                            ob_datpro.Codigo = pr_datpro.Codigo;
-                            ob_datpro.Descripcion = pr_datpro.Descripcion;
-                            //return View(ob_datpro);
-                        }
-                        else
-                        {
-                            //Devolver a vista
-                            MessageBox.Show("", "Debe seleccionar un ítem de la categoría para continuar");
-
-                            //return View(ob_datpro);
-                        }
-                    }
+                    pr_datpro.ProCategoria_1 = Convert.ToDecimal(pr_datpro.Check);
+                    ResetChecksAndCantidades(pr_datpro);
                 }
 
-                //Inicializar instancia de BD
+                // Guardar en tabla RetailSales
+                GuardarRetailSales(pr_datpro, Convert.ToDecimal(lc_secsec));
+
+                int IdRetail = 0;
                 using (var context = new DataDB(config))
-                {
-                    //Agregar valores a tabla ReportSales
-                    var retailSales = new RetailSales
-                    {
-                        Tipo = pr_datpro.Tipo,
-                        Precio = Convert.ToDecimal(pr_datpro.Valor),
-                        Cantidad = pr_datpro.Cantidad,
-                        Secuencia = Convert.ToDecimal(lc_secsec),
-                        PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
-                        KeyProducto = pr_datpro.Codigo,
-                        Descripcion = pr_datpro.Descripcion,
-                        ProProducto1 = pr_datpro.ProProducto_1,
-                        ProProducto2 = pr_datpro.ProProducto_2,
-                        ProProducto3 = pr_datpro.ProProducto_3,
-                        ProProducto4 = pr_datpro.ProProducto_4,
-                        ProProducto5 = pr_datpro.ProProducto_5,
-                        CanProducto1 = pr_datpro.ProCantidad_1,
-                        CanProducto2 = pr_datpro.ProCantidad_2,
-                        CanProducto3 = pr_datpro.ProCantidad_3,
-                        CanProducto4 = pr_datpro.ProCantidad_4,
-                        CanProducto5 = pr_datpro.ProCantidad_5,
-                        ProCategoria1 = pr_datpro.ProCategoria_1,
-                        ProCategoria2 = pr_datpro.ProCategoria_2,
-                        ProCategoria3 = pr_datpro.ProCategoria_3,
-                        ProCategoria4 = pr_datpro.ProCategoria_4,
-                        ProCategoria5 = pr_datpro.ProCategoria_5,
-                        CanCategoria1 = pr_datpro.CanCategoria_1,
-                        CanCategoria2 = pr_datpro.CanCategoria_2,
-                        CanCategoria3 = pr_datpro.CanCategoria_3,
-                        CanCategoria4 = pr_datpro.CanCategoria_4,
-                        CanCategoria5 = pr_datpro.CanCategoria_5,
-                        FechaRegistro = DateTime.Now,
-                        KeyTeatro = Convert.ToDecimal(App.idCine),
-                        SwitchAdd = pr_datpro.SwitchAdd
-                    };
-
-                    //Adicionar y guardar registro a tabla
-                    context.RetailSales.Add(retailSales);
-                    context.SaveChanges();
-                }
-
-                //Validar Combo
+                    App.IdRetail = context.RetailSales.Max(u => u.Id);
+                // Guardar en tabla RetailDet para combos
                 if (pr_datpro.Tipo == "C")
                 {
-                    //Obtener id de prodcutos de combo
-                    int IdRetail = 0;
-                    using (var context = new DataDB(config))
-                        App.IdRetail = context.RetailSales.Max(u => u.Id);
-
-                    //Recorrer la cantidad maxima de categorias por combo
-                    for (int lc_variii = 0; lc_variii < 4; lc_variii++)
+                    for (int i = 0; i < 4; i++)
                     {
-                        switch (lc_variii)
-                        {
-                            case 0:
-                                RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_1, pr_datpro.Check1, pr_datpro.Check11, pr_datpro.Check111, pr_datpro.Check1111);
-                                break;
-                            case 1:
-                                RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_2, pr_datpro.Check2, pr_datpro.Check22, pr_datpro.Check222, pr_datpro.Check2222);
-                                break;
-                            case 2:
-                                RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_3, pr_datpro.Check3, pr_datpro.Check33, pr_datpro.Check333, pr_datpro.Check3333);
-                                break;
-                            case 3:
-                                RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_4, pr_datpro.Check4, pr_datpro.Check44, pr_datpro.Check444, pr_datpro.Check4444);
-                                break;
-                            case 4:
-                                RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_5, pr_datpro.Check5, pr_datpro.Check44, pr_datpro.Check555, pr_datpro.Check5555);
-                                break;
-                        }
+                        RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_1, pr_datpro.Check1, pr_datpro.Check11, pr_datpro.Check111, pr_datpro.Check1111);
                     }
                 }
-
 
 
             }
@@ -1935,6 +1726,186 @@ namespace Portal.Kiosco
                 MessageBox.Show("Error al guardar el producto selecionado");
             }
         }
+
+        private static void GuardarRetailSales(Producto prDatPro, decimal secuencia)
+        {
+            using (var context = new DataDB(config))
+            {
+                var retailSales = new RetailSales
+                {
+                    Tipo = prDatPro.Tipo,
+                    Precio = Convert.ToDecimal(prDatPro.Valor),
+                    Cantidad = prDatPro.Cantidad,
+                    Secuencia = secuencia,
+                    PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
+                    KeyProducto = prDatPro.Codigo,
+                    Descripcion = prDatPro.Descripcion,
+                    ProProducto1 = prDatPro.ProProducto_1,
+                    ProProducto2 = prDatPro.ProProducto_2,
+                    ProProducto3 = prDatPro.ProProducto_3,
+                    ProProducto4 = prDatPro.ProProducto_4,
+                    ProProducto5 = prDatPro.ProProducto_5,
+                    CanProducto1 = prDatPro.ProCantidad_1,
+                    CanProducto2 = prDatPro.ProCantidad_2,
+                    CanProducto3 = prDatPro.ProCantidad_3,
+                    CanProducto4 = prDatPro.ProCantidad_4,
+                    CanProducto5 = prDatPro.ProCantidad_5,
+                    ProCategoria1 = prDatPro.ProCategoria_1,
+                    ProCategoria2 = prDatPro.ProCategoria_2,
+                    ProCategoria3 = prDatPro.ProCategoria_3,
+                    ProCategoria4 = prDatPro.ProCategoria_4,
+                    ProCategoria5 = prDatPro.ProCategoria_5,
+                    CanCategoria1 = prDatPro.CanCategoria_1,
+                    CanCategoria2 = prDatPro.CanCategoria_2,
+                    CanCategoria3 = prDatPro.CanCategoria_3,
+                    CanCategoria4 = prDatPro.CanCategoria_4,
+                    CanCategoria5 = prDatPro.CanCategoria_5,
+                    FechaRegistro = DateTime.Now,
+                    KeyTeatro = Convert.ToDecimal(App.idCine),
+                    SwitchAdd = prDatPro.SwitchAdd
+                };
+
+                context.RetailSales.Add(retailSales);
+                context.SaveChanges();
+            }
+        }
+
+        private static void RetailDet(decimal secuencia, int idRetail, decimal categoria, params string[] valores)
+        {
+            using (var context = new DataDB(config))
+            {
+                for (int i = 0; i < valores.Length; i++)
+                {
+                    string valor = valores[i];
+                    if (!string.IsNullOrEmpty(valor))
+                    {
+                        var retailDet = new RetailDet
+                        {
+                            Secuencia = secuencia,
+                            IdRetailSales = idRetail,
+                            ProCategoria = categoria,
+                            ProItem = valor
+                        };
+
+                        context.RetailDet.Add(retailDet);
+                    }
+                }
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void ResetChecksAndCantidades(Producto producto)
+        {
+            producto.Check1 = "0";
+            producto.Check2 = "0";
+            producto.Check3 = "0";
+            producto.Check4 = "0";
+            producto.Check5 = "0";
+
+            producto.Cantidad1 = 0;
+            producto.Cantidad2 = 0;
+            producto.Cantidad3 = 0;
+            producto.Cantidad4 = 0;
+            producto.Cantidad5 = 0;
+        }
+
+        //private static void RetailDet(decimal secuencia, int idRetail, decimal categoria, string valor1, string valor2, string valor3, string valor4)
+        //{
+        //    //Recorrido para guardar valores en base de datos
+        //    for (int lc_variii = 0; lc_variii < 3; lc_variii++)
+        //    {
+        //        using (var context = new DataDB(config))
+        //        {
+        //            switch (lc_variii)
+        //            {
+        //                case 0:
+        //                    if (valor1 != string.Empty && valor1 != null)
+        //                    {
+        //                        //Inicializar instancia de BD
+
+
+        //                        //Agregar valores a tabla RetailDet
+        //                        var retailDet = new RetailDet
+        //                        {
+        //                            Secuencia = secuencia,
+        //                            IdRetailSales = idRetail,
+        //                            ProCategoria = categoria,
+        //                            ProItem = valor1
+        //                        };
+
+        //                        //Adicionar y guardar registro a tabla
+        //                        context.RetailDet.Add(retailDet);
+        //                        context.SaveChanges();
+
+        //                    }
+        //                    break;
+        //                case 1:
+        //                    if (valor2 != string.Empty && valor2 != null)
+        //                    {
+        //                        //Inicializar instancia de BD
+
+        //                        //Agregar valores a tabla RetailDet
+        //                        var retailDet = new RetailDet
+        //                        {
+        //                            Secuencia = secuencia,
+        //                            IdRetailSales = idRetail,
+        //                            ProCategoria = categoria,
+        //                            ProItem = valor2
+        //                        };
+
+        //                        //Adicionar y guardar registro a tabla
+        //                        context.RetailDet.Add(retailDet);
+        //                        context.SaveChanges();
+
+        //                    }
+        //                    break;
+        //                case 2:
+        //                    if (valor3 != string.Empty && valor3 != null)
+        //                    {
+        //                        //Inicializar instancia de BD
+        //                        //Agregar valores a tabla RetailDet
+        //                        var retailDet = new RetailDet
+        //                        {
+        //                            Secuencia = secuencia,
+        //                            IdRetailSales = idRetail,
+        //                            ProCategoria = categoria,
+        //                            ProItem = valor3
+        //                        };
+
+        //                        //Adicionar y guardar registro a tabla
+        //                        context.RetailDet.Add(retailDet);
+        //                        context.SaveChanges();
+
+        //                    }
+        //                    break;
+        //                case 3:
+        //                    if (valor4 != string.Empty && valor4 != null)
+        //                    {
+        //                        //Inicializar instancia de BD
+
+        //                        //Agregar valores a tabla RetailDet
+        //                        var retailDet = new RetailDet
+        //                        {
+        //                            Secuencia = secuencia,
+        //                            IdRetailSales = idRetail,
+        //                            ProCategoria = categoria,
+        //                            ProItem = valor4
+        //                        };
+
+        //                        //Adicionar y guardar registro a tabla
+        //                        context.RetailDet.Add(retailDet);
+        //                        context.SaveChanges();
+
+        //                    }
+        //                    break;
+
+        //            }
+        //        }
+        //    }
+        //}
+
+
 
         private static Producto GetDetails(Producto pr_datpro)
         {
@@ -2090,102 +2061,9 @@ namespace Portal.Kiosco
             }
         }
 
-        private static void RetailDet(decimal secuencia, int idRetail, decimal categoria, string valor1, string valor2, string valor3, string valor4)
-        {
-            //Recorrido para guardar valores en base de datos
-            for (int lc_variii = 0; lc_variii < 3; lc_variii++)
-            {
-                using (var context = new DataDB(config))
-                {
-                    switch (lc_variii)
-                    {
-                        case 0:
-                            if (valor1 != string.Empty && valor1 != null)
-                            {
-                                //Inicializar instancia de BD
 
 
-                                //Agregar valores a tabla RetailDet
-                                var retailDet = new RetailDet
-                                {
-                                    Secuencia = secuencia,
-                                    IdRetailSales = idRetail,
-                                    ProCategoria = categoria,
-                                    ProItem = valor1
-                                };
-
-                                //Adicionar y guardar registro a tabla
-                                context.RetailDet.Add(retailDet);
-                                context.SaveChanges();
-
-                            }
-                            break;
-                        case 1:
-                            if (valor2 != string.Empty && valor2 != null)
-                            {
-                                //Inicializar instancia de BD
-
-                                //Agregar valores a tabla RetailDet
-                                var retailDet = new RetailDet
-                                {
-                                    Secuencia = secuencia,
-                                    IdRetailSales = idRetail,
-                                    ProCategoria = categoria,
-                                    ProItem = valor2
-                                };
-
-                                //Adicionar y guardar registro a tabla
-                                context.RetailDet.Add(retailDet);
-                                context.SaveChanges();
-
-                            }
-                            break;
-                        case 2:
-                            if (valor3 != string.Empty && valor3 != null)
-                            {
-                                //Inicializar instancia de BD
-                                //Agregar valores a tabla RetailDet
-                                var retailDet = new RetailDet
-                                {
-                                    Secuencia = secuencia,
-                                    IdRetailSales = idRetail,
-                                    ProCategoria = categoria,
-                                    ProItem = valor3
-                                };
-
-                                //Adicionar y guardar registro a tabla
-                                context.RetailDet.Add(retailDet);
-                                context.SaveChanges();
-
-                            }
-                            break;
-                        case 3:
-                            if (valor4 != string.Empty && valor4 != null)
-                            {
-                                //Inicializar instancia de BD
-
-                                //Agregar valores a tabla RetailDet
-                                var retailDet = new RetailDet
-                                {
-                                    Secuencia = secuencia,
-                                    IdRetailSales = idRetail,
-                                    ProCategoria = categoria,
-                                    ProItem = valor4
-                                };
-
-                                //Adicionar y guardar registro a tabla
-                                context.RetailDet.Add(retailDet);
-                                context.SaveChanges();
-
-                            }
-                            break;
-
-                    }
-                }
-            }
-        }
-
-        public static void CineFans()
+        public async static void CineFans()
         {
             #region VARIABLES LOCALES
             string lc_result = string.Empty;
@@ -2222,66 +2100,11 @@ namespace Portal.Kiosco
                 //Encriptar Json
                 lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-                #region SCOMOV
-                //Consumir servicio
-                //lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scomov/"), lc_srvpar);
 
-                ////Validar respuesta
-                //if (lc_result.Substring(0, 1) == "0")
-                //{
-                //    //Quitar switch
-                //    lc_result = lc_result.Replace("0-", "");
-                //    lc_result = lc_result.Replace("[", "");
-                //    lc_result = lc_result.Replace("]", "");
-
-                //    //Deserializar Json y validar respuesta
-                //    ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
-                //    if (ob_diclst.ContainsKey("puntos_acumulados"))
-                //    {
-                //        ob_rtacnfs.puntos_vencidos = Convert.ToDecimal(ob_diclst["puntos_vencidos"]);
-                //        ob_rtacnfs.puntos_redimidos = Convert.ToDecimal(ob_diclst["puntos_redimidos"]);
-                //        ob_rtacnfs.puntos_acumulados = Convert.ToDecimal(ob_diclst["puntos_acumulados"]);
-                //        ob_rtacnfs.puntos_disponibles = Convert.ToDecimal(ob_diclst["puntos_disponibles"]);
-                //    }
-                //    else
-                //    {
-                //        ob_rtacnfs.puntos_vencidos = 0;
-                //        ob_rtacnfs.puntos_redimidos = 0;
-                //        ob_rtacnfs.puntos_acumulados = 0;
-                //        ob_rtacnfs.puntos_disponibles = 0;
-                //    }
-                //}
-                //else
-                //{
-                //    //Devolver a vista
-                //    lc_result = lc_result.Replace("1-", "");
-                //    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
-
-                #endregion
-
-                #region SCODES
-                ////Consumir servicio
-                //lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scodes/"), lc_srvpar);
-
-                ////Validar respuesta
-                //if (lc_result.Substring(0, 1) == "0")
-                //{
-                //    //Quitar switch
-                //    lc_result = lc_result.Replace("0-[", "[");
-                //    ob_cfsdet = (List<CinefansDET>)JsonConvert.DeserializeObject(lc_result, (typeof(List<CinefansDET>))); //Deserializar Json y validar respuesta
-                //}
-                //else
-                //{
-                //    //Devolver a vista
-                //    lc_result = lc_result.Replace("1-", "");
-                //    MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
-                #endregion
 
                 #region SCOHIS
                 //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scohis/"), lc_srvpar);
+                lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scohis/"), lc_srvpar);
 
                 //Validar respuesta
                 if (lc_result.Substring(0, 1) == "0")
@@ -2320,7 +2143,7 @@ namespace Portal.Kiosco
                 lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
                 //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scolog/"), lc_srvpar);
+                lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scolog/"), lc_srvpar);
 
                 //Validar respuesta
                 if (lc_result.Substring(0, 1) == "0")
@@ -2369,118 +2192,39 @@ namespace Portal.Kiosco
 
             try
             {
-                var ClientFrecnt = App.ClienteFrecuente;
-
-                //inicializar instancia de BD
+                // Initialize instance of DB
                 using (var context = new DataDB(config))
                 {
-                    //Recorrido para saber si hay cantidades válidas para agregar a carrito
-                    int lc_idxiii = 1;
-                    while (lc_idxiii <= 6)
+                    // Loop through each product
+                    for (int i = 1; i <= 6; i++)
                     {
-                        switch (lc_idxiii)
-                        {
-                            case 1:
-                                //Validar cantidad producto
-                                if (pr_addpro.Cantidad_1 <= 0)
-                                {
-                                    lc_idxiii++;
-                                    continue;
-                                }
+                        // Use reflection to dynamically get the properties
+                        var cantidadProp = pr_addpro.GetType().GetProperty($"Cantidad_{i}");
+                        var precioProp = pr_addpro.GetType().GetProperty($"Precio_{i}");
+                        var codigoProp = pr_addpro.GetType().GetProperty($"Codigo_{i}");
+                        var descripcionProp = pr_addpro.GetType().GetProperty($"Descripcion_{i}");
 
-                                //Asignar valores de vista
-                                ob_datpro.Valor = pr_addpro.Precio_1.ToString();
-                                ob_datpro.Codigo = pr_addpro.Codigo_1;
-                                ob_datpro.Cantidad = pr_addpro.Cantidad_1;
-                                ob_datpro.Descripcion = pr_addpro.Descripcion_1;
-                                break;
+                        if (cantidadProp == null || precioProp == null || codigoProp == null || descripcionProp == null)
+                            continue;
 
-                            case 2:
-                                //Validar cantidad producto
-                                if (pr_addpro.Cantidad_2 <= 0)
-                                {
-                                    lc_idxiii++;
-                                    continue;
-                                }
+                        var cantidad = (decimal)cantidadProp.GetValue(pr_addpro);
+                        if (cantidad <= 0)
+                            continue;
 
-                                //Asignar valores de vista
-                                ob_datpro.Valor = pr_addpro.Precio_2.ToString();
-                                ob_datpro.Codigo = pr_addpro.Codigo_2;
-                                ob_datpro.Cantidad = pr_addpro.Cantidad_2;
-                                ob_datpro.Descripcion = pr_addpro.Descripcion_2;
-                                break;
+                        var precio = (decimal)precioProp.GetValue(pr_addpro);
+                        var codigo = (string)codigoProp.GetValue(pr_addpro);
+                        var descripcion = (string)descripcionProp.GetValue(pr_addpro);
 
-                            case 3:
-                                //Validar cantidad producto
-                                if (pr_addpro.Cantidad_3 <= 0)
-                                {
-                                    lc_idxiii++;
-                                    continue;
-                                }
-
-                                //Asignar valores de vista
-                                ob_datpro.Valor = pr_addpro.Precio_3.ToString();
-                                ob_datpro.Codigo = pr_addpro.Codigo_3;
-                                ob_datpro.Cantidad = pr_addpro.Cantidad_3;
-                                ob_datpro.Descripcion = pr_addpro.Descripcion_3;
-                                break;
-
-                            case 4:
-                                //Validar cantidad producto
-                                if (pr_addpro.Cantidad_4 <= 0)
-                                {
-                                    lc_idxiii++;
-                                    continue;
-                                }
-
-                                //Asignar valores de vista
-                                ob_datpro.Valor = pr_addpro.Precio_4.ToString();
-                                ob_datpro.Codigo = pr_addpro.Codigo_4;
-                                ob_datpro.Cantidad = pr_addpro.Cantidad_4;
-                                ob_datpro.Descripcion = pr_addpro.Descripcion_4;
-                                break;
-
-                            case 5:
-                                //Validar cantidad producto
-                                if (pr_addpro.Cantidad_5 <= 0)
-                                {
-                                    lc_idxiii++;
-                                    continue;
-                                }
-
-                                //Asignar valores de vista
-                                ob_datpro.Valor = pr_addpro.Precio_5.ToString();
-                                ob_datpro.Codigo = pr_addpro.Codigo_5;
-                                ob_datpro.Cantidad = pr_addpro.Cantidad_5;
-                                ob_datpro.Descripcion = pr_addpro.Descripcion_5;
-                                break;
-
-                            case 6:
-                                //Validar cantidad producto
-                                if (pr_addpro.Cantidad_6 <= 0)
-                                {
-                                    lc_idxiii++;
-                                    continue;
-                                }
-
-                                //Asignar valores de vista
-                                ob_datpro.Valor = pr_addpro.Precio_6.ToString();
-                                ob_datpro.Codigo = pr_addpro.Codigo_6;
-                                ob_datpro.Cantidad = pr_addpro.Cantidad_6;
-                                ob_datpro.Descripcion = pr_addpro.Descripcion_6;
-                                break;
-                        }
-
-                        //Agregar valores a yabla RetailSales
                         var retailSales = new RetailSales
                         {
                             Tipo = "P",
-                            Precio = Convert.ToDecimal(ob_datpro.Valor),
-                            Cantidad = ob_datpro.Cantidad,
+                            Precio = precio,
+                            Cantidad = cantidad,
                             Secuencia = pr_addpro.Secuencia,
                             PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
-                            KeyProducto = ob_datpro.Codigo,
-                            Descripcion = ob_datpro.Descripcion,
+                            KeyProducto = Convert.ToDecimal(codigo),
+                            Descripcion = descripcion,
+                            // Assuming ProProducto and CanProducto are arrays or lists
                             ProProducto1 = ob_datpro.ProProducto_1,
                             ProProducto2 = ob_datpro.ProProducto_2,
                             ProProducto3 = ob_datpro.ProProducto_3,
@@ -2506,17 +2250,15 @@ namespace Portal.Kiosco
                             SwitchAdd = " "
                         };
 
-                        //Adicionar y guardar registro a tabla
+                        // Add and save record to table
                         context.RetailSales.Add(retailSales);
                         context.SaveChanges();
-                        lc_idxiii++;
                     }
                 }
-
             }
-            catch (Exception lc_syserr)
+            catch (Exception ex)
             {
-                MessageBox.Show(lc_syserr.Message.Contains("Inner") ? lc_syserr.InnerException.Message : "null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.InnerException?.Message ?? ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
