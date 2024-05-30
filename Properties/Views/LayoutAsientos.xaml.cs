@@ -95,42 +95,36 @@ namespace Portal.Kiosco.Properties.Views
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null && principal.Visibility == Visibility.Visible)
+
+                    if (principal == null)
+                    {
+                        principal = new Principal();
+                        principal.Show();
+                        isMainWindowOpen = true;
+                    }
+                    else if (principal.Visibility == Visibility.Visible)
                     {
                         principal.Activate();
                         isMainWindowOpen = true;
                     }
                     else
                     {
-                        if (!isMainWindowOpen)
-                        {
-                            if (principal == null)
-                            {
-                                principal = new Principal();
-                                principal.Show();
-                                isMainWindowOpen = true;
-                            }
-
-                            foreach (Window window in Application.Current.Windows)
-                            {
-                                if (window != principal && window != this)
-                                {
-                                    window.Close();
-                                }
-                            }
-                        }
+                        principal.Show();
+                        isMainWindowOpen = true;
                     }
+
+                    this.Close();
 
                 });
             }
 
-
-
             return isMainWindowOpen;
         }
 
+
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
+
             isThreadActive = false;
             Cartelera openWindows = new Cartelera();
             openWindows.Show();
@@ -621,6 +615,8 @@ namespace Portal.Kiosco.Properties.Views
                     sillasSeleccionadasArray[index] = null;
 
                     button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
+
+                    App.BolVentaRoom.SelUbicaciones.Replace(button.Name.ToString() + ";","");
 
                     sillasSeleccionadas--;
                 }

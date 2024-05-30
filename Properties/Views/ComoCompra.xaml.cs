@@ -42,48 +42,43 @@ namespace Portal.Kiosco.Properties.Views
             thread.Start();
         }
 
-        private bool isMainWindowOpen = false; 
+        private bool isMainWindowOpen = false;
 
         private bool ComprobarTiempo()
         {
-            bool isMainWindowOpen = false; 
+            bool isMainWindowOpen = false;
 
             if (App._tiempoRestanteGlobal == "00:00")
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null && principal.Visibility == Visibility.Visible)
+
+                    if (principal == null)
+                    {
+                        principal = new Principal();
+                        principal.Show();
+                        isMainWindowOpen = true;
+                    }
+                    else if (principal.Visibility == Visibility.Visible)
                     {
                         principal.Activate();
                         isMainWindowOpen = true;
                     }
                     else
                     {
-                        if (!isMainWindowOpen)
-                        {
-                            if (principal == null)
-                            {
-                                principal = new Principal();
-                                principal.Show();
-                                isMainWindowOpen = true;
-                            }
-
-                            foreach (Window window in Application.Current.Windows)
-                            {
-                                if (window != principal && window != this)
-                                {
-                                    window.Close();
-                                }
-                            }
-                        }
+                        principal.Show();
+                        isMainWindowOpen = true;
                     }
-                 
+
+                    this.Close();
+
                 });
             }
 
             return isMainWindowOpen;
         }
+
 
         private async void btnCinefans_Click(object sender, RoutedEventArgs e)
         {

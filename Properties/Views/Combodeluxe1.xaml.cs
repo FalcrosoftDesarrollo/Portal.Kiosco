@@ -1,12 +1,8 @@
 ﻿using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Org.BouncyCastle.Asn1.Mozilla;
-using Org.BouncyCastle.Tls.Crypto.Impl.BC;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -17,7 +13,6 @@ using System.Windows.Media.Imaging;
 
 namespace Portal.Kiosco.Properties.Views
 {
-
     public partial class Combodeluxe1 : Window
     {
         private readonly IOptions<MyConfig> config;
@@ -109,36 +104,30 @@ namespace Portal.Kiosco.Properties.Views
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null && principal.Visibility == Visibility.Visible)
+
+                    if (principal == null)
+                    {
+                        principal = new Principal();
+                        principal.Show();
+                        isMainWindowOpen = true;
+                    }
+                    else if (principal.Visibility == Visibility.Visible)
                     {
                         principal.Activate();
                         isMainWindowOpen = true;
                     }
                     else
                     {
-                        if (!isMainWindowOpen)
-                        {
-                            if (principal == null)
-                            {
-                                principal = new Principal();
-                                principal.Show();
-                                isMainWindowOpen = true;
-                            }
-
-                            foreach (Window window in Application.Current.Windows)
-                            {
-                                if (window != principal && window != this)
-                                {
-                                    window.Close();
-                                }
-                            }
-                        }
+                        principal.Show();
+                        isMainWindowOpen = true;
                     }
+
+                    this.Close();
 
                 });
             }
 
-            return isMainWindowOpen; // Devolver el valor booleano
+            return isMainWindowOpen;
         }
 
         private decimal CodigoProducto;
@@ -148,7 +137,7 @@ namespace Portal.Kiosco.Properties.Views
             radiobebidas.Children.Clear();
             radioComidas.Children.Clear();
             checkBoxAdicionales.Children.Clear();
-            
+
             Producto ob_datpro = new Producto();
 
             int CodigoBebidas = 1244;
@@ -234,14 +223,14 @@ namespace Portal.Kiosco.Properties.Views
                                                 var radioButton = new RadioButton();
                                                 radioButton.Content = itemRecetaCategoria.Descripcion;
                                                 radioButton.Name = "v" + lc_variii.ToString() + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
-                                                radioButton.FontSize = 24; 
-                                                radioButton.HorizontalAlignment = HorizontalAlignment.Left; 
+                                                radioButton.FontSize = 24;
+                                                radioButton.HorizontalAlignment = HorizontalAlignment.Left;
                                                 radioButton.GroupName = "Comida" + lc_variii.ToString();
                                                 if (itemRecetaCategoria.Frecuente == "True")
                                                 {
                                                     radioButton.IsChecked = true;
                                                 }
-                                                radioComidas.Children.Add(radioButton); 
+                                                radioComidas.Children.Add(radioButton);
 
                                                 radioButton.Checked += RadioButton_Checked;
 
@@ -913,14 +902,14 @@ namespace Portal.Kiosco.Properties.Views
                     openWindows.Show();
                     this.Close();
                 }
-                else 
+                else
                 {
                     CrearCombosYbebidas(App.ProductosSeleccionados);
                 }
-                
+
                 return;
             }
-          
+
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)

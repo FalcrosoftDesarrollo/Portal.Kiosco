@@ -97,6 +97,7 @@ namespace Portal.Kiosco
         public static string CodMedioPagoCB { get; set; }
         public static string NroDocumento { get; set; }
         public static string Direccion { get; set; }
+        public static string Tiempo { get; set; }
         public static string Clave { get; set; }
         public static int IdRetail { get; set; }
         public string TiempoRestanteGlobal
@@ -131,7 +132,7 @@ namespace Portal.Kiosco
                     .AddJsonFile("kiosco.json")
                     .Build();
                 var appSettingsSection = configuration.GetSection("MyConfig");
-
+                Tiempo = appSettingsSection["Tiempo"];
                 NomEmpresa = appSettingsSection["NomEmpresa"];
                 DirEmpresa = appSettingsSection["DirEmpresa"];
                 CiuEmpresa = appSettingsSection["CiuEmpresa"];
@@ -184,6 +185,7 @@ namespace Portal.Kiosco
                 HandleStartupError(ex, "An unexpected error occurred while starting the application. Please try again.");
             }
         }
+        
         private void HandleStartupError(Exception ex, string userMessage)
         {
             LogError(ex);
@@ -207,7 +209,7 @@ namespace Portal.Kiosco
 
         private void IniciarContadorGlobal()
         {
-            tiempoRestante = TimeSpan.FromSeconds(900);
+            tiempoRestante = TimeSpan.FromSeconds(Convert.ToDouble(Tiempo));
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
 
             DispatcherTimer contadorGlobalTimer = new DispatcherTimer();
@@ -229,7 +231,7 @@ namespace Portal.Kiosco
 
         public void ResetearTimer()
         {
-            tiempoRestante = TimeSpan.FromSeconds(900);
+            tiempoRestante = TimeSpan.FromSeconds(Convert.ToDouble(Tiempo));
             TiempoRestanteGlobal = tiempoRestante.ToString(@"mm\:ss");
         }
 

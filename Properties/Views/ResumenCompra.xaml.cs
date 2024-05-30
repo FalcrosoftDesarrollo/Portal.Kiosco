@@ -54,37 +54,31 @@ namespace Portal.Kiosco.Properties.Views
                 this.Dispatcher.Invoke(() =>
                 {
                     Principal principal = Application.Current.Windows.OfType<Principal>().FirstOrDefault();
-                    if (principal != null && principal.Visibility == Visibility.Visible)
+
+                    if (principal == null)
+                    {
+                        principal = new Principal();
+                        principal.Show();
+                        isMainWindowOpen = true;
+                    }
+                    else if (principal.Visibility == Visibility.Visible)
                     {
                         principal.Activate();
                         isMainWindowOpen = true;
                     }
                     else
                     {
-                        if (!isMainWindowOpen)
-                        {
-                            if (principal == null)
-                            {
-                                principal = new Principal();
-                                principal.Show();
-                                isMainWindowOpen = true;
-                            }
-
-                            foreach (Window window in Application.Current.Windows)
-                            {
-                                if (window != principal && window != this)
-                                {
-                                    window.Close();
-                                }
-                            }
-                        }
+                        principal.Show();
+                        isMainWindowOpen = true;
                     }
+
+                    this.Close();
 
                 });
             }
 
             return isMainWindowOpen;
-        }
+        } 
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
@@ -277,86 +271,6 @@ namespace Portal.Kiosco.Properties.Views
 
             App.TotalPagar = totalcombos.ToString();
         }
-
-        //private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
-        //{
-        //    Grid grid = new Grid();
-
-        //    for (int i = 0; i < 9; i++)
-        //    {
-        //        ColumnDefinition columnDefinition = new ColumnDefinition();
-        //        if (i == 0)
-        //            columnDefinition.Width = new GridLength(28);
-        //        else if (i == 1)
-        //            columnDefinition.Width = new GridLength(840);
-        //        else if (i == 2)
-        //            columnDefinition.Width = new GridLength(0);
-        //        else if (i == 3)
-        //            columnDefinition.Width = new GridLength(185);
-        //        else if (i == 4)
-        //            columnDefinition.Width = new GridLength(50);
-        //        else if (i == 5)
-        //            columnDefinition.Width = new GridLength(185);
-        //        else if (i == 6)
-        //            columnDefinition.Width = new GridLength(50);
-        //        else if (i == 7)
-        //            columnDefinition.Width = new GridLength(185);
-
-        //        grid.ColumnDefinitions.Add(columnDefinition);
-        //    }
-
-        //    for (int i = 1; i <= 4; i++)
-        //    {
-        //        Border border = new Border();
-        //        Grid.SetColumn(border, i * 2 - 1);
-        //        Label label = new Label();
-        //        label.FontFamily = new FontFamily("Myanmar Khyay");
-        //        label.FontSize = 24;
-        //        label.VerticalContentAlignment = VerticalAlignment.Center;
-        //        border.BorderBrush = Brushes.Black; 
-
-        //        if (i == 1)
-        //        {
-        //            label.Content = nombre;
-        //            label.Margin = new Thickness(0, 0, -78, 0);
-        //        }
-        //        else if (i == 2)
-        //        {
-        //            label.Content = valor.ToString("C0"); ;
-        //            label.HorizontalAlignment = HorizontalAlignment.Center;
-        //        }
-        //        else if (i == 3)
-        //        {
-        //            label.Content = cantidad;
-        //            label.HorizontalAlignment = HorizontalAlignment.Center;
-
-        //        }
-        //        else if (i == 4)
-        //        {
-        //            label.Content = total.ToString("C0");
-        //            label.HorizontalAlignment = HorizontalAlignment.Center;
-        //            total += Convert.ToDecimal(total);
-        //        }
-
-        //        border.Child = label;
-        //        grid.Children.Add(border);
-        //    }
-
-        //    switch (categoria)
-        //    {
-        //        case "Boletas":
-        //            ContenedorBoletas.Children.Add(grid);
-        //            break;
-        //        case "Gafas":
-        //            ContenedorGafas.Children.Add(grid);
-        //            break;
-        //        case "Combos":
-        //            ContenedorResumen.Children.Add(grid);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
         {
