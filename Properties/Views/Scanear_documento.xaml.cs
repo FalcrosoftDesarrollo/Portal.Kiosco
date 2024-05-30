@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 using Cartelera = Portal.Kiosco.Properties.Views.Cartelera;
@@ -14,6 +15,7 @@ namespace Portal.Kiosco
     public partial class Scanear_documento : Window
     {
         private bool isThreadActive = true;
+        private bool isError = false;
 
         public Scanear_documento()
         {
@@ -24,7 +26,7 @@ namespace Portal.Kiosco
             var monitorThread = new Thread(MonitorTextChanged);
             monitorThread.IsBackground = true;
             monitorThread.Start();
-
+            
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
             Thread thread = new Thread(() =>
@@ -40,6 +42,8 @@ namespace Portal.Kiosco
             thread.IsBackground = true;
             thread.Start();
         }
+
+       
 
         private bool ComprobarTiempo()
         {
@@ -142,7 +146,7 @@ namespace Portal.Kiosco
         {
             string lastText = string.Empty;
 
-            Dispatcher.Invoke(() =>
+            await Dispatcher.InvokeAsync(() =>
             {
                 lastText = TextDocumento.Text;
             });
@@ -152,7 +156,7 @@ namespace Portal.Kiosco
                 try
                 {
                     string scannedText = string.Empty;
-                    Dispatcher.Invoke(() =>
+                    await Dispatcher.InvokeAsync(() =>
                     {
                         scannedText = TextDocumento.Text;
                     });
@@ -164,54 +168,58 @@ namespace Portal.Kiosco
                         if (indiceComa != -1)
                         {
                             General ob_fncgrl = new General();
-                            var userDocument = new UserDocumento();
-                            userDocument.Documento = scannedText.Substring(0, scannedText.IndexOf(','));
-                            userDocument.tercero = "1";
-                            string lc_srvpar = string.Empty;
-                            string lc_result = string.Empty;
-                            lc_srvpar = JsonConvert.SerializeObject(userDocument);
-                            string Usuario = string.Empty;
+                            var userDocument = new UserDocumento
+                            {
+                                Documento = scannedText.Substring(0, indiceComa),
+                                tercero = "1"
+                            };
+
+                            string lc_srvpar = JsonConvert.SerializeObject(userDocument);
                             lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoced/"), lc_srvpar);
+                            string lc_result = await ob_fncgrl.WebServicesAsync($"{App.ScoreServices}scoced/", lc_srvpar);
 
-                            if (lc_result.Substring(0, 1) == "0")
+                            if (lc_result.StartsWith("0"))
                             {
-                                lc_result = lc_result.Replace("0-", "");
-                                lc_result = lc_result.Replace("[", "");
-                                lc_result = lc_result.Replace("]", "");
-
-                                var respuesta  = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result.Replace("0-[", "["), (typeof(Dictionary<string, string>)));
+                                lc_result = lc_result.Substring(2).Trim('[', ']');
+                                var respuesta = JsonConvert.DeserializeObject<Dictionary<string, string>>(lc_result);
                                 App.ob_diclst = respuesta;
-                            }
 
-                            Usuario = App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString();
-                            App.EmailEli = App.ob_diclst["Login"].ToString();
-                            App.NombreEli = App.ob_diclst["Nombre"].ToString();
-                            App.ApellidoEli = App.ob_diclst["Apellido"].ToString();
-                            App.NroDocumento = App.ob_diclst["Documento"].ToString();
-                            App.Direccion = App.ob_diclst["Direccion"].ToString();
-                            App.TelefonoEli = App.ob_diclst["Celular"].ToString();
-                            App.Clave = App.ob_diclst["Clave"].ToString();
+                                App.EmailEli = respuesta["Login"];
+                                App.NombreEli = respuesta["Nombre"];
+                                App.ApellidoEli = respuesta["Apellido"];
+                                App.NroDocumento = respuesta["Documento"];
+                                App.Direccion = respuesta["Direccion"];
+                                App.TelefonoEli = respuesta["Celular"];
+                                App.Clave = respuesta["Clave"];
 
-                            if (Usuario != "")
-                            {
-                                getnuevapantalla();
+                                string usuario = $"{respuesta["Nombre"]} {respuesta["Apellido"]}";
+                                if (!string.IsNullOrEmpty(usuario))
+                                {
+                                    getnuevapantalla();
+                                }
+
+                                lastText = scannedText;
                             }
-                            lastText = scannedText;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    TextDocumento.Text = "";
+                    await Dispatcher.InvokeAsync(() => limpiar());
+                    isError = true;
                     System.Windows.MessageBox.Show("Usuario no registrado en el sistema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Thread.Sleep(100);
                     break;
                 }
 
-                Thread.Sleep(100);
+                await Task.Delay(100); // Reemplazar Thread.Sleep con Task.Delay
             }
         }
+
+        public void limpiar()
+        {
+            Dispatcher.Invoke(() => TextDocumento.Text = string.Empty);
+        }
+
     }
 }
