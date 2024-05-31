@@ -12,13 +12,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace Portal.Kiosco.Properties.Views
 {
     public partial class SeleccionarFuncion : Window
     {
-        
+
         private Button botonPreviamenteSeleccionadoHora;
         public List<UIElement> elementosConservados3D;
         public List<UIElement> elementosConservadosGeneral;
@@ -27,6 +28,13 @@ namespace Portal.Kiosco.Properties.Views
         private bool errorgeneral = false;
         private HashSet<string> fechasProcesadas = new HashSet<string>();
         private HashSet<string> horasProcesadas = new HashSet<string>();
+        private HashSet<string> horasProcesadas3D = new HashSet<string>();
+        private HashSet<string> horasProcesadasBlackStard = new HashSet<string>();
+        private HashSet<string> horasProcesadasBlackStard3D = new HashSet<string>();
+        private HashSet<string> horasProcesadasSupernova = new HashSet<string>();
+        private HashSet<string> horasProcesadasSupernova3d = new HashSet<string>();
+        private HashSet<string> horasProcesadas4XD = new HashSet<string>();
+        private HashSet<string> horasProcesadas4XD3D = new HashSet<string>();
         public SeleccionarFuncion()
         {
             InitializeComponent();
@@ -154,6 +162,13 @@ namespace Portal.Kiosco.Properties.Views
 
             fechasProcesadas = new HashSet<string>();
             horasProcesadas = new HashSet<string>();
+            horasProcesadas3D = new HashSet<string>();
+            horasProcesadasSupernova = new HashSet<string>();
+            horasProcesadasSupernova3d = new HashSet<string>();
+            horasProcesadas4XD = new HashSet<string>();
+            horasProcesadas4XD3D = new HashSet<string>();
+            horasProcesadasBlackStard = new HashSet<string>();
+            horasProcesadasBlackStard3D = new HashSet<string>();
             foreach (var pelicula in listpelicula)
             {
                 horasProcesadas.Clear();
@@ -368,7 +383,15 @@ namespace Portal.Kiosco.Properties.Views
             InicializarBotonesFormato();
 
             fechasProcesadas = new HashSet<string>();
+         
             horasProcesadas = new HashSet<string>();
+            horasProcesadas3D = new HashSet<string>();
+            horasProcesadasSupernova = new HashSet<string>();
+            horasProcesadasSupernova3d = new HashSet<string>();
+            horasProcesadas4XD = new HashSet<string>();
+            horasProcesadas4XD3D = new HashSet<string>();
+            horasProcesadasBlackStard = new HashSet<string>();
+            horasProcesadasBlackStard3D = new HashSet<string>();
             var totalfecha = 0;
             int contador = 0;
             try
@@ -429,8 +452,8 @@ namespace Portal.Kiosco.Properties.Views
             ContenedorHorasSupernova.Children.Add(CrearBotonFormato("Supernova"));
             ContenedorHoras3DSuperNova.Children.Add(CrearBotonFormato("Supernova 3D"));
             ContenedorHorasGeneral.Children.Add(CrearBotonFormato("General"));
-            ContenedorHorasBlackStar.Children.Add(CrearBotonFormato("Black Star"));
-            ContenedorHoras3DBlackStar.Children.Add(CrearBotonFormato("Black Star 3D"));
+            ContenedorHorasBlackStar.Children.Add(CrearBotonFormato("BLACK STAR"));
+            ContenedorHoras3DBlackStar.Children.Add(CrearBotonFormato("BLACK STAR 3D"));
 
             ContenedorHoras3D4DX.Children.Add(CrearBotonFormato("3D 4DX"));
             ContenedorHoras4DX.Children.Add(CrearBotonFormato("4DX"));
@@ -517,27 +540,43 @@ namespace Portal.Kiosco.Properties.Views
 
         private void AgregarBotonesPorFormato(dynamic item3, string horario, string militar, string formato, string zonaKey)
         {
+
+
             if (formato == "Digital 3D")
             {
                 if (item3.tipoSala.Contains("GENERAL"))
                 {
-                    ContenedorHoras3D.Children.Add(CrearBotonHora(horario, militar, "GENERAL3D"));
+                    if (!horasProcesadas3D.Contains(horario))
+                    {
+                        ContenedorHoras3D.Children.Add(CrearBotonHora(horario, militar, "GENERAL3D"));
+                        horasProcesadas3D.Add(horario);
+                    }
                 }
-                if (item3.tipoSala.Contains("Black Star"))
+                 
+                if (item3.tipoSala.Contains("BLACK STAR 3D"))
                 {
-                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
-                }
-                if (item3.tipoSala.Contains("Black Star 3D"))
-                {
-                    ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
+                    if (!horasProcesadasBlackStard3D.Contains(horario))
+                    {
+                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
+                        horasProcesadasBlackStard3D.Add(horario);
+                    }
                 }
                 if (item3.tipoSala.Contains("SUPERNOVA"))
                 {
-                    ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(horario, militar, "SUPERNOVA"));
+                    if (!horasProcesadasSupernova3d.Contains(horario))
+                    {
+                        ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(horario, militar, "SUPERNOVA"));
+                        horasProcesadasSupernova3d.Add(horario);
+                    }
                 }
                 if (item3.tipoSala.Contains("4DX"))
                 {
-                    ContenedorHoras3D4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
+                    if (!horasProcesadasSupernova3d.Contains(horario))
+                    {
+
+                        ContenedorHoras3D4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
+                        horasProcesadasSupernova3d.Add(horario);
+                    }
                 }
             }
 
@@ -545,23 +584,36 @@ namespace Portal.Kiosco.Properties.Views
             {
                 if (item3.tipoSala.Contains("GENERAL"))
                 {
-                    ContenedorHorasGeneral.Children.Add(CrearBotonHora(horario, militar, zonaKey));
+                    if (!horasProcesadas.Contains(horario))
+                    {
+                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(horario, militar, zonaKey));
+                        horasProcesadas.Add(horario);
+                    }
                 }
-                if (item3.tipoSala.Contains("Black Star"))
+                if (item3.tipoSala.Contains("BLACK STAR"))
                 {
-                    ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
+                    if (!horasProcesadas.Contains(horario))
+                    {
+                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
+                        horasProcesadasBlackStard.Add(horario);
+                    }
                 }
-                if (item3.tipoSala.Contains("Black Star 3D"))
-                {
-                    ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
-                }
+              
                 if (item3.tipoSala.Contains("SUPERNOVA"))
                 {
-                    ContenedorHorasSupernova.Children.Add(CrearBotonHora(horario, militar, "Supernova"));
+                    if (!horasProcesadasSupernova.Contains(horario))
+                    {
+                        ContenedorHorasSupernova.Children.Add(CrearBotonHora(horario, militar, "Supernova"));
+                        horasProcesadasSupernova.Add(horario);
+                    }
                 }
                 if (item3.tipoSala.Contains("4DX"))
                 {
-                    ContenedorHoras4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
+                    if (!horasProcesadas4XD.Contains(horario))
+                    {
+                        ContenedorHoras4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
+                        horasProcesadas4XD.Add(horario);
+                    }
                 }
             }
 
@@ -725,13 +777,13 @@ namespace Portal.Kiosco.Properties.Views
             var DiasDisponibles = App.Peliculas.Where(p => p.TituloOriginal == TituloOriginal).ToList();
             var FechaSel = App.Pelicula.FechaSel;
 
-            var pelicula = App.Peliculas.Where(x => x.TituloOriginal == TituloOriginal ).ToList();
+            var pelicula = App.Peliculas.Where(x => x.TituloOriginal == TituloOriginal).ToList();
             foreach (var pel in pelicula)
             {
                 foreach (var diaSel in pel.DiasDisponibles.Where(x => x.fecunv == FechaSel.Substring(3)))
                 {
-                    foreach (var sala in diaSel.horafun.Where(x=> x.horario == clickedButton.Content.ToString() && x.fecvin == FechaSel.Substring(3)))
-                    {                     
+                    foreach (var sala in diaSel.horafun.Where(x => x.horario == clickedButton.Content.ToString() && x.fecvin == FechaSel.Substring(3)))
+                    {
                         App.NombreFec = diaSel.fecham;
                         App.Imagen = pel.Imagen;
                         App.Censura = pel.Censura;

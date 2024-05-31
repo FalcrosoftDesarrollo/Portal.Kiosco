@@ -29,6 +29,7 @@ namespace Portal.Kiosco
             
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -39,12 +40,13 @@ namespace Portal.Kiosco
                     }
                 }
             });
+
             thread.IsBackground = true;
+            
             thread.Start();
         }
 
        
-
         private bool ComprobarTiempo()
         {
             bool isMainWindowOpen = false;
