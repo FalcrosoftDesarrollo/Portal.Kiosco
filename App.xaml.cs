@@ -3,6 +3,7 @@ using APIPortalKiosco.Entities;
 using APIPortalWebMed.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
+using TEFII_NET.data;
+using TEFII_NET.trx;
+using Windows.ApplicationModel.VoiceCommands;
 
 namespace Portal.Kiosco
 {
@@ -100,6 +104,10 @@ namespace Portal.Kiosco
         public static string Tiempo { get; set; }
         public static string Clave { get; set; }
         public static int IdRetail { get; set; }
+        public static string IVC { get; set; }
+        public static string IVA { get; set; }
+     
+
         public string TiempoRestanteGlobal
         {
             get { return _tiempoRestanteGlobal; }
@@ -185,7 +193,7 @@ namespace Portal.Kiosco
                 HandleStartupError(ex, "An unexpected error occurred while starting the application. Please try again.");
             }
         }
-        
+
         private void HandleStartupError(Exception ex, string userMessage)
         {
             LogError(ex);
@@ -339,114 +347,117 @@ namespace Portal.Kiosco
             return peliculas;
         }
 
-        public static void RoomReverse()
+        public async static void RoomReverse()
         {
-            #region VARIABLES LOCALES
-            int lc_idearr = 0;
-
-            string pr_fecprg = App.Pelicula.FechaSel;
-            string pr_horprg = App.Pelicula.HoraSel.ToString();
-            string pr_salprg = App.Pelicula.numeroSala.ToString();
-
-            string pr_selubi = "";
-            string lc_result = string.Empty;
-            string lc_srvpar = string.Empty;
-            string lc_auxitm = string.Empty;
-            string[] ls_lstsel = new string[5];
-
-            General ob_fncgrl = new General();
-            List<string> ls_lstubi = new List<string>();
-            Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
-            #endregion
-
-            try
+            if (App.BolVentaRoom.SelUbicaciones != null)
             {
-                //Obtener ubicaciones de vista
-                char[] ar_charst = App.BolVentaRoom.SelUbicaciones.ToCharArray();
-                for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
-                {
-                    //Concatenar caracteres
-                    lc_auxitm += ar_charst[lc_iditem].ToString();
+                #region VARIABLES LOCALES
+                int lc_idearr = 0;
 
-                    //Obtener parámetro
-                    if (ar_charst[lc_iditem].ToString() == ";")
-                    {
-                        ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
-                        lc_auxitm = string.Empty;
-                    }
-                }
+                string pr_fecprg = App.Pelicula.FechaSel.Substring(3);
+                string pr_horprg = App.Pelicula.HoraSel.ToString();
+                string pr_salprg = App.Pelicula.numeroSala.ToString();
 
-                //Cargar ubicaciones al modelo JSON
-                lc_auxitm = string.Empty;
-                foreach (var item in ls_lstubi)
+                string pr_selubi = "";
+                string lc_result = string.Empty;
+                string lc_srvpar = string.Empty;
+                string lc_auxitm = string.Empty;
+                string[] ls_lstsel = new string[5];
+
+                General ob_fncgrl = new General();
+                List<string> ls_lstubi = new List<string>();
+                Dictionary<string, string> ob_diclst = new Dictionary<string, string>();
+                #endregion
+
+                try
                 {
-                    lc_idearr = 0;
-                    char[] ar_chars2 = item.ToCharArray();
-                    for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                    //Obtener ubicaciones de vista
+                    char[] ar_charst = App.BolVentaRoom.SelUbicaciones.ToCharArray();
+                    for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
                     {
                         //Concatenar caracteres
-                        lc_auxitm += ar_chars2[lc_iditem].ToString();
+                        lc_auxitm += ar_charst[lc_iditem].ToString();
 
                         //Obtener parámetro
-                        if (ar_chars2[lc_iditem].ToString() == "_")
+                        if (ar_charst[lc_iditem].ToString() == ";")
                         {
-                            ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
-
-                            lc_idearr++;
+                            ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
                             lc_auxitm = string.Empty;
                         }
                     }
 
-                    #region SCOSIL
-                    LiberaSilla ob_libsrv = new LiberaSilla();
-                    ob_libsrv.Fila = ls_lstsel[3];
-                    ob_libsrv.Sala = Convert.ToInt32(pr_salprg.Substring(0, pr_salprg.IndexOf(";")));
-                    ob_libsrv.teatro = Convert.ToInt32(App.idCine);
-                    ob_libsrv.Funcion = Convert.ToInt32(pr_horprg.Length == 4 ? pr_horprg.Substring(0, 2) : pr_horprg.Substring(0, 1));
-                    ob_libsrv.Columna = Convert.ToInt32(ls_lstsel[4]);
-                    ob_libsrv.Usuario = 777;
-                    ob_libsrv.tercero = App.ValorTercero;
-                    ob_libsrv.FechaFuncion = pr_fecprg;
-
-                    //Generar y encriptar JSON para servicio
-                    lc_srvpar = ob_fncgrl.JsonConverter(ob_libsrv);
-
-                    lc_srvpar = lc_srvpar.Replace("fechaFuncion", "FechaFuncion");
-                    lc_srvpar = lc_srvpar.Replace("sala", "Sala");
-                    lc_srvpar = lc_srvpar.Replace("funcion", "Funcion");
-                    lc_srvpar = lc_srvpar.Replace("fila", "Fila");
-                    lc_srvpar = lc_srvpar.Replace("columna", "Columna");
-                    lc_srvpar = lc_srvpar.Replace("usuario", "Usuario");
-
-                    //Encriptar Json LIB
-                    lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-                    //Consumir servicio LIB
-                    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scosil/"), lc_srvpar);
-
-
-                    //Validar secuencia
-                    if (lc_result.Substring(0, 1) == "0")
+                    //Cargar ubicaciones al modelo JSON
+                    lc_auxitm = string.Empty;
+                    foreach (var item in ls_lstubi)
                     {
-                        //Quitar switch
-                        lc_result = lc_result.Replace("0-", "");
-                        lc_result = lc_result.Replace("[", "");
-                        lc_result = lc_result.Replace("]", "");
+                        lc_idearr = 0;
+                        char[] ar_chars2 = item.ToCharArray();
+                        for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                        {
+                            //Concatenar caracteres
+                            lc_auxitm += ar_chars2[lc_iditem].ToString();
 
-                        //Deserializar Json y validar respuesta
-                        ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+                            //Obtener parámetro
+                            if (ar_chars2[lc_iditem].ToString() == "_")
+                            {
+                                ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
+
+                                lc_idearr++;
+                                lc_auxitm = string.Empty;
+                            }
+                        }
+
+                        #region SCOSIL
+                        LiberaSilla ob_libsrv = new LiberaSilla();
+                        ob_libsrv.Fila = ls_lstsel[3];
+                        ob_libsrv.Sala = Convert.ToInt32(pr_salprg);
+                        ob_libsrv.teatro = Convert.ToInt32(App.idCine);
+                        ob_libsrv.Funcion = Convert.ToInt32(pr_horprg.Length == 4 ? pr_horprg.Substring(0, 2) : pr_horprg.Substring(0, 1));
+                        ob_libsrv.Columna = Convert.ToInt32(ls_lstsel[4]);
+                        ob_libsrv.Usuario = 777;
+                        ob_libsrv.tercero = App.ValorTercero;
+                        ob_libsrv.FechaFuncion = pr_fecprg;
+
+                        //Generar y encriptar JSON para servicio
+                        lc_srvpar = ob_fncgrl.JsonConverter(ob_libsrv);
+
+                        lc_srvpar = lc_srvpar.Replace("fechaFuncion", "FechaFuncion");
+                        lc_srvpar = lc_srvpar.Replace("sala", "Sala");
+                        lc_srvpar = lc_srvpar.Replace("funcion", "Funcion");
+                        lc_srvpar = lc_srvpar.Replace("fila", "Fila");
+                        lc_srvpar = lc_srvpar.Replace("columna", "Columna");
+                        lc_srvpar = lc_srvpar.Replace("usuario", "Usuario");
+
+                        //Encriptar Json LIB
+                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                        //Consumir servicio LIB
+                        lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scosil/"), lc_srvpar);
 
 
+                        //Validar secuencia
+                        if (lc_result.Substring(0, 1) == "0")
+                        {
+                            //Quitar switch
+                            lc_result = lc_result.Replace("0-", "");
+                            lc_result = lc_result.Replace("[", "");
+                            lc_result = lc_result.Replace("]", "");
+
+                            //Deserializar Json y validar respuesta
+                            ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+
+
+                        }
+
+                        #endregion
                     }
 
-                    #endregion
+                    //Validar acción
                 }
+                catch (Exception lc_syserr)
+                {
 
-                //Validar acción
-            }
-            catch (Exception lc_syserr)
-            {
-
+                }
             }
         }
 
@@ -456,6 +467,8 @@ namespace Portal.Kiosco
             {
                 using (Process process = new Process())
                 {
+                   
+
                     process.StartInfo.FileName = App.Credicor;
                     process.StartInfo.Arguments = arguments;
                     process.StartInfo.RedirectStandardOutput = true;
@@ -463,7 +476,7 @@ namespace Portal.Kiosco
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.CreateNoWindow = true;
                     process.StartInfo.Verb = "runas";
-
+                    App.llamadoDatafono(arguments);
                     process.Start();
 
                     string output = process.StandardOutput.ReadToEnd();
@@ -483,6 +496,28 @@ namespace Portal.Kiosco
                 return "Error: " + ex.Message;
             }
         }
+
+        public static void llamadoDatafono(String trama)
+        {
+
+            string pMessage = trama;
+                string str;
+                if ("2".Equals(pMessage))
+                    str = Convert.ToString(new TEFTransactionManager().checkLastTransaction());
+                else if (pMessage.IndexOf(",") > 0)
+                {
+                    
+                    TEFTransactionManager transactionManager = new TEFTransactionManager();
+                    object obj = (object)(pMessage);
+                    ref object local = ref obj;
+                    str = Convert.ToString(transactionManager.getTEFAuthorization(ref local));
+                }
+                else
+                    str = "Invalid message";
+                Console.WriteLine("Answer=" + str);
+            
+        }
+
 
         public async static void Payment(Producto pr_datpro)
         {
@@ -953,10 +988,6 @@ namespace Portal.Kiosco
 
                                             //validar Cliente frecuente
                                             ob_auxven.Precio = 1;
-                                            //if (Session.GetString("ClienteFrecuente") == "No")
-                                            //    ob_auxven.Precio = 1;
-                                            //else
-                                            //    ob_auxven.Precio = 2;
 
                                             ob_auxven.Receta = null;
                                             ob_auxven.Descripcion = vr_itevta.Descripcion;
@@ -1049,14 +1080,9 @@ namespace Portal.Kiosco
                                     }
                                 }
 
-                                //Asignar valor total de productos
                                 lc_valpro += vr_itevta.Precio * vr_itevta.Cantidad;
                             }
 
-
-                            //Obtener boletas carrito de compra
-
-                            //Select * From ReportSales Where Secuencia == ob_datpro.KeySecuencia
 
                             var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
                             foreach (var vr_itevta in ReportSales)
@@ -2235,7 +2261,7 @@ namespace Portal.Kiosco
 
                         var precio = (decimal)precioProp.GetValue(pr_addpro);
                         var codigo = (decimal)codigoProp.GetValue(pr_addpro);
-                        codigo.ToString();
+
                         var descripcion = (string)descripcionProp.GetValue(pr_addpro);
 
                         var retailSales = new RetailSales

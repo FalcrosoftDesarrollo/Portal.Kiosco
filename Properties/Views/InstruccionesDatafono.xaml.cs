@@ -13,6 +13,8 @@ namespace Portal.Kiosco.Properties.Views
         private bool isThreadActive = true;
         private System.Timers.Timer timer;
 
+       
+
         public InstruccionesDatafono()
         {
             InitializeComponent();
@@ -29,8 +31,7 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-
-            //var consumo = new TEFII_NET.trx.TEFTransactionManager();
+             
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -68,25 +69,33 @@ namespace Portal.Kiosco.Properties.Views
         public void LLamadoDatafono()
         {
             var subtotal = Convert.ToInt64(Convert.ToInt64(App.TotalPagar) * 0.19);
-            var total = Convert.ToInt64(App.TotalPagar) - subtotal;
+            var IAC = Convert.ToInt64(Convert.ToInt64(App.TotalPagar) * 0.08);
+            var total = Convert.ToInt64(App.TotalPagar) ;
+            App.IVC = IAC.ToString();
+            App.IVA = subtotal.ToString();
             var responseSection = "";
-            var respuesta = App.RunProgramAndWait("01," + total.ToString() + ",100,CAJA" + App.PuntoVenta + ",TRX" + App.Secuencia + "," + subtotal + ",0,KIOSCO,0,0,");
-            int start = respuesta.IndexOf("Response:");
 
-            int end = respuesta.IndexOf("*", start);
 
-            if (start != -1 && end != -1)
-            {
-                // Extraer la subcadena desde "Response:" hasta "*"
-                responseSection = respuesta.Substring(start, end - start);
-                Console.WriteLine(responseSection);
-            }
-            else
-            {
-                MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            if (responseSection.Replace("Response:","").Substring(0, 3).Replace(",", "") == "00")
-            {
+            String Trama = "01," + total.ToString() + "," + subtotal + "," + App.PuntoVenta + "," + App.Secuencia + ", 0 ,"+ IAC + ",KIOSCO,0,0,";
+            
+            //var respuesta = App.RunProgramAndWait(Trama);
+
+            //int start = respuesta.IndexOf("Response:");
+
+            //int end = respuesta.IndexOf("*", start);
+
+            //if (start != -1 && end != -1)
+            //{ 
+            //    responseSection = respuesta.Substring(start, end - start);
+            //    Console.WriteLine(responseSection);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+
+            //if (responseSection.Replace("Response:","").Substring(0, 3).Replace(",", "") == "00")
+            //{
                 Producto producto = new Producto
                 {
                     TipoCompra = App.TipoCompra,
@@ -97,26 +106,26 @@ namespace Portal.Kiosco.Properties.Views
                 };
                
 
-                App.Payment(producto);
+                //App.Payment(producto);
 
-                if (App.respuestagenerica == "Error")
-                {
-                    MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
+                //if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
+                //{
+                //    MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //}
+                //else
+                //{
                     App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
                     var openWindows = new BoletasGafasAlimentos();
                     openWindows.Show();
                     this.Close();
-                }
+                //}
 
            
-            }
-            else 
-            {
-                this.Close();
-            }   
+            //}
+            //else 
+            //{ 
+            //    this.Close();
+            //}   
         }
 
         private bool ComprobarTiempo()

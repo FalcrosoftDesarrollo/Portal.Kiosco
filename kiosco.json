@@ -163,7 +163,7 @@
     "secretoIntegridad": "prod_integrity_lgb2dJuSCkrNIX8wESwEDAOTBWyKcTRT",
     "src_wompi_responses": "https://production.wompi.co/v1/transactions/",
     "secretKey": "PROCINALSCORE2024",
-    "Credicor": "C:\\TEFII_NET\\TEFII_NET_TEST.exe"
+    "Credicor": "C:\\TEFII_NET\\Procinal.exe"
   },
     "ImagesURLs": {
       "Smile": "https://portalweb.procinal.com/images/smile.png",

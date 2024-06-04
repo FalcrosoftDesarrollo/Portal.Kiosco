@@ -21,9 +21,7 @@ namespace Portal.Kiosco.Properties.Views
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
         public static string[] sillasSeleccionadasArray = new string[10];
-        private int sillasSeleccionadas = 0;
-        private string zonaseleccionada = "";
-        private BolVenta bolVentaSala;
+        private int sillasSeleccionadas = 0; 
         private bool isError;
         public LayoutAsientos(IOptions<MyConfig> config)
         {
@@ -31,8 +29,10 @@ namespace Portal.Kiosco.Properties.Views
             {
                 InitializeComponent();
                 sillasSeleccionadasArray = new string[10];
+        
                 this.config = config;
                 ContenedorSala.Children.Clear();
+                sillasSeleccionadas = 0;
                 GenerarSala();
                 DataContext = ((App)Application.Current);
                 btnSiguiente.Visibility = Visibility.Hidden;
@@ -124,7 +124,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
-
+            App.RoomReverse();
             isThreadActive = false;
             Cartelera openWindows = new Cartelera();
             openWindows.Show();
@@ -134,7 +134,7 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
-            Room(App.BolVentaRoom);
+           
 
             if (isError == false)
             {
@@ -144,6 +144,8 @@ namespace Portal.Kiosco.Properties.Views
 
                     return;
                 }
+
+                Room(App.BolVentaRoom);
 
                 if (pelicula != null && pelicula.Formato != null && pelicula.Formato.Contains("3D"))
                 {
@@ -619,6 +621,7 @@ namespace Portal.Kiosco.Properties.Views
                     App.BolVentaRoom.SelUbicaciones.Replace(button.Name.ToString() + ";","");
 
                     sillasSeleccionadas--;
+                    isError = false;
                 }
                 else if (sillasSeleccionadas < Convert.ToInt32(App.CantSillasBol))
                 {
@@ -630,13 +633,13 @@ namespace Portal.Kiosco.Properties.Views
                     sillasSeleccionadasArray[index] = silla;
 
                     button.Background = Brushes.Red;
-
+                    isError = false;
                     sillasSeleccionadas++;
                 }
                 else
                 {
                     MessageBox.Show("Solo se pueden seleccionar hasta " + App.CantidadBoletas + " sillas.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    isError = true;
+                    isError = false;
                 }
 
                 ActualizarInterfazSillasSeleccionadas();
@@ -687,6 +690,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
+            App.RoomReverse();
             isThreadActive = false;
             Principal openWindows = new Principal();
             openWindows.Show();

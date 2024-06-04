@@ -22,7 +22,7 @@ namespace Portal.Kiosco
             InitializeComponent();
             TextDocumento.Focus();
             TextDocumento.Text = "";
-
+            isError = false;
             var monitorThread = new Thread(MonitorTextChanged);
             monitorThread.IsBackground = true;
             monitorThread.Start();

@@ -38,6 +38,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="TEFII_NET">
+      <HintPath>..\..\..\TEFII_NET\TEFII_NET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Properties\Resources\arrowrightalt-3xJ.png" />
     <Resource Include="Properties\Resources\butaca-de-cine-1-1-sbc.png" />
     <Resource Include="Properties\Resources\descarga-2-wVp.png" />

@@ -30,6 +30,10 @@ namespace Portal.Kiosco.Properties.Views
             Sucursal.Text = App.DirEmpresa;
             NomEmpresa.Text = App.NomEmpresa;
             NomEmpresa2.Text = App.NomEmpresa;
+            TotalImp.Text = App.IVC == null ? "$0" : "$ " + App.IVC ;
+            IVA.Text = App.IVA == null ? "$0" : "$ " + App.IVA;
+            factura.Text = App.Secuencia;
+            Valorpagado.Text = TotalFac.Text;
             var combos = App.ProductosSeleccionados;
     
             Thread thread = new Thread(() =>
@@ -592,7 +596,7 @@ namespace Portal.Kiosco.Properties.Views
                 bitmapimage.StreamSource = memory;
                 bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapimage.EndInit();
-                imgqr.Source = bitmapimage;
+                //imgqr.Source = bitmapimage;
             }
         }
     }

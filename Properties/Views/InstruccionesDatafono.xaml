@@ -19,7 +19,7 @@
                         <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
-                        
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="false">
                                 <Setter Property="Opacity" Value="0.8" />
@@ -70,7 +70,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -122,10 +122,13 @@
                             <RowDefinition Height="130"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        
-                        <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Width="721" Height="130" TextAlignment="Center">
-                            <Run Text="Completa tu pago siguiendo"/><LineBreak/><Run Text="las ins"/>
-                            <Run Language="es-es" Text="tr"/><Run Text="ucciones del datafono"/>
+
+                        <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Height="130" TextAlignment="Left" Margin="600,0,529,0">
+                            <Run  Text="Completa tu pago siguiendo"/>
+                            <LineBreak/>
+                           
+                            <Run Text="las instrucciones del datafono"/>
+
                         </TextBlock>
 
                         <Border Grid.Row="2" Width="570" Height="543" Background="#F5F5F5" VerticalAlignment="Top" Margin="0,35,0,0" CornerRadius="10">

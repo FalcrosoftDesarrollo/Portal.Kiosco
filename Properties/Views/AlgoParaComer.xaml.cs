@@ -74,6 +74,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
+            App.RoomReverse();
             isThreadActive = false;
             Principal openWindows = new Principal();
             openWindows.Show();

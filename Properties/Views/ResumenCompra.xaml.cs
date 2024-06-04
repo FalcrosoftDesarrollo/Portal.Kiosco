@@ -32,6 +32,7 @@ namespace Portal.Kiosco.Properties.Views
             else
             {
                 lblnombre.Content = "¡HOLA INVITADO!";
+                borderPagarCash.Visibility = Visibility.Hidden;
             }
 
             Thread thread = new Thread(() =>
@@ -100,21 +101,21 @@ namespace Portal.Kiosco.Properties.Views
         {
             isThreadActive = false;
 
-            //decimal totalDecimal;
-            //if (decimal.TryParse(TotalResumen.Content.ToString(), NumberStyles.Currency, CultureInfo.GetCultureInfo("es-CO"), out totalDecimal))
-            //{
-            //    var total = Convert.ToString(Convert.ToInt32(totalDecimal));
-            //    App.TotalPagar = total.ToString();
-            //}
-            //else
-            //{
-            //    Console.WriteLine("No se pudo convertir la cadena en un valor decimal.");
-            //}
+            decimal totalDecimal;
+            if (decimal.TryParse(TotalResumen.Content.ToString(), NumberStyles.Currency, CultureInfo.GetCultureInfo("es-CO"), out totalDecimal))
+            {
+                var total = Convert.ToString(Convert.ToInt32(totalDecimal));
+                App.TotalPagar = total.ToString();
+            }
+            else
+            {
+                Console.WriteLine("No se pudo convertir la cadena en un valor decimal.");
+            }
 
-            //StartMonitoringDatafono();
-            var openWindows = new BoletasGafasAlimentos();
+            StartMonitoringDatafono();
+            var openWindows = new InstruccionesDatafono();
             openWindows.Show();
-            this.Close();
+         
 
         }
 
