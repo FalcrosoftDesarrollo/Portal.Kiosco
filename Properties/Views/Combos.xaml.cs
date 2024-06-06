@@ -430,6 +430,12 @@ namespace Portal.Kiosco.Properties.Views
         public void CrearCombosYbebidas(List<Producto> productos)
         {
 
+            var ultimoProducto = productos[productos.Count - 1];
+
+            productos.RemoveAt(productos.Count - 1);
+
+            productos.Insert(0, ultimoProducto);
+
             imagenes.Children.Clear();
 
 
@@ -854,6 +860,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
+
             if (totalLabel.Content.ToString() != "0")
             {
                 var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");

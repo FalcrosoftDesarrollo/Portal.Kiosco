@@ -313,17 +313,18 @@ namespace Portal.Kiosco.Properties.Views
 
             foreach (var itemRecetaCategoria in snacks)
             {
-                var checkBox = new CheckBox();
-                checkBox.Content = itemRecetaCategoria.Descripcion;
-                checkBox.Name = "v" + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
-                checkBox.FontSize = 24; // Establece el tamaño de fuente como un valor numérico
-                checkBox.HorizontalAlignment = HorizontalAlignment.Left; // Establece la alineación horizontal
-                checkBox.Checked += CheckBox_Checked;
-                checkBox.Unchecked += CheckBox_Unchecked;
+                if (itemRecetaCategoria.Descripcion != "Gafas 3D")
+                {
+                    var checkBox = new CheckBox();
+                    checkBox.Content = itemRecetaCategoria.Descripcion;
+                    checkBox.Name = "v" + Convert.ToInt32(itemRecetaCategoria.Codigo).ToString();
+                    checkBox.FontSize = 24;
+                    checkBox.HorizontalAlignment = HorizontalAlignment.Left;
+                    checkBox.Checked += CheckBox_Checked;
+                    checkBox.Unchecked += CheckBox_Unchecked;
 
-                checkBoxAdicionales.Children.Add(checkBox); // Agrega el botón de radio al contenedor
-                                                            // Agregar el evento Checked
-
+                    checkBoxAdicionales.Children.Add(checkBox);
+                }
             }
         }
 

@@ -618,7 +618,7 @@ namespace Portal.Kiosco.Properties.Views
 
                     button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
 
-                    App.BolVentaRoom.SelUbicaciones.Replace(button.Name.ToString() + ";","");
+                    App.BolVentaRoom.SelUbicaciones = App.BolVentaRoom.SelUbicaciones.Replace(button.Name.ToString() + ";", "");
 
                     sillasSeleccionadas--;
                     isError = false;

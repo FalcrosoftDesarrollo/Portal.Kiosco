@@ -86,7 +86,7 @@
     "MinDifHora": "50",
     "MinDifConf": "0", //60
     "CantProductos": "99",
-    "CantSillasBol": "6",
+    "CantSillasBol": "10",
     "CodMedioPago": "21",
     "CodMedioPagoCB": "2",
     "VistasCF": "12",

@@ -82,8 +82,11 @@
                                         <Path.Triggers>
                                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                                 <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" From="157" To="0" Duration="0:0:10" RepeatBehavior="Forever"/>
+                                                    <Storyboard RepeatBehavior="Forever">
+                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="circlePath" Storyboard.TargetProperty="StrokeDashOffset" Duration="0:0:10" RepeatBehavior="Forever">
+                                                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="157" />
+                                                            <LinearDoubleKeyFrame KeyTime="0:0:10" Value="0" />
+                                                        </DoubleAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>

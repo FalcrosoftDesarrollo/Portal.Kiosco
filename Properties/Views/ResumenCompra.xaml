@@ -11,7 +11,7 @@
         WindowState="Maximized" 
         >
     <Window.Resources>
-        <Style x:Key="MyButton" TargetType="Button">
+        <Style TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
@@ -20,9 +20,8 @@
                         <Border Name="border" BorderThickness="0" BorderBrush="Black" >
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
-                        
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger Property="IsMouseOver" Value="false">
                                 <Setter Property="Opacity" Value="0.8" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -103,15 +102,9 @@
                                 <TextBlock TextAlignment="Center">
                                     <Run Text="SALIR"/>
                                 </TextBlock>
-
-                                <Button.Effect>
-                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                </Button.Effect>
                             </Button>
 
-                            <Border.Effect>
-                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                            </Border.Effect>
+                         
                         </Border>
                     </Grid>
                 </Border>
@@ -214,6 +207,8 @@
                                 <Border Grid.Column="1" Grid.Row="0" Width="350" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10" Margin="0,0">
                                     <Button Background="Transparent"  Name="btnPagoTarjeta" Click="btnPagoTarjeta_Click" BorderThickness="0" Content="PAGAR CON TARJETA" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>
                                 </Border>
+                                
+                                
 
                                 <Border  Width="350" Height="80" VerticalAlignment="Bottom" Name="borderPagarCash" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
                                     <Button Background="Transparent" Name="btnPagarCash" Click="btnPagarCash_Click" BorderThickness="0" Content="PAGAR CON CASHBACK" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>

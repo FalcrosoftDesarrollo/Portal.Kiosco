@@ -128,15 +128,15 @@
                             <WrapPanel>
                                 <Label Height="70" Width="525" HorizontalAlignment="Center" Margin="184,77,186,47" Content="¡Listo! Aquí están tus:" FontFamily="Myanmar Khyay" FontSize="48"/>
 
-                                <Border Background="#F5F5F5" Width="886" Height="169" CornerRadius="10" Margin="0,0,0,21">
+                                <Border Background="#FAFAFA" Width="886" Height="169" CornerRadius="10" Margin="0,0,0,21">
                                     <Grid>
                                         <Label Content="Boletas" HorizontalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="40" Height="50" Margin="410,63,207,62"/>
                                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\boletas.png" Height="106" Width="134" HorizontalAlignment="Left" Margin="205,0,0,0" Stretch="Fill" />
                                         <Button Background="Transparent" BorderThickness="0"/>
                                     </Grid>
                                 </Border>
-                                
-                                <Border Background="#F5F5F5" Width="886" Height="169" CornerRadius="10" Margin="0,0,0,23">
+
+                                <Border Background="#FAFAFA" Width="886" Height="169" CornerRadius="10" Margin="0,0,0,23">
                                     <Grid>
                                         <Label Content="Gafas" HorizontalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="40" Height="50" Margin="410,63,207,62"/>
                                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\frame.png" Height="78" Width="140" HorizontalAlignment="Left" Margin="205,0,0,0" Stretch="Fill" />
@@ -144,7 +144,7 @@
                                     </Grid>
                                 </Border>
 
-                                <Border Background="#F5F5F5" Width="886" Height="169" CornerRadius="10">
+                                <Border Background="#FAFAFA" Width="886" Height="169" CornerRadius="10">
                                     <Grid>
                                         <Label Content="Alimentos" HorizontalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="40" Height="50" Margin="410,63,207,62"/>
                                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\group4.png" Height="126.22" Width="159.72" HorizontalAlignment="Left" Margin="205,0,0,0" Stretch="Fill" />

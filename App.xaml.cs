@@ -17,8 +17,8 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
-using TEFII_NET.data;
-using TEFII_NET.trx;
+//using TEFII_NET.data;
+//using TEFII_NET.trx;
 using Windows.ApplicationModel.VoiceCommands;
 
 namespace Portal.Kiosco
@@ -106,7 +106,6 @@ namespace Portal.Kiosco
         public static int IdRetail { get; set; }
         public static string IVC { get; set; }
         public static string IVA { get; set; }
-     
 
         public string TiempoRestanteGlobal
         {
@@ -117,8 +116,6 @@ namespace Portal.Kiosco
                 OnPropertyChanged(nameof(TiempoRestanteGlobal));
             }
         }
-
-
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -476,7 +473,7 @@ namespace Portal.Kiosco
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.CreateNoWindow = true;
                     process.StartInfo.Verb = "runas";
-                    App.llamadoDatafono(arguments);
+                    //App.llamadoDatafono(arguments);
                     process.Start();
 
                     string output = process.StandardOutput.ReadToEnd();
@@ -497,27 +494,26 @@ namespace Portal.Kiosco
             }
         }
 
-        public static void llamadoDatafono(String trama)
-        {
+        //public static void llamadoDatafono(String trama)
+        //{
 
-            string pMessage = trama;
-                string str;
-                if ("2".Equals(pMessage))
-                    str = Convert.ToString(new TEFTransactionManager().checkLastTransaction());
-                else if (pMessage.IndexOf(",") > 0)
-                {
+        //    string pMessage = trama;
+        //        string str;
+        //        if ("2".Equals(pMessage))
+        //            str = Convert.ToString(new TEFTransactionManager().checkLastTransaction());
+        //        else if (pMessage.IndexOf(",") > 0)
+        //        {
                     
-                    TEFTransactionManager transactionManager = new TEFTransactionManager();
-                    object obj = (object)(pMessage);
-                    ref object local = ref obj;
-                    str = Convert.ToString(transactionManager.getTEFAuthorization(ref local));
-                }
-                else
-                    str = "Invalid message";
-                Console.WriteLine("Answer=" + str);
+        //            TEFTransactionManager transactionManager = new TEFTransactionManager();
+        //            object obj = (object)(pMessage);
+        //            ref object local = ref obj;
+        //            str = Convert.ToString(transactionManager.getTEFAuthorization(ref local));
+        //        }
+        //        else
+        //            str = "Invalid message";
+        //        Console.WriteLine("Answer=" + str);
             
-        }
-
+        //}
 
         public async static void Payment(Producto pr_datpro)
         {
@@ -1694,7 +1690,6 @@ namespace Portal.Kiosco
 
             try
             {
-
                 #region SERVICIO SCOSEC
                 lc_secsec = pr_datpro.KeySecuencia;
                 if (lc_secsec == "0" || lc_secsec == null)
@@ -1748,8 +1743,6 @@ namespace Portal.Kiosco
                 }
                 #endregion
 
-
-
                 if (pr_datpro.Tipo == "A" && pr_datpro.Check != null)
                 {
                     pr_datpro.ProCategoria_1 = Convert.ToDecimal(pr_datpro.Check);
@@ -1762,7 +1755,7 @@ namespace Portal.Kiosco
                 int IdRetail = 0;
                 using (var context = new DataDB(config))
                     App.IdRetail = context.RetailSales.Max(u => u.Id);
-                // Guardar en tabla RetailDet para combos
+
                 if (pr_datpro.Tipo == "C")
                 {
                     for (int i = 0; i < 4; i++)
