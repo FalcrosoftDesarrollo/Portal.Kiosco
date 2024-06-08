@@ -27,6 +27,8 @@ namespace Portal.Kiosco.Properties.Views
         {
             try
             {
+
+                var fecha = App.Pelicula.FechaSel;
                 InitializeComponent();
                 sillasSeleccionadasArray = new string[10];
         
@@ -46,10 +48,14 @@ namespace Portal.Kiosco.Properties.Views
                     lblnombre.Content = "¡HOLA INVITADO!";
                 }
 
+                
+
                 lblSala.Content = App.Pelicula.numeroSala;
                 lblNombrePelicula.Content = App.Pelicula.TituloOriginal;
-                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));
+                FechaImpresion(App.Pelicula.FechaSel);
+                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));              
                 lblHora.Content = App.Pelicula.HoraUsuario;
+
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                 Thread thread = new Thread(() =>
@@ -71,21 +77,28 @@ namespace Portal.Kiosco.Properties.Views
 
 
         public static string FormatearFecha(string fecha)
-        {
-            if (fecha.Length != 8)
-            {
-                throw new ArgumentException("La fecha debe estar en el formato YYYYMMDD");
-            }
-
-            // Convertir la cadena a un objeto DateTime
+        {    
             DateTime fechaDateTime = DateTime.ParseExact(fecha, "yyyyMMdd", CultureInfo.InvariantCulture);
 
-            // Formatear la fecha en el formato "MMM dd"
             string fechaFormateada = fechaDateTime.ToString("MMM dd", CultureInfo.InvariantCulture);
-
+            
             return fechaFormateada;
         }
+       
 
+        public static void FechaImpresion (string fechaImpresion)
+        {
+
+            string fechaString = fechaImpresion;
+
+            string fechaStr = fechaString.Substring(3);
+
+            if (DateTime.TryParseExact(fechaStr, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
+            {
+                string fechaFinal = fecha.ToString("dd/MM/yyyy");
+                App.FechaSeleccionada = fechaFinal;
+            }
+        }
         private bool ComprobarTiempo()
         {
             bool isMainWindowOpen = false;

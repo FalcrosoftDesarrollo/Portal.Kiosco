@@ -25,7 +25,11 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
             ListCarrito();
             CargarQr();
-
+            var diasel = App.DiaSeleccionado;
+            var fechasel = App.FechaSeleccionada;
+            string horaMilitar = App.Pelicula.HoraMilitar;
+            string horaFormateada = horaMilitar.Insert(2, ":");
+            NomHora.Text = horaFormateada; 
             FechaFac.Text = DateTime.Now.ToString();
             Sucursal.Text = App.DirEmpresa;
             NomEmpresa.Text = App.NomEmpresa;
@@ -35,6 +39,25 @@ namespace Portal.Kiosco.Properties.Views
             factura.Text = App.Secuencia;
             Valorpagado.Text = TotalFac.Text;
             var combos = App.ProductosSeleccionados;
+            NomPelicula.Text = App.Pelicula.TituloOriginal;
+            NomFormato.Text = App.NomZona + " " + App.NomTarifa2;
+            NomHora.Text = horaFormateada;
+            FechaSeleccionada.Text = App.FechaSeleccionada;
+            NomSala.Text = App.NumSala;
+            DiaSeleccionado.Text = App.DiaSeleccionado;
+
+            if (App.TipoCompra == "B")
+            {
+                IVAPorcentaje.Visibility = Visibility.Collapsed;
+                ImpConsumo.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PanelPeliculas.Visibility = Visibility.Collapsed;
+            }
+
+
+            
     
             Thread thread = new Thread(() =>
             {
@@ -169,7 +192,6 @@ namespace Portal.Kiosco.Properties.Views
 
             TotalFac.Text = totalcombos.ToString("C0");
         }
-
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
         {

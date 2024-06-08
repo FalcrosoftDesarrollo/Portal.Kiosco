@@ -114,8 +114,8 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Text="SUBTOTAL: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="IVA: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="IVAPorcentaje" Text="IVA: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="ImpConsumo" Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <TextBlock Text="TOTAL:" FontWeight="Bold" HorizontalAlignment="Left"/>
                         </StackPanel>
 
@@ -152,9 +152,41 @@
             </StackPanel>
         </Border>
 
-        <!--<Border Grid.Row="1">
-            <Image Name="imgqr" />
-        </Border>-->
+
+        <Border BorderThickness="0,1,0,1" BorderBrush="Black" Grid.Row="1" Width="350" Height="150" x:Name="PanelPeliculas">
+            <StackPanel>
+                <TextBlock x:Name="NomPelicula" FontSize="25" Text="Pelicula" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock x:Name="NomFormato" Text="Formato" HorizontalAlignment="Center"/>
+
+                <StackPanel>
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Primera fila -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="DiaSeleccionado" FontWeight="Bold" Text="Viernes" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="Hora:" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="NomHora" Text="18:20" HorizontalAlignment="Right"/>
+
+                        <!-- Segunda fila -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="FechaSeleccionada" FontWeight="Bold" Text="FechaNumero" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" FontWeight="Bold" Text="Sala:" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="NomSala" Text="2" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" FontWeight="Bold" Text="Ubicación:" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="2" Grid.Column="3" x:Name="NomUbicacion" Text="A-5" HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+        
 
         <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10,10,10,10" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <TextBlock Text="Solo se permite el ingreso a las instalaciones de Cinemas"  HorizontalAlignment="Center"/>

@@ -250,6 +250,7 @@ namespace Portal.Kiosco.Properties.Views
                                                                 AgregarBotonesPorFormato(item, item2.horario, item2.militar, formato, itemZonas.Key);
                                                                 horasProcesadas.Add(item2.horario);
                                                                 zonasProcesadas.Add(itemZonas.Key);
+
                                                             }
                                                         }
                                                     }
@@ -333,22 +334,29 @@ namespace Portal.Kiosco.Properties.Views
                         {
                             foreach (var item in ob_lisprg)
                             {
+                                App.NumSala = item.numeroSala;
+                                
                                 if (item.tipoSala.ToLower() == App.TipoSilla.ToLower())
                                 {
+                                    
                                     if (item.hora != null && item.hora.Count > 0)
                                     {
                                         foreach (var item2 in item.hora.Where(x => x.militar == horaMilitar))
                                         {
+                                            
+                                            
                                             foreach (var item3 in item2.TipoZonaOld)
                                             {
                                                 if (Zonas.Values.Contains(item3.nombreZona))
                                                 {
+                                                    App.NomZona = item3.nombreZona;
                                                     foreach (var item4 in item3.TipoSilla)
                                                     {
                                                         if (item4.Tarifa.Count > 0)
                                                         {
                                                             foreach (var item5 in item4.Tarifa)
-                                                            {
+                                                            {             
+                                                                App.NomTarifa2 = item5.nombreTarifa;                                                                     
                                                                 App.ValorTarifa = Convert.ToDecimal(item5.valor);
                                                                 App.KeyTarifa = Convert.ToDecimal(item5.codigoTarifa);
                                                                 App.NombreTarifa = $"{item5.nombreTarifa};{item5.valor}";
@@ -668,6 +676,30 @@ namespace Portal.Kiosco.Properties.Views
                 border.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F30613") as Color? ?? Colors.Red);
                 App.Pelicula.FechaSel = fecunv;
                 App.IsFecha = true;
+
+                string diaYNumero = btn.Content.ToString();
+
+                string[] partes = diaYNumero.Split(',');
+
+                string diaAbreviado = partes[0].Trim();
+
+                var terminaciones = new Dictionary<string, string>
+                {
+                    { "Dom", "ingo" },
+                    { "Lun", "es" },
+                    { "Mar", "tes" },
+                    { "Mie", "rcoles" },
+                    { "Jue", "ves" },
+                    { "Vie", "rnes" },
+                    { "Sab", "ado" }
+                };
+
+                if (terminaciones.ContainsKey(diaAbreviado))
+                {
+                    string diaCompleto = diaAbreviado + terminaciones[diaAbreviado];
+
+                    App.DiaSeleccionado = diaCompleto;
+                }
             }
 
             btn.Click += btnSeleccionFecha_Click;
@@ -899,6 +931,39 @@ namespace Portal.Kiosco.Properties.Views
             clickedButton.Foreground = Brushes.White;
             clickedButton.Foreground = Brushes.White;
             CargarFechasDesdeSelect();
+
+            string diaYNumero = clickedButton.Content.ToString();
+
+            string[] partes = diaYNumero.Split(',');
+
+            string diaAbreviado = partes[0].Trim();
+
+            var terminaciones = new Dictionary<string, string>
+            {
+                { "Dom", "ingo" },
+                { "Lun", "es" },
+                { "Mar", "tes" },
+                { "Mie", "rcoles" },
+                { "Jue", "ves" },
+                { "Vie", "rnes" },
+                { "Sab", "ado" }
+            };
+
+            if (terminaciones.ContainsKey(diaAbreviado))
+            {
+                string diaCompleto = diaAbreviado + terminaciones[diaAbreviado];
+
+                App.DiaSeleccionado = diaCompleto;
+            }
+            string btnnombre = clickedButton.Name; 
+
+            string fechaStr = btnnombre.Substring(3); 
+
+            if (DateTime.TryParseExact(fechaStr, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
+            {
+                string fechaFormateada = fecha.ToString("dd/MM/yyyy");
+                App.FechaSeleccionada = fechaFormateada;
+            }
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)

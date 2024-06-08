@@ -106,6 +106,12 @@ namespace Portal.Kiosco
         public static int IdRetail { get; set; }
         public static string IVC { get; set; }
         public static string IVA { get; set; }
+        public static string NomTarifa2 { get; set; }
+        public static string NomZona {  get; set; }
+        public static string NumSala { get; set; }
+        public static string DiaSeleccionado { get; set; }
+
+        public static string FechaSeleccionada { get; set; }
 
         public string TiempoRestanteGlobal
         {
@@ -1949,8 +1955,6 @@ namespace Portal.Kiosco
         //        }
         //    }
         //}
-
-
 
         private static Producto GetDetails(Producto pr_datpro)
         {
