@@ -43,7 +43,10 @@
                     <TextBlock Text="Detalle de documento: "  FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="KIOSCO PROCINAL" HorizontalAlignment="Left"/>
                 </StackPanel>
-
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="FE Comp. de entrega:" FontWeight="Bold"/>
+                    <TextBlock Text="      303-024-000008002"/>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5" />
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
@@ -51,27 +54,25 @@
                     <TextBlock Text="" Name="FechaFac" HorizontalAlignment="Left"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical" Margin="5" >
-                    <TextBlock Text="Resolucion de facturacion:" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="18764059689843 del 10/11/2023" HorizontalAlignment="Left"/>
-                    <TextBlock Text="desde PF 748662 hasta PF 2000000" HorizontalAlignment="Left"/>
-                </StackPanel>
 
-                <StackPanel Orientation="Vertical" Margin="5" >
-                    <TextBlock Text="Factura de Venta:" FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="0" Name="factura" HorizontalAlignment="Left"/>
-                </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Cliente: " FontWeight="Bold" HorizontalAlignment="Left"/>
-                        <TextBlock Text="CONSUMIDOR FINAL" HorizontalAlignment="Left"/>
+                        <TextBlock Text="CONSUMIDOR FINAL" FontWeight="Bold"  HorizontalAlignment="Left"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ced. I/NIT: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Ced. I/NIT: "  HorizontalAlignment="Left"/>
                         <TextBlock Text="99999999999999999" HorizontalAlignment="Left"/>
+                        
                     </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Correo:"/>
+                        <TextBlock Text="consumidorfinal@procinal.com"/>
+                    </StackPanel>
+
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="10" x:Name="ContenedorFac">
@@ -85,11 +86,11 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="CANT" FontWeight="Bold" Margin="5"/>
-                        <TextBlock Grid.Column="1" Text="PRODUCTO" FontWeight="Bold" Margin="5"/>
-                        <TextBlock Grid.Column="2" Text="IM" FontWeight="Bold" Margin="5"/>
-                        <TextBlock Grid.Column="3" Text="PRECIO" FontWeight="Bold" Margin="5"/>
-                        <TextBlock Grid.Column="4" Text="TOTAL" FontWeight="Bold" Margin="5"/>
+                        <TextBlock Grid.Column="0" Text="Cant" FontWeight="Bold" Margin="5"/>
+                        <TextBlock Grid.Column="1" Text="Producto" FontWeight="Bold" Margin="5"/>
+                        <TextBlock Grid.Column="2" Text="Im" FontWeight="Bold" Margin="5"/>
+                        <TextBlock Grid.Column="3" Text="Precio" FontWeight="Bold" Margin="5"/>
+                        <TextBlock Grid.Column="4" Text="Total" FontWeight="Bold" Margin="5"/>
                     </Grid>
 
                     <Grid x:Name="TablaProductos">
@@ -113,10 +114,10 @@
                 <Border BorderThickness="0,1,0,1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock Text="SUBTOTAL: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock x:Name="IVAPorcentaje" Text="IVA: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Subtotal: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Subtotal: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <!--<TextBlock x:Name="IVAPorcentaje" Text="IVA: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>-->
                             <TextBlock x:Name="ImpConsumo" Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <TextBlock Text="TOTAL:" FontWeight="Bold" HorizontalAlignment="Left"/>
                         </StackPanel>
 
                         <StackPanel Margin="30,0,30,0"/>
@@ -125,14 +126,26 @@
                             <TextBlock Text="$0" FontWeight="Bold" Name="subtotal" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0" FontWeight="Bold" Name="IVA" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0" FontWeight="Bold" Name="TotalImp"  HorizontalAlignment="Left"/>
-                            <TextBlock Text="$0" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <StackPanel Orientation="Horizontal" Margin="20,5,5,5">
+                                <TextBlock Text="TOTAL:" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                <TextBlock Text="$0" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                            
                         </StackPanel>
                     </StackPanel>
                 </Border>
 
-                <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Valor pagado: " FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock Text="$0" Name="Valorpagado" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Vertical" Margin="5" >
+                    <TextBlock Text="Valor pagado en: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal" Margin="80,0,0,0">
+                        <TextBlock Text="Tarjeta: "/>
+                        <TextBlock Text="$0" Name="Valorpagado" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="CAMBIO: $0.00" FontWeight="Bold"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >

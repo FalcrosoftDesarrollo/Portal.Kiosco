@@ -15,10 +15,6 @@
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\seleccionarfuncion.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\layoutasientos.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\layoutasientos.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|c:\\falcrosoft\\procinal\\portal.kiosco\\properties\\views\\layoutasientos.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{D7B63D2E-B72D-4A00-B752-55942900F063}|Portal.Kiosco.csproj|solutionrelative:properties\\views\\layoutasientos.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -45,7 +41,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 15,
           "Children": [
             {
               "$type": "Bookmark",
@@ -81,28 +77,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "EventRoute.cs",
               "DocumentMoniker": "C:\\Users\\Antoine\\AppData\\Local\\Temp\\.vsdbgsrc\\2a3172f96ad17890b315d5f80fe25b18a35773c846d0b7793c6037aff3622c0e\\EventRoute.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\Antoine\\AppData\\Local\\Temp\\.vsdbgsrc\\2a3172f96ad17890b315d5f80fe25b18a35773c846d0b7793c6037aff3622c0e\\EventRoute.cs",
-              "ToolTip": "C:\\Users\\Antoine\\AppData\\Local\\Temp\\.vsdbgsrc\\2a3172f96ad17890b315d5f80fe25b18a35773c846d0b7793c6037aff3622c0e\\EventRoute.cs [Solo lectura]",
-              "RelativeToolTip": "..\\..\\..\\Users\\Antoine\\AppData\\Local\\Temp\\.vsdbgsrc\\2a3172f96ad17890b315d5f80fe25b18a35773c846d0b7793c6037aff3622c0e\\EventRoute.cs [Solo lectura]",
+              "ToolTip": "C:\\Users\\Antoine\\AppData\\Local\\Temp\\.vsdbgsrc\\2a3172f96ad17890b315d5f80fe25b18a35773c846d0b7793c6037aff3622c0e\\EventRoute.cs",
+              "RelativeToolTip": "..\\..\\..\\Users\\Antoine\\AppData\\Local\\Temp\\.vsdbgsrc\\2a3172f96ad17890b315d5f80fe25b18a35773c846d0b7793c6037aff3622c0e\\EventRoute.cs",
               "ViewState": "AQIAAFIAAAAAAAAAAAAqwHYAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-08T17:11:09.98Z",
-              "EditorCaption": " [Solo lectura]"
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "LayoutAsientos.xaml",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\LayoutAsientos.xaml",
               "RelativeDocumentMoniker": "Properties\\Views\\LayoutAsientos.xaml",
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\LayoutAsientos.xaml",
               "RelativeToolTip": "Properties\\Views\\LayoutAsientos.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-08T16:53:41.752Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-08T16:53:41.752Z"
             },
             {
               "$type": "Document",
@@ -113,12 +108,11 @@
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\SeleccionarFuncion.xaml",
               "RelativeToolTip": "Properties\\Views\\SeleccionarFuncion.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-08T16:05:29.676Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-08T16:05:29.676Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "Cartelera.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\Cartelera.xaml.cs",
               "RelativeDocumentMoniker": "Properties\\Views\\Cartelera.xaml.cs",
@@ -126,12 +120,11 @@
               "RelativeToolTip": "Properties\\Views\\Cartelera.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAF4AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-08T15:10:18.075Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-08T15:10:18.075Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
@@ -139,12 +132,11 @@
               "RelativeToolTip": "App.xaml.cs",
               "ViewState": "AQIAAFsAAAAAAAAAAIA6wHEAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-08T15:09:42.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-08T15:09:42.277Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "kiosco.json",
               "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\kiosco.json",
               "RelativeDocumentMoniker": "kiosco.json",
@@ -152,8 +144,7 @@
               "RelativeToolTip": "kiosco.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-06-08T15:05:39.979Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-08T15:05:39.979Z"
             },
             {
               "$type": "Document",
@@ -165,8 +156,7 @@
               "RelativeToolTip": "Properties\\Views\\SeleccionarFuncion.xaml.cs",
               "ViewState": "AQIAAJMCAAAAAAAAAAAuwLUCAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-08T15:02:34.458Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-08T15:02:34.458Z"
             },
             {
               "$type": "Document",
@@ -176,43 +166,9 @@
               "RelativeDocumentMoniker": "Properties\\Views\\BoletaFactura.xaml.cs",
               "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\BoletaFactura.xaml.cs",
               "RelativeToolTip": "Properties\\Views\\BoletaFactura.xaml.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAACsAAAApAAAA",
+              "ViewState": "AQIAAKcAAAAAAAAAAAAgwBwAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-04T21:58:11.101Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "b50ddcfa-2c7a-4ea8-8f44-f633d64fc790",
-        "Display": 0,
-        "X": 86,
-        "Y": 98,
-        "Width": 1907,
-        "Height": 1003,
-        "WindowState": 2
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "LayoutAsientos.xaml.cs",
-              "DocumentMoniker": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\LayoutAsientos.xaml.cs",
-              "RelativeDocumentMoniker": "Properties\\Views\\LayoutAsientos.xaml.cs",
-              "ToolTip": "C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Views\\LayoutAsientos.xaml.cs",
-              "RelativeToolTip": "Properties\\Views\\LayoutAsientos.xaml.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAmwDoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-08T16:53:39.758Z",
               "EditorCaption": ""
             }
           ]
