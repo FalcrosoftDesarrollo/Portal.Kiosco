@@ -25,36 +25,36 @@ namespace Portal.Kiosco.Properties.Views
             InitializeComponent();
             ListCarrito();
             CargarQr();
-            var diasel = App.DiaSeleccionado;
-            var fechasel = App.FechaSeleccionada;
-            string horaMilitar = App.Pelicula.HoraMilitar;
-            string horaFormateada = horaMilitar.Insert(2, ":");
-            NomHora.Text = horaFormateada; 
-            FechaFac.Text = DateTime.Now.ToString();
-            Sucursal.Text = App.DirEmpresa;
-            NomEmpresa.Text = App.NomEmpresa;
-            NomEmpresa2.Text = App.NomEmpresa;
-            TotalImp.Text = App.IVC == null ? "$0" : "$ " + App.IVC ;
-            IVA.Text = App.IVA == null ? "$0" : "$ " + App.IVA;
-            factura.Text = App.Secuencia;
-            Valorpagado.Text = TotalFac.Text;
-            var combos = App.ProductosSeleccionados;
-            NomPelicula.Text = App.Pelicula.TituloOriginal;
-            NomFormato.Text = App.NomZona + " " + App.NomTarifa2;
-            NomHora.Text = horaFormateada;
-            FechaSeleccionada.Text = App.FechaSeleccionada;
-            NomSala.Text = App.NumSala;
-            DiaSeleccionado.Text = App.DiaSeleccionado;
+            //var diasel = App.DiaSeleccionado;
+            //var fechasel = App.FechaSeleccionada;
+            //string horaMilitar = App.Pelicula.HoraMilitar;
+            //string horaFormateada = horaMilitar.Insert(2, ":");
+            //NomHora.Text = horaFormateada; 
+            //FechaFac.Text = DateTime.Now.ToString();
+            //Sucursal.Text = App.DirEmpresa;
+            //NomEmpresa.Text = App.NomEmpresa;
+            //NomEmpresa2.Text = App.NomEmpresa;
+            //TotalImp.Text = App.IVC == null ? "$0" : "$ " + App.IVC ;
+            //IVA.Text = App.IVA == null ? "$0" : "$ " + App.IVA;
+            //factura.Text = App.Secuencia;
+            //Valorpagado.Text = TotalFac.Text;
+            //var combos = App.ProductosSeleccionados;
+            //NomPelicula.Text = App.Pelicula.TituloOriginal;
+            //NomFormato.Text = App.NomZona + " " + App.NomTarifa2;
+            //NomHora.Text = horaFormateada;
+            //FechaSeleccionada.Text = App.FechaSeleccionada;
+            //NomSala.Text = App.NumSala;
+            //DiaSeleccionado.Text = App.DiaSeleccionado;
 
-            if (App.TipoCompra == "B")
-            {
-                IVAPorcentaje.Visibility = Visibility.Collapsed;
-                ImpConsumo.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                PanelPeliculas.Visibility = Visibility.Collapsed;
-            }
+            //if (App.TipoCompra == "B")
+            //{
+            //    IVAPorcentaje.Visibility = Visibility.Collapsed;
+            //    ImpConsumo.Visibility = Visibility.Collapsed;
+            //}
+            //else
+            //{
+            //    PanelPeliculas.Visibility = Visibility.Collapsed;
+            //}
 
 
             
@@ -180,17 +180,17 @@ namespace Portal.Kiosco.Properties.Views
                     cantidad = item.Cantidad;
                 }
 
-                string totalString = TotalFac.Text.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
-                decimal totalAnterior = decimal.Parse(totalString);
-                decimal nuevoTotal = totalAnterior + precio;
+                //string totalString = TotalFac.Text.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
+                //decimal totalAnterior = decimal.Parse(totalString);
+                //decimal nuevoTotal = totalAnterior + precio;
 
-                decimal total = nuevoTotal * cantidad;
-                totalcombos += total;
+                //decimal total = nuevoTotal * cantidad;
+                //totalcombos += total;
 
-                GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
+                //GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
-            TotalFac.Text = totalcombos.ToString("C0");
+            //TotalFac.Text = totalcombos.ToString("C0");
         }
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
@@ -255,7 +255,7 @@ namespace Portal.Kiosco.Properties.Views
                 grid.Children.Add(border);
             }
 
-            ContenedorFac.Children.Add(grid);
+            //ContenedorFac.Children.Add(grid);
         }
 
         public string buscarNombre(List<Producto> productos, Decimal Codigo)

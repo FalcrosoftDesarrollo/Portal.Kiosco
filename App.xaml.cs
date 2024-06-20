@@ -521,7 +521,7 @@ namespace Portal.Kiosco
             
         //}
 
-        public async static void Payment(Producto pr_datpro)
+        public static void Payment(Producto pr_datpro)
         {
             #region VARIABLES LOCALES
 
@@ -1257,7 +1257,7 @@ namespace Portal.Kiosco
                 lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
 
                 //Consumir servicio
-                lc_result = await ob_fncgrl.WebServicesAsync(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
+                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
 
                 if (lc_result.Substring(0, 1) == "0")
                 {
