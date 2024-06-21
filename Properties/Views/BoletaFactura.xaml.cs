@@ -20,45 +20,47 @@ namespace Portal.Kiosco.Properties.Views
     {
         private bool isThreadActive = true;
         private readonly IOptions<MyConfig> config;
+
         public BoletaFactura(IOptions<MyConfig> config)
         {
             InitializeComponent();
             ListCarrito();
             CargarQr();
-            //var diasel = App.DiaSeleccionado;
-            //var fechasel = App.FechaSeleccionada;
-            //string horaMilitar = App.Pelicula.HoraMilitar;
-            //string horaFormateada = horaMilitar.Insert(2, ":");
-            //NomHora.Text = horaFormateada; 
-            //FechaFac.Text = DateTime.Now.ToString();
-            //Sucursal.Text = App.DirEmpresa;
-            //NomEmpresa.Text = App.NomEmpresa;
-            //NomEmpresa2.Text = App.NomEmpresa;
-            //TotalImp.Text = App.IVC == null ? "$0" : "$ " + App.IVC ;
-            //IVA.Text = App.IVA == null ? "$0" : "$ " + App.IVA;
+
+            var diasel = App.DiaSeleccionado;
+            var fechasel = App.FechaSeleccionada;
+            string horaMilitar = App.Pelicula.HoraMilitar;
+            string horaFormateada = horaMilitar.Insert(2, ":");
+            NomHora.Text = horaFormateada;
+            FechaFac.Text = DateTime.Now.ToString();
+            Sucursal.Text = App.DirEmpresa;
+            NomEmpresa.Text = App.NomEmpresa;
+            NomEmpresa2.Text = App.NomEmpresa;
+            TotalImp.Text = App.IVC == null ? "$0" : "$ " + App.IVC;
+            IVA.Text = App.IVA == null ? "$0" : "$ " + App.IVA;
             //factura.Text = App.Secuencia;
-            //Valorpagado.Text = TotalFac.Text;
-            //var combos = App.ProductosSeleccionados;
-            //NomPelicula.Text = App.Pelicula.TituloOriginal;
-            //NomFormato.Text = App.NomZona + " " + App.NomTarifa2;
-            //NomHora.Text = horaFormateada;
-            //FechaSeleccionada.Text = App.FechaSeleccionada;
-            //NomSala.Text = App.NumSala;
-            //DiaSeleccionado.Text = App.DiaSeleccionado;
+            Valorpagado.Text = TotalFac.Text;
+            var combos = App.ProductosSeleccionados;
+            NomPelicula.Text = App.Pelicula.TituloOriginal;
+            NomFormato.Text = App.NomZona + " " + App.NomTarifa2;
+            NomHora.Text = horaFormateada;
+            FechaSeleccionada.Text = App.FechaSeleccionada;
+            NomSala.Text = App.NumSala;
+            DiaSeleccionado.Text = App.DiaSeleccionado;
 
-            //if (App.TipoCompra == "B")
-            //{
-            //    IVAPorcentaje.Visibility = Visibility.Collapsed;
-            //    ImpConsumo.Visibility = Visibility.Collapsed;
-            //}
-            //else
-            //{
-            //    PanelPeliculas.Visibility = Visibility.Collapsed;
-            //}
+            if (App.TipoCompra == "B")
+            {
+                //IVAPorcentaje.Visibility = Visibility.Collapsed;
+                ImpConsumo.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PanelPeliculas.Visibility = Visibility.Collapsed;
+            }
 
 
-            
-    
+
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)

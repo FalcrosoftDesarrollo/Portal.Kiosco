@@ -104,20 +104,20 @@ namespace Portal.Kiosco.Properties.Views
                     SwitchCashback = "S",
                     Valor = App.TotalPagar,
                 };
-               
 
-                //App.Payment(producto);
 
-                //if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
-                //{
-                //    MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
-                //else
-                //{
-                    App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
-                    var openWindows = new BoletasGafasAlimentos();
-                    openWindows.Show();
-                    this.Close();
+            App.Payment(producto);
+
+            //if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
+            //{
+            //    MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+            //else
+            //{
+            //App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
+            //        var openWindows = new BoletasGafasAlimentos();
+            //        openWindows.Show();
+            //        this.Close();
                 //}
 
            

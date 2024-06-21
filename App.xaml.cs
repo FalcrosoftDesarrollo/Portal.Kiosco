@@ -1185,7 +1185,7 @@ namespace Portal.Kiosco
                 ob_intvta.Telefono = Convert.ToInt64(TelefonoEli);
                 ob_intvta.Direccion = DireccionEli;
                 ob_intvta.PuntoVenta = Convert.ToInt32(App.PuntoVenta);
-                ob_intvta.DocIdentidad = Convert.ToInt64(DocumentoEli);
+                ob_intvta.DocIdentidad = Convert.ToInt64(DocumentoEli) == 0 ? 99999999999 : Convert.ToInt64(DocumentoEli);
                 ob_intvta.CorreoCliente = EmailEli;
 
                 ob_intvta.Obs1 = "";

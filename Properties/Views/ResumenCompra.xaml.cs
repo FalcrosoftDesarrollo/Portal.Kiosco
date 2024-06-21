@@ -252,10 +252,11 @@ namespace Portal.Kiosco.Properties.Views
             {
                 foreach (var item in grupoCombos)
                 {
+                    cantidad += 1;
                     codigo = item.KeyProducto;
                     nombre = item.Descripcion;
                     precio = item.Precio;
-                    cantidad = item.Cantidad;
+                    cantidad = cantidad;
                 }
 
                 string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
