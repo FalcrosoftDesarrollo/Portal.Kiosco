@@ -873,12 +873,12 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    App.ProductosCambiados = new List<Producto>();
-
                     var productos = App.ProductosSeleccionados;
 
                     foreach (var producto in productos.Where(x => x.Tipo == "P"))
                     {
+                        producto.KeySecuencia = App.Secuencia;
+                        producto.Cantidad = 1;
                         producto.SwitchAdd = "S";
                         foreach (var precio in producto.Precios)
                         {

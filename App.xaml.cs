@@ -69,6 +69,7 @@ namespace Portal.Kiosco
         public static List<Producto> SnacksWeb = new List<Producto>();
         public static List<Producto> ProductosSeleccionados = new List<Producto>();
         public static List<Producto> ProductosCambiados = new List<Producto>();
+        public static List<Producto> AlimentosBebidasSnacks = new List<Producto>();
         public static BolVenta BolVentaRoom = new BolVenta();
         public static CinefansINI Cashback = new CinefansINI();
         public static Dictionary<string, string> FacturaCompra = new Dictionary<string, string>();

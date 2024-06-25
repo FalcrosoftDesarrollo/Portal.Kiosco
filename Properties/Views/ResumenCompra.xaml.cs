@@ -183,7 +183,6 @@ namespace Portal.Kiosco.Properties.Views
             string secuencia = "";
             #endregion
 
-            //Validar secuencia y asignar valores
             App.TipoCompra = "V";
             secuencia = App.Secuencia;
             List<RetailSales> ListCarritoR = new List<RetailSales>();
@@ -191,7 +190,6 @@ namespace Portal.Kiosco.Properties.Views
 
             if (secuencia != null)
             {
-                //Obtener productos carrito de compra
                 lc_secsec = Convert.ToDecimal(secuencia);
                 using (var context = new DataDB(config))
                 {
@@ -242,21 +240,22 @@ namespace Portal.Kiosco.Properties.Views
                 GenerateResumenCategoria("Gafas", "Gafas", App.PrecioUnitario, App.CantidadGafas.ToString(), (App.CantidadGafas * App.PrecioUnitario));
             }
 
+            
             totalcombos += 0;
 
             var combos = ListCarritoR;
 
             var combosAgrupados = combos.GroupBy(c => c.KeyProducto);
 
+            
             foreach (var grupoCombos in combosAgrupados)
             {
                 foreach (var item in grupoCombos)
                 {
-                    cantidad += 1;
+                    cantidad = item.Cantidad;
                     codigo = item.KeyProducto;
                     nombre = item.Descripcion;
                     precio = item.Precio;
-                    cantidad = cantidad;
                 }
 
                 string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
