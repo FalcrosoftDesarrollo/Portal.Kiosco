@@ -87,7 +87,7 @@
     "MinDifConf": "0", //60
     "CantProductos": "99",
     "CantSillasBol": "10",
-    "CodMedioPago": "21",
+    "CodMedioPago": "20",
     "CodMedioPagoCB": "2",
     "VistasCF": "12",
     "MessageException": "Error en proceso, por favor vuelve a intentarlo o comunicate con el administador del sitio - ",

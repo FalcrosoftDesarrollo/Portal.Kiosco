@@ -114,18 +114,18 @@
                 <Border BorderThickness="0,1,0,1" BorderBrush="Black">
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock Text="Subtotal: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Subtotal: 8%" FontWeight="Bold" x:Name="ImpConsumo" HorizontalAlignment="Left"/>
                             <TextBlock Text="Subtotal: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <!--<TextBlock x:Name="IVAPorcentaje" Text="IVA: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>-->
-                            <TextBlock x:Name="ImpConsumo" Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <!--<TextBlock x:Name="ImpConsumo" Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>-->
                         </StackPanel>
 
                         <StackPanel Margin="30,0,30,0"/>
 
                         <StackPanel >
-                            <TextBlock Text="$0" FontWeight="Bold" Name="subtotal" HorizontalAlignment="Left"/>
+                            <TextBlock Text="$0" FontWeight="Bold" Name="TotalImp" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0" FontWeight="Bold" Name="IVA" HorizontalAlignment="Left"/>
-                            <TextBlock Text="$0" FontWeight="Bold" Name="TotalImp"  HorizontalAlignment="Left"/>
+                            <!--<TextBlock Text="$0" FontWeight="Bold" Name="TotalImp"  HorizontalAlignment="Left"/>-->
                             <StackPanel Orientation="Horizontal" Margin="20,5,5,5">
                                 <TextBlock Text="TOTAL:" FontWeight="Bold" HorizontalAlignment="Left"/>
                                 <TextBlock Text="$0" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>

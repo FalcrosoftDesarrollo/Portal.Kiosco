@@ -30,7 +30,7 @@ namespace Portal.Kiosco.Properties.Views
             var diasel = App.DiaSeleccionado;
             var fechasel = App.FechaSeleccionada;
             string horaMilitar = App.Pelicula.HoraMilitar;
-            string horaFormateada = horaMilitar.Insert(2, ":");
+            string horaFormateada = horaMilitar == null ? "" : horaMilitar.Insert(2, ":");
             NomHora.Text = horaFormateada;
             FechaFac.Text = DateTime.Now.ToString();
             Sucursal.Text = App.DirEmpresa;
@@ -182,17 +182,17 @@ namespace Portal.Kiosco.Properties.Views
                     cantidad = item.Cantidad;
                 }
 
-                //string totalString = TotalFac.Text.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
-                //decimal totalAnterior = decimal.Parse(totalString);
-                //decimal nuevoTotal = totalAnterior + precio;
+                string totalString = TotalFac.Text.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
+                decimal totalAnterior = decimal.Parse(totalString);
+                decimal nuevoTotal = totalAnterior + precio;
 
-                //decimal total = nuevoTotal * cantidad;
-                //totalcombos += total;
+                decimal total = nuevoTotal * cantidad;
+                totalcombos += total;
 
-                //GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
+                GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
-            //TotalFac.Text = totalcombos.ToString("C0");
+            TotalFac.Text = totalcombos.ToString("C0");
         }
 
         private void GenerateResumenCategoria(string categoria, string nombre, decimal valor, string cantidad, decimal total)
@@ -257,7 +257,7 @@ namespace Portal.Kiosco.Properties.Views
                 grid.Children.Add(border);
             }
 
-            //ContenedorFac.Children.Add(grid);
+            ContenedorFac.Children.Add(grid);
         }
 
         public string buscarNombre(List<Producto> productos, Decimal Codigo)

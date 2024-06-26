@@ -112,6 +112,8 @@ namespace Portal.Kiosco
         public static string NumSala { get; set; }
         public static string DiaSeleccionado { get; set; }
 
+        public static string EstadoScore { get; set; }
+
         public static string FechaSeleccionada { get; set; }
 
         public string TiempoRestanteGlobal
@@ -1203,7 +1205,7 @@ namespace Portal.Kiosco
 
                 ob_intvta.PagoEfectivo = 0;
                 ob_intvta.ClienteFrecuente = lc_barclf;
-
+               
                 //Generar y encriptar JSON para servicio
                 lc_srvpar = ob_fncgrl.JsonConverter(ob_intvta);
                 lc_srvpar = lc_srvpar.Replace("puntoVenta", "PuntoVenta");
@@ -1313,6 +1315,9 @@ namespace Portal.Kiosco
                                     //Adicionar y guardar registro a tabla
                                     transaction.TransactionSales.Add(transactionSales);
                                     transaction.SaveChanges();
+
+                                    App.EstadoScore = "1";
+
                                 }
 
                                 //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -1339,22 +1344,21 @@ namespace Portal.Kiosco
                                 {
                                     //Validar impoconsumo 1
                                     if (ob_diclst["TipoImpuesto_1"].ToString().Contains("8%"))
-                                        Impuesto_1 = Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2);
+                                        App.IVC = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2));
 
                                     //Validar iva 1
                                     if (ob_diclst["TipoImpuesto_1"].ToString().Contains("19%"))
-                                        Impuesto_2 = Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2);
+                                        App.IVA = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2));
                                 }
 
                                 if (ob_diclst["Impuesto_2"].ToString() != "0")
                                 {
                                     //Validar impoconsumo 1
                                     if (ob_diclst["TipoImpuesto_2"].ToString().Contains("8%"))
-                                        Impuesto_1 = Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2);
-
+                                        App.IVC = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2));
                                     //Validar iva 1
                                     if (ob_diclst["TipoImpuesto_2"].ToString().Contains("19%"))
-                                        Impuesto_2 = Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2);
+                                        App.IVA = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2));
                                 }
 
                                 CashBack_Acumulado = Math.Round(Convert.ToDecimal(ob_diclst["CashBack_Acumulado"].ToString()), 2);
@@ -1391,7 +1395,7 @@ namespace Portal.Kiosco
                                     //Adicionar y guardar registro a tabla
                                     transaction.TransactionSales.Add(transactionSales);
                                     transaction.SaveChanges();
-
+                                    App.EstadoScore = "0";
                                     try
                                     {
                                         //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -1765,9 +1769,21 @@ namespace Portal.Kiosco
 
                 if (pr_datpro.Tipo == "C")
                 {
-                    for (int i = 0; i < 4; i++)
-                    {
+
+                    if (pr_datpro.Cantidad1 > 0) { 
                         RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_1, pr_datpro.Check1, pr_datpro.Check11, pr_datpro.Check111, pr_datpro.Check1111);
+                    }
+                    if (pr_datpro.Cantidad2 > 0)
+                    {
+                        RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_2, pr_datpro.Check2, pr_datpro.Check22, pr_datpro.Check222, pr_datpro.Check2222);
+                    }
+                    if (pr_datpro.Cantidad3 > 0)
+                    {
+                        RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_3, pr_datpro.Check3, pr_datpro.Check33, pr_datpro.Check333, pr_datpro.Check3333);
+                    }
+                    if (pr_datpro.Cantidad4 > 0)
+                    {
+                        RetailDet(Convert.ToDecimal(lc_secsec), App.IdRetail, pr_datpro.ProCategoria_4, pr_datpro.Check4, pr_datpro.Check44, pr_datpro.Check444, pr_datpro.Check4444);
                     }
                 }
 

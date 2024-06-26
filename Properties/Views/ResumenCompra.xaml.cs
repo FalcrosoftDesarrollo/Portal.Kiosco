@@ -122,6 +122,7 @@ namespace Portal.Kiosco.Properties.Views
         private Thread monitorThread;
         private void StartMonitoringDatafono()
         {
+            
             monitorThread = new Thread(() =>
             {
                 while (true)
@@ -143,14 +144,16 @@ namespace Portal.Kiosco.Properties.Views
                 }
             });
 
-            if (App.ResponseDatafono != "00" && App.ResponseDatafono != null)
-            {
-                monitorThread.Suspend();
-                return;
-            }
+            //if (App.ResponseDatafono != "00" && App.ResponseDatafono != null)
+            //{
+            //    monitorThread.Suspend();
+            //    return;
+            //}
 
             monitorThread.IsBackground = true;
             monitorThread.Start();
+           
+
         }
 
         private async void btnPagarCash_Click(object sender, RoutedEventArgs e)

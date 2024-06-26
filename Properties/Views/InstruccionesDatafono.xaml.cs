@@ -13,7 +13,7 @@ namespace Portal.Kiosco.Properties.Views
         private bool isThreadActive = true;
         private System.Timers.Timer timer;
 
-       
+
 
         public InstruccionesDatafono()
         {
@@ -31,7 +31,7 @@ namespace Portal.Kiosco.Properties.Views
 
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-             
+
             Thread thread = new Thread(() =>
             {
                 while (isThreadActive)
@@ -68,64 +68,71 @@ namespace Portal.Kiosco.Properties.Views
 
         public void LLamadoDatafono()
         {
-            var subtotal = Convert.ToInt64(Convert.ToInt64(App.TotalPagar) * 0.19);
-            var IAC = Convert.ToInt64(Convert.ToInt64(App.TotalPagar) * 0.08);
-            var total = Convert.ToInt64(App.TotalPagar) ;
-            App.IVC = IAC.ToString();
-            App.IVA = subtotal.ToString();
-            var responseSection = "";
 
-
-            String Trama = "01," + total.ToString() + "," + subtotal + "," + App.PuntoVenta + "," + App.Secuencia + ", 0 ,"+ IAC + ",KIOSCO,0,0,";
-            
-            //var respuesta = App.RunProgramAndWait(Trama);
-
-            //int start = respuesta.IndexOf("Response:");
-
-            //int end = respuesta.IndexOf("*", start);
-
-            //if (start != -1 && end != -1)
-            //{ 
-            //    responseSection = respuesta.Substring(start, end - start);
-            //    Console.WriteLine(responseSection);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-
-            //if (responseSection.Replace("Response:","").Substring(0, 3).Replace(",", "") == "00")
-            //{
-                Producto producto = new Producto
-                {
-                    TipoCompra = App.TipoCompra,
-                    KeySecuencia = App.Secuencia,
-                    SwtVenta = "V",
-                    SwitchCashback = "S",
-                    Valor = App.TotalPagar,
-                };
+            Producto producto = new Producto
+            {
+                TipoCompra = App.TipoCompra,
+                KeySecuencia = App.Secuencia,
+                SwtVenta = "V",
+                SwitchCashback = "N",
+                Valor = App.TotalPagar,
+            };
 
 
             App.Payment(producto);
 
-            //if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
+            //if (App.EstadoScore == "0")
             //{
-            //    MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //else
-            //{
-            //App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
+            //    var subtotal = "0";
+            //    var IAC = "0";
+            //    var total = Convert.ToInt64(App.TotalPagar);
+
+            //    subtotal = App.IVA;
+            //    IAC = App.IVC;
+
+
+            //    var responseSection = "";
+
+
+            //    String Trama = "01," + total.ToString() + "," + subtotal + "," + App.PuntoVenta + "," + App.Secuencia + ", 0 ," + IAC + ",KIOSCO,0,0,";
+
+            //    var respuesta = App.RunProgramAndWait(Trama);
+
+            //    int start = respuesta.IndexOf("Response:");
+
+            //    int end = respuesta.IndexOf("*", start);
+
+            //    if (start != -1 && end != -1)
+            //    {
+            //        responseSection = respuesta.Substring(start, end - start);
+            //        App.respuestagenerica = responseSection;
+            //        Console.WriteLine(responseSection);
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+
+            //    if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
+            //    {
+            //        MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //        this.Close();
+            //    }
+            //    else
+            //    {
+            //        App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
             //        var openWindows = new BoletasGafasAlimentos();
             //        openWindows.Show();
             //        this.Close();
-                //}
+            //    }
 
-           
             //}
             //else 
-            //{ 
+            //{
+            //    MessageBox.Show("Error al procesar el pago en SCORE" + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             //    this.Close();
-            //}   
+            //}
+
         }
 
         private bool ComprobarTiempo()
