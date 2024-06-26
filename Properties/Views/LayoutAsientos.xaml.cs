@@ -21,7 +21,7 @@ namespace Portal.Kiosco.Properties.Views
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
         public static string[] sillasSeleccionadasArray = new string[10];
-        private int sillasSeleccionadas = 0; 
+        private int sillasSeleccionadas = 0;
         private bool isError;
         public LayoutAsientos(IOptions<MyConfig> config)
         {
@@ -31,7 +31,7 @@ namespace Portal.Kiosco.Properties.Views
                 var fecha = App.Pelicula.FechaSel;
                 InitializeComponent();
                 sillasSeleccionadasArray = new string[10];
-        
+
                 this.config = config;
                 ContenedorSala.Children.Clear();
                 sillasSeleccionadas = 0;
@@ -48,12 +48,12 @@ namespace Portal.Kiosco.Properties.Views
                     lblnombre.Content = "¡HOLA INVITADO!";
                 }
 
-                
+
 
                 lblSala.Content = App.Pelicula.numeroSala;
                 lblNombrePelicula.Content = App.Pelicula.TituloOriginal;
                 FechaImpresion(App.Pelicula.FechaSel);
-                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));              
+                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));
                 lblHora.Content = App.Pelicula.HoraUsuario;
 
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
@@ -77,16 +77,16 @@ namespace Portal.Kiosco.Properties.Views
 
 
         public static string FormatearFecha(string fecha)
-        {    
+        {
             DateTime fechaDateTime = DateTime.ParseExact(fecha, "yyyyMMdd", CultureInfo.InvariantCulture);
 
             string fechaFormateada = fechaDateTime.ToString("MMM dd", CultureInfo.InvariantCulture);
-            
+
             return fechaFormateada;
         }
-       
 
-        public static void FechaImpresion (string fechaImpresion)
+
+        public static void FechaImpresion(string fechaImpresion)
         {
 
             string fechaString = fechaImpresion;
@@ -147,7 +147,7 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             var pelicula = App.Peliculas.FirstOrDefault(x => x.Id == App.Pelicula.Id);
-           
+
 
             if (isError == false)
             {
@@ -523,20 +523,48 @@ namespace Portal.Kiosco.Properties.Views
 
                     var tipozona = App.TipoSilla.Replace("_", " ");
 
+
                     if (ubicacion.TipoSilla == "pasillo")
                     {
                         border.Visibility = Visibility.Hidden;
                     }
                     else
                     {
-                        switch (ubicacion.EstadoSilla)
+                        if (ubicacion.TipoSilla.ToLower() == tipozona.ToLower())
                         {
-                            case "S":
-                                if (ubicacion.TipoSilla == "Discapacitado")
-                                {
-                                    border.Background = Brushes.Blue;
+
+                            switch (ubicacion.EstadoSilla)
+                            {
+                                case "S":
+                                    if (ubicacion.TipoSilla == "Discapacitado")
+                                    {
+                                        border.Background = Brushes.Blue;
+                                        label.Content = lc_valmos;
+                                        label.Background = Brushes.Blue;
+                                        label.Foreground = Brushes.White;
+
+                                        label.FontSize = 14;
+                                        label.FontWeight = FontWeights.Bold;
+
+                                        label.HorizontalAlignment = HorizontalAlignment.Center;
+                                        label.VerticalAlignment = VerticalAlignment.Center;
+                                        border.Child = label;
+
+                                    }
+                                    else
+                                    {
+                                        button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
+                                        button.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
+                                        button.Foreground = Brushes.Black;
+                                        border.Child = button;
+                                    }
+
+
+                                    break;
+                                case "B":
+                                    border.Background = Brushes.Red;
                                     label.Content = lc_valmos;
-                                    label.Background = Brushes.Blue;
+                                    label.Background = Brushes.Red;
                                     label.Foreground = Brushes.White;
 
                                     label.FontSize = 14;
@@ -545,67 +573,59 @@ namespace Portal.Kiosco.Properties.Views
                                     label.HorizontalAlignment = HorizontalAlignment.Center;
                                     label.VerticalAlignment = VerticalAlignment.Center;
                                     border.Child = label;
+                                    break;
+                                case "R":
+                                    border.Visibility = Visibility.Hidden;
+                                    break;
+                                case "O":
+                                    border.Background = Brushes.Yellow;
+                                    label.Content = lc_valmos;
+                                    label.Background = Brushes.Yellow;
+                                    label.Foreground = Brushes.Black;
 
-                                }
-                                else
-                                {
-                                    button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
-                                    button.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
+                                    label.FontSize = 14;
+                                    label.FontWeight = FontWeights.Bold;
+
+                                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                                    label.VerticalAlignment = VerticalAlignment.Center;
+                                    border.Child = label;
+                                    break;
+                                case "X":
+                                    button.Background = Brushes.Green;
+                                    button.BorderBrush = Brushes.Green;
                                     button.Foreground = Brushes.Black;
                                     border.Child = button;
-                                }
+                                    break;
+                                default:
+                                    border.Background = Brushes.Red;
+                                    label.Content = lc_valmos;
+                                    label.Background = Brushes.Red;
+                                    label.Foreground = Brushes.White;
 
+                                    label.FontSize = 14;
+                                    label.FontWeight = FontWeights.Bold;
 
-                                break;
-                            case "B":
-                                border.Background = Brushes.Red;
-                                label.Content = lc_valmos;
-                                label.Background = Brushes.Red;
-                                label.Foreground = Brushes.White;
-
-                                label.FontSize = 14;
-                                label.FontWeight = FontWeights.Bold;
-
-                                label.HorizontalAlignment = HorizontalAlignment.Center;
-                                label.VerticalAlignment = VerticalAlignment.Center;
-                                border.Child = label;
-                                break;
-                            case "R":
-                                border.Visibility = Visibility.Hidden;
-                                break;
-                            case "O":
-                                border.Background = Brushes.Yellow;
-                                label.Content = lc_valmos;
-                                label.Background = Brushes.Yellow;
-                                label.Foreground = Brushes.Black;
-
-                                label.FontSize = 14;
-                                label.FontWeight = FontWeights.Bold;
-
-                                label.HorizontalAlignment = HorizontalAlignment.Center;
-                                label.VerticalAlignment = VerticalAlignment.Center;
-                                border.Child = label;
-                                break;
-                            case "X":
-                                button.Background = Brushes.Green;
-                                button.BorderBrush = Brushes.Green;
-                                button.Foreground = Brushes.Black;
-                                border.Child = button;
-                                break;
-                            default:
-                                border.Background = Brushes.Red;
-                                label.Content = lc_valmos;
-                                label.Background = Brushes.Red;
-                                label.Foreground = Brushes.White;
-
-                                label.FontSize = 14;
-                                label.FontWeight = FontWeights.Bold;
-
-                                label.HorizontalAlignment = HorizontalAlignment.Center;
-                                label.VerticalAlignment = VerticalAlignment.Center;
-                                border.Child = label;
-                                break;
+                                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                                    label.VerticalAlignment = VerticalAlignment.Center;
+                                    border.Child = label;
+                                    break;
+                            }
                         }
+                        else
+                        {
+                            border.Background = Brushes.Red;
+                            label.Content = lc_valmos;
+                            label.Background = Brushes.Red;
+                            label.Foreground = Brushes.White;
+
+                            label.FontSize = 14;
+                            label.FontWeight = FontWeights.Bold;
+
+                            label.HorizontalAlignment = HorizontalAlignment.Center;
+                            label.VerticalAlignment = VerticalAlignment.Center;
+                            border.Child = label;
+                        }
+
                     }
 
                     ContenedorSala.Rows = bolVenta.FilSala;
