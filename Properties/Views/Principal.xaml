@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
          
         mc:Ignorable="d"
-        Title="Principal" Height="1080" Width="1920"
+        Title="Principal" Height="1920" Width="1080"
         Background="White"
         WindowState="Maximized"
         WindowStyle="None"
@@ -35,36 +35,53 @@
     <Border Name="gridPrincipal">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition  />
+                <RowDefinition Height="607" />
+                <RowDefinition Height="463"/>
+                <RowDefinition Height="715.29"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Width="906" Height="273" VerticalAlignment="Bottom">
+            <Border Grid.Row="1">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="205"/>
                         <RowDefinition/>
-                        <RowDefinition Height="108"/>
-                        <RowDefinition Height="100"/>
                     </Grid.RowDefinitions>
+            
 
-                    <Label VerticalAlignment="Top" FontSize="48" FontFamily="Myanmar Khyay" Content="Bienvenido ¿Qué quieres hacer hoy?" HorizontalContentAlignment="Center"/>
-
-                    <Border Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="400" Height="100" Background="#F30613" CornerRadius="10">
-                        <Button Click="btnBoleteria_Click" Name="btnBoleteria" Background="Transparent" BorderThickness="0" Content="COMPRAR BOLETAS" Foreground="White" FontFamily="Myanmar Khyay" FontSize="32" Width="400" Height="100" />
-
-                        <!--<Border.Effect>
-                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                        </Border.Effect>-->
+                    <Border VerticalAlignment="Top" Width="519" Height="130">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="¡Bienvenido(a)!" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                            <TextBlock Text="¿Qué quieres hacer hoy?" FontSize="48"></TextBlock>
+                        </StackPanel>
                     </Border>
 
-                    <Border Grid.Row="2" VerticalAlignment="Bottom"  HorizontalAlignment="Right" Width="400" Height="100" Background="#F30613" CornerRadius="10">
-                        <Button Click="btnConfiteria_Click" Name="btnConfiteria" Background="Transparent" BorderThickness="0" Content="COMPRAR CONFITERÍA" Foreground="White" FontFamily="Myanmar Khyay" FontSize="32" Width="400" Height="100" />
+                    
+
+                    <Border Grid.Row="1" Height="258" VerticalAlignment="Top">
+                        <Grid>
+                            <Border Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="100" Background="#F30613" CornerRadius="10">
+                                <Button Click="btnBoleteria_Click" Name="btnBoleteria" Background="Transparent" BorderThickness="0" Content="COMPRAR BOLETAS" Foreground="White" FontFamily="Myanmar Khyay" FontSize="32" Width="400" Height="100" />
+
+                            </Border>
+
+                            <Border Grid.Row="2" VerticalAlignment="Bottom"  HorizontalAlignment="Center" Width="400" Height="100" Background="#F30613" CornerRadius="10">
+                                <Button Click="btnConfiteria_Click" Name="btnConfiteria" Background="Transparent" BorderThickness="0" Content="COMPRAR CONFITERÍA" Foreground="White" FontFamily="Myanmar Khyay" FontSize="32" Width="400" Height="100" />
+                            </Border>
+                        </Grid>
+                        
                     </Border>
+                    
+                    
                 </Grid>
+                    
+                    
+                    
             </Border>
-
-            <Border Grid.Row="1">
-                <Image Width="212.55" Height="85.29" Stretch="Fill" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logo-procinal1.png" VerticalAlignment="Top" Margin="0,177,0,0"/>
+            <Border Grid.Row="2">
+                <Border VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Image Width="212.55" Height="85.29" Stretch="Fill" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logo-procinal1.png" VerticalAlignment="Top"/>
+                </Border>
             </Border>
         </Grid>
     </Border>
