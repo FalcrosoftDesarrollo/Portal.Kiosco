@@ -21,6 +21,12 @@
     <Compile Update="Properties\Views\LayoutAsientos.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Properties\Views\PopUpComboDeluxe.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Views\PopUpCombos.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Views\Principal.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -42,6 +48,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\LayoutAsientos.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\PopUpComboDeluxe.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\PopUpCombos.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\Principal.xaml">

@@ -36,7 +36,7 @@ namespace Portal.Kiosco.Properties.Views
             NomEmpresa2.Text = App.NomEmpresa;
             TotalImp.Text = App.IVC == null ? "$0" : "$ " + App.IVC ;
             IVA.Text = App.IVA == null ? "$0" : "$ " + App.IVA;
-            factura.Text = App.Secuencia;
+            //factura.Text = App.Secuencia;
             Valorpagado.Text = TotalFac.Text;
             var combos = App.ProductosSeleccionados;
             NomPelicula.Text = App.Pelicula.TituloOriginal;
@@ -48,7 +48,7 @@ namespace Portal.Kiosco.Properties.Views
 
             if (App.TipoCompra == "B")
             {
-                IVAPorcentaje.Visibility = Visibility.Collapsed;
+                //IVAPorcentaje.Visibility = Visibility.Collapsed;
                 ImpConsumo.Visibility = Visibility.Collapsed;
             }
             else

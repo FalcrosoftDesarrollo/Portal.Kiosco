@@ -130,8 +130,8 @@ namespace Portal.Kiosco.Properties.Views
 
                         Image nuevaImagen = new Image
                         {
-                            Width = 360,
-                            Height = 444,
+                            Width = 273,
+                            Height = 379,
                             Stretch = Stretch.Fill,
                             Source = new BitmapImage(new Uri(pelicula.Imagen))
                         };

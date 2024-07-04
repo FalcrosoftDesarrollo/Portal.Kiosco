@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="LayoutAsientos" Height="1080" Width="1920"
+        Title="LayoutAsientos" Height="1920" Width="1080"
         Background="White"
         WindowStyle="None" 
         WindowState="Maximized" 
@@ -108,8 +108,8 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
+                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="White" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
                                     <Run Text="SALIR"/>
                                 </TextBlock>
@@ -154,94 +154,74 @@
                         
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="143"/>
-                                <RowDefinition Height="609"/>
+                                <RowDefinition Height="145"/>
+                                <RowDefinition Height="160"/>
+                                <RowDefinition Height="489"/>
                                 <RowDefinition Height="34"/>
-                                <RowDefinition Height="89"/>
+                                <RowDefinition Height="524"/>
+                                <RowDefinition Height="263"/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Row="0">
+                            <Border>
+                                <TextBlock Text="¿Dónde te quieres sentar?" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontFamily="Myanmar Khyay" />
+                            </Border>
+                            <Border Grid.Row="1">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="530"/>
-                                        <ColumnDefinition Width="0"/>
+                                        <ColumnDefinition Width="252"/>
                                         <ColumnDefinition/>
-                                        <ColumnDefinition Width="54"/>
+                                        <ColumnDefinition Width="262"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Border Grid.Column="2" Background="#D9D9D9" Height="100" CornerRadius="200,200, 0 ,0" Margin="0,32,0,33" BorderThickness="10,30,10,0" BorderBrush="Black">
+                                    <Border Grid.Column="1" Background="#D9D9D9" Height="100" CornerRadius="200,200, 0 ,0" VerticalAlignment="Top" BorderThickness="10,30,10,0" BorderBrush="Black">
                                         <Label FontFamily="Myanmar Khyay" FontSize="32" Content="P A N T A L L A" HorizontalAlignment="Center" />
                                     </Border>
                                 </Grid>
                             </Border>
                             
-                            <Border Grid.Row="1">
+                            <Border Grid.Row="2">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="380"/>
-                                        <ColumnDefinition Width="54"/>
-                                        <ColumnDefinition Width="1300"/>
+                                        <ColumnDefinition Width="53"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="53"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Border Grid.Column="1">
-                                        <Grid Margin="0,0,0,0">
+                                        <UniformGrid Name="ContenedorSala" Rows="9" Columns="16"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="4">
+                                <Grid>
+                                   
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="82"/>
+                                        <ColumnDefinition Width="353"/>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="1">
+                                        <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="80"/>
-                                                <RowDefinition Height="40"/>
-                                                <RowDefinition Height="40"/>
-                                                <RowDefinition Height="60"/>
                                                 <RowDefinition Height="30"/>
-                                                <RowDefinition Height="260.5" />
+                                                <RowDefinition />
                                                 <RowDefinition Height="105.5"/>
-                                                <RowDefinition/>
                                             </Grid.RowDefinitions>
 
-                                            <Border Grid.Row="0">
-                                                <Grid>
-                                                    <Label Content="Nombre pelicula" Name="lblNombrePelicula" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                                </Grid>
-                                            </Border>
+                                            
 
-                                            <Border Grid.Row="1">
-                                                <Grid>
-                                                    <Label Content="Funcion Seleccionada" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                                </Grid>
-                                            </Border>
-
-                                            <Border Grid.Row="2">
-                                                <Grid>
-                                                    <UniformGrid Columns="3" Grid.Row="2" VerticalAlignment="Center">
-                                                        <Border CornerRadius="10" Background="#F5F5F5">
-                                                            <Label  Name="lblFecha" FontFamily="Myanmar Khyay" FontSize="16" Content="Funcion" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                        </Border>
-
-                                                        <Border CornerRadius="10" Background="#F5F5F5">
-                                                            <Label Name="lblHora" FontFamily="Myanmar Khyay" FontSize="16" Content="Hora" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                        </Border>
-
-                                                        <Border CornerRadius="10" Background="#F5F5F5">
-                                                            
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                                <Label Content="Sala:" FontFamily="Myanmar Khyay" FontSize="16" />
-                                                                <Label Name="lblSala" FontFamily="Myanmar Khyay" FontSize="16" Content="Sala" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                            </StackPanel>
-                                                        </Border>
-                                                    </UniformGrid>
-                                                </Grid>
-                                            </Border>
-
-                                            <Border Grid.Row="3">
-                                                <Label Content="¿Dónde te quieres sentar?" FontFamily="Myanmar Khyay" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                            </Border>
-
-                                            <Border Grid.Row="4">
+                                            <Border>
                                                 <UniformGrid Columns="2" VerticalAlignment="Center">
-                                                    <Border CornerRadius="10" Background="#F5F5F5">
+                                                    <Border CornerRadius="10" Background="#F5F5F5" Width="167">
                                                         <Label FontFamily="Myanmar Khyay" FontSize="16" Content="SILLA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </Border>
 
-                                                    <Border CornerRadius="10" Background="#F5F5F5">
+                                                    <Border CornerRadius="10" Background="#F5F5F5" Width="167">
                                                         <Label FontFamily="Myanmar Khyay" FontSize="16" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     </Border>
                                                 </UniformGrid>
@@ -259,104 +239,110 @@
                                             </Border>
                                         </Grid>
                                     </Border>
+                                    <Border Grid.Column="3" VerticalAlignment="Top" Grid.RowSpan="3">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="68"/>
+                                                <RowDefinition Height="26"/>
+                                                <RowDefinition Height="68"/>
+                                                <RowDefinition Height="26"/>
+                                                <RowDefinition Height="68"/>
+                                                <RowDefinition Height="26"/>
+                                                <RowDefinition Height="68"/>
+                                                <RowDefinition Height="26"/>
 
-                                    <Border Grid.Column="3">
-                                        <UniformGrid Name="ContenedorSala" Rows="9" Columns="16"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition Height="29"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Border Background="#d9d9d9" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
+
+                                                    <Label Grid.Row="1" Width="103" Content="DISPONIBLE" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
+                                                </Grid>
+                                                
+                                            </Border>
+                                            <Border Grid.Row="2" Height="68" VerticalAlignment="Top" Grid.RowSpan="3">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition Height="29"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Border Background="#F30613" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
+
+                                                    <Label Grid.Row="1" Width="115" Content="SELECCIONADO" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
+                                                </Grid>
+                                            </Border>
+                                            <Border Grid.Row="4" Height="68" VerticalAlignment="Top" Grid.RowSpan="3">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition Height="29"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Border Background="#FDD608" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
+
+                                                    <Label Grid.Row="1" Width="115" Content="OCUPADO" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
+                                                </Grid>
+                                            </Border>
+                                            <Border Grid.Row="6"  Height="68" VerticalAlignment="Top" Grid.RowSpan="3">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition Height="29"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Border Background="#05A2FA" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
+
+                                                    <Label Grid.Row="1" Width="179" Content="MOVILIDAD REDUCIDA" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
                                     </Border>
+
+
+                                    <Border Grid.Column="4">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="379"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <Image Width="273" Height="379" Stretch="Fill" Name="imgPelicula" VerticalAlignment="Top"/>
+                                            <Border Grid.Row="1" Width="265">
+                                                <StackPanel>
+                                                    <TextBlock Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="14" FontWeight="Bold" Text="Ghostbusters: Apocalípsis Fantasma" TextWrapping="Wrap" Height="40"/>
+                                                    <TextBlock Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="14" Text="Duración: 115 min" Height="38"/>
+                                                    <TextBlock Name="lblClasificacion" FontFamily="Myanmar Khyay" FontSize="14" Text="Clasificación: 7 años" Height="38"/>
+                                                    <TextBlock Name="lblGenero" FontFamily="Myanmar Khyay" FontSize="14" Text="Género: Aventura, Comedia, Fantasía" Height="38"/>
+                                                </StackPanel>
+                                                    
+                                                   
+                                            </Border>
+
+                                        </Grid>
+                                        
+                                            
+                                    </Border>
+
+
+
+
+
                                 </Grid>
                             </Border>
-                            <Border Grid.Row="3">
+                            <Border Grid.Row="6" Width="374" Height="80" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,96,0">
                                 <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="0*"/>
-                                        <RowDefinition Height="28*"/>
-                                        <RowDefinition Height="45*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="651"/>
-                                        <ColumnDefinition Width="103"/>
-                                        <ColumnDefinition Width="16"/>
-                                        <ColumnDefinition Width="115"/>
-                                        <ColumnDefinition Width="4"/>
-                                        <ColumnDefinition Width="115"/>
-                                        <ColumnDefinition Width="4"/>
-                                        <ColumnDefinition Width="179"/>
-                                        <ColumnDefinition Width="305"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="54"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="1" Height="68" VerticalAlignment="Top" Grid.RowSpan="3">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="29"/>
-                                            </Grid.RowDefinitions>
-
-                                            <Border Background="#d9d9d9" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
-
-                                            <Border Grid.Row="1">
-                                                <Label Width="103" Content="DISPONIBLE" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
-                                            </Border>
-                                        </Grid>
+                                    <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
+                                        <Button Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                     </Border>
 
-                                    <Border Grid.Column="3" Height="68" VerticalAlignment="Top" Grid.RowSpan="3">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="29"/>
-                                            </Grid.RowDefinitions>
-
-                                            <Border Background="#F30613" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
-
-                                            <Border Grid.Row="1">
-                                                <Label Width="115" Content="SELECCIONADO" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-
-                                    <Border Grid.Column="5" Height="68" VerticalAlignment="Top" Grid.RowSpan="3">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="29"/>
-                                            </Grid.RowDefinitions>
-
-                                            <Border Background="#FDD608" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
-
-                                            <Border Grid.Row="1">
-                                                <Label Width="115" Content="OCUPADO" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-
-                                    <Border Grid.Column="7" Height="68" VerticalAlignment="Top" Grid.RowSpan="3">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="29"/>
-                                            </Grid.RowDefinitions>
-
-                                            <Border Background="#05A2FA" HorizontalAlignment="Left" Width="39" Height="39" VerticalAlignment="Top"/>
-
-                                            <Border Grid.Row="1">
-                                                <Label Width="179" Content="MOVILIDAD REDUCIDA" FontSize="12" FontFamily="Myanmar Khyay" HorizontalAlignment="Left" VerticalAlignment="Bottom" HorizontalContentAlignment="Left"></Label>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-
-                                    <Border Grid.Column="9" Width="374" Height="80" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-7,0,0" Grid.RowSpan="3">
-                                        <Grid>
-                                            <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                                <Button Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
-                                            </Border>
-
-                                            <Border Width="180" Height="80" Name="btnSiguiente"  HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                                <Button Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
-                                            </Border>
-                                        </Grid>
+                                    <Border Width="180" Height="80" Name="btnSiguiente"  HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
+                                        <Button Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                     </Border>
                                 </Grid>
                             </Border>

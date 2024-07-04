@@ -102,7 +102,6 @@ namespace Portal.Kiosco.Properties.Views
             return isMainWindowOpen;
         }
 
-
         private Border clickedBorder;
  
         private void tapAlimentos_Click(object sender, RoutedEventArgs e)

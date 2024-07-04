@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="InstruccionesDatafono" Height="1080" Width="1920"
+        Title="InstruccionesDatafono" Height="1920" Width="1080"
         WindowStyle="None" 
         WindowState="Maximized" >
 
@@ -91,14 +91,14 @@
                                         </Path.Triggers>
                                     </Path>
                                 </Canvas>
-                                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding TiempoRestanteGlobal}" FontSize="24" FontFamily="Inter Regular" />
+                                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="24" FontFamily="Inter Regular" />
                             </Grid>
                         </Border>
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Background="Transparent" Click="btnSalir_Click" Name="btnSalir" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
+                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="White" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                            <Button Background="Transparent" Click="btnSalir_Click" Name="btnSalir" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
                                     <Run Text="SALIR"/>
                                 </TextBlock>
@@ -118,12 +118,14 @@
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="129"/>
-                            <RowDefinition Height="130"/>
-                            <RowDefinition />
+                            <RowDefinition Height="245"/>
+                            <RowDefinition Height="230"/>
+                            <RowDefinition Height="746"/>
+                            <RowDefinition Height="280"/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Height="130" TextAlignment="Left" Margin="600,0,529,0">
+                        <TextBlock Grid.Row="1" FontFamily="Myanmar Khyay" FontSize="48" Height="130" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Run  Text="Completa tu pago siguiendo"/>
                             <LineBreak/>
                            
@@ -131,10 +133,22 @@
 
                         </TextBlock>
 
-                        <Border Grid.Row="2" Width="570" Height="543" Background="#F5F5F5" VerticalAlignment="Top" Margin="0,35,0,0" CornerRadius="10">
+                        <Border Grid.Row="2" Width="711" Height="746" Background="#F5F5F5" VerticalAlignment="Top" CornerRadius="10">
                             <Grid>
                                 <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\datafono.png" Width="178" Height="389" />
                             </Grid>
+                        </Border>
+
+                        <Border Grid.Row="3" VerticalAlignment="Bottom">
+                            <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Center">
+                                <TextBlock Text="1. Inserte la tarjeta en el dispositivo" FontFamily="Myanmar Khyay" FontSize="32"/>
+                                <TextBlock Text="2. Seleccione el tipo de cuenta" FontFamily="Myanmar Khyay" FontSize="32"/>
+                                <TextBlock Text="3. Ingrese el PIN de seguridad" FontFamily="Myanmar Khyay" FontSize="32"/>
+                                <TextBlock Text="4. Presione la tecla verde para comenzar" FontFamily="Myanmar Khyay" FontSize="32"/>
+                                <TextBlock Text="5. Confirma con la tecla verde" FontFamily="Myanmar Khyay" FontSize="32"/>
+
+                            </StackPanel>
+
                         </Border>
                     </Grid>
                 </Border>

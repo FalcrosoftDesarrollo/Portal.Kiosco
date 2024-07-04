@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="ResumenCompra" Height="1080" Width="1920"
+        Title="ResumenCompra" Height="1920" Width="1080"
         Background="White"
         WindowStyle="None" 
         WindowState="Maximized" 
@@ -103,8 +103,6 @@
                                     <Run Text="SALIR"/>
                                 </TextBlock>
                             </Button>
-
-                         
                         </Border>
                     </Grid>
                 </Border>
@@ -113,20 +111,20 @@
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="140"/>
+                            <RowDefinition Height="118"/>
                             <RowDefinition Height="15"/>
                             <RowDefinition Height="550"/>
-                            <RowDefinition  Height="60"/>
-                            <RowDefinition  Height="30"/>
-                            <RowDefinition Height="90"/>
+                            <RowDefinition Height="76"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="176"/>
                             <RowDefinition Height="72"/>
                         </Grid.RowDefinitions>
                         
-                        <Border Height="65" VerticalAlignment="Bottom" Margin="647,0,633,0">
+                        <Border Height="65" VerticalAlignment="Bottom">
                             <Label Grid.Row="0" FontSize="48" FontFamily="Myanmar Khyay" Content="Resumen de tu compra" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                         </Border>
 
-                        <Border Grid.Row="2" Width="1600" Margin="160,4,160,7">
+                        <Border Grid.Row="2" Width="980">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="100"/>
@@ -136,14 +134,13 @@
                                 <Border Grid.Row="0">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="245*" />
+                                            <ColumnDefinition Width="459" />
                                             <ColumnDefinition Width="33*"/>
-                                            <ColumnDefinition Width="233"/>
-                                            <ColumnDefinition Width="12" />
-                                            <ColumnDefinition Width="234"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="232"/>
-                                            <ColumnDefinition Width="43"/>
+                                            <ColumnDefinition Width="167"/>
+                                            <ColumnDefinition Width="9" />
+                                            <ColumnDefinition Width="167"/>
+                                            <ColumnDefinition Width="9"/>
+                                            <ColumnDefinition Width="167"/>
                                         </Grid.ColumnDefinitions>
 
                                         <Border Grid.Column="2" Height="59" CornerRadius="10" Background="#F5F5F5" Margin="0,20,0,20">
@@ -163,11 +160,14 @@
                                 <Border Grid.Row="1">
                                     <Grid Grid.Row="0">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="80"/>
-                                            <RowDefinition Height="80"/>
-                                            <RowDefinition Height="310"/>
+                                            <RowDefinition Height="120"/>
+                                            <RowDefinition Height="120"/>
+                                            <RowDefinition Height="240"/>
                                         </Grid.RowDefinitions>
 
+                                        <Border>
+                                            
+                                        </Border>
                                         <WrapPanel Grid.Row="0" x:Name="ContenedorBoletas" Height="50" ></WrapPanel>
                                         <WrapPanel Grid.Row="1" x:Name="ContenedorGafas"  Height="50" ></WrapPanel>
 
@@ -178,13 +178,10 @@
                                 </Border>
                             </Grid>
                         </Border>
+                        
                         <Border Grid.Row="3">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1800"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Width="700" HorizontalAlignment="Right" CornerRadius="10" Background="White" Margin="0,0,0,0">
+                                <Border Width="700" HorizontalAlignment="Right" VerticalAlignment="Bottom" CornerRadius="10" Background="White">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Label Content="TOTAL A PAGAR:" FontFamily="Myanmar Khyay" FontSize="32" Margin="0,0,10,0"/>
                                         <Label  Name="TotalResumen" Content="0" FontFamily="Myanmar Khyay" FontSize="32" FontWeight="Bold"/>
@@ -192,26 +189,15 @@
                                 </Border>
                             </Grid>
                         </Border>
+                        
                         <Border Grid.Row="5">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="354"/>
-                                    <ColumnDefinition Width="154"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="80"/>
-                                </Grid.RowDefinitions>
-
-                                <Border Grid.Column="1" Grid.Row="0" Width="350" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10" Margin="0,0">
+                                <Border Grid.Column="1" Grid.Row="0" Width="350" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10" Margin="0,0,56,0">
                                     <Button Background="Transparent"  Name="btnPagoTarjeta" Click="btnPagoTarjeta_Click" BorderThickness="0" Content="PAGAR CON TARJETA" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>
                                 </Border>
-                                
-                                
 
-                                <Border  Width="350" Height="80" VerticalAlignment="Bottom" Name="borderPagarCash" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                    <Button Background="Transparent" Name="btnPagarCash" Click="btnPagarCash_Click" BorderThickness="0" Content="PAGAR CON CASHBACK" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>
+                                <Border Width="350" Height="80" VerticalAlignment="Bottom" Name="borderPagarCash" HorizontalAlignment="Right" Background="White" CornerRadius="10" BorderThickness="1" BorderBrush="#F30613" Margin="0,0,56,0">
+                                    <Button Background="Transparent" Name="btnPagarCash" Click="btnPagarCash_Click" BorderThickness="0" Content="PAGAR CON CASHBACK" FontSize="24" FontFamily="Myanmar Khyay" Foreground="#F30613"/>
                                 </Border>
                             </Grid>
                         </Border>

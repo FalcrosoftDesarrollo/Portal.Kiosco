@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="SeleccionarFuncion" Height="1080" Width="1920"
+        Title="SeleccionarFuncion" Height="1920" Width="1080"
         WindowStyle="None" 
         WindowState="Maximized" 
         >
@@ -99,7 +99,7 @@
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
+                            <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159">
                                 <TextBlock TextAlignment="Center">
                                     <Run Text="SALIR"/>
                                 </TextBlock>
@@ -119,30 +119,67 @@
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="46"/>
+                            <RowDefinition Height="62"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="69"/>
+                            <RowDefinition Height="379"/>
                             <RowDefinition Height="630"/>
+                            <RowDefinition Height="92"/>
                             <RowDefinition />
+                            <RowDefinition Height="60"/>
                         </Grid.RowDefinitions>
 
-                        <Border Grid.Row="1">
+                        <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label FontSize="48" Content="¿Cuándo la quieres ver?" FontFamily="Myanmar Khyay"/>
+                        </Border>
+
+                        <Border Grid.Row="3">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="360"/>
-                                    <ColumnDefinition Width="190"/>
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="406"/>
+                                    <ColumnDefinition Width="674"/>
                                 </Grid.ColumnDefinitions>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="0" />
-                                </Grid.RowDefinitions>
-
-                                <Border Grid.Row="0" Grid.Column="1"  Width="360" Height="500" VerticalAlignment="Bottom" Margin="0,70,0,70">
-                                    <Grid>
-                                        <Image Width="360" Height="500" Stretch="Fill" Name="imgPelicula"/>
-                                    </Grid>
+                                
+                                <Border>
+                                    <Image Width="273" Height="379" Stretch="Fill" Name="imgPelicula"/>
                                 </Border>
+                                <Border Grid.Column="1">
+                                    <Grid>
+                                        <Border>
+                                            <WrapPanel>
+                                                <StackPanel Height="150" Width="500">
+                                                    <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="24">
+                                                        <TextBlock Text="Ghostbusters: Apocalípsis Fantasma" TextWrapping="Wrap"/>
+                                                    </Label>
+                                                    <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
+                                                    <Label Name="lblClasificacion" FontFamily="Myanmar Khyay" FontSize="24" Content="Clasificación: 7 años" Height="38"/>
+                                                    <Label Name="lblGenero" FontFamily="Myanmar Khyay" FontSize="24" Content="Género: Aventura, Comedia, Fantasía" Height="38"/>
+                                                </StackPanel>
+                                            </WrapPanel>
+                                        </Border>
+
+                                        <Border Grid.Row="1" Width="584" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613" VerticalAlignment="Bottom">
+                                            <WrapPanel Height="100" VerticalAlignment="Top">
+                                                <Image Height="62" Width="74" Margin="25,18"  Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\advertencia.png"/>
+                                                <TextBlock Width="459" Height="69" FontFamily="Inter Mixed" FontSize="20" Foreground="White" VerticalAlignment="Center">
+                                                    <Run Text="Las películas con clasificación +15 y +18 años son "/>
+                                                    <LineBreak/>
+                                                    <Run Text="restrictivas, y deberás presentar el documento de "/>
+                                                    <LineBreak/>
+                                                    <Run Text="identificación para ingresar a la sala."/>
+
+                                                </TextBlock>
+                                            </WrapPanel>
+                                        </Border>
+                                    </Grid>
+                                    
+                                </Border>
+                            </Grid>
+
+                           
+                        </Border>
+                        <Border Grid.Row="4">
+                            <Grid>
                                 <ScrollViewer Grid.Column="3" VerticalScrollBarVisibility="Auto">
                                     <Border >
                                         <Grid>
@@ -153,7 +190,6 @@
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>
 
-                                            <Label FontSize="32" Content="¿Cuándo la quieres ver?" FontFamily="Myanmar Khyay" Grid.Row="0"/>
                                             <ScrollViewer Grid.Row="1"  PanningMode="HorizontalOnly" Margin="6,0,270,0" >
                                                 <WrapPanel VerticalAlignment="Center" Width="971" HorizontalAlignment="Left" x:Name="ContenedorFechas"/>
                                             </ScrollViewer>
@@ -163,10 +199,10 @@
                                                     <Border Height="40" Width="283" HorizontalAlignment="Right" Margin="0,0,25,0" Background="White"/>
                                                 </Border>
 
-                                                <Button Width="135" Height="23" Background="Transparent" FontFamily="Myanmar Khyay" BorderThickness="0" FontSize="14" Content="Ver más fechas"/>
+                                                <!--<Button Width="135" Height="23" Background="Transparent" FontFamily="Myanmar Khyay" BorderThickness="0" FontSize="14" Content="Ver más fechas"/>-->
                                             </WrapPanel>
 
-                                            <Border Grid.Row="3" Width="980" HorizontalAlignment="Left">
+                                            <Border Grid.Row="3" Width="980" HorizontalAlignment="Center">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition />
@@ -277,68 +313,23 @@
                                         </Grid>
                                     </Border>
                                 </ScrollViewer>
-                                
+
                             </Grid>
                         </Border>
-
-                        <Border Grid.Row="2">
+                        <Border Grid.Row="6" Width="374" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,68,0">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="1200" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-
-                                <Border Grid.Column="1">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="175" />
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-
-                                        <Border Grid.Row="0" Margin="31,0,0,0">
-                                            <WrapPanel Margin="0,0,624,0">
-                                                <StackPanel Height="150" Width="500">
-                                                    <Label Name="lblNombre" FontFamily="Myanmar Khyay" FontSize="24">
-                                                        <TextBlock Text="Ghostbusters: Apocalípsis Fantasma" TextWrapping="Wrap"/>
-                                                    </Label>
-                                                    <Label Name="lblDuracion" FontFamily="Myanmar Khyay" FontSize="24" Content="Duración: 115 min" Height="38"/>
-                                                    <Label Name="lblClasificacion" FontFamily="Myanmar Khyay" FontSize="24" Content="Clasificación: 7 años" Height="38"/>
-                                                    <Label Name="lblGenero" FontFamily="Myanmar Khyay" FontSize="24" Content="Género: Aventura, Comedia, Fantasía" Height="38"/>
-                                                </StackPanel>
-                                            </WrapPanel>
-                                        </Border>
-
-                                        <Border Grid.Row="1" Width="835" HorizontalAlignment="Left" CornerRadius="16" Background="#F30613" >
-                                            <WrapPanel Height="100" VerticalAlignment="Top">
-                                                <Image Height="62" Width="74" Margin="25,18"  Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\advertencia.png"/>
-                                                <TextBlock Width="705" FontFamily="Inter Mixed" FontSize="20" Foreground="White" VerticalAlignment="Center">
-                                                    <Run Text="Las películas con clasificación +15 y +18 años son restrictivas,"/>
-                                                    <LineBreak/>
-                                                    <Run Text="y deberás presentar el documento de identificación para ingresar a la sala."/>
-                                                </TextBlock>
-                                            </WrapPanel>
-                                        </Border>
-                                    </Grid>
+                                <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
+                                    <Button x:Name="btnVolver" Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
                                 </Border>
 
-                                <Border Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Grid/>
-                                </Border>
-
-                                <Border Grid.Column="2" Width="374" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,54,55">
-                                    <Grid>
-                                        <Border  Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                            <Button x:Name="btnVolver" Click="btnVolver_Click" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
-                                        </Border>
-
-                                        <Border Width="180" Name="borSiguente"  Visibility="Hidden"  Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                            <Button x:Name="btnSiguiente" Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
-                                        </Border>
-                                    </Grid>
+                                <Border Width="180" Name="borSiguente"  Visibility="Hidden"  Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
+                                    <Button x:Name="btnSiguiente" Click="btnSiguiente_Click" Background="Transparent" BorderThickness="0" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
                                 </Border>
                             </Grid>
                         </Border>
+
+
+
                     </Grid>
                 </Border>
             </Grid>

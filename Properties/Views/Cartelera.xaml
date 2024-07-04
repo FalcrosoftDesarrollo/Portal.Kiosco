@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="Cartelera" Height="1080" Width="1920"
+        Title="Cartelera" Height="1920" Width="1080"
         WindowStyle="None" 
         WindowState="Maximized" 
         >
@@ -93,14 +93,14 @@
                                         </Path.Triggers>
                                     </Path>
                                 </Canvas>
-                                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding TiempoRestanteGlobal}" FontSize="24" FontFamily="Inter Regular" />
+                                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"  FontSize="24" FontFamily="Inter Regular" />
                             </Grid>
                         </Border>
 
-                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159">
+                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#FFFFFF" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                            <Button Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="159">
                                 <TextBlock TextAlignment="Center">
                                     <Run Text="SALIR"/>
                                 </TextBlock>
@@ -122,22 +122,16 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="152"/>
                             <RowDefinition />
+                            <RowDefinition Height="261"/>
                         </Grid.RowDefinitions>
                         <Border Height="65" Width="450">
                             <Label Content="¿Qué quieres ver?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myanmar Khyay" FontSize="48"/>
                         </Border>
 
-                        <Border Grid.Row="1" Width="1800" >
-                            <ScrollViewer  PanningMode="Both" 
-                              PreviewMouseDown="ScrollViewer_PreviewMouseDown" 
-                              PreviewMouseUp="ScrollViewer_PreviewMouseUp"
-                              PreviewTouchDown="ScrollViewer_PreviewTouchDown"
-                              PreviewTouchUp="ScrollViewer_PreviewTouchUp"
-                              PreviewMouseMove="ScrollViewer_PreviewMouseMove" Margin="0,-27,0,0">
-                                <WrapPanel x:Name="ContenedorPeliculas">
+                        <Border Grid.Row="1" Width="987">
+                            <WrapPanel x:Name="ContenedorPeliculas">
 
-                                </WrapPanel>
-                            </ScrollViewer>
+                            </WrapPanel>
                         </Border>
                     </Grid>
                 </Border>

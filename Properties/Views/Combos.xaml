@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="Combos" Height="1080" Width="1920"
+        Title="Combos" Height="1920" Width="1080"
         Background="White"
         WindowStyle="None" 
         WindowState="Maximized" 
@@ -121,21 +121,22 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="199"/>
                             <RowDefinition Height="567"/>
-                            <RowDefinition Height="174"/>
+                            <RowDefinition Height="565"/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="390"/>
-                                <ColumnDefinition Width="274"/>
+                                <ColumnDefinition Width="63"/>
+                                <ColumnDefinition Width="229"/>
                                 <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="275"/>
+                                <ColumnDefinition Width="229"/>
                                 <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="274"/>
+                                <ColumnDefinition Width="229"/>
                                 <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="274"/>
+                                <ColumnDefinition Width="229"/>
                                 <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="391"/>
+                                <ColumnDefinition Width="64"/>
                             </Grid.ColumnDefinitions>
 
                             <Border Grid.Column="1">
@@ -197,8 +198,8 @@
 
                         <Border Grid.Row="1">
                             <Grid>
-                                <ScrollViewer PanningMode="Both" HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Width="1645" >
-                                    <WrapPanel x:Name="imagenes" Grid.Column="1" Grid.ColumnSpan="2" Width="1786"/>
+                                <ScrollViewer PanningMode="Both" HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Width="950" >
+                                    <WrapPanel x:Name="imagenes" Grid.Column="1" Grid.ColumnSpan="2" Width="950"/>
                                 </ScrollViewer>
                             </Grid>
                         </Border>
