@@ -863,7 +863,23 @@ namespace Portal.Kiosco.Properties.Views
 
             if (totalLabel.Content.ToString() != "0")
             {
-                var ProductosSeleccionados = App.ProductosSeleccionados.FirstOrDefault(tip => tip.Tipo == "C");
+                // Procesa los productos seleccionados
+                var productos = App.ProductosSeleccionados;
+
+                foreach (var producto in productos.Where(x => x.Tipo == "P"))
+                {
+                    producto.KeySecuencia = App.Secuencia;
+                    producto.Cantidad = 1;
+                    producto.SwitchAdd = "S";
+                    foreach (var precio in producto.Precios)
+                    {
+                        producto.Valor = precio.General.ToString();
+                    }
+                    App.agregarProducto(producto);
+                }
+
+                // Verifica si existen combinaciones seleccionadas
+                var ProductosSeleccionados = productos.FirstOrDefault(tip => tip.Tipo == "C");
                 if (ProductosSeleccionados != null)
                 {
                     isThreadActive = false;
@@ -873,20 +889,6 @@ namespace Portal.Kiosco.Properties.Views
                 }
                 else
                 {
-                    var productos = App.ProductosSeleccionados;
-
-                    foreach (var producto in productos.Where(x => x.Tipo == "P"))
-                    {
-                        producto.KeySecuencia = App.Secuencia;
-                        producto.Cantidad = 1;
-                        producto.SwitchAdd = "S";
-                        foreach (var precio in producto.Precios)
-                        {
-                            producto.Valor = precio.General.ToString();
-                        }
-                        App.agregarProducto(producto);
-                    }
-
                     isThreadActive = false;
                     ResumenCompra openWindows = new ResumenCompra(config);
                     openWindows.Show();
@@ -897,6 +899,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 MessageBox.Show("Ups, aun no haz seleccionado un producto.", "Notificación", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private async void btnVolver_Click(object sender, RoutedEventArgs e)

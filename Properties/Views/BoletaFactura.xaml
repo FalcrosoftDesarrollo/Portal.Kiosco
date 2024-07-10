@@ -115,7 +115,7 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Text="Subtotal: 8%" FontWeight="Bold" x:Name="ImpConsumo" HorizontalAlignment="Left"/>
-                            <TextBlock Text="Subtotal: 0%" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Subtotal: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>
                             <!--<TextBlock x:Name="IVAPorcentaje" Text="IVA: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>-->
                             <!--<TextBlock x:Name="ImpConsumo" Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>-->
                         </StackPanel>

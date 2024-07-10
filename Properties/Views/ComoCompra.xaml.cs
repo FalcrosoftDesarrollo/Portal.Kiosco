@@ -20,11 +20,13 @@ namespace Portal.Kiosco.Properties.Views
             App.IsFecha = false;
             App.ProductosSeleccionados = new List<Producto>();
             App.Secuencia = "0";
+            App.validadorVenta = 0;
             App.ProductosCambiados = new List<Producto>();
             App.Pelicula = new Pelicula();
             App.CantidadBoletas = 0;
             App.ValorTarifa = 0;
-
+            App.IVA = null;
+            App.IVC = null;
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
 

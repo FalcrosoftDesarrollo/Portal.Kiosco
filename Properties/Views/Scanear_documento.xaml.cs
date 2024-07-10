@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
+using Windows.Graphics.Printing;
 using Cartelera = Portal.Kiosco.Properties.Views.Cartelera;
 
 namespace Portal.Kiosco
@@ -42,7 +43,6 @@ namespace Portal.Kiosco
             });
 
             thread.IsBackground = true;
-            
             thread.Start();
         }
 
@@ -210,11 +210,20 @@ namespace Portal.Kiosco
                 {
                     await Dispatcher.InvokeAsync(() => limpiar());
                     isError = true;
-                    System.Windows.MessageBox.Show("Usuario no registrado en el sistema", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    break;
+
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        MessageBoxResult result = System.Windows.MessageBox.Show(
+                            "Usuario no registrado en el sistema",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                    });
                 }
 
-                await Task.Delay(100); // Reemplazar Thread.Sleep con Task.Delay
+
+                await Task.Delay(100);  
             }
         }
 

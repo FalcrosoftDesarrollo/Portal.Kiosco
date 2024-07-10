@@ -25,7 +25,7 @@ namespace Portal.Kiosco
 {
     public partial class App : Application, INotifyPropertyChanged
     {
-
+        public static int validadorVenta { get; set; } = 0;
         public static string respuestagenerica { get; set; }
         public static string UrlRetailImg { get; set; }
         public static bool IsUserAuthenticated { get; set; }
@@ -145,9 +145,11 @@ namespace Portal.Kiosco
                 var configuration = new ConfigurationBuilder()
                     .AddJsonFile("kiosco.json")
                     .Build();
+
                 var appSettingsSection = configuration.GetSection("MyConfig");
                 Tiempo = appSettingsSection["Tiempo"];
                 NomEmpresa = appSettingsSection["NomEmpresa"];
+                Direccion = appSettingsSection["DireccionUsuario"];
                 DirEmpresa = appSettingsSection["DirEmpresa"];
                 CiuEmpresa = appSettingsSection["CiuEmpresa"];
                 TelEmpresa = appSettingsSection["TelEmpresa"];
@@ -199,6 +201,7 @@ namespace Portal.Kiosco
                 HandleStartupError(ex, "An unexpected error occurred while starting the application. Please try again.");
             }
         }
+
 
         private void HandleStartupError(Exception ex, string userMessage)
         {
@@ -585,105 +588,578 @@ namespace Portal.Kiosco
             Secuencia ob_scopre = new Secuencia();
             General ob_fncgrl = new General();
             #endregion
-
-            try
+            if (App.validadorVenta == 0)
             {
-                //URLPortal(config);
-                //ListCarrito();
-
-                //Inicializar valores
-                alertS = false;
-                var PuntoVenta = App.PuntoVenta;
-
-                EmailEli = App.EmailEli;
-                NombreEli = App.NombreEli;
-                KeyTeatro = App.idCine;
-                TipoCompra = pr_datpro.TipoCompra;
-                ApellidoEli = App.ApellidoEli;
-                TelefonoEli = App.TelefonoEli;
-                DireccionEli = App.Direccion;
-                DocumentoEli = App.NroDocumento;
-                KeySecuencia = pr_datpro.KeySecuencia;
-
-                if (App.NroTarjeta != null)
-                    lc_barclf = Convert.ToInt32(App.NroTarjeta);
-                else
-                    lc_barclf = 0;
-
-                lc_tipven = TipoCompra;
-                lc_secsec = KeySecuencia;
-
-                //Tipo de venta
-                switch (lc_tipven)
+                try
                 {
-                    case "B": //VENTA BOLETAS
-                              //Obtener boletas carrito de compra
-                        using (var context = new DataDB(config))
-                        {
+                    //URLPortal(config);
+                    //ListCarrito();
 
-                            var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
-                            foreach (var vr_itevta in ReportSales)
+                    //Inicializar valores
+                    alertS = false;
+                    var PuntoVenta = App.PuntoVenta;
+
+                    EmailEli = App.EmailEli;
+                    NombreEli = App.NombreEli;
+                    KeyTeatro = App.idCine;
+                    TipoCompra = pr_datpro.TipoCompra;
+                    ApellidoEli = App.ApellidoEli;
+                    TelefonoEli = App.TelefonoEli;
+                    DireccionEli = App.Direccion;
+                    DocumentoEli = App.NroDocumento;
+                    KeySecuencia = pr_datpro.KeySecuencia;
+
+                    if (App.NroTarjeta != null)
+                        lc_barclf = Convert.ToInt32(App.NroTarjeta);
+                    else
+                        lc_barclf = 0;
+
+                    lc_tipven = TipoCompra;
+                    lc_secsec = KeySecuencia;
+
+                    //Tipo de venta
+                    switch (lc_tipven)
+                    {
+                        case "B": //VENTA BOLETAS
+                                  //Obtener boletas carrito de compra
+                            using (var context = new DataDB(config))
                             {
-                                ob_intvta.Sala = Convert.ToInt32(vr_itevta.KeySala);
-                                ob_intvta.Funcion = Convert.ToInt32(vr_itevta.HorProg.Substring(0, 2));
-                                ob_intvta.Pelicula = Convert.ToInt32(vr_itevta.KeyPelicula);
-                                ob_intvta.FechaFun = string.Concat(vr_itevta.FecProg.Substring(0, 4), "-", vr_itevta.FecProg.Substring(4, 2), "-", vr_itevta.FecProg.Substring(6, 2));
-                                ob_intvta.InicioFun = Convert.ToInt32(vr_itevta.HorProg);
 
-                                lc_boltot = vr_itevta.Precio;
-                                lc_ubiprg = vr_itevta.SelUbicaciones;
-                                lc_keytar = Convert.ToInt32(vr_itevta.KeyTarifa);
-                            }
-
-                            //Obtener ubicaciones de vista
-                            char[] ar_charst = lc_ubiprg.ToCharArray();
-                            for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
-                            {
-                                //Concatenar caracteres
-                                lc_auxitm += ar_charst[lc_iditem].ToString();
-
-                                //Obtener parámetro
-                                if (ar_charst[lc_iditem].ToString() == ";")
+                                var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
+                                foreach (var vr_itevta in ReportSales)
                                 {
-                                    ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
-                                    lc_auxitm = string.Empty;
-                                }
-                            }
+                                    ob_intvta.Sala = Convert.ToInt32(vr_itevta.KeySala);
+                                    ob_intvta.Funcion = Convert.ToInt32(vr_itevta.HorProg.Substring(0, 2));
+                                    ob_intvta.Pelicula = Convert.ToInt32(vr_itevta.KeyPelicula);
+                                    ob_intvta.FechaFun = string.Concat(vr_itevta.FecProg.Substring(0, 4), "-", vr_itevta.FecProg.Substring(4, 2), "-", vr_itevta.FecProg.Substring(6, 2));
+                                    ob_intvta.InicioFun = Convert.ToInt32(vr_itevta.HorProg);
 
-                            //Cargar ubicaciones al modelo JSON
-                            lc_auxitm = string.Empty;
-                            foreach (var item in ls_lstubi)
-                            {
-                                lc_idearr = 0;
-                                char[] ar_chars2 = item.ToCharArray();
-                                for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                                    lc_boltot = vr_itevta.Precio;
+                                    lc_ubiprg = vr_itevta.SelUbicaciones;
+                                    lc_keytar = Convert.ToInt32(vr_itevta.KeyTarifa);
+                                }
+
+                                //Obtener ubicaciones de vista
+                                char[] ar_charst = lc_ubiprg.ToCharArray();
+                                for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
                                 {
                                     //Concatenar caracteres
-                                    lc_auxitm += ar_chars2[lc_iditem].ToString();
+                                    lc_auxitm += ar_charst[lc_iditem].ToString();
 
                                     //Obtener parámetro
-                                    if (ar_chars2[lc_iditem].ToString() == "_")
+                                    if (ar_charst[lc_iditem].ToString() == ";")
                                     {
-                                        ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
-
-                                        lc_idearr++;
+                                        ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
                                         lc_auxitm = string.Empty;
                                     }
                                 }
 
-                                lc_cntubi++;
-                                lc_ubilbl += string.Concat("Fila: ", ls_lstsel[1], " Columna: ", ls_lstsel[2], ";");
-                                ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = lc_keytar, FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
+                                //Cargar ubicaciones al modelo JSON
+                                lc_auxitm = string.Empty;
+                                foreach (var item in ls_lstubi)
+                                {
+                                    lc_idearr = 0;
+                                    char[] ar_chars2 = item.ToCharArray();
+                                    for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                                    {
+                                        //Concatenar caracteres
+                                        lc_auxitm += ar_chars2[lc_iditem].ToString();
+
+                                        //Obtener parámetro
+                                        if (ar_chars2[lc_iditem].ToString() == "_")
+                                        {
+                                            ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
+
+                                            lc_idearr++;
+                                            lc_auxitm = string.Empty;
+                                        }
+                                    }
+
+                                    lc_cntubi++;
+                                    lc_ubilbl += string.Concat("Fila: ", ls_lstsel[1], " Columna: ", ls_lstsel[2], ";");
+                                    ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = lc_keytar, FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
+                                }
+
+                                //Adicionar a lista
+                                ob_ordite.Add(new OrderItem
+                                {
+                                    Precio = Convert.ToDecimal(lc_boltot),
+                                    Cantidad = lc_cntubi,
+                                    Descripcion = string.Concat(lc_despel, "-", lc_ubilbl),
+                                    KeyProducto = ob_intvta.Pelicula
+                                });
+
+                                //Asignar valores
+                                ob_intvta.Productos = ob_proven;
+                                ob_intvta.Ubicaciones = ob_ubiprg;
+                                ob_intvta.Accion = pr_datpro.SwtVenta;
+                                ob_intvta.TotalVenta = lc_boltot;
+
+                                //Validar pago cashback
+                                if (pr_datpro.SwitchCashback == "S")
+                                {
+                                    ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
+                                    ob_intvta.PagoInterno = Convert.ToDouble(pr_datpro.Valor);
+                                    ob_intvta.PagoCredito = 0;
+                                }
+                                else
+                                {
+                                    ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
+                                    ob_intvta.PagoInterno = 0;
+                                    ob_intvta.PagoCredito = Convert.ToDouble(pr_datpro.Valor);
+                                }
                             }
 
-                            //Adicionar a lista
-                            ob_ordite.Add(new OrderItem
+                            break;
+
+                        case "P": //VENTA RETAIL
+                            #region SERVICIO SCOPRE
+                            //Asignar valores PRE
+                            ob_scopre.Punto = Convert.ToInt32(App.PuntoVenta);
+                            ob_scopre.Teatro = Convert.ToInt32(KeyTeatro);
+                            ob_scopre.Tercero = App.ValorTercero;
+
+                            //Generar y encriptar JSON para servicio PRE
+                            lc_srvpar = ob_fncgrl.JsonConverter(ob_scopre);
+                            lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
+                            lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
+                            lc_srvpar = lc_srvpar.Replace("punto", "Punto");
+
+                            //Encriptar Json PRE
+                            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                            //Consumir servicio PRE
+                            if (clientFrecnt == "No")
+                                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
+                            else
+                                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
+
+                            //Validar respuesta
+                            if (lc_result.Substring(0, 1) == "0")
                             {
-                                Precio = Convert.ToDecimal(lc_boltot),
-                                Cantidad = lc_cntubi,
-                                Descripcion = string.Concat(lc_despel, "-", lc_ubilbl),
-                                KeyProducto = ob_intvta.Pelicula
-                            });
+                                //Quitar switch
+                                lc_result = lc_result.Replace("0-", "");
+                                ob_lstpro = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                                ob_retpro = (List<Producto>)JsonConvert.DeserializeObject(ob_lstpro["Lista_Productos"].ToString(), (typeof(List<Producto>)));
+
+                                if (ob_lstpro.ContainsKey("Validación"))
+                                    MessageBox.Show(ob_lstpro["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                lc_result = lc_result.Replace("1-", "");
+                                MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            #endregion
+
+                            //Obtener productos carrito de compra
+                            using (var context = new DataDB(config))
+                            {
+                                //Select * From RetailSales Where Secuencia == ob_datpro.KeySecuencia
+
+                                decimal IdTeatro = Convert.ToDecimal(KeyTeatro);
+                                var RetailSales = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == Convert.ToDecimal(PuntoVenta)).Where(x => x.KeyTeatro == IdTeatro).ToList();
+                                foreach (var vr_itevta in RetailSales)
+                                {
+                                    //Recorrer productos habilitados para internet y valodar carrito de compras
+                                    foreach (var vr_itepro in ob_retpro)
+                                    {
+                                        //Valiar keypro vta VS keypro int
+                                        if (vr_itevta.KeyProducto == vr_itepro.Codigo)
+                                        {
+                                            //Recorrer y asignar productos por cantidad seleccionada
+                                            for (int j = 0; j < vr_itevta.Cantidad; j++)
+                                            {
+                                                //Asignar valores
+                                                Productos ob_auxven = new Productos();
+                                                List<Receta> ob_comrec = new List<Receta>();
+
+                                                //Validar tipo
+                                                if (vr_itevta.Tipo == "A")
+                                                {
+                                                    ob_auxven.Codigo = vr_itevta.ProCategoria1;
+                                                    ob_auxven.Tipo = "P";
+                                                }
+                                                else
+                                                {
+                                                    ob_auxven.Codigo = vr_itevta.KeyProducto;
+                                                    ob_auxven.Tipo = vr_itevta.Tipo;
+                                                }
+
+                                                //validar Cliente frecuente
+                                                ob_auxven.Precio = 1;
+                                                //if (Session.GetString("ClienteFrecuente") == "No")
+                                                //    ob_auxven.Precio = 1;
+                                                //else
+                                                //    ob_auxven.Precio = 2;
+
+                                                ob_auxven.Receta = null;
+                                                ob_auxven.Descripcion = vr_itevta.Descripcion;
+
+                                                //Validar receta del combo
+                                                if (ob_auxven.Tipo == "C")
+                                                {
+                                                    //Recorrer receta del combo y guardar
+                                                    lc_swtcat = 1;
+                                                    foreach (var vr_itecom in vr_itepro.Receta)
+                                                    {
+                                                        List<Producto> ob_compro = new List<Producto>();
+
+
+                                                        //Validar si es categoria
+                                                        if (vr_itecom.Tipo == "A")
+                                                        {
+                                                            //Asignar valores
+                                                            switch (lc_swtcat)
+                                                            {
+                                                                case 1:
+                                                                    lc_canrot = vr_itevta.CanCategoria1;
+                                                                    lc_prorot = vr_itevta.ProCategoria1;
+                                                                    break;
+                                                                case 2:
+                                                                    lc_canrot = vr_itevta.CanCategoria2;
+                                                                    lc_prorot = vr_itevta.ProCategoria2;
+                                                                    break;
+                                                                case 3:
+                                                                    lc_canrot = vr_itevta.CanCategoria3;
+                                                                    lc_prorot = vr_itevta.ProCategoria3;
+                                                                    break;
+                                                                case 4:
+                                                                    lc_canrot = vr_itevta.CanCategoria4;
+                                                                    lc_prorot = vr_itevta.ProCategoria4;
+                                                                    break;
+                                                                case 5:
+                                                                    lc_canrot = vr_itevta.CanCategoria5;
+                                                                    lc_prorot = vr_itevta.ProCategoria5;
+                                                                    break;
+                                                            }
+
+
+
+                                                            lc_swtcat++;
+
+                                                            //Adicionar retail detcombo
+
+                                                            decimal lc_secsec1 = Convert.ToDecimal(App.Secuencia);
+                                                            using (var context2 = new DataDB(config))
+                                                            {
+                                                                var RetailDet = context.RetailDet.Where(x => x.IdRetailSales == vr_itevta.Id).Where(x => x.Secuencia == lc_secsec1).Where(x => x.ProCategoria == vr_itecom.Codigo).ToList();
+                                                                foreach (var retail in RetailDet.OrderBy(r => r.ProCategoria))
+                                                                {
+                                                                    //Adicionar producto seleccionado de la categoria la cantidad indicada
+
+                                                                    ob_compro.Add(new Producto
+                                                                    {
+                                                                        Tipo = "P",
+                                                                        Codigo = Convert.ToDecimal(retail.ProItem.Substring(0, retail.ProItem.IndexOf(","))),
+                                                                        Cantidad = 1,
+                                                                        Descripcion = retail.ProItem.Substring(retail.ProItem.IndexOf("-") + 1)
+                                                                    });
+
+                                                                }
+                                                            }
+
+                                                            //Adicionar producto a receta del combo
+                                                            ob_comrec.Add(new Receta
+                                                            {
+                                                                Tipo = vr_itecom.Tipo,
+                                                                Codigo = vr_itecom.Codigo,
+                                                                Cantidad = vr_itecom.Cantidad,
+                                                                Descripcion = vr_itecom.Descripcion,
+                                                                RecetaCategoria = ob_compro
+                                                            });
+                                                        }
+                                                        else
+                                                        {
+                                                            //Adicionar producto a receta del combo
+                                                            ob_comrec.Add(vr_itecom);
+                                                        }
+                                                    }
+                                                }
+
+                                                //Cargar producto
+                                                ob_auxven.Receta = ob_comrec;
+                                                ob_proven.Add(ob_auxven);
+                                            }
+
+                                            break;
+                                        }
+                                    }
+
+                                    //Asignar valor total de productos
+                                    lc_valpro += vr_itevta.Precio * vr_itevta.Cantidad;
+                                }
+
+                                //Asignar valores
+                                ob_intvta.Productos = ob_proven;
+                                ob_intvta.Ubicaciones = ob_ubiprg;
+
+                                //Asignar valores
+                                ob_intvta.Sala = 0;
+                                ob_intvta.Funcion = 0;
+                                ob_intvta.Pelicula = 0;
+                                ob_intvta.FechaFun = string.Concat(lc_fecven.Substring(6, 4), "-", lc_fecven.Substring(3, 2), "-", lc_fecven.Substring(0, 2));
+                                ob_intvta.InicioFun = 0;
+                                ob_intvta.Accion = "C";
+                                ob_intvta.TotalVenta = Convert.ToDouble(lc_valpro);
+
+                                //Validar pago cashback
+                                if (pr_datpro.SwitchCashback == "S")
+                                {
+                                    ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
+                                    ob_intvta.PagoInterno = Convert.ToDouble(lc_valpro);
+                                    ob_intvta.PagoCredito = 0;
+                                }
+                                else
+                                {
+                                    ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
+                                    ob_intvta.PagoInterno = 0;
+                                    ob_intvta.PagoCredito = Convert.ToDouble(lc_valpro);
+                                }
+                            }
+
+                            break;
+
+                        case "M": //VENTA MIXTA (BOLETAS Y RETAIL)
+                            #region SERVICIO SCOPRE
+                            //Asignar valores PRE
+                            ob_scopre.Punto = Convert.ToInt32(App.PuntoVenta);
+                            ob_scopre.Teatro = Convert.ToInt32(KeyTeatro);
+                            ob_scopre.Tercero = App.ValorTercero;
+
+                            //Generar y encriptar JSON para servicio PRE
+                            lc_srvpar = ob_fncgrl.JsonConverter(ob_scopre);
+                            lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
+                            lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
+                            lc_srvpar = lc_srvpar.Replace("punto", "Punto");
+
+                            //Encriptar Json PRE
+                            lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                            //Consumir servicio PRE
+                            if (clientFrecnt == "No")
+                                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
+                            else
+                                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
+
+                            //Validar respuesta
+                            if (lc_result.Substring(0, 1) == "0")
+                            {
+                                //Quitar switch
+                                lc_result = lc_result.Replace("0-", "");
+                                ob_lstpro = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
+                                ob_retpro = (List<Producto>)JsonConvert.DeserializeObject(ob_lstpro["Lista_Productos"].ToString(), (typeof(List<Producto>)));
+
+                                if (ob_lstpro.ContainsKey("Validación"))
+                                    MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                lc_result = lc_result.Replace("1-", "");
+                                MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            #endregion
+
+                            //Obtener productos carrito de compra
+                            using (var context = new DataDB(config))
+                            {
+                                //Select * From RetailSales Where Secuencia == ob_datpro.KeySecuencia
+
+                                decimal IdTeatro = Convert.ToDecimal(KeyTeatro);
+                                var RetailSales = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == Convert.ToDecimal(PuntoVenta)).Where(x => x.KeyTeatro == IdTeatro).ToList();
+                                foreach (var vr_itevta in RetailSales)
+                                {
+                                    //Recorrer productos habilitados para internet y valodar carrito de compras
+                                    foreach (var vr_itepro in ob_retpro)
+                                    {
+                                        //Valiar keypro vta VS keypro int
+                                        if (vr_itevta.KeyProducto == vr_itepro.Codigo)
+                                        {
+                                            //Recorrer y asignar productos por cantidad seleccionada
+                                            for (int j = 0; j < vr_itevta.Cantidad; j++)
+                                            {
+                                                //Asignar valores
+                                                Productos ob_auxven = new Productos();
+                                                List<Receta> ob_comrec = new List<Receta>();
+
+                                                //Validar tipo
+                                                if (vr_itevta.Tipo == "A")
+                                                {
+                                                    ob_auxven.Codigo = vr_itevta.ProCategoria1;
+                                                    ob_auxven.Tipo = "P";
+                                                }
+                                                else
+                                                {
+                                                    ob_auxven.Codigo = vr_itevta.KeyProducto;
+                                                    ob_auxven.Tipo = vr_itevta.Tipo;
+                                                }
+
+                                                //validar Cliente frecuente
+                                                ob_auxven.Precio = 1;
+
+                                                ob_auxven.Receta = null;
+                                                ob_auxven.Descripcion = vr_itevta.Descripcion;
+
+                                                //Validar receta del combo
+                                                if (ob_auxven.Tipo == "C")
+                                                {
+                                                    //Recorrer receta del combo y guardar
+                                                    lc_swtcat = 1;
+                                                    foreach (var vr_itecom in vr_itepro.Receta)
+                                                    {
+                                                        List<Producto> ob_compro = new List<Producto>();
+                                                        //Validar si es categoria
+                                                        if (vr_itecom.Tipo == "A")
+                                                        {
+                                                            //Asignar valores
+                                                            switch (lc_swtcat)
+                                                            {
+                                                                case 1:
+                                                                    lc_canrot = vr_itevta.CanCategoria1;
+                                                                    lc_prorot = vr_itevta.ProCategoria1;
+                                                                    break;
+                                                                case 2:
+                                                                    lc_canrot = vr_itevta.CanCategoria2;
+                                                                    lc_prorot = vr_itevta.ProCategoria2;
+                                                                    break;
+                                                                case 3:
+                                                                    lc_canrot = vr_itevta.CanCategoria3;
+                                                                    lc_prorot = vr_itevta.ProCategoria3;
+                                                                    break;
+                                                                case 4:
+                                                                    lc_canrot = vr_itevta.CanCategoria4;
+                                                                    lc_prorot = vr_itevta.ProCategoria4;
+                                                                    break;
+                                                                case 5:
+                                                                    lc_canrot = vr_itevta.CanCategoria5;
+                                                                    lc_prorot = vr_itevta.ProCategoria5;
+                                                                    break;
+                                                            }
+
+
+
+                                                            lc_swtcat++;
+
+                                                            //Adicionar retail detcombo
+
+                                                            decimal lc_secsec1 = Convert.ToDecimal(App.Secuencia);
+                                                            using (var context2 = new DataDB(config))
+                                                            {
+                                                                var RetailDet = context.RetailDet.Where(x => x.IdRetailSales == vr_itevta.Id).Where(x => x.Secuencia == lc_secsec1).Where(x => x.ProCategoria == vr_itecom.Codigo).ToList();
+
+                                                                foreach (var retail in RetailDet)
+                                                                {
+                                                                    //Adicionar producto seleccionado de la categoria la cantidad indicada
+
+                                                                    ob_compro.Add(new Producto
+                                                                    {
+                                                                        Tipo = "P",
+                                                                        Codigo = Convert.ToDecimal(retail.ProItem.Substring(0, retail.ProItem.IndexOf(","))),
+                                                                        Cantidad = 1,
+                                                                        Descripcion = retail.ProItem.Substring(retail.ProItem.IndexOf("-") + 1)
+                                                                    });
+
+                                                                }
+                                                            }
+
+                                                            //Adicionar producto a receta del combo
+                                                            ob_comrec.Add(new Receta
+                                                            {
+                                                                Tipo = vr_itecom.Tipo,
+                                                                Codigo = vr_itecom.Codigo,
+                                                                Cantidad = vr_itecom.Cantidad,
+                                                                Descripcion = vr_itecom.Descripcion,
+                                                                RecetaCategoria = ob_compro
+                                                            });
+                                                        }
+                                                        else
+                                                        {
+                                                            //Adicionar producto a receta del combo
+                                                            ob_comrec.Add(vr_itecom);
+                                                        }
+                                                    }
+                                                }
+
+                                                //Cargar producto
+                                                ob_auxven.Receta = ob_comrec;
+                                                ob_proven.Add(ob_auxven);
+                                            }
+
+                                            break;
+                                        }
+                                    }
+
+                                    lc_valpro += vr_itevta.Precio * vr_itevta.Cantidad;
+                                }
+
+
+                                var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
+                                foreach (var vr_itevta in ReportSales)
+                                {
+                                    ob_intvta.Sala = Convert.ToInt32(vr_itevta.KeySala);
+                                    ob_intvta.Funcion = Convert.ToInt32(vr_itevta.HorProg.Substring(0, 2));
+                                    ob_intvta.Pelicula = Convert.ToInt32(vr_itevta.KeyPelicula);
+                                    ob_intvta.FechaFun = string.Concat(vr_itevta.FecProg.Substring(0, 4), "-", vr_itevta.FecProg.Substring(4, 2), "-", vr_itevta.FecProg.Substring(6, 2));
+                                    ob_intvta.InicioFun = Convert.ToInt32(vr_itevta.HorProg);
+
+                                    lc_boltot = vr_itevta.Precio;
+                                    lc_ubiprg = vr_itevta.SelUbicaciones;
+                                    lc_keytar = Convert.ToInt32(vr_itevta.KeyTarifa);
+                                }
+
+                                //Obtener ubicaciones de vista
+                                char[] ar_charst = lc_ubiprg.ToCharArray();
+                                for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
+                                {
+                                    //Concatenar caracteres
+                                    lc_auxitm += ar_charst[lc_iditem].ToString();
+
+                                    //Obtener parámetro
+                                    if (ar_charst[lc_iditem].ToString() == ";")
+                                    {
+                                        ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
+                                        lc_auxitm = string.Empty;
+                                    }
+                                }
+
+                                //Cargar ubicaciones al modelo JSON
+                                lc_auxitm = string.Empty;
+                                foreach (var item in ls_lstubi)
+                                {
+                                    lc_idearr = 0;
+                                    char[] ar_chars2 = item.ToCharArray();
+                                    for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
+                                    {
+                                        //Concatenar caracteres
+                                        lc_auxitm += ar_chars2[lc_iditem].ToString();
+
+                                        //Obtener parámetro
+                                        if (ar_chars2[lc_iditem].ToString() == "_")
+                                        {
+                                            ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
+
+                                            lc_idearr++;
+                                            lc_auxitm = string.Empty;
+                                        }
+                                    }
+
+                                    lc_cntubi++;
+                                    lc_ubilbl += string.Concat("Fila: ", ls_lstsel[1], " Columna: ", ls_lstsel[2], ";");
+                                    ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = lc_keytar, FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
+                                }
+
+                                //Adicionar a lista
+                                ob_ordite.Add(new OrderItem
+                                {
+                                    Precio = Convert.ToDecimal(lc_boltot),
+                                    Cantidad = lc_cntubi,
+                                    Descripcion = string.Concat(lc_despel, "-", lc_ubilbl),
+                                    KeyProducto = ob_intvta.Pelicula
+                                });
+                            }
+
+                            //Venta de boletas y confites
+                            lc_boltot += Convert.ToDouble(lc_valpro);
 
                             //Asignar valores
                             ob_intvta.Productos = ob_proven;
@@ -695,784 +1171,321 @@ namespace Portal.Kiosco
                             if (pr_datpro.SwitchCashback == "S")
                             {
                                 ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
-                                ob_intvta.PagoInterno = Convert.ToDouble(pr_datpro.Valor);
+                                ob_intvta.PagoInterno = Convert.ToDouble(lc_boltot);
                                 ob_intvta.PagoCredito = 0;
                             }
                             else
                             {
                                 ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
                                 ob_intvta.PagoInterno = 0;
-                                ob_intvta.PagoCredito = Convert.ToDouble(pr_datpro.Valor);
-                            }
-                        }
-
-                        break;
-
-                    case "P": //VENTA RETAIL
-                        #region SERVICIO SCOPRE
-                        //Asignar valores PRE
-                        ob_scopre.Punto = Convert.ToInt32(App.PuntoVenta);
-                        ob_scopre.Teatro = Convert.ToInt32(KeyTeatro);
-                        ob_scopre.Tercero = App.ValorTercero;
-
-                        //Generar y encriptar JSON para servicio PRE
-                        lc_srvpar = ob_fncgrl.JsonConverter(ob_scopre);
-                        lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
-                        lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
-                        lc_srvpar = lc_srvpar.Replace("punto", "Punto");
-
-                        //Encriptar Json PRE
-                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-                        //Consumir servicio PRE
-                        if (clientFrecnt == "No")
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
-                        else
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
-
-                        //Validar respuesta
-                        if (lc_result.Substring(0, 1) == "0")
-                        {
-                            //Quitar switch
-                            lc_result = lc_result.Replace("0-", "");
-                            ob_lstpro = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                            ob_retpro = (List<Producto>)JsonConvert.DeserializeObject(ob_lstpro["Lista_Productos"].ToString(), (typeof(List<Producto>)));
-
-                            if (ob_lstpro.ContainsKey("Validación"))
-                                MessageBox.Show(ob_lstpro["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        else
-                        {
-                            lc_result = lc_result.Replace("1-", "");
-                            MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        #endregion
-
-                        //Obtener productos carrito de compra
-                        using (var context = new DataDB(config))
-                        {
-                            //Select * From RetailSales Where Secuencia == ob_datpro.KeySecuencia
-
-                            decimal IdTeatro = Convert.ToDecimal(KeyTeatro);
-                            var RetailSales = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == Convert.ToDecimal(PuntoVenta)).Where(x => x.KeyTeatro == IdTeatro).ToList();
-                            foreach (var vr_itevta in RetailSales)
-                            {
-                                //Recorrer productos habilitados para internet y valodar carrito de compras
-                                foreach (var vr_itepro in ob_retpro)
-                                {
-                                    //Valiar keypro vta VS keypro int
-                                    if (vr_itevta.KeyProducto == vr_itepro.Codigo)
-                                    {
-                                        //Recorrer y asignar productos por cantidad seleccionada
-                                        for (int j = 0; j < vr_itevta.Cantidad; j++)
-                                        {
-                                            //Asignar valores
-                                            Productos ob_auxven = new Productos();
-                                            List<Receta> ob_comrec = new List<Receta>();
-
-                                            //Validar tipo
-                                            if (vr_itevta.Tipo == "A")
-                                            {
-                                                ob_auxven.Codigo = vr_itevta.ProCategoria1;
-                                                ob_auxven.Tipo = "P";
-                                            }
-                                            else
-                                            {
-                                                ob_auxven.Codigo = vr_itevta.KeyProducto;
-                                                ob_auxven.Tipo = vr_itevta.Tipo;
-                                            }
-
-                                            //validar Cliente frecuente
-                                            ob_auxven.Precio = 1;
-                                            //if (Session.GetString("ClienteFrecuente") == "No")
-                                            //    ob_auxven.Precio = 1;
-                                            //else
-                                            //    ob_auxven.Precio = 2;
-
-                                            ob_auxven.Receta = null;
-                                            ob_auxven.Descripcion = vr_itevta.Descripcion;
-
-                                            //Validar receta del combo
-                                            if (ob_auxven.Tipo == "C")
-                                            {
-                                                //Recorrer receta del combo y guardar
-                                                lc_swtcat = 1;
-                                                foreach (var vr_itecom in vr_itepro.Receta)
-                                                {
-                                                    List<Producto> ob_compro = new List<Producto>();
-
-
-                                                    //Validar si es categoria
-                                                    if (vr_itecom.Tipo == "A")
-                                                    {
-                                                        //Asignar valores
-                                                        switch (lc_swtcat)
-                                                        {
-                                                            case 1:
-                                                                lc_canrot = vr_itevta.CanCategoria1;
-                                                                lc_prorot = vr_itevta.ProCategoria1;
-                                                                break;
-                                                            case 2:
-                                                                lc_canrot = vr_itevta.CanCategoria2;
-                                                                lc_prorot = vr_itevta.ProCategoria2;
-                                                                break;
-                                                            case 3:
-                                                                lc_canrot = vr_itevta.CanCategoria3;
-                                                                lc_prorot = vr_itevta.ProCategoria3;
-                                                                break;
-                                                            case 4:
-                                                                lc_canrot = vr_itevta.CanCategoria4;
-                                                                lc_prorot = vr_itevta.ProCategoria4;
-                                                                break;
-                                                            case 5:
-                                                                lc_canrot = vr_itevta.CanCategoria5;
-                                                                lc_prorot = vr_itevta.ProCategoria5;
-                                                                break;
-                                                        }
-
-
-
-
-                                                        lc_swtcat++;
-
-                                                        //Adicionar retail detcombo
-
-                                                        decimal lc_secsec1 = Convert.ToDecimal(App.Secuencia);
-                                                        using (var context2 = new DataDB(config))
-                                                        {
-                                                            var RetailDet = context.RetailDet.Where(x => x.IdRetailSales == vr_itevta.Id).Where(x => x.Secuencia == lc_secsec1).Where(x => x.ProCategoria == lc_prorot).ToList();
-                                                            foreach (var retail in RetailDet)
-                                                            {
-                                                                //Adicionar producto seleccionado de la categoria la cantidad indicada
-
-                                                                ob_compro.Add(new Producto
-                                                                {
-                                                                    Tipo = "P",
-                                                                    Codigo = Convert.ToDecimal(retail.ProItem.Substring(0, retail.ProItem.IndexOf(","))),
-                                                                    Cantidad = 1,
-                                                                    Descripcion = retail.ProItem.Substring(retail.ProItem.IndexOf("-") + 1)
-                                                                });
-
-                                                            }
-                                                        }
-
-                                                        //Adicionar producto a receta del combo
-                                                        ob_comrec.Add(new Receta
-                                                        {
-                                                            Tipo = vr_itecom.Tipo,
-                                                            Codigo = vr_itecom.Codigo,
-                                                            Cantidad = vr_itecom.Cantidad,
-                                                            Descripcion = vr_itecom.Descripcion,
-                                                            RecetaCategoria = ob_compro
-                                                        });
-                                                    }
-                                                    else
-                                                    {
-                                                        //Adicionar producto a receta del combo
-                                                        ob_comrec.Add(vr_itecom);
-                                                    }
-                                                }
-                                            }
-
-                                            //Cargar producto
-                                            ob_auxven.Receta = ob_comrec;
-                                            ob_proven.Add(ob_auxven);
-                                        }
-
-                                        break;
-                                    }
-                                }
-
-                                //Asignar valor total de productos
-                                lc_valpro += vr_itevta.Precio * vr_itevta.Cantidad;
+                                ob_intvta.PagoCredito = Convert.ToDouble(lc_boltot);
                             }
 
-                            //Asignar valores
-                            ob_intvta.Productos = ob_proven;
-                            ob_intvta.Ubicaciones = ob_ubiprg;
-
-                            //Asignar valores
-                            ob_intvta.Sala = 0;
-                            ob_intvta.Funcion = 0;
-                            ob_intvta.Pelicula = 0;
-                            ob_intvta.FechaFun = string.Concat(lc_fecven.Substring(6, 4), "-", lc_fecven.Substring(3, 2), "-", lc_fecven.Substring(0, 2));
-                            ob_intvta.InicioFun = 0;
-                            ob_intvta.Accion = "C";
-                            ob_intvta.TotalVenta = Convert.ToDouble(lc_valpro);
-
-                            //Validar pago cashback
-                            if (pr_datpro.SwitchCashback == "S")
-                            {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
-                                ob_intvta.PagoInterno = Convert.ToDouble(lc_valpro);
-                                ob_intvta.PagoCredito = 0;
-                            }
-                            else
-                            {
-                                ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
-                                ob_intvta.PagoInterno = 0;
-                                ob_intvta.PagoCredito = Convert.ToDouble(lc_valpro);
-                            }
-                        }
-
-                        break;
-
-                    case "M": //VENTA MIXTA (BOLETAS Y RETAIL)
-                        #region SERVICIO SCOPRE
-                        //Asignar valores PRE
-                        ob_scopre.Punto = Convert.ToInt32(App.PuntoVenta);
-                        ob_scopre.Teatro = Convert.ToInt32(KeyTeatro);
-                        ob_scopre.Tercero = App.ValorTercero;
-
-                        //Generar y encriptar JSON para servicio PRE
-                        lc_srvpar = ob_fncgrl.JsonConverter(ob_scopre);
-                        lc_srvpar = lc_srvpar.Replace("Teatro", "teatro");
-                        lc_srvpar = lc_srvpar.Replace("Tercero", "tercero");
-                        lc_srvpar = lc_srvpar.Replace("punto", "Punto");
-
-                        //Encriptar Json PRE
-                        lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-                        //Consumir servicio PRE
-                        if (clientFrecnt == "No")
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopre/"), lc_srvpar);
-                        else
-                            lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scopcf/"), lc_srvpar);
-
-                        //Validar respuesta
-                        if (lc_result.Substring(0, 1) == "0")
-                        {
-                            //Quitar switch
-                            lc_result = lc_result.Replace("0-", "");
-                            ob_lstpro = (Dictionary<string, object>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, object>)));
-                            ob_retpro = (List<Producto>)JsonConvert.DeserializeObject(ob_lstpro["Lista_Productos"].ToString(), (typeof(List<Producto>)));
-
-                            if (ob_lstpro.ContainsKey("Validación"))
-                                MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        else
-                        {
-                            lc_result = lc_result.Replace("1-", "");
-                            MessageBox.Show(lc_result, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        #endregion
-
-                        //Obtener productos carrito de compra
-                        using (var context = new DataDB(config))
-                        {
-                            //Select * From RetailSales Where Secuencia == ob_datpro.KeySecuencia
-
-                            decimal IdTeatro = Convert.ToDecimal(KeyTeatro);
-                            var RetailSales = context.RetailSales.Where(x => x.Secuencia == Convert.ToDecimal(lc_secsec)).Where(x => x.PuntoVenta == Convert.ToDecimal(PuntoVenta)).Where(x => x.KeyTeatro == IdTeatro).ToList();
-                            foreach (var vr_itevta in RetailSales)
-                            {
-                                //Recorrer productos habilitados para internet y valodar carrito de compras
-                                foreach (var vr_itepro in ob_retpro)
-                                {
-                                    //Valiar keypro vta VS keypro int
-                                    if (vr_itevta.KeyProducto == vr_itepro.Codigo)
-                                    {
-                                        //Recorrer y asignar productos por cantidad seleccionada
-                                        for (int j = 0; j < vr_itevta.Cantidad; j++)
-                                        {
-                                            //Asignar valores
-                                            Productos ob_auxven = new Productos();
-                                            List<Receta> ob_comrec = new List<Receta>();
-
-                                            //Validar tipo
-                                            if (vr_itevta.Tipo == "A")
-                                            {
-                                                ob_auxven.Codigo = vr_itevta.ProCategoria1;
-                                                ob_auxven.Tipo = "P";
-                                            }
-                                            else
-                                            {
-                                                ob_auxven.Codigo = vr_itevta.KeyProducto;
-                                                ob_auxven.Tipo = vr_itevta.Tipo;
-                                            }
-
-                                            //validar Cliente frecuente
-                                            ob_auxven.Precio = 1;
-
-                                            ob_auxven.Receta = null;
-                                            ob_auxven.Descripcion = vr_itevta.Descripcion;
-
-                                            //Validar receta del combo
-                                            if (ob_auxven.Tipo == "C")
-                                            {
-                                                //Recorrer receta del combo y guardar
-                                                lc_swtcat = 1;
-                                                foreach (var vr_itecom in vr_itepro.Receta)
-                                                {
-                                                    List<Producto> ob_compro = new List<Producto>();
-                                                    //Validar si es categoria
-                                                    if (vr_itecom.Tipo == "A")
-                                                    {
-                                                        //Asignar valores
-                                                        switch (lc_swtcat)
-                                                        {
-                                                            case 1:
-                                                                lc_canrot = vr_itevta.CanCategoria1;
-                                                                lc_prorot = vr_itevta.ProCategoria1;
-                                                                break;
-                                                            case 2:
-                                                                lc_canrot = vr_itevta.CanCategoria2;
-                                                                lc_prorot = vr_itevta.ProCategoria2;
-                                                                break;
-                                                            case 3:
-                                                                lc_canrot = vr_itevta.CanCategoria3;
-                                                                lc_prorot = vr_itevta.ProCategoria3;
-                                                                break;
-                                                            case 4:
-                                                                lc_canrot = vr_itevta.CanCategoria4;
-                                                                lc_prorot = vr_itevta.ProCategoria4;
-                                                                break;
-                                                            case 5:
-                                                                lc_canrot = vr_itevta.CanCategoria5;
-                                                                lc_prorot = vr_itevta.ProCategoria5;
-                                                                break;
-                                                        }
-
-
-
-                                                        lc_swtcat++;
-
-                                                        //Adicionar retail detcombo
-
-                                                        decimal lc_secsec1 = Convert.ToDecimal(App.Secuencia);
-                                                        using (var context2 = new DataDB(config))
-                                                        {
-                                                            var RetailDet = context.RetailDet.Where(x => x.IdRetailSales == vr_itevta.Id).Where(x => x.Secuencia == lc_secsec1).Where(x => x.ProCategoria == lc_prorot).ToList();
-                                                            foreach (var retail in RetailDet)
-                                                            {
-                                                                //Adicionar producto seleccionado de la categoria la cantidad indicada
-
-                                                                ob_compro.Add(new Producto
-                                                                {
-                                                                    Tipo = "P",
-                                                                    Codigo = Convert.ToDecimal(retail.ProItem.Substring(0, retail.ProItem.IndexOf(","))),
-                                                                    Cantidad = 1,
-                                                                    Descripcion = retail.ProItem.Substring(retail.ProItem.IndexOf("-") + 1)
-                                                                });
-
-                                                            }
-                                                        }
-
-                                                        //Adicionar producto a receta del combo
-                                                        ob_comrec.Add(new Receta
-                                                        {
-                                                            Tipo = vr_itecom.Tipo,
-                                                            Codigo = vr_itecom.Codigo,
-                                                            Cantidad = vr_itecom.Cantidad,
-                                                            Descripcion = vr_itecom.Descripcion,
-                                                            RecetaCategoria = ob_compro
-                                                        });
-                                                    }
-                                                    else
-                                                    {
-                                                        //Adicionar producto a receta del combo
-                                                        ob_comrec.Add(vr_itecom);
-                                                    }
-                                                }
-                                            }
-
-                                            //Cargar producto
-                                            ob_auxven.Receta = ob_comrec;
-                                            ob_proven.Add(ob_auxven);
-                                        }
-
-                                        break;
-                                    }
-                                }
-
-                                lc_valpro += vr_itevta.Precio * vr_itevta.Cantidad;
-                            }
-
-
-                            var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
-                            foreach (var vr_itevta in ReportSales)
-                            {
-                                ob_intvta.Sala = Convert.ToInt32(vr_itevta.KeySala);
-                                ob_intvta.Funcion = Convert.ToInt32(vr_itevta.HorProg.Substring(0, 2));
-                                ob_intvta.Pelicula = Convert.ToInt32(vr_itevta.KeyPelicula);
-                                ob_intvta.FechaFun = string.Concat(vr_itevta.FecProg.Substring(0, 4), "-", vr_itevta.FecProg.Substring(4, 2), "-", vr_itevta.FecProg.Substring(6, 2));
-                                ob_intvta.InicioFun = Convert.ToInt32(vr_itevta.HorProg);
-
-                                lc_boltot = vr_itevta.Precio;
-                                lc_ubiprg = vr_itevta.SelUbicaciones;
-                                lc_keytar = Convert.ToInt32(vr_itevta.KeyTarifa);
-                            }
-
-                            //Obtener ubicaciones de vista
-                            char[] ar_charst = lc_ubiprg.ToCharArray();
-                            for (int lc_iditem = 0; lc_iditem < ar_charst.Length; lc_iditem++)
-                            {
-                                //Concatenar caracteres
-                                lc_auxitm += ar_charst[lc_iditem].ToString();
-
-                                //Obtener parámetro
-                                if (ar_charst[lc_iditem].ToString() == ";")
-                                {
-                                    ls_lstubi.Add(lc_auxitm.Substring(0, lc_auxitm.Length - 1));
-                                    lc_auxitm = string.Empty;
-                                }
-                            }
-
-                            //Cargar ubicaciones al modelo JSON
-                            lc_auxitm = string.Empty;
-                            foreach (var item in ls_lstubi)
-                            {
-                                lc_idearr = 0;
-                                char[] ar_chars2 = item.ToCharArray();
-                                for (int lc_iditem = 0; lc_iditem < ar_chars2.Length; lc_iditem++)
-                                {
-                                    //Concatenar caracteres
-                                    lc_auxitm += ar_chars2[lc_iditem].ToString();
-
-                                    //Obtener parámetro
-                                    if (ar_chars2[lc_iditem].ToString() == "_")
-                                    {
-                                        ls_lstsel[lc_idearr] = lc_auxitm.Substring(0, lc_auxitm.Length - 1);
-
-                                        lc_idearr++;
-                                        lc_auxitm = string.Empty;
-                                    }
-                                }
-
-                                lc_cntubi++;
-                                lc_ubilbl += string.Concat("Fila: ", ls_lstsel[1], " Columna: ", ls_lstsel[2], ";");
-                                ob_ubiprg.Add(new Ubicaciones() { Fila = ls_lstsel[3], Columna = Convert.ToInt32(ls_lstsel[4]), Tarifa = lc_keytar, FilRelativa = ls_lstsel[1], ColRelativa = Convert.ToInt32(ls_lstsel[2]), TipoSilla = "", TipoZona = "", EstadoSilla = "" });
-                            }
-
-                            //Adicionar a lista
-                            ob_ordite.Add(new OrderItem
-                            {
-                                Precio = Convert.ToDecimal(lc_boltot),
-                                Cantidad = lc_cntubi,
-                                Descripcion = string.Concat(lc_despel, "-", lc_ubilbl),
-                                KeyProducto = ob_intvta.Pelicula
-                            });
-                        }
-
-                        //Venta de boletas y confites
-                        lc_boltot += Convert.ToDouble(lc_valpro);
-
-                        //Asignar valores
-                        ob_intvta.Productos = ob_proven;
-                        ob_intvta.Ubicaciones = ob_ubiprg;
-                        ob_intvta.Accion = pr_datpro.SwtVenta;
-                        ob_intvta.TotalVenta = lc_boltot;
-
-                        //Validar pago cashback
-                        if (pr_datpro.SwitchCashback == "S")
-                        {
-                            ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPagoCB);
-                            ob_intvta.PagoInterno = Convert.ToDouble(lc_boltot);
-                            ob_intvta.PagoCredito = 0;
-                        }
-                        else
-                        {
-                            ob_intvta.CodMedioPago = Convert.ToInt32(App.CodMedioPago);
-                            ob_intvta.PagoInterno = 0;
-                            ob_intvta.PagoCredito = Convert.ToDouble(lc_boltot);
-                        }
-
-                        break;
-                }
-
-                #region SERVICIO SCOINT
-                //Asignar valores
-                ob_intvta.Nombre = NombreEli;
-                ob_intvta.Factura = Convert.ToInt32(KeySecuencia);
-                ob_intvta.Apellido = ApellidoEli;
-                ob_intvta.Telefono = Convert.ToInt64(TelefonoEli);
-                ob_intvta.Direccion = DireccionEli;
-                ob_intvta.PuntoVenta = Convert.ToInt32(App.PuntoVenta);
-                ob_intvta.DocIdentidad = Convert.ToInt64(DocumentoEli) == 0 ? 99999999999 : Convert.ToInt64(DocumentoEli);
-                ob_intvta.CorreoCliente = EmailEli;
-
-                ob_intvta.Obs1 = "";
-                ob_intvta.Obs2 = "";
-                ob_intvta.Obs3 = "";
-                ob_intvta.Obs4 = "";
-                ob_intvta.Placa = "0";
-                ob_intvta.Teatro = Convert.ToInt32(KeyTeatro);
-                ob_intvta.Tercero = Convert.ToInt32(App.ValorTercero);
-                ob_intvta.AudiPrev = 0;
-                ob_intvta.TipoBono = 0;
-                ob_intvta.Cortesia = "";
-                ob_intvta.TipoEntrega = "T";
-
-                ob_intvta.PagoEfectivo = 0;
-                ob_intvta.ClienteFrecuente = lc_barclf;
-               
-                //Generar y encriptar JSON para servicio
-                lc_srvpar = ob_fncgrl.JsonConverter(ob_intvta);
-                lc_srvpar = lc_srvpar.Replace("puntoVenta", "PuntoVenta");
-                lc_srvpar = lc_srvpar.Replace("factura", "Factura");
-                lc_srvpar = lc_srvpar.Replace("correoCliente", "CorreoCliente");
-                lc_srvpar = lc_srvpar.Replace("docIdentidad", "DocIdentidad");
-                lc_srvpar = lc_srvpar.Replace("nombre", "Nombre");
-                lc_srvpar = lc_srvpar.Replace("apellido", "Apellido");
-                lc_srvpar = lc_srvpar.Replace("telefono", "Telefono");
-                lc_srvpar = lc_srvpar.Replace("direccion", "Direccion");
-                lc_srvpar = lc_srvpar.Replace("sala", "Sala");
-                lc_srvpar = lc_srvpar.Replace("fechaFun", "FechaFun");
-                lc_srvpar = lc_srvpar.Replace("funcion", "Funcion");
-                lc_srvpar = lc_srvpar.Replace("inicioFun", "InicioFun");
-                lc_srvpar = lc_srvpar.Replace("ubicaciones", "Ubicaciones");
-                lc_srvpar = lc_srvpar.Replace("fila", "Fila");
-                lc_srvpar = lc_srvpar.Replace("columna", "Columna");
-                lc_srvpar = lc_srvpar.Replace("tarifa", "Tarifa");
-                lc_srvpar = lc_srvpar.Replace("filRelativa", "FilRelativa");
-                lc_srvpar = lc_srvpar.Replace("colRelativa", "ColRelativa");
-                lc_srvpar = lc_srvpar.Replace("pelicula", "Pelicula");
-                lc_srvpar = lc_srvpar.Replace("productos", "Productos");
-
-                lc_srvpar = lc_srvpar.Replace("receta", "Receta");
-                lc_srvpar = lc_srvpar.Replace("RecetaCategoria", "Receta");
-                lc_srvpar = lc_srvpar.Replace("codigo", "Codigo");
-                lc_srvpar = lc_srvpar.Replace("tipo", "Tipo");
-                lc_srvpar = lc_srvpar.Replace("descripcion", "Descripcion");
-                lc_srvpar = lc_srvpar.Replace("precio", "Precio");
-                lc_srvpar = lc_srvpar.Replace("precios", "Precio");
-                lc_srvpar = lc_srvpar.Replace("Precios", "Precio");
-                lc_srvpar = lc_srvpar.Replace("cantidad", "Cantidad");
-
-                lc_srvpar = lc_srvpar.Replace("placa", "Placa");
-                lc_srvpar = lc_srvpar.Replace("audiPrev", "AudiPrev");
-                lc_srvpar = lc_srvpar.Replace("tipoEntrega", "TipoEntrega");
-                lc_srvpar = lc_srvpar.Replace("cortesia", "Cortesia");
-                lc_srvpar = lc_srvpar.Replace("tipoBono", "TipoBono");
-                lc_srvpar = lc_srvpar.Replace("clienteFrecuente", "ClienteFrecuente");
-                lc_srvpar = lc_srvpar.Replace("totalVenta", "TotalVenta");
-                lc_srvpar = lc_srvpar.Replace("pagoInterno", "PagoInterno");
-                lc_srvpar = lc_srvpar.Replace("pagoCredito", "PagoCredito");
-                lc_srvpar = lc_srvpar.Replace("pagoEfectivo", "PagoEfectivo");
-                lc_srvpar = lc_srvpar.Replace("codMedioPago", "CodMedioPago");
-                lc_srvpar = lc_srvpar.Replace("obs1", "Obs1");
-                lc_srvpar = lc_srvpar.Replace("obs2", "Obs2");
-                lc_srvpar = lc_srvpar.Replace("obs3", "Obs3");
-                lc_srvpar = lc_srvpar.Replace("obs4", "Obs4");
-                lc_srvpar = lc_srvpar.Replace("accion", "Accion");
-
-                //Encriptar Json
-                lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
-
-                //Consumir servicio
-                lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
-
-                if (lc_result.Substring(0, 1) == "0")
-                {
-                    //Quitar switch
-                    lc_result = lc_result.Replace("0-", "");
-                    lc_result = lc_result.Replace("[", "");
-                    lc_result = lc_result.Replace("]", "");
-
-                    //Deserializar Json y validar respuesta
-                    ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
-
-                    //Validar respuesta llave 1
-                    if (ob_diclst.ContainsKey("Validación"))
-                    {
-                        MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        App.respuestagenerica = "Error";
+                            break;
                     }
-                    else
+
+                    #region SERVICIO SCOINT
+                    //Asignar valores
+                    ob_intvta.Nombre = NombreEli;
+                    ob_intvta.Factura = Convert.ToInt32(KeySecuencia);
+                    ob_intvta.Apellido = ApellidoEli;
+                    ob_intvta.Telefono = Convert.ToInt64(TelefonoEli);
+                    ob_intvta.Direccion = DireccionEli;
+                    ob_intvta.PuntoVenta = Convert.ToInt32(App.PuntoVenta);
+                    ob_intvta.DocIdentidad = Convert.ToInt64(DocumentoEli) == 0 ? 99999999999 : Convert.ToInt64(DocumentoEli);
+                    ob_intvta.CorreoCliente = EmailEli;
+
+                    ob_intvta.Obs1 = "";
+                    ob_intvta.Obs2 = "";
+                    ob_intvta.Obs3 = "";
+                    ob_intvta.Obs4 = "";
+                    ob_intvta.Placa = "0";
+                    ob_intvta.Teatro = Convert.ToInt32(KeyTeatro);
+                    ob_intvta.Tercero = Convert.ToInt32(App.ValorTercero);
+                    ob_intvta.AudiPrev = 0;
+                    ob_intvta.TipoBono = 0;
+                    ob_intvta.Cortesia = "";
+                    ob_intvta.TipoEntrega = "T";
+
+                    ob_intvta.PagoEfectivo = 0;
+                    ob_intvta.ClienteFrecuente = lc_barclf;
+
+                    //Generar y encriptar JSON para servicio
+                    lc_srvpar = ob_fncgrl.JsonConverter(ob_intvta);
+                    lc_srvpar = lc_srvpar.Replace("puntoVenta", "PuntoVenta");
+                    lc_srvpar = lc_srvpar.Replace("factura", "Factura");
+                    lc_srvpar = lc_srvpar.Replace("correoCliente", "CorreoCliente");
+                    lc_srvpar = lc_srvpar.Replace("docIdentidad", "DocIdentidad");
+                    lc_srvpar = lc_srvpar.Replace("nombre", "Nombre");
+                    lc_srvpar = lc_srvpar.Replace("apellido", "Apellido");
+                    lc_srvpar = lc_srvpar.Replace("telefono", "Telefono");
+                    lc_srvpar = lc_srvpar.Replace("direccion", "Direccion");
+                    lc_srvpar = lc_srvpar.Replace("sala", "Sala");
+                    lc_srvpar = lc_srvpar.Replace("fechaFun", "FechaFun");
+                    lc_srvpar = lc_srvpar.Replace("funcion", "Funcion");
+                    lc_srvpar = lc_srvpar.Replace("inicioFun", "InicioFun");
+                    lc_srvpar = lc_srvpar.Replace("ubicaciones", "Ubicaciones");
+                    lc_srvpar = lc_srvpar.Replace("fila", "Fila");
+                    lc_srvpar = lc_srvpar.Replace("columna", "Columna");
+                    lc_srvpar = lc_srvpar.Replace("tarifa", "Tarifa");
+                    lc_srvpar = lc_srvpar.Replace("filRelativa", "FilRelativa");
+                    lc_srvpar = lc_srvpar.Replace("colRelativa", "ColRelativa");
+                    lc_srvpar = lc_srvpar.Replace("pelicula", "Pelicula");
+                    lc_srvpar = lc_srvpar.Replace("productos", "Productos");
+
+                    lc_srvpar = lc_srvpar.Replace("receta", "Receta");
+                    lc_srvpar = lc_srvpar.Replace("RecetaCategoria", "Receta");
+                    lc_srvpar = lc_srvpar.Replace("codigo", "Codigo");
+                    lc_srvpar = lc_srvpar.Replace("tipo", "Tipo");
+                    lc_srvpar = lc_srvpar.Replace("descripcion", "Descripcion");
+                    lc_srvpar = lc_srvpar.Replace("precio", "Precio");
+                    lc_srvpar = lc_srvpar.Replace("precios", "Precio");
+                    lc_srvpar = lc_srvpar.Replace("Precios", "Precio");
+                    lc_srvpar = lc_srvpar.Replace("cantidad", "Cantidad");
+
+                    lc_srvpar = lc_srvpar.Replace("placa", "Placa");
+                    lc_srvpar = lc_srvpar.Replace("audiPrev", "AudiPrev");
+                    lc_srvpar = lc_srvpar.Replace("tipoEntrega", "TipoEntrega");
+                    lc_srvpar = lc_srvpar.Replace("cortesia", "Cortesia");
+                    lc_srvpar = lc_srvpar.Replace("tipoBono", "TipoBono");
+                    lc_srvpar = lc_srvpar.Replace("clienteFrecuente", "ClienteFrecuente");
+                    lc_srvpar = lc_srvpar.Replace("totalVenta", "TotalVenta");
+                    lc_srvpar = lc_srvpar.Replace("pagoInterno", "PagoInterno");
+                    lc_srvpar = lc_srvpar.Replace("pagoCredito", "PagoCredito");
+                    lc_srvpar = lc_srvpar.Replace("pagoEfectivo", "PagoEfectivo");
+                    lc_srvpar = lc_srvpar.Replace("codMedioPago", "CodMedioPago");
+                    lc_srvpar = lc_srvpar.Replace("obs1", "Obs1");
+                    lc_srvpar = lc_srvpar.Replace("obs2", "Obs2");
+                    lc_srvpar = lc_srvpar.Replace("obs3", "Obs3");
+                    lc_srvpar = lc_srvpar.Replace("obs4", "Obs4");
+                    lc_srvpar = lc_srvpar.Replace("accion", "Accion");
+                    lc_srvpar = lc_srvpar.Replace("recetaCategoria", "Receta");
+
+                    //Encriptar Json
+                    lc_srvpar = ob_fncgrl.EncryptStringAES(lc_srvpar);
+
+                    //Consumir servicio
+                    lc_result = ob_fncgrl.WebServices(string.Concat(App.ScoreServices, "scoint/"), lc_srvpar);
+
+                    if (lc_result.Substring(0, 1) == "0")
                     {
-                        //Validar respuesta llave 2
-                        if (ob_diclst.ContainsKey("Respuesta"))
+                        //Quitar switch
+                        lc_result = lc_result.Replace("0-", "");
+                        lc_result = lc_result.Replace("[", "");
+                        lc_result = lc_result.Replace("]", "");
+
+                        //Deserializar Json y validar respuesta
+                        ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+
+                        //Validar respuesta llave 1
+                        if (ob_diclst.ContainsKey("Validación"))
                         {
-                            if (ob_diclst["Respuesta"].ToString() != "Proceso exitoso.")
+                            //MessageBox.Show(ob_diclst["Validación"].ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            App.respuestagenerica = "Error";
+                        }
+                        else
+                        {
+                            //Validar respuesta llave 2
+                            if (ob_diclst.ContainsKey("Respuesta"))
                             {
-                                //Crear transacción del registro
-                                using (var transaction = new DataDB(config))
+                                if (ob_diclst["Respuesta"].ToString() != "Proceso exitoso.")
                                 {
-                                    var transactionSales = new TransactionSales
+                                    //Crear transacción del registro
+                                    using (var transaction = new DataDB(config))
                                     {
-                                        Secuencia = Convert.ToDecimal(KeySecuencia),
-                                        PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
-                                        Teatro = Convert.ToDecimal(KeyTeatro),
-                                        EmailEli = EmailEli,
-                                        NombreEli = NombreEli + " " + ApellidoEli,
-                                        DocumentoEli = DocumentoEli,
-                                        TelefonoEli = TelefonoEli,
-                                        EstadoTx = "ERR",
-                                        FechaTx = DateTime.Now,
-                                        ValorTx = 0,
-                                        BaseTx = 0,
-                                        IvaTx = 0,
-                                        IcoTx = 0,
-                                        AutorizacionTx = "-",
-                                        ReferenciaTx = "-",
-                                        ReferenciaEx = "VENTA RECHAZADA SOLO SCORE ",
-                                        BancoTx = "-",
-                                        Observaciones = ob_diclst["Respuesta"].ToString(),
-                                        FechaCreado = DateTime.Now,
-                                        FechaModificado = DateTime.Now
-                                    };
+                                        var transactionSales = new TransactionSales
+                                        {
+                                            Secuencia = Convert.ToDecimal(KeySecuencia),
+                                            PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
+                                            Teatro = Convert.ToDecimal(App.idCine),
+                                            EmailEli = EmailEli == null ? "pol@scoreprojects.net" : EmailEli,
+                                            NombreEli = NombreEli + " " + ApellidoEli,
+                                            DocumentoEli = DocumentoEli == null ? "99999999999" : DocumentoEli,
+                                            TelefonoEli = TelefonoEli == null ? "123456" : TelefonoEli,
+                                            EstadoTx = "ERR",
+                                            FechaTx = DateTime.Now,
+                                            ValorTx = 0,
+                                            BaseTx = 0,
+                                            IvaTx = 0,
+                                            IcoTx = 0,
+                                            AutorizacionTx = "-",
+                                            ReferenciaTx = "-",
+                                            ReferenciaEx = "VENTA RECHAZADA SOLO SCORE ",
+                                            BancoTx = "-",
+                                            Observaciones = ob_diclst["Respuesta"].ToString(),
+                                            FechaCreado = DateTime.Now,
+                                            FechaModificado = DateTime.Now
+                                        };
 
-                                    //Adicionar y guardar registro a tabla
-                                    transaction.TransactionSales.Add(transactionSales);
-                                    transaction.SaveChanges();
+                                        //Adicionar y guardar registro a tabla
+                                        transaction.TransactionSales.Add(transactionSales);
+                                        transaction.SaveChanges();
 
-                                    App.EstadoScore = "1";
+                                        App.EstadoScore = "1";
 
-                                }
+                                    }
 
-                                //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            else
-                            {
-                                if (lc_tipven == "B")
-                                {
-                                    Base = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
-                                    Total = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
-                                }
-                                else if (lc_tipven == "M")
-                                {
-                                    Base = Math.Round(Convert.ToDecimal(ob_diclst["Boletas+Base"].ToString()), 2);
-                                    Total = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
+                                    //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 }
                                 else
                                 {
-                                    Base = Math.Round(Convert.ToDecimal(ob_diclst["Base"].ToString()), 2);
-                                    Total = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
-                                }
-
-                                if (ob_diclst["Impuesto_1"].ToString() != "0")
-                                {
-                                    //Validar impoconsumo 1
-                                    if (ob_diclst["TipoImpuesto_1"].ToString().Contains("8%"))
-                                        App.IVC = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2));
-
-                                    //Validar iva 1
-                                    if (ob_diclst["TipoImpuesto_1"].ToString().Contains("19%"))
-                                        App.IVA = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2));
-                                }
-
-                                if (ob_diclst["Impuesto_2"].ToString() != "0")
-                                {
-                                    //Validar impoconsumo 1
-                                    if (ob_diclst["TipoImpuesto_2"].ToString().Contains("8%"))
-                                        App.IVC = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2));
-                                    //Validar iva 1
-                                    if (ob_diclst["TipoImpuesto_2"].ToString().Contains("19%"))
-                                        App.IVA = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2));
-                                }
-
-                                CashBack_Acumulado = Math.Round(Convert.ToDecimal(ob_diclst["CashBack_Acumulado"].ToString()), 2);
-
-
-
-                                //Crear transacción del registro
-                                using (var transaction = new DataDB(config))
-                                {
-                                    var transactionSales = new TransactionSales
+                                    if (lc_tipven == "B")
                                     {
-                                        Secuencia = Convert.ToDecimal(KeySecuencia),
-                                        PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
-                                        Teatro = Convert.ToDecimal(KeyTeatro),
-                                        EmailEli = EmailEli,
-                                        NombreEli = NombreEli + " " + ApellidoEli,
-                                        DocumentoEli = DocumentoEli,
-                                        TelefonoEli = TelefonoEli,
-                                        EstadoTx = "SCO",
-                                        FechaTx = DateTime.Now,
-                                        ValorTx = Total,
-                                        BaseTx = Base,
-                                        IvaTx = Impuesto_2,
-                                        IcoTx = Impuesto_1,
-                                        AutorizacionTx = "-",
-                                        ReferenciaTx = "-",
-                                        ReferenciaEx = "-",
-                                        BancoTx = "-",
-                                        Observaciones = "VENTA SOLO SCORE",
-                                        FechaCreado = DateTime.Now,
-                                        FechaModificado = DateTime.Now
-                                    };
-
-                                    //Adicionar y guardar registro a tabla
-                                    transaction.TransactionSales.Add(transactionSales);
-                                    transaction.SaveChanges();
-                                    App.EstadoScore = "0";
-                                    try
-                                    {
-                                        //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                                        Base = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
+                                        Total = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
                                     }
-                                    catch (Exception ex)
+                                    else if (lc_tipven == "M")
                                     {
-                                        MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                        App.respuestagenerica = "Error";
+                                        Base = Math.Round(Convert.ToDecimal(ob_diclst["Boletas+Base"].ToString()), 2);
+                                        Total = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
+                                    }
+                                    else
+                                    {
+                                        Base = Math.Round(Convert.ToDecimal(ob_diclst["Base"].ToString()), 2);
+                                        Total = Math.Round(Convert.ToDecimal(ob_diclst["Total"].ToString()), 2);
+                                    }
 
+                                    if (ob_diclst["Impuesto_1"].ToString() != "0")
+                                    {
+                                        //Validar impoconsumo 1
+                                        if (ob_diclst["TipoImpuesto_1"].ToString().Contains("8%"))
+                                            App.IVC = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2));
+
+                                        //Validar iva 1
+                                        if (ob_diclst["TipoImpuesto_1"].ToString().Contains("19%"))
+                                            App.IVA = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_1"].ToString()), 2));
+                                    }
+
+                                    if (ob_diclst["Impuesto_2"].ToString() != "0")
+                                    {
+                                        //Validar impoconsumo 1
+                                        if (ob_diclst["TipoImpuesto_2"].ToString().Contains("8%"))
+                                            App.IVC = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2));
+                                        //Validar iva 1
+                                        if (ob_diclst["TipoImpuesto_2"].ToString().Contains("19%"))
+                                            App.IVA = Convert.ToString(Math.Round(Convert.ToDecimal(ob_diclst["Impuesto_2"].ToString()), 2));
+                                    }
+
+                                    CashBack_Acumulado = Math.Round(Convert.ToDecimal(ob_diclst["CashBack_Acumulado"].ToString()), 2);
+
+
+
+                                    //Crear transacción del registro
+                                    using (var transaction = new DataDB(config))
+                                    {
+                                        var transactionSales = new TransactionSales
+                                        {
+                                            Secuencia = Convert.ToDecimal(KeySecuencia),
+                                            PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
+                                            Teatro = Convert.ToDecimal(App.idCine),
+                                            EmailEli = EmailEli == null ? "pol@scoreprojects.net" : EmailEli,
+                                            NombreEli = NombreEli + " " + ApellidoEli,
+                                            DocumentoEli = DocumentoEli == null ? "99999999999" : DocumentoEli,
+                                            TelefonoEli = TelefonoEli == null ? "123456" : TelefonoEli,
+                                            EstadoTx = "SCO",
+                                            FechaTx = DateTime.Now,
+                                            ValorTx = Total,
+                                            BaseTx = Base,
+                                            IvaTx = Impuesto_2,
+                                            IcoTx = Impuesto_1,
+                                            AutorizacionTx = "-",
+                                            ReferenciaTx = "-",
+                                            ReferenciaEx = "-",
+                                            BancoTx = "-",
+                                            Observaciones = "VENTA SOLO SCORE",
+                                            FechaCreado = DateTime.Now,
+                                            FechaModificado = DateTime.Now
+                                        };
+
+                                        //Adicionar y guardar registro a tabla
+                                        transaction.TransactionSales.Add(transactionSales);
+                                        transaction.SaveChanges();
+                                        App.EstadoScore = "0";
+                                        try
+                                        {
+                                            //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            //MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                            App.respuestagenerica = "Error";
+
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                else
-                {
-                    MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                #endregion
+                    else
+                    {
+                        MessageBox.Show(ob_diclst["Respuesta"].ToString() + " SECUENCIA: " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    #endregion
 
 
-                //Validar redireccion si hay pago con cashback
-                if (pr_datpro.SwitchCashback == "S")
+                    //Validar redireccion si hay pago con cashback
+                    if (pr_datpro.SwitchCashback == "S")
+                    {
+                        string ref_payco = "CashBack:" + Total.ToString();
+
+                        App.Responses(ref_payco);
+
+                    }
+
+                }
+                catch (Exception lc_syserr)
                 {
-                    string ref_payco = "CashBack:" + Total.ToString();
+                    //Crear transacción del registro
+                    using (var transaction = new DataDB(config))
+                    {
+                        var transactionSales = new TransactionSales
+                        {
+                            Secuencia = Convert.ToDecimal(KeySecuencia),
+                            PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
+                            Teatro = Convert.ToDecimal(App.idCine),
+                            EmailEli = EmailEli == null ? "pol@scoreprojects.net" : EmailEli,
+                            NombreEli = NombreEli + " " + ApellidoEli,
+                            DocumentoEli = DocumentoEli == null ? "99999999999" : DocumentoEli,
+                            TelefonoEli = TelefonoEli == null ? "123456" : TelefonoEli,
+                            EstadoTx = "ERR",
+                            FechaTx = DateTime.Now,
+                            ValorTx = 0,
+                            BaseTx = 0,
+                            IvaTx = 0,
+                            IcoTx = 0,
+                            AutorizacionTx = "-",
+                            ReferenciaTx = "-",
+                            ReferenciaEx = "VENTA RECHAZADA SOLO SCORE ",
+                            BancoTx = "-",
+                            Observaciones = lc_syserr.Message,
+                            FechaCreado = DateTime.Now,
+                            FechaModificado = DateTime.Now
+                        };
+
+                        //Adicionar y guardar registro a tabla
+                        transaction.TransactionSales.Add(transactionSales);
+                        transaction.SaveChanges();
+                    }
+
+                    //MessageBox.Show((lc_syserr.Message).Contains("Inner") ? lc_syserr.InnerException.Message : "null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
+                {
+               
+                }
+                else 
+                {
+                    string ref_payco = "Tarjeta:" + Total.ToString();
 
                     App.Responses(ref_payco);
-
                 }
-                else
-                {
-                    App.respuestagenerica = "Error";
-
-                    //var secretKey = config.Value.secretKey;
-                    //var queryString = $"{pr_datpro.KeySecuencia}{pr_datpro.SwtVenta}{Total}{Impuesto_1}{Impuesto_2}{Base}{CashBack_Acumulado}";
-                    //var computedSignature = ComputeSignature(queryString, secretKey);
-                    //return RedirectToAction("Finish", "Pages", new { pr_secpro = pr_datpro.KeySecuencia, pr_swtven = pr_datpro.SwtVenta, pr_valven = Total, pr_valimp = Impuesto_1, pr_valiva = Impuesto_2, pr_valbas = Base, pr_casbck = CashBack_Acumulado, signature = computedSignature });
-                }
+ 
             }
-            catch (Exception lc_syserr)
-            {
-                //Crear transacción del registro
-                using (var transaction = new DataDB(config))
-                {
-                    var transactionSales = new TransactionSales
-                    {
-                        Secuencia = Convert.ToDecimal(KeySecuencia),
-                        PuntoVenta = Convert.ToDecimal(App.PuntoVenta),
-                        Teatro = Convert.ToDecimal(App.idCine),
-                        EmailEli = EmailEli,
-                        NombreEli = NombreEli + " " + ApellidoEli,
-                        DocumentoEli = DocumentoEli,
-                        TelefonoEli = TelefonoEli,
-                        EstadoTx = "ERR",
-                        FechaTx = DateTime.Now,
-                        ValorTx = 0,
-                        BaseTx = 0,
-                        IvaTx = 0,
-                        IcoTx = 0,
-                        AutorizacionTx = "-",
-                        ReferenciaTx = "-",
-                        ReferenciaEx = "VENTA RECHAZADA SOLO SCORE ",
-                        BancoTx = "-",
-                        Observaciones = lc_syserr.Message,
-                        FechaCreado = DateTime.Now,
-                        FechaModificado = DateTime.Now
-                    };
 
-                    //Adicionar y guardar registro a tabla
-                    transaction.TransactionSales.Add(transactionSales);
-                    transaction.SaveChanges();
-                }
-
-                MessageBox.Show((lc_syserr.Message).Contains("Inner") ? lc_syserr.InnerException.Message : "null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         public static void Responses(string ref_payco = "")
@@ -1588,7 +1601,7 @@ namespace Portal.Kiosco
                         ob_repsle.EmailEli = App.EmailEli;
                         ob_repsle.NombreEli = App.NombreEli + " " + App.ApellidoEli;
                         ob_repsle.TelefonoEli = App.TelefonoEli;
-                        ob_repsle.DocumentoEli = App.NroDocumento;
+                        ob_repsle.DocumentoEli = App.NroDocumento == null ? "999999999": App.NroDocumento;
 
 
                         //Actualizar estado de transacción

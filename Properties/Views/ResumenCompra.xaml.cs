@@ -219,18 +219,16 @@ namespace Portal.Kiosco.Properties.Views
                     App.TipoCompra = "M";
             }
 
-
-
-            GenerateResumen(ListCarritoR, ListCarritoB);
+           GenerateResumen(ListCarritoR, ListCarritoB);
         }
 
         public void GenerateResumen(List<RetailSales> ListCarritoR, List<ReportSales> ListCarritoB)
         {
             decimal totalcombos = 0;
             decimal codigo = 0;
-            string nombre = "";
-            decimal precio = 0;
-            decimal cantidad = 0;
+            //string nombre = "";
+            //decimal precio = 0;
+            //decimal cantidad = 0;
 
             if (App.Pelicula.Nombre != "")
             {
@@ -250,25 +248,42 @@ namespace Portal.Kiosco.Properties.Views
 
             var combosAgrupados = combos.GroupBy(c => c.KeyProducto);
 
-            
+
+            //decimal totalcombos = 0;
+
             foreach (var grupoCombos in combosAgrupados)
             {
-                foreach (var item in grupoCombos)
+                var groupedItems = grupoCombos
+                    .GroupBy(item => new { item.Descripcion, item.Precio })
+                    .Select(g => new
+                    {
+                        Descripcion = g.Key.Descripcion,
+                        Precio = g.Key.Precio,
+                        Cantidad = g.Count()
+                    });
+
+                foreach (var group in groupedItems)
                 {
-                    cantidad = item.Cantidad;
-                    codigo = item.KeyProducto;
-                    nombre = item.Descripcion;
-                    precio = item.Precio;
+                    string nombre = group.Descripcion;
+                    decimal precio = group.Precio;
+                    int cantidad = group.Cantidad;
+
+                    // Calcula el total actual (remueve caracteres no numéricos y convierte a decimal)
+                    string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
+                    decimal totalAnterior = decimal.Parse(totalString);
+
+                    // Calcula el nuevo total sumando el precio del ítem
+                    decimal nuevoTotal = totalAnterior + (precio * cantidad);
+
+                    // Multiplica el nuevo total por la cantidad
+                    decimal total = nuevoTotal;
+
+                    // Suma el total al total de combinaciones
+                    totalcombos += total;
+
+                    // Genera el resumen de categoría
+                    GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
                 }
-
-                string totalString = TotalResumen.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
-                decimal totalAnterior = decimal.Parse(totalString);
-                decimal nuevoTotal = totalAnterior + precio;
-
-                decimal total = nuevoTotal * cantidad;
-                totalcombos += total;
-
-                GenerateResumenCategoria("Combos", nombre, precio, cantidad.ToString(), total);
             }
 
             TotalResumen.Content = totalcombos.ToString("C0");

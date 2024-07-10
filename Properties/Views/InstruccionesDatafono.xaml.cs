@@ -1,4 +1,5 @@
 ﻿using APIPortalKiosco.Entities;
+using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading;
@@ -12,8 +13,8 @@ namespace Portal.Kiosco.Properties.Views
     {
         private bool isThreadActive = true;
         private System.Timers.Timer timer;
-
-
+        public int validador = 0;
+        private readonly IOptions<MyConfig> config;
 
         public InstruccionesDatafono()
         {
@@ -28,7 +29,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 lblnombre.Content = "¡HOLA INVITADO!";
             }
-
+            validador = 0;
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
 
@@ -68,70 +69,112 @@ namespace Portal.Kiosco.Properties.Views
 
         public void LLamadoDatafono()
         {
+            
+                Producto producto = new Producto
+                {
+                    TipoCompra = App.TipoCompra,
+                    KeySecuencia = App.Secuencia,
+                    SwtVenta = "V",
+                    SwitchCashback = "N",
+                    Valor = App.TotalPagar,
+                };
 
-            Producto producto = new Producto
+
+                App.Payment(producto);
+                App.validadorVenta = 1;
+            
+            if (App.EstadoScore == "0")
             {
-                TipoCompra = App.TipoCompra,
-                KeySecuencia = App.Secuencia,
-                SwtVenta = "V",
-                SwitchCashback = "N",
-                Valor = App.TotalPagar,
-            };
+                var subtotal = 0;
+                var IAC = 0;
+                var total = Convert.ToInt64(App.TotalPagar);
+                var subtotalString = "";
+            ;
+                // Si App.IVA es null, se utiliza "0"
+                string ivaString = App.IVA ?? "0";
+
+                string icaString = App.IVC ?? "0";
+                // Convertir el valor a decimal
+                decimal ivaDecimal;
+                if (decimal.TryParse(ivaString, out ivaDecimal))
+                {
+                    // Redondear el valor
+                     subtotal = Convert.ToInt32(Math.Round(ivaDecimal));
+
+                    // Convertir a string si es necesario
+                     subtotalString = subtotal.ToString();
+                    App.IVA = subtotalString;
+                }
+                else
+                {
+                    // Manejar el caso en que la conversión falle
+                    throw new FormatException("El valor de IVA no tiene un formato correcto.");
+                }
+                decimal icaDecimal;
+                if (decimal.TryParse(icaString, out icaDecimal))
+                {
+                    // Redondear el valor
+                    IAC = Convert.ToInt32(Math.Round(icaDecimal));
+
+                    // Convertir a string si es necesario
+                    icaString = IAC.ToString();
+                    App.IVC = icaString;
+                }
+                else
+                {
+                    // Manejar el caso en que la conversión falle
+                    throw new FormatException("El valor de IVA no tiene un formato correcto.");
+                }
 
 
-            App.Payment(producto);
-
-            //if (App.EstadoScore == "0")
-            //{
-            //    var subtotal = "0";
-            //    var IAC = "0";
-            //    var total = Convert.ToInt64(App.TotalPagar);
-
-            //    subtotal = App.IVA;
-            //    IAC = App.IVC;
+              
 
 
-            //    var responseSection = "";
+                var responseSection = "";
 
 
-            //    String Trama = "01," + total.ToString() + "," + subtotal + "," + App.PuntoVenta + "," + App.Secuencia + ", 0 ," + IAC + ",KIOSCO,0,0,";
+                String Trama = "01," + total.ToString() + "," + subtotalString + "," + App.PuntoVenta + ","+ App.Secuencia.ToString() +", 0 ," + icaString + ",KIOSCO,0,0,";
+                
+                var respuesta = App.RunProgramAndWait(Trama);
 
-            //    var respuesta = App.RunProgramAndWait(Trama);
+                int start = respuesta.IndexOf("Response:");
 
-            //    int start = respuesta.IndexOf("Response:");
+                int end = respuesta.IndexOf("*", start);
 
-            //    int end = respuesta.IndexOf("*", start);
+                if (start != -1 && end != -1)
+                {
+                    responseSection = respuesta.Substring(start, end - start);
 
-            //    if (start != -1 && end != -1)
-            //    {
-            //        responseSection = respuesta.Substring(start, end - start);
-            //        App.respuestagenerica = responseSection;
-            //        Console.WriteLine(responseSection);
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    }
+                    App.respuestagenerica = responseSection.Contains("Response:00") ? "00" : "Error";
+                    Console.WriteLine(responseSection);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
 
-            //    if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
-            //    {
-            //        MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //        this.Close();
-            //    }
-            //    else
-            //    {
-            //        App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
-            //        var openWindows = new BoletasGafasAlimentos();
-            //        openWindows.Show();
-            //        this.Close();
-            //    }
+                if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
+                {
+                    MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
+                }
+                else
+                {
+                    App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
+                    var openWindows = new BoletasGafasAlimentos();
+                    openWindows.Show();
+                    this.Close();
+                }
 
-            //}
-            //else 
-            //{
-            //    MessageBox.Show("Error al procesar el pago en SCORE" + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    this.Close();
-            //}
+            }
+            else
+            {
+                MessageBox.Show("Error al procesar el pago en SCORE" + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var openWindows = new ResumenCompra(config);
+                openWindows.Show();
+                this.Close();
+
+            }
 
         }
 
