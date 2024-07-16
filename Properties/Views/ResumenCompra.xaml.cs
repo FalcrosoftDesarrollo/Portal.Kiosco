@@ -106,6 +106,7 @@ namespace Portal.Kiosco.Properties.Views
             {
                 var total = Convert.ToString(Convert.ToInt32(totalDecimal));
                 App.TotalPagar = total.ToString();
+
             }
             else
             {
@@ -113,9 +114,10 @@ namespace Portal.Kiosco.Properties.Views
             }
 
             StartMonitoringDatafono();
-            var openWindows = new InstruccionesDatafono();
+            var openWindows = new BoletasGafasAlimentos();
+          
             openWindows.Show();
-         
+            this.Close();
 
         }
 
@@ -144,15 +146,8 @@ namespace Portal.Kiosco.Properties.Views
                 }
             });
 
-            //if (App.ResponseDatafono != "00" && App.ResponseDatafono != null)
-            //{
-            //    monitorThread.Suspend();
-            //    return;
-            //}
-
             monitorThread.IsBackground = true;
             monitorThread.Start();
-           
 
         }
 

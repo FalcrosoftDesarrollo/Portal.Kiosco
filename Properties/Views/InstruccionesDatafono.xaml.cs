@@ -134,8 +134,8 @@ namespace Portal.Kiosco.Properties.Views
 
 
                 String Trama = "01," + total.ToString() + "," + subtotalString + "," + App.PuntoVenta + ","+ App.Secuencia.ToString() +", 0 ," + icaString + ",KIOSCO,0,0,";
-                
-                var respuesta = App.RunProgramAndWait(Trama);
+
+                var respuesta =  App.RunProgramAndWait(Trama);
 
                 int start = respuesta.IndexOf("Response:");
 
@@ -156,6 +156,9 @@ namespace Portal.Kiosco.Properties.Views
                 if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
                 {
                     MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    var openWindows = new ResumenCompra(config);
+                    openWindows.Show();
                     this.Close();
                 }
                 else

@@ -309,7 +309,7 @@ namespace Portal.Kiosco.Properties.Views
 
         public void ProductosAdicionales()
         {
-            var snacks = App.SnacksWeb;
+            var snacks = App.Adicionales;
 
             foreach (var itemRecetaCategoria in snacks)
             {
@@ -341,7 +341,7 @@ namespace Portal.Kiosco.Properties.Views
 
         public void buscarprecioadicionales()
         {
-            var snacks = App.SnacksWeb;
+            var snacks = App.Adicionales;
             precioAdicionales = 0;
             foreach (var itemRecetaCategoria in snacks)
             {
@@ -367,46 +367,51 @@ namespace Portal.Kiosco.Properties.Views
         {
             int contadorAdicionales = 1;
             var adicionales = new Adiciones();
-            var snacks = App.SnacksWeb;
+            var snacks = App.Adicionales;
             adicionales.Secuencia = Convert.ToDecimal(App.Secuencia);
             adicionales.Tipo = "P";
 
             foreach (var itemRecetaCategoria in snacks)
             {
-                if (contadorAdicionales > 6) break;
-
-                string cantidadProp = $"Cantidad_{contadorAdicionales}";
-                string codigoProp = $"Codigo_{contadorAdicionales}";
-                string descripcionProp = $"Descripcion_{contadorAdicionales}";
-                string precioProp = $"Precio_{contadorAdicionales}";
-
-                adicionales.GetType().GetProperty(descripcionProp)?.SetValue(adicionales, itemRecetaCategoria.Descripcion);
-
-                var codigoValue = itemRecetaCategoria.Codigo;
-                adicionales.GetType().GetProperty(codigoProp)?.SetValue(adicionales, codigoValue);
-
-                var precioGeneral = itemRecetaCategoria.Precios.FirstOrDefault()?.General;
-                if (precioGeneral != null)
-                {
-                    var precioValue = precioGeneral;
-                    adicionales.GetType().GetProperty(precioProp)?.SetValue(adicionales, precioValue);
-                }
-
                 foreach (var child in checkBoxAdicionales.Children)
                 {
                     if (child is CheckBox checkBox && checkBox.IsChecked == true)
                     {
                         if (checkBox.Name.Substring(1) == Convert.ToInt32(itemRecetaCategoria.Codigo).ToString())
                         {
+                            string cantidadProp = $"Cantidad_{contadorAdicionales}";
+                            string codigoProp = $"Codigo_{contadorAdicionales}";
+                            string descripcionProp = $"Descripcion_{contadorAdicionales}";
+                            string precioProp = $"Precio_{contadorAdicionales}";
+
+                            adicionales.GetType().GetProperty(descripcionProp)?.SetValue(adicionales, itemRecetaCategoria.Descripcion);
+
+                            var codigoValue = itemRecetaCategoria.Codigo;
+                            adicionales.GetType().GetProperty(codigoProp)?.SetValue(adicionales, codigoValue);
+
+                            var precioGeneral = itemRecetaCategoria.Precios.FirstOrDefault()?.General;
+                            if (precioGeneral != null)
+                            {
+                                var precioValue = precioGeneral;
+                                adicionales.GetType().GetProperty(precioProp)?.SetValue(adicionales, precioValue);
+                            }
+
+
+                            
+
                             adicionales.GetType().GetProperty(cantidadProp)?.SetValue(adicionales, 1m);
+
+                            App.AddProduct(adicionales);
+
                             break;
                         }
                     }
                 }
-                contadorAdicionales++;
+
+               
             }
 
-            App.AddProduct(adicionales);
+           
         }
 
 
@@ -415,7 +420,7 @@ namespace Portal.Kiosco.Properties.Views
             var radioButton = (RadioButton)sender;
             var descripcion = radioButton.Content.ToString();
             var codigo = radioButton.Name.Substring(1);
-            var snacks = App.SnacksWeb;
+            var snacks = App.Adicionales;
             preciodefault = datosFinalesComidaRadio
             .Where(x => x.frecuenciaComida == "default")
             .Sum(x => x.PrecioFinalComida);
@@ -559,7 +564,19 @@ namespace Portal.Kiosco.Properties.Views
                     .Sum(x => x.PrecioFinalComida) + bebidaDetalle1.PrecioFinalBotella + bebidaDetalle2.PrecioFinalBotella + comidaDetalle1.PrecioFinalComida + comidaDetalle2.PrecioFinalComida, 2, bebidaDetalle1, comidaDetalle1, bebidaDetalle2, comidaDetalle2);
                     }
 
+                    else if (opcionSeleccionadabebidasDetalle.Count == 2 && opcionSeleccionadacomidasDetalle.Count == 1)
+                    {
+                        var bebidaDetalle1 = opcionSeleccionadabebidasDetalle[0];
+                        var bebidaDetalle2 = opcionSeleccionadabebidasDetalle[1];
+                        var comidaDetalle1 = opcionSeleccionadacomidasDetalle[0];
+                         
+                        productonew = UpdateProduct(productocambiado, datosFinalesComidaRadio
+                    .Where(x => x.frecuenciaComida == "default")
+                    .Sum(x => x.PrecioFinalComida) + bebidaDetalle1.PrecioFinalBotella + bebidaDetalle2.PrecioFinalBotella + comidaDetalle1.PrecioFinalComida , 2, bebidaDetalle1, comidaDetalle1, bebidaDetalle2);
+                    }
+
                     productonew.KeySecuencia = App.Secuencia;
+                    productonew.Descripcion = productocambiado.Descripcion;
                     productonew.SwitchAdd = "S";
                     productonew.Codigo = CodigoProducto;
                     productonew.Cantidad = 1;
@@ -638,7 +655,7 @@ namespace Portal.Kiosco.Properties.Views
         public decimal buscarPrecioAdicionales(string opcionSeleccionada)
         {
             decimal Precios = 0;
-            var adicionales = App.SnacksWeb;
+            var adicionales = App.Adicionales;
 
             foreach (var item in adicionales)
             {

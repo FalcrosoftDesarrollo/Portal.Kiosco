@@ -18,6 +18,9 @@
     <Compile Update="Properties\Views\CorreoTecladoFlotante.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Properties\Views\Entradas.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Views\LayoutAsientos.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -39,6 +42,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\CorreoTecladoFlotante.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\Entradas.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\LayoutAsientos.xaml">

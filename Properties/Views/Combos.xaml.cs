@@ -344,6 +344,7 @@ namespace Portal.Kiosco.Properties.Views
                         App.AlimentosWeb = new List<Producto>();
                         App.BebidasWeb = new List<Producto>();
                         App.SnacksWeb = new List<Producto>();
+                        App.Adicionales = new List<Producto>();
                         foreach (Producto item in ob_return)
                         {
                             //Recorrido por pantallas
@@ -385,6 +386,13 @@ namespace Portal.Kiosco.Properties.Views
                                         App.SnacksWeb[lc_cntsnk].OrdenView = pantallas.Orden;
                                         App.SnacksWeb[lc_cntsnk].Descripcion_Web = pantallas.Descripcion_Web;
                                         App.SnacksWeb[lc_cntsnk].Flag = pantallas.Flag;
+                                        break;
+
+                                    case "ADICIONES WEB":
+                                        int lc_cntadd = App.Adicionales.Count();
+
+                                        App.Adicionales.Add(item);
+                                        App.Adicionales[lc_cntadd].OrdenView = pantallas.Orden;
                                         break;
                                 }
                             }

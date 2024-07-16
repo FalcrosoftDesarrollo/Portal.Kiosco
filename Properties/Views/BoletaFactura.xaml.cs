@@ -31,35 +31,44 @@ namespace Portal.Kiosco.Properties.Views
             var fechasel = App.FechaSeleccionada;
             string horaMilitar = App.Pelicula.HoraMilitar;
             string horaFormateada = horaMilitar == null ? "" : horaMilitar.Insert(2, ":");
-            NomHora.Text = horaFormateada;
+            //NomHora.Text = horaFormateada;
             FechaFac.Text = DateTime.Now.ToString();
             Sucursal.Text = App.DirEmpresa;
             NomEmpresa.Text = App.NomEmpresa;
+            nrocaja.Text = "C" + App.PuntoVenta.ToString();
             NomEmpresa2.Text = App.NomEmpresa;
+            txtSecuencia.Text = App.Secuencia.ToString();
             TotalImp.Text = App.IVC == null ? "$0" : "$ " + App.IVC;
             IVA.Text = App.IVA == null ? "$0" : "$ " + App.IVA;
-            //factura.Text = App.Secuencia;
-            Valorpagado.Text = TotalFac.Text;
+            Valorpagado.Text = App.Pago == 0 ? "" : TotalFac.Text;  
             var combos = App.ProductosSeleccionados;
-            NomPelicula.Text = App.Pelicula.TituloOriginal;
-            NomFormato.Text = App.NomZona + " " + App.NomTarifa2;
-            NomHora.Text = horaFormateada;
-            FechaSeleccionada.Text = App.FechaSeleccionada;
-            NomSala.Text = App.NumSala;
-            DiaSeleccionado.Text = App.DiaSeleccionado;
+            //NomPelicula.Text = App.Pelicula.TituloOriginal;
+            //NomFormato.Text = App.NomZona + " " + App.NomTarifa2;
+            //NomHora.Text = horaFormateada;
+            //FechaSeleccionada.Text = App.FechaSeleccionada;
+            //NomSala.Text = App.NumSala;
+            //DiaSeleccionado.Text = App.DiaSeleccionado;
+            
+            // Asumiendo que App.idCine, App.PuntoVenta, y App.Secuencia son enteros o cadenas
+            int idCine = Convert.ToInt32(App.idCine);
+            int puntoVenta = Convert.ToInt32(App.PuntoVenta);
+            long secuencia = Convert.ToInt32(App.Secuencia);
 
-            if (App.TipoCompra == "B")
+            // Formatea los valores con la máscara deseada
+            string formattedText = $"{idCine:D3}-{puntoVenta:D3}-{secuencia:D10}";
+
+            // Asigna el texto formateado a factura.Text
+            factura.Text = formattedText;
+
+            if (App.TipoCompra == "B" || App.TipoCompra == "M")
             {
                 //IVAPorcentaje.Visibility = Visibility.Collapsed;
                 ImpConsumo.Visibility = Visibility.Collapsed;
             }
-            else
-            {
-                PanelPeliculas.Visibility = Visibility.Collapsed;
-            }
-
-
-
+            //else
+            //{
+            //    //PanelPeliculas.Visibility = Visibility.Collapsed;
+            //}
 
             Thread thread = new Thread(() =>
             {

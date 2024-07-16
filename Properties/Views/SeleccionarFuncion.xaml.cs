@@ -28,6 +28,19 @@ namespace Portal.Kiosco.Properties.Views
         private bool errorgeneral = false;
         private HashSet<string> fechasProcesadas = new HashSet<string>();
         private HashSet<string> horasProcesadas = new HashSet<string>();
+
+        private Dictionary<string, HashSet<string>> horasProcesadasPorSala = new Dictionary<string, HashSet<string>>()
+{
+    { "GENERAL3D", new HashSet<string>() },
+    { "EDBlackStar", new HashSet<string>() },
+    { "SUPERNOVA", new HashSet<string>() },
+    { "P4DX2D", new HashSet<string>() },
+    { "P4DX3D", new HashSet<string>() },
+    { "GENERAL", new HashSet<string>() },
+    { "BlackStar", new HashSet<string>() },
+    { "Supernova", new HashSet<string>() }
+};
+
         private HashSet<string> horasProcesadas3D = new HashSet<string>();
         private HashSet<string> horasProcesadasBlackStard = new HashSet<string>();
         private HashSet<string> horasProcesadasBlackStard3D = new HashSet<string>();
@@ -162,6 +175,17 @@ namespace Portal.Kiosco.Properties.Views
 
             fechasProcesadas = new HashSet<string>();
             horasProcesadas = new HashSet<string>();
+            horasProcesadasPorSala =  new Dictionary<string, HashSet<string>>()
+{
+    { "GENERAL3D", new HashSet<string>() },
+    { "EDBlackStar", new HashSet<string>() },
+    { "SUPERNOVA", new HashSet<string>() },
+    { "P4DX2D", new HashSet<string>() },
+    { "P4DX3D", new HashSet<string>() },
+    { "GENERAL", new HashSet<string>() },
+    { "BlackStar", new HashSet<string>() },
+    { "Supernova", new HashSet<string>() }
+};
             horasProcesadas3D = new HashSet<string>();
             horasProcesadasSupernova = new HashSet<string>();
             horasProcesadasSupernova3d = new HashSet<string>();
@@ -251,8 +275,8 @@ namespace Portal.Kiosco.Properties.Views
                                                                 {
 
                                                                     AgregarBotonesPorFormato(item, item2.horario, item2.militar, formato, itemZonas.Key);
-                                                                    horasProcesadas.Add(item2.horario);
-                                                                    zonasProcesadas.Add(itemZonas.Key);
+                                                                    //horasProcesadas.Add(item2.horario);
+                                                                    //zonasProcesadas.Add(itemZonas.Key);
 
                                                                 }
                                                             }
@@ -556,85 +580,71 @@ namespace Portal.Kiosco.Properties.Views
 
         private void AgregarBotonesPorFormato(dynamic item3, string horario, string militar, string formato, string zonaKey)
         {
+            string tipoSalaKey = GetTipoSalaKey(item3.tipoSala, formato);
 
+            if (!horasProcesadasPorSala[tipoSalaKey].Contains(horario))
+            {
+                switch (tipoSalaKey)
+                {
+                    case "GENERAL3D":
+                        ContenedorHoras3D.Children.Add(CrearBotonHora(horario, militar, "GENERAL3D"));
+                        break;
+                    case "EDBlackStar":
+                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
+                        break;
+                    case "SUPERNOVA":
+                        ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(horario, militar, "SUPERNOVA"));
+                        break;
+                    case "P4DX":
+                        ContenedorHoras4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
+                        break;
+                    case "GENERAL":
+                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(horario, militar, zonaKey));
+                        break;
+                    case "BlackStar":
+                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
+                        break;
+                    case "Supernova":
+                        ContenedorHorasSupernova.Children.Add(CrearBotonHora(horario, militar, "Supernova"));
+                        break;
+                    case "P4DX3D":
+                        ContenedorHoras3D4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX3D"));
+                        break;
+                }
+                 
+                horasProcesadasPorSala[tipoSalaKey].Add(horario);
+            }
+        }
 
+        private string GetTipoSalaKey(string tipoSala, string formato)
+        {
             if (formato == "Digital 3D")
             {
-                if (item3.tipoSala.Contains("GENERAL"))
-                {
-                    if (!horasProcesadas3D.Contains(horario))
-                    {
-                        ContenedorHoras3D.Children.Add(CrearBotonHora(horario, militar, "GENERAL3D"));
-                        horasProcesadas3D.Add(horario);
-                    }
-                }
-
-                if (item3.tipoSala.Contains("BLACK STAR 3D"))
-                {
-                    if (!horasProcesadasBlackStard3D.Contains(horario))
-                    {
-                        ContenedorHoras3DBlackStar.Children.Add(CrearBotonHora(horario, militar, "EDBlackStar"));
-                        horasProcesadasBlackStard3D.Add(horario);
-                    }
-                }
-                if (item3.tipoSala.Contains("SUPERNOVA"))
-                {
-                    if (!horasProcesadasSupernova3d.Contains(horario))
-                    {
-                        ContenedorHoras3DSuperNova.Children.Add(CrearBotonHora(horario, militar, "SUPERNOVA"));
-                        horasProcesadasSupernova3d.Add(horario);
-                    }
-                }
-                if (item3.tipoSala.Contains("4DX"))
-                {
-                    if (!horasProcesadasSupernova3d.Contains(horario))
-                    {
-
-                        ContenedorHoras3D4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
-                        horasProcesadasSupernova3d.Add(horario);
-                    }
-                }
+                if (tipoSala.Contains("GENERAL"))
+                    return "GENERAL3D";
+                if (tipoSala.Contains("BLACK STAR 3D"))
+                    return "EDBlackStar";
+                if (tipoSala.Contains("SUPERNOVA"))
+                    return "SUPERNOVA";
+                if (tipoSala.Contains("4DX"))
+                    return "P4DX3D";
             }
 
             if (formato == "Digital 2D")
             {
-                if (item3.tipoSala.Contains("GENERAL"))
-                {
-                    if (!horasProcesadas.Contains(horario))
-                    {
-                        ContenedorHorasGeneral.Children.Add(CrearBotonHora(horario, militar, zonaKey));
-                        horasProcesadas.Add(horario);
-                    }
-                }
-                if (item3.tipoSala.Contains("BLACK STAR"))
-                {
-                    if (!horasProcesadas.Contains(horario))
-                    {
-                        ContenedorHorasBlackStar.Children.Add(CrearBotonHora(horario, militar, "BlackStar"));
-                        horasProcesadasBlackStard.Add(horario);
-                    }
-                }
-
-                if (item3.tipoSala.Contains("SUPERNOVA"))
-                {
-                    if (!horasProcesadasSupernova.Contains(horario))
-                    {
-                        ContenedorHorasSupernova.Children.Add(CrearBotonHora(horario, militar, "Supernova"));
-                        horasProcesadasSupernova.Add(horario);
-                    }
-                }
-                if (item3.tipoSala.Contains("4DX"))
-                {
-                    if (!horasProcesadas4XD.Contains(horario))
-                    {
-                        ContenedorHoras4DX.Children.Add(CrearBotonHora(horario, militar, "P4DX"));
-                        horasProcesadas4XD.Add(horario);
-                    }
-                }
+                if (tipoSala.Contains("GENERAL"))
+                    return "GENERAL";
+                if (tipoSala.Contains("BLACK STAR"))
+                    return "BlackStar";
+                if (tipoSala.Contains("SUPERNOVA"))
+                    return "Supernova";
+                if (tipoSala.Contains("4DX"))
+                    return "P4DX2D";
             }
 
-            horasProcesadas.Add(horario);
+            return string.Empty;
         }
+
 
         private async void btnSelectFecha_Click(object sender, RoutedEventArgs e)
         {

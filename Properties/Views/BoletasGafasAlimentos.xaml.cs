@@ -1,6 +1,8 @@
-﻿using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Data;
+using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -14,7 +16,7 @@ namespace Portal.Kiosco.Properties.Views
     {
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
-
+        private List<ReportSales> ListCarritoB = new List<ReportSales>();
         public BoletasGafasAlimentos()
         {
             InitializeComponent();
@@ -80,60 +82,95 @@ namespace Portal.Kiosco.Properties.Views
             return isMainWindowOpen;
         }
 
+        private void ListCarrito()
+        {
+            #region VARIABLES LOCALES
+            decimal lc_secsec = 0;
+            var PuntoVenta = App.PuntoVenta;
+            var KeyTeatro = App.idCine;
+            string secuencia = "";
+            #endregion
+
+            App.TipoCompra = "V";
+            secuencia = App.Secuencia;
+            List<RetailSales> ListCarritoR = new List<RetailSales>();
+
+
+            if (secuencia != null)
+            {
+                lc_secsec = Convert.ToDecimal(secuencia);
+                using (var context = new DataDB(config))
+                {
+
+                    try
+                    {
+                        var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
+                        ListCarritoB = ReportSales;
+                    }
+                    catch (Exception e) { }
+                }
+
+            }
+
+        }
 
         private void btnImprimir_Click(object sender, RoutedEventArgs e)
         {
             var compra = App.TipoCompra;
+
+            // Crear una instancia de la ventana secundaria y obtener su contenido visual
             Window ventanaSecundaria = new BoletaFactura(config);
+            UIElement contenidoVisualVentanaSecundaria = ventanaSecundaria.Content as UIElement;
 
-            UIElement contenidoVisual = ventanaSecundaria.Content as UIElement;
-
+            // Desconectar el contenido visual de la ventana secundaria de su padre
             ventanaSecundaria.Content = null;
 
-            ImpresionDirectaWPF impresion = new ImpresionDirectaWPF(contenidoVisual);
+            // Crear una instancia de ImpresionDirectaWPF con el contenido visual de la ventana secundaria
+            ImpresionDirectaWPF impresionVentanaSecundaria = new ImpresionDirectaWPF(contenidoVisualVentanaSecundaria);
 
-            impresion.ImprimirDirecto();
-        }
-
-        private void PrintDocument()
-        {
-            PrintDialog printDialog = new PrintDialog();
-
-            if (printDialog.ShowDialog() == true)
+            // Intentar imprimir el contenido de la ventana secundaria
+            impresionVentanaSecundaria.ImprimirDirecto();
+            ListCarrito();
+            // Crear una instancia de la ventana de entradas y obtener su contenido visual
+            foreach (var boleta in ListCarritoB)
             {
-                FlowDocument document = new FlowDocument();
+                string[] ubicacionesArray = boleta.SelUbicaciones.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-                document.Blocks.Add(new Paragraph(new Run("Colombiana de Cines S.A. Pro:cinal Parque Fabricato")));
-                document.Blocks.Add(new Paragraph(new Run("NIT: 900.090.098-0")));
-                document.Blocks.Add(new Paragraph(new Run("Matriz:")));
-                document.Blocks.Add(new Paragraph(new Run("Colombiana de Cines S.A.")));
-                document.Blocks.Add(new Paragraph(new Run("Sucursal:")));
-                document.Blocks.Add(new Paragraph(new Run("Cra 50 N 38 A-185, local 04284")));
 
-                var Fecha = DateTime.Now.ToString("dd(MM/yyyy MM:ss:FF"); 
+                foreach (var ubicacion in ubicacionesArray)
+                {
+                    var dianomre = boleta.NombreFec;
+                    string[] partesUbicacion = ubicacion.Split('_');
+                    string columna = partesUbicacion[2]; // Obtener la columna (H)
+                    string numeroAsiento = partesUbicacion[3]; // Obtener el número de asiento (p)
 
-                document.Blocks.Add(new Paragraph(new Run("Detalle del documento: 328-014-000874403")));
-                document.Blocks.Add(new Paragraph(new Run("Fecha: "+ Fecha)));
-                document.Blocks.Add(new Paragraph(new Run("Resolución de facturación:")));
-                document.Blocks.Add(new Paragraph(new Run("18764056988493 del 10/11/2023")));
-                document.Blocks.Add(new Paragraph(new Run("desde PF 748662 hasta PF 2000000")));
-                document.Blocks.Add(new Paragraph(new Run("Factura de Venta: PF 000874403")));
-                document.Blocks.Add(new Paragraph(new Run("Cliente: CONSUMIDOR FINAL")));
-                document.Blocks.Add(new Paragraph(new Run("Cant Producto       Im      Precio     Total")));
-                document.Blocks.Add(new Paragraph(new Run("1    Perro caliente         8.00      $14,900.00      $14,900.00")));
-                document.Blocks.Add(new Paragraph(new Run("Subtotal: 8%        $13,796.30")));
-                document.Blocks.Add(new Paragraph(new Run("Subtotal: 0%        $0.00")));
-                document.Blocks.Add(new Paragraph(new Run("IMPOCONSUMO 8%  $1,103.70")));
-                document.Blocks.Add(new Paragraph(new Run("TOTAL: $14,900.00")));
-                document.Blocks.Add(new Paragraph(new Run("Valor pagado en:")));
-                document.Blocks.Add(new Paragraph(new Run("Efectivo: $14,900.00")));
-                document.PagePadding = new Thickness(50);
-                document.ColumnGap = 0;
-                document.ColumnWidth = printDialog.PrintableAreaWidth;
 
-                printDialog.PrintDocument(((IDocumentPaginatorSource)document).DocumentPaginator, "Impresión de prueba");
+
+                    var hora = boleta.HorProg  ; var salas = boleta.KeySala; string ubicacione = numeroAsiento  + "-" + columna;
+                    // Crear una instancia de la ventana de entradas y obtener su contenido visual
+                    Window ventanaEntradas = new Entradas(dianomre, boleta.NombreHor, salas, ubicacione, boleta.FecProg);
+                    UIElement contenidoVisualEntradas = ventanaEntradas.Content as UIElement;
+
+                    // Desconectar el contenido visual de la ventana de entradas de su padre
+                    ventanaEntradas.Content = null;
+
+                    // Crear una instancia de ImpresionDirectaWPF con el contenido visual de la ventana de entradas
+                    ImpresionDirectaWPF impresionVentanaEntradas = new ImpresionDirectaWPF(contenidoVisualEntradas);
+
+                    // Intentar imprimir el contenido de la ventana de entradas
+                    impresionVentanaEntradas.ImprimirDirecto();
+                }
             }
+           
+            // Mostrar la ventana principal
+            Principal openWindows = new Principal();
+            openWindows.Show();
+
+            // Cerrar la ventana actual
+            this.Close();
         }
+
+
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {

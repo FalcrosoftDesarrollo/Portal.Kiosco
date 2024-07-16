@@ -1,0 +1,56 @@
+﻿<Window x:Class="Portal.Kiosco.Properties.Views.Entradas"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
+        mc:Ignorable="d"
+        Title="Entradas" Height="auto" Width="418">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto" />
+
+            <RowDefinition Height="386*"/>
+            <RowDefinition Height="53*"/>
+        </Grid.RowDefinitions>
+        <!-- Aquí puedes agregar los elementos necesarios según la estructura de tu ventana -->
+        <Border BorderThickness="1" HorizontalAlignment="Left" Width="418">
+            <StackPanel  Name="stackPanelTickets" Margin="20">
+
+                <Border  >
+                    <StackPanel Margin="0,0,8,-3">
+                        <TextBlock Text="_______ TICKET DE INGRESO CLIENTE ________" TextAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock Text="*************************************************************" TextAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock FontSize="20" Text="Pelicula" Name="txtpelicula" HorizontalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock Text="Formato"  Name="txtformato" HorizontalAlignment="Center"/>
+                        <TextBlock Text="__________________________________________" TextAlignment="Center"/>
+
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="Viernes" Name="txtdia" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold"  Text="Hora:" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="18:20" Name="txthora" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" FontWeight="Bold" Name="txtfecha" Text="01/01/2023" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" FontWeight="Bold" Text="Sala:" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="2" Name="txtsala" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" FontWeight="Bold" Text="Ubicación:" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="A-5" Name="txtubicacion" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <TextBlock Text="*************************************************************" TextAlignment="Center" FontWeight="Bold"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

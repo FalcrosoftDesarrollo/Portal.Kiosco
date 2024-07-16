@@ -58,6 +58,8 @@ namespace Portal.Kiosco
         public static string variables41 { get; set; }
         public static string _tiempoRestanteGlobal { get; set; }
         public static TimeSpan tiempoRestante { get; set; }
+
+        public static int Pago { get; set; } = 0;
         private static IOptions<MyConfig> config { get; set; }
         private List<UIElement> elementosCombos = new List<UIElement>();
         private List<UIElement> elementosAlimentos = new List<UIElement>();
@@ -67,6 +69,7 @@ namespace Portal.Kiosco
         public static List<Producto> AlimentosWeb = new List<Producto>();
         public static List<Producto> BebidasWeb = new List<Producto>();
         public static List<Producto> SnacksWeb = new List<Producto>();
+        public static List<Producto> Adicionales = new List<Producto>();
         public static List<Producto> ProductosSeleccionados = new List<Producto>();
         public static List<Producto> ProductosCambiados = new List<Producto>();
         public static List<Producto> AlimentosBebidasSnacks = new List<Producto>();
@@ -2335,6 +2338,110 @@ namespace Portal.Kiosco
             catch (Exception ex)
             {
                 MessageBox.Show(ex.InnerException?.Message ?? ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public static void CancelPayment(Paymentez pr_datpay)
+        {
+            #region VARIABLES LOCALES
+            string lc_usuepy = string.Empty;
+            string lc_pwdepy = string.Empty;
+            string lc_tokens = string.Empty;
+            string lc_traepy = string.Empty;
+            string lc_srvcod = string.Empty;
+            string lc_srvkey = string.Empty;
+            string lc_unvtok = string.Empty;
+            string lc_auttok = string.Empty;
+            string lc_srvpar = string.Empty;
+            string lc_jsonst = string.Empty;
+            string lc_result = string.Empty;
+            string pr_objson = string.Empty;
+            string lc_feccod = string.Empty;
+
+            Dictionary<string, string> ob_diclst;
+            TransactionSales ob_repsle = new TransactionSales();
+            General ob_fncgrl = new General();
+            #endregion
+
+            try
+            {
+                #region SERVICO SCORET
+                //Json de servicio RET
+                pr_objson = "{\"Punto\":" + Convert.ToInt32(config.Value.PuntoVenta) + ",\"Pedido\":" + Convert.ToInt32(pr_datpay.KeySecuencia) + ",\"teatro\":\"" + Convert.ToInt32(pr_datpay.KeyTeatro) + "\",\"tercero\":\"" + config.Value.ValorTercero + "\"}";
+
+                //Encriptar Json RET
+                lc_srvpar = ob_fncgrl.EncryptStringAES(pr_objson);
+
+                //Consumir servicio RET
+                lc_result = ob_fncgrl.WebServices(string.Concat(config.Value.ScoreServices, "scoret/"), lc_srvpar);
+                 
+
+                //Escribir Log
+                //logAudit.LogApp(logSales);
+
+                //Validar respuesta
+                if (lc_result.Substring(0, 1) == "0")
+                {
+                    //Quitar switch
+                    lc_result = lc_result.Replace("0-", "");
+                    lc_result = lc_result.Replace("[", "");
+                    lc_result = lc_result.Replace("]", "");
+
+                    //Deserializar Json y validar respuesta SEC
+                    ob_diclst = (Dictionary<string, string>)JsonConvert.DeserializeObject(lc_result, (typeof(Dictionary<string, string>)));
+
+                    //Validar respuesta llave 1
+                    if (ob_diclst.ContainsKey("Validación"))
+                    {
+                        //return RedirectToAction("Error", "Pages", new { pr_message = ob_diclst["Validación"].ToString() });
+                    }
+                    else
+                    {
+                        //Validar respuesta llave 2
+                        if (ob_diclst.ContainsKey("Respuesta"))
+                        {
+                            if (ob_diclst["Respuesta"].ToString() == "Proceso exitoso")
+                            {
+                                //Inicializar instancia de BD
+                                decimal Secuencia = Convert.ToDecimal(App.Secuencia);
+                                decimal PuntoVenta = Convert.ToDecimal(App.PuntoVenta);
+                                decimal KeyTeatro = Convert.ToDecimal(App.idCine);
+                                using (var context = new DataDB(config))
+                                {
+                                    //Consultar registro de venta en BD transacciones
+                                    var ob_repsl1 = context.TransactionSales.Where(x => x.Secuencia == Secuencia).Where(x => x.PuntoVenta == PuntoVenta).Where(x => x.Teatro == KeyTeatro);
+                                    foreach (var TransactionSales in ob_repsl1)
+                                        ob_repsle = context.TransactionSales.Find(TransactionSales.Id);
+
+                                    ob_repsle.EstadoTx = "REE";
+                                    ob_repsle.Observaciones = "VENTA ANULADA SOLO SCORE";
+
+                                    ob_repsle.DocumentoEli = App.NroDocumento;
+                                    ob_repsle.AutorizacionTx = string.Concat(Secuencia, ",", "Cancel");
+                                    ob_repsle.FechaModificado = DateTime.Now;
+
+                                    //Actualizar estado de transacción
+                                    context.TransactionSales.Update(ob_repsle);
+                                    context.SaveChanges();
+                                }
+                                 
+                            }
+                            else
+                            { 
+                             }
+                        }
+                        else
+                        { 
+                         }
+                    }
+                }
+                else
+                { 
+                }
+                #endregion
+            }
+            catch (Exception lc_syserr)
+            { 
             }
         }
 

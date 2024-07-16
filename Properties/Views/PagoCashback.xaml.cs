@@ -104,8 +104,10 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnCambiar_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            InstruccionesDatafono openWindows = new InstruccionesDatafono();
-            var openWindow = new InstruccionesDatafono();
+
+            StartMonitoringDatafono();
+            var openWindows = new InstruccionesDatafono();
+
             openWindows.Show();
             this.Close();
         }
@@ -116,6 +118,36 @@ namespace Portal.Kiosco.Properties.Views
             var openWindows = new Principal();
             openWindows.Show();
             this.Close();
+        }
+
+        private Thread monitorThread;
+        private void StartMonitoringDatafono()
+        {
+
+            monitorThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    if (App.ResponseDatafono == "00")
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            BoletasGafasAlimentos boletasGafasAlimentos = new BoletasGafasAlimentos();
+                            boletasGafasAlimentos.Show();
+
+                            this.Close();
+                        });
+
+                        return;
+                    }
+
+                    Thread.Sleep(1000);
+                }
+            });
+
+            monitorThread.IsBackground = true;
+            monitorThread.Start();
+
         }
 
         private void PagoConCash_Click(object sender, RoutedEventArgs e)
@@ -143,5 +175,7 @@ namespace Portal.Kiosco.Properties.Views
                 this.Close();
             }
         }
+
+        
     }
 }
