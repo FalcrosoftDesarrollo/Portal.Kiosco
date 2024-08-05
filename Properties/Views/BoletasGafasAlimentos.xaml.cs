@@ -1,10 +1,9 @@
-﻿using APIPortalKiosco.Data;
-using APIPortalKiosco.Entities;
+﻿using APIPortalKiosco.Entities;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -16,7 +15,7 @@ namespace Portal.Kiosco.Properties.Views
     {
         private readonly IOptions<MyConfig> config;
         private bool isThreadActive = true;
-        private List<ReportSales> ListCarritoB = new List<ReportSales>();
+
         public BoletasGafasAlimentos()
         {
             InitializeComponent();
@@ -45,6 +44,19 @@ namespace Portal.Kiosco.Properties.Views
             });
             thread.IsBackground = true;
             thread.Start();
+
+             
+            var nuevaVista = new BoletaFactura(config); 
+             
+            resultImprecion.Content = nuevaVista;
+        }
+
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
         }
 
         private bool ComprobarTiempo()
@@ -82,95 +94,24 @@ namespace Portal.Kiosco.Properties.Views
             return isMainWindowOpen;
         }
 
-        private void ListCarrito()
-        {
-            #region VARIABLES LOCALES
-            decimal lc_secsec = 0;
-            var PuntoVenta = App.PuntoVenta;
-            var KeyTeatro = App.idCine;
-            string secuencia = "";
-            #endregion
-
-            App.TipoCompra = "V";
-            secuencia = App.Secuencia;
-            List<RetailSales> ListCarritoR = new List<RetailSales>();
-
-
-            if (secuencia != null)
-            {
-                lc_secsec = Convert.ToDecimal(secuencia);
-                using (var context = new DataDB(config))
-                {
-
-                    try
-                    {
-                        var ReportSales = context.ReportSales.Where(x => x.Secuencia == lc_secsec.ToString()).Where(x => x.KeyPunto == PuntoVenta).Where(x => x.KeyTeatro == KeyTeatro).ToList();
-                        ListCarritoB = ReportSales;
-                    }
-                    catch (Exception e) { }
-                }
-
-            }
-
-        }
 
         private void btnImprimir_Click(object sender, RoutedEventArgs e)
         {
             var compra = App.TipoCompra;
+            var ventanaSecundaria = new BoletaFactura(config);
 
-            // Crear una instancia de la ventana secundaria y obtener su contenido visual
-            Window ventanaSecundaria = new BoletaFactura(config);
-            UIElement contenidoVisualVentanaSecundaria = ventanaSecundaria.Content as UIElement;
+            UIElement contenidoVisual = ventanaSecundaria.Content as UIElement;
 
-            // Desconectar el contenido visual de la ventana secundaria de su padre
             ventanaSecundaria.Content = null;
 
-            // Crear una instancia de ImpresionDirectaWPF con el contenido visual de la ventana secundaria
-            ImpresionDirectaWPF impresionVentanaSecundaria = new ImpresionDirectaWPF(contenidoVisualVentanaSecundaria);
+            ImpresionDirectaWPF impresion = new ImpresionDirectaWPF(contenidoVisual);
 
-            // Intentar imprimir el contenido de la ventana secundaria
-            impresionVentanaSecundaria.ImprimirDirecto();
-            ListCarrito();
-            // Crear una instancia de la ventana de entradas y obtener su contenido visual
-            foreach (var boleta in ListCarritoB)
-            {
-                string[] ubicacionesArray = boleta.SelUbicaciones.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            impresion.ImprimirDirecto();
 
-
-                foreach (var ubicacion in ubicacionesArray)
-                {
-                    var dianomre = boleta.NombreFec;
-                    string[] partesUbicacion = ubicacion.Split('_');
-                    string columna = partesUbicacion[2]; // Obtener la columna (H)
-                    string numeroAsiento = partesUbicacion[3]; // Obtener el número de asiento (p)
-
-
-
-                    var hora = boleta.HorProg  ; var salas = boleta.KeySala; string ubicacione = numeroAsiento  + "-" + columna;
-                    // Crear una instancia de la ventana de entradas y obtener su contenido visual
-                    Window ventanaEntradas = new Entradas(dianomre, boleta.NombreHor, salas, ubicacione, boleta.FecProg);
-                    UIElement contenidoVisualEntradas = ventanaEntradas.Content as UIElement;
-
-                    // Desconectar el contenido visual de la ventana de entradas de su padre
-                    ventanaEntradas.Content = null;
-
-                    // Crear una instancia de ImpresionDirectaWPF con el contenido visual de la ventana de entradas
-                    ImpresionDirectaWPF impresionVentanaEntradas = new ImpresionDirectaWPF(contenidoVisualEntradas);
-
-                    // Intentar imprimir el contenido de la ventana de entradas
-                    impresionVentanaEntradas.ImprimirDirecto();
-                }
-            }
-           
-            // Mostrar la ventana principal
-            Principal openWindows = new Principal();
-            openWindows.Show();
-
-            // Cerrar la ventana actual
+            var gracias = new GraciasXcomprar();
+            gracias.Show();
             this.Close();
-        }
-
-
+        } 
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {

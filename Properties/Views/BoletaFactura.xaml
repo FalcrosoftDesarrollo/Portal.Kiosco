@@ -1,24 +1,23 @@
-﻿<Window x:Class="Portal.Kiosco.Properties.Views.BoletaFactura"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
-        mc:Ignorable="d"
-        Title="BoletaFactura" Height="1448" Width="418">
+﻿<UserControl x:Class="Portal.Kiosco.Properties.Views.BoletaFactura"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
+             mc:Ignorable="d"
+             Background="White">
 
-    <Grid Background="White" Margin="15,0,0,0">
-
+    <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="Auto" />
-        
-            <RowDefinition Height="386*"/>
-            <RowDefinition Height="53*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="347*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="227*"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border BorderThickness="1" HorizontalAlignment="Left" Width="302">
+        <Border BorderThickness="1" Margin="0,10,0,10" HorizontalAlignment="Center">
             <StackPanel Width="300">
                 <TextBlock Text=" " Name="NomEmpresa" FontSize="16" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
 
@@ -39,43 +38,38 @@
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <TextBlock Text="Sucursal: " FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text=" " Name="Sucursal" HorizontalAlignment="Left"/>
-
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Detalle de documento: "  FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Detalle de documento: " FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="KIOSCO PROCINAL" HorizontalAlignment="Left"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBlock Text="FE Comp. de entrega:" FontWeight="Bold"/>
-                    <TextBlock Name="factura" Text="      303-024-000008002"/>
+                    <TextBlock Text=" 303-024-000008002"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5" />
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Fecha:     " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Fecha: " FontWeight="Bold" HorizontalAlignment="Left"/>
                     <TextBlock Text="" Name="FechaFac" HorizontalAlignment="Left"/>
                 </StackPanel>
-
-
 
                 <StackPanel Orientation="Vertical" Margin="5" >
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Cliente: " FontWeight="Bold" HorizontalAlignment="Left"/>
-                        <TextBlock Text="CONSUMIDOR FINAL" FontWeight="Bold"  HorizontalAlignment="Left"/>
+                        <TextBlock Text="CONSUMIDOR FINAL" FontWeight="Bold" HorizontalAlignment="Left"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ced. I/NIT: "  HorizontalAlignment="Left"/>
+                        <TextBlock Text="Ced. I/NIT: " HorizontalAlignment="Left"/>
                         <TextBlock Text="99999999999999999" HorizontalAlignment="Left"/>
-
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Correo:"/>
                         <TextBlock Text="consumidorfinal@procinal.com"/>
                     </StackPanel>
-
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="10" x:Name="ContenedorFac">
@@ -119,8 +113,6 @@
                         <StackPanel>
                             <TextBlock Text="Subtotal: 8%" FontWeight="Bold" x:Name="ImpConsumo" HorizontalAlignment="Left"/>
                             <TextBlock Text="Subtotal: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>
-                            <!--<TextBlock x:Name="IVAPorcentaje" Text="IVA: 19%" FontWeight="Bold" HorizontalAlignment="Left"/>-->
-                            <!--<TextBlock x:Name="ImpConsumo" Text="IMPOCONSUMO: 8%" FontWeight="Bold" HorizontalAlignment="Left"/>-->
                         </StackPanel>
 
                         <StackPanel Margin="30,0,30,0"/>
@@ -128,12 +120,10 @@
                         <StackPanel >
                             <TextBlock Text="$0" FontWeight="Bold" Name="TotalImp" HorizontalAlignment="Left"/>
                             <TextBlock Text="$0" FontWeight="Bold" Name="IVA" HorizontalAlignment="Left"/>
-                            <!--<TextBlock Text="$0" FontWeight="Bold" Name="TotalImp"  HorizontalAlignment="Left"/>-->
                             <StackPanel Orientation="Horizontal" Margin="20,5,5,5">
                                 <TextBlock Text="TOTAL:" FontWeight="Bold" HorizontalAlignment="Left"/>
                                 <TextBlock Text="$0" Name="TotalFac" FontWeight="Bold" HorizontalAlignment="Left"/>
                             </StackPanel>
-
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -144,7 +134,6 @@
                         <TextBlock Text="Tarjeta: "/>
                         <TextBlock Text="$0" Name="Valorpagado" HorizontalAlignment="Left"/>
                     </StackPanel>
-
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
@@ -152,88 +141,74 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Cajero: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="KIOSCO PROCINAL" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Cajero: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="KIOSCO PROCINAL" HorizontalAlignment="Left"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Caja: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="CN4" Name="nrocaja" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Caja: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="CN4" HorizontalAlignment="Left"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5" >
-                    <TextBlock Text="Auditoria Interna: "  FontWeight="Bold" HorizontalAlignment="Left"/>
-                    <TextBlock  Text="80115" Name="txtSecuencia" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Auditoria Interna: " FontWeight="Bold" HorizontalAlignment="Left"/>
+                    <TextBlock Text="80115" HorizontalAlignment="Left"/>
                 </StackPanel>
             </StackPanel>
         </Border>
 
-
-
-        <Border Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="476" Width="288" >
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="442">
-                <TextBlock x:Name="textBlockAviso"
-           
-           FontWeight="Bold"
-           Margin="5"
-           Width="278"
-           Height="114">
-                    <Run Text="Solo se permite el ingreso a las instalaciones"/>
+        <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Margin="5">
+                    <Run Text="Solo se permite el ingreso a las instalaciones de Cinemas"/>
                     <LineBreak/>
-                    <Run Text="de Cinemas Procinal, de productos que hayan "/>
+                    <Run Text="Procinal, de productos que hayan sido comprados en"/>
                     <LineBreak/>
-                    <Run Language="es-co" Text="&#x9;"/>
-                    <Run Text="sido comprados en nuestras "/>
+                    <Run Text="nuestras confiterías o cafés del cinema."/>
                     <LineBreak/>
-                    <Run Language="es-co" Text="&#x9;"/>
-                    <Run Text="confiterías o cafés del"/>
-                    <Run Text=" "/>
-                    <Run/>
-                    <LineBreak/>
-                    <Run Language="es-co" Text="&#x9;&#x9;"/>
-                    <Run Text="cinema."/>
-                    <LineBreak/>
-                    <Run/>
-                    <LineBreak/>
-                    <Run Language="es-co" Text="&#x9;&#x9;"/>
                     <Run Text="Gracias"/>
+                    <LineBreak/>
+                    <LineBreak/>
                 </TextBlock>
 
-
-
-                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Margin="10">
-            <Run Text="Factura Electrónica Nro: SETT-000000210"/>
-            <LineBreak/>
-            <Run Text="Solicite su Factura Electrónica en línea"/>
-            <LineBreak/>
-            <Run Text="Escanee el Código QR y registre"/>
-            <LineBreak/>
-            <Run Text="los datos. Recuerde que cuenta con"/>
-            <LineBreak/>
-            <Run Text="un día calendario para realizar la"/>
-            <LineBreak/>
-            <Run Text="personalización de su factura."/>
+                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Margin="5">
+                    <Run Text="Términos y condiciones de la facturación en"/>
+                    <LineBreak/>
+                    <Run Text="WWW.PROCINAL.COM.CO"/>
+                    <LineBreak/>
+                    <LineBreak/>
                 </TextBlock>
-                <Image Height="189" Source="/Image4.png" Stretch="Fill" Width="190"/>
+
+                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Margin="5">
+                    <Run Text="Los productos exentos de impuesto al consumo"/>
+                    <LineBreak/>
+                    <Run Text="son grabados al 19% según art. 468-3 Estatuto"/>
+                    <LineBreak/>
+                    <Run Text="Tributario modificado por la ley 1819/2016"/>
+                </TextBlock>
             </StackPanel>
         </Border>
 
-
-
-     
-        <Border BorderThickness="0,1,0,1" BorderBrush="Black" Grid.Row="3" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="Encuesta" >
-            <StackPanel >
-                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Margin="10">
-                <Run Text="!Tú opinión nos interesa¡ Califica tu"/>
-                <LineBreak/>
-                <Run Text="experiencia y ayúdanos a mejorar."/>
-                <LineBreak/>
-
+        <Border Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Margin="5">
+                <TextBlock FontWeight="Bold" TextAlignment="Center">
+                    <Run Text="Resolución DIAN No. 18762000529414 del 24/02/2017"/>
+                    <LineBreak/>
+                    <Run Text="Habilita para facturar por computador"/>
+                    <LineBreak/>
+                    <Run Text="del No. 00001 al No. 100000."/>
                 </TextBlock>
-                <Image Height="194" Source="/Image6.png" Stretch="Fill" Width="189"/>
+            </StackPanel>
+        </Border>
 
-
+        <Border Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" TextAlignment="Center">
+                    <Run Text="RÉGIMEN COMÚN"/>
+                    <LineBreak/>
+                    <Run Text="Actividad económica No. 5911"/>
+                </TextBlock>
             </StackPanel>
         </Border>
     </Grid>
-</Window>
+</UserControl>

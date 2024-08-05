@@ -6,11 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -24,26 +27,31 @@ namespace Portal.Kiosco.Properties.Views
         private List<UIElement> elementosBebidas = new List<UIElement>();
         private List<UIElement> elementosSnack = new List<UIElement>();
         private bool isThreadActive = true;
-
+        private string pantalla = "C";
         public Combos()
         {
             InitializeComponent();
             DataContext = ((App)Application.Current);
+            try
+            {
+                if (App.ob_diclst.Count > 0)
+                {
+                    lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
+                }
+                else
+                {
+                    lblnombre.Content = "!HOLA INVITADO¡";
+                }
+            }
+            catch (Exception e)
+            { lblnombre.Content = "!HOLA INVITADO¡"; }
 
-            if (App.ob_diclst.Count > 0)
-            {
-                lblnombre.Content = "!HOLA " + App.ob_diclst["Nombre"].ToString() + " " + App.ob_diclst["Apellido"].ToString() + "!";
-            }
-            else
-            {
-                lblnombre.Content = "!HOLA INVITADO¡";
-            }
 
             try
             {
-                App.ProductosSeleccionados.Clear();
+                //App.ProductosSeleccionados.Clear();
                 CombosConsult();
-                App.ProductosSeleccionados = new List<Producto>();
+                //App.ProductosSeleccionados = new List<Producto>();
 
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
@@ -65,6 +73,14 @@ namespace Portal.Kiosco.Properties.Views
             });
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
         }
 
         private bool ComprobarTiempo()
@@ -104,7 +120,7 @@ namespace Portal.Kiosco.Properties.Views
 
 
         private Border clickedBorder;
- 
+
         private void tapAlimentos_Click(object sender, RoutedEventArgs e)
         {
             RestoreButtonState();
@@ -112,6 +128,16 @@ namespace Portal.Kiosco.Properties.Views
             Button clickedButton = sender as Button;
 
             clickedBorder = GetButtonBorder(clickedButton);
+
+
+            if (clickedButton.Name != "tabcombos")
+            {
+                pantalla = "N";
+            }
+            else
+            {
+                pantalla = "C";
+            }
 
             clickedButton.Foreground = new SolidColorBrush(Colors.White);
             clickedButton.Background = new SolidColorBrush(Colors.Red);
@@ -437,31 +463,29 @@ namespace Portal.Kiosco.Properties.Views
 
         public void CrearCombosYbebidas(List<Producto> productos)
         {
-
             var ultimoProducto = productos[productos.Count - 1];
 
             productos.RemoveAt(productos.Count - 1);
-
             productos.Insert(0, ultimoProducto);
-
             imagenes.Children.Clear();
-
 
             string urlRetailImg = App.UrlRetailImg;
 
             if (productos != null)
             {
-                foreach (var item in productos)
+                foreach (var item in productos.OrderBy(o => o.OrdenView))
                 {
                     string lc_auxcod = item.Codigo.ToString();
                     string lc_auximg = string.Concat(urlRetailImg, lc_auxcod.Substring(0, lc_auxcod.Length - 2), ".jpg");
 
-                    Border border = new Border();
-                    border.Width = 300;
-                    border.Height = 550;
-                    border.Margin = new Thickness(5);
-                    border.BorderBrush = Brushes.Transparent;
-                    border.BorderThickness = new Thickness(1);
+                    Border border = new Border
+                    {
+                        Width = 300,
+                        Height = 550,
+                        Margin = new Thickness(5),
+                        BorderBrush = Brushes.Transparent,
+                        BorderThickness = new Thickness(1)
+                    };
 
                     Grid grid = new Grid();
                     border.Child = grid;
@@ -470,21 +494,117 @@ namespace Portal.Kiosco.Properties.Views
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(462) });
-                    grid.RowDefinitions.Add(new RowDefinition());
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(300) }); // Tamaño fijo para la imagen
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Ajuste automático
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Ajuste automático
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100) }); // Ajuste automático
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Ajuste automático
 
-                    Image image = new Image();
-                    image.Source = new BitmapImage(new Uri(lc_auximg));
-                    Grid.SetRow(image, 0);
-                    Grid.SetColumnSpan(image, 3);
-                    grid.Children.Add(image);
 
-                    Border innerBorder = new Border();
-                    innerBorder.HorizontalAlignment = HorizontalAlignment.Center;
-                    innerBorder.Width = 200;
-                    Grid.SetRow(innerBorder, 1);
+                    // Imagen con Border redondeado y sombra
+                    var imageBorder = new Border
+                    {
+                        CornerRadius = new CornerRadius(10), // Esquinas redondeadas para la imagen
+                        Margin = new Thickness(10),
+                        Effect = new DropShadowEffect
+                        {
+                            Color = Colors.Black,
+                            Direction = 270,
+                            ShadowDepth = 5,
+                            Opacity = 0.5
+                        },
+                        OpacityMask = new VisualBrush
+                        {
+                            Stretch = Stretch.Fill,
+                            Visual = new Rectangle
+                            {
+                                RadiusX = 0.1,
+                                RadiusY = 0.1,
+                                Width = 1,
+                                Height = 1,
+                                Fill = Brushes.Black
+                            }
+                        },
+                        Child = new Image
+                        {
+                            Source = new BitmapImage(new Uri(lc_auximg)),
+                            Stretch = Stretch.Uniform,
+                            StretchDirection = StretchDirection.Both
+                        }
+                    };
+
+                    Grid.SetRow(imageBorder, 0);
+                    Grid.SetColumnSpan(imageBorder, 3);
+                    grid.Children.Add(imageBorder);
+
+                    // Título Combo
+                    TextBlock titulocombo = new TextBlock
+                    {
+                        Text = item.Descripcion.ToUpper(),
+                        Foreground = Brushes.Black,
+                        Background = Brushes.White,
+                        FontSize = 16,
+                        FontWeight = FontWeights.Bold,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextAlignment = TextAlignment.Center,
+                        TextWrapping = TextWrapping.Wrap,
+                        Margin = new Thickness(0, 0, 0, 10)
+                    };
+
+                    Grid.SetRow(titulocombo, 1);
+                    Grid.SetColumnSpan(titulocombo, 3);
+                    grid.Children.Add(titulocombo);
+
+
+                    // Precio
+                    TextBlock Precio = new TextBlock
+                    {
+                        Text = buscarprecio(productos, item.Codigo, "").ToString("C0"),
+                        Foreground = Brushes.Black,
+                        Background = Brushes.White,
+                        FontSize = 12,
+                        FontWeight = FontWeights.Bold,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextAlignment = TextAlignment.Center,
+                        TextWrapping = TextWrapping.Wrap,
+                        Margin = new Thickness(0, 0, 0, 10)
+                    };
+                    Grid.SetRow(Precio, 2);
+                    Grid.SetColumnSpan(Precio, 3);
+                    grid.Children.Add(Precio);
+
+                    // Descripción
+                    TextBlock tituloDescripcion = new TextBlock
+                    {
+                        Text = item.Descripcion_Web,
+                        Foreground = Brushes.Black,
+                        Background = Brushes.White,
+                        FontSize = 12,
+                        FontWeight = FontWeights.Normal,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextAlignment = TextAlignment.Center,
+                        TextWrapping = TextWrapping.Wrap,
+                        Margin = new Thickness(0, 0, 0, 10)
+                    };
+                    Grid.SetRow(tituloDescripcion, 3);
+                    Grid.SetColumnSpan(tituloDescripcion, 3);
+                    grid.Children.Add(tituloDescripcion);
+
+                    // Inner Border para los botones
+                    Border innerBorder = new Border
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Width = 200,
+                        Margin = new Thickness(0, 10, 0, 0)
+                    };
+
+                    Grid.SetRow(innerBorder, 4);
                     Grid.SetColumnSpan(innerBorder, 3);
                     grid.Children.Add(innerBorder);
+
 
                     Grid innerGrid = new Grid();
                     innerBorder.Child = innerGrid;
@@ -493,63 +613,71 @@ namespace Portal.Kiosco.Properties.Views
                     innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
                     innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-                    Border minusButtonBorder = new Border();
-                    minusButtonBorder.CornerRadius = new CornerRadius(100);
-                    minusButtonBorder.Background = new SolidColorBrush(Color.FromRgb(243, 6, 19));
-                    minusButtonBorder.HorizontalAlignment = HorizontalAlignment.Left;
-                    minusButtonBorder.Width = 61;
-                    minusButtonBorder.Height = 61;
+                    // Botón Menos
+                    Border minusButtonBorder = new Border
+                    {
+                        CornerRadius = new CornerRadius(100),
+                        Background = new SolidColorBrush(Color.FromRgb(243, 6, 19)),
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        Width = 61,
+                        Height = 61
+                    };
                     Grid.SetColumn(minusButtonBorder, 0);
                     innerGrid.Children.Add(minusButtonBorder);
 
-                    Button minusButton = new Button();
-                    minusButton.Background = Brushes.Transparent;
-                    minusButton.BorderThickness = new Thickness(0);
-                    minusButton.Content = "-";
-                    minusButton.FontFamily = new FontFamily("Myanmar Khyay");
-                    minusButton.FontSize = 50;
-                    minusButton.Foreground = Brushes.White;
+                    Button minusButton = new Button
+                    {
+                        Background = Brushes.Transparent,
+                        BorderThickness = new Thickness(0),
+                        Content = "-",
+                        FontFamily = new FontFamily("Myanmar Khyay"),
+                        FontSize = 50,
+                        Foreground = Brushes.White
+                    };
                     minusButton.Click += MinusButton_Click;
                     minusButtonBorder.Child = minusButton;
 
-                    Label countLabel = new Label();
-                    countLabel.FontFamily = new FontFamily("Myanmar Khyay");
-                    countLabel.FontSize = 32;
-                    countLabel.Content = "0";
-                    countLabel.Name = string.Concat("lbl", lc_auxcod.Substring(0, lc_auxcod.Length - 2));
-                    countLabel.VerticalAlignment = VerticalAlignment.Center;
-                    countLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                    // Etiqueta de Conteo
+                    Label countLabel = new Label
+                    {
+                        FontFamily = new FontFamily("Myanmar Khyay"),
+                        FontSize = 32,
+                        Content = App.ProductosSeleccionados == null ? "0" :App.ProductosSeleccionados.Where(x => x.Codigo == item.Codigo).Count().ToString(),
+                        Name = string.Concat("lbl", lc_auxcod.Substring(0, lc_auxcod.Length - 2)),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    };
                     Grid.SetColumn(countLabel, 1);
                     innerGrid.Children.Add(countLabel);
 
-                    Border plusButtonBorder = new Border();
-                    plusButtonBorder.CornerRadius = new CornerRadius(100);
-                    plusButtonBorder.Background = new SolidColorBrush(Color.FromRgb(243, 6, 19));
-                    plusButtonBorder.HorizontalAlignment = HorizontalAlignment.Right;
-                    plusButtonBorder.Width = 61;
-                    plusButtonBorder.Height = 61;
+                    // Botón Más
+                    Border plusButtonBorder = new Border
+                    {
+                        CornerRadius = new CornerRadius(100),
+                        Background = new SolidColorBrush(Color.FromRgb(243, 6, 19)),
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        Width = 61,
+                        Height = 61
+                    };
                     Grid.SetColumn(plusButtonBorder, 2);
                     innerGrid.Children.Add(plusButtonBorder);
 
-                    Button plusButton = new Button();
-                    plusButton.Background = Brushes.Transparent;
-                    plusButton.BorderThickness = new Thickness(0);
-                    plusButton.Content = "+";
-                    plusButton.FontFamily = new FontFamily("Myanmar Khyay");
-                    plusButton.FontSize = 50;
-                    plusButton.Foreground = Brushes.White;
+                    Button plusButton = new Button
+                    {
+                        Background = Brushes.Transparent,
+                        BorderThickness = new Thickness(0),
+                        Content = "+",
+                        FontFamily = new FontFamily("Myanmar Khyay"),
+                        FontSize = 50,
+                        Foreground = Brushes.White
+                    };
                     plusButton.Click += PlusButton_Click;
                     plusButtonBorder.Child = plusButton;
 
                     imagenes.Children.Add(border);
                 }
 
-                Producto ob_datpro = new Producto();
-                List<(decimal CodigoBotella, string NombreFinalBotella, decimal PrecioFinalBotella, string frecuenciaBotella, decimal categoria)> datosFinalesBotella = new List<(decimal, string, decimal, string, decimal)>();
-                List<(decimal CodigoComida, string NombreFinalComida, decimal PrecioFinalComida, string frecuenciaComida, decimal categoria)> datosFinalesComida = new List<(decimal, string, decimal, string, decimal)>();
-                int CodigoBebidas = 1244;
-                int CodigoBebidas2 = 2444;
-                int CodigoComidas = 246;
+                // Aquí puedes agregar más lógica si es necesario
             }
         }
 
@@ -789,6 +917,7 @@ namespace Portal.Kiosco.Properties.Views
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
+            App.CodigoProducto = "";
             Button button = (Button)sender;
             Border parentBorder = (Border)button.Parent;
             Grid innerGrid = (Grid)parentBorder.Parent;
@@ -807,17 +936,144 @@ namespace Portal.Kiosco.Properties.Views
 
             string codigo = countLabel.Name.Substring(3);
             var productoAEliminar = App.ProductosSeleccionados.FirstOrDefault(producto => producto.Codigo == Convert.ToDecimal(countLabel.Name.Substring(3)));
+            App.CodigoProducto = countLabel.Name.Substring(3);
+           var codigoProducto = Convert.ToDecimal(countLabel.Name.Substring(3));
 
-            var codigoProducto = Convert.ToDecimal(countLabel.Name.Substring(3));
-
+            if (pantalla == "C")
+            {
+                ApplyBlurEffect();
+                var window = new Combopopup(this, sender);
+                window.Cancelled += Popup_Cancelled;
+                window.ShowDialog();
+                RemoveBlurEffect();
+            }
         }
+
+        private void Popup_Cancelled(object sender, EventArgs e)
+        {
+            // Aquí recibes el sender original que es el Button
+            if (sender is Button button)
+            {
+                DecrementProductCount(button);
+            }
+        }
+
+        private Button GetSpecificButton()
+        {
+            // Implementa la lógica para obtener el botón específico que necesitas
+            // Por ejemplo, si tienes un contenedor 'imagenes' que contiene todos los botones generados
+            foreach (Border border in imagenes.Children)
+            {
+                Grid grid = border.Child as Grid;
+                if (grid != null)
+                {
+                    foreach (UIElement element in grid.Children)
+                    {
+                        if (element is Border innerBorder)
+                        {
+                            Grid innerGrid = innerBorder.Child as Grid;
+                            if (innerGrid != null)
+                            {
+                                foreach (UIElement innerElement in innerGrid.Children)
+                                {
+                                    if (innerElement is Button button && button.Content.ToString() == "-")
+                                    {
+                                        return button; // O alguna otra condición específica para encontrar tu botón
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+
+        private void ApplyBlurEffect()
+        {
+            BlurEffect blur = new BlurEffect
+            {
+                Radius = 10 // Ajusta el radio del desenfoque según tus necesidades
+            };
+            gridcombos.Effect = blur;
+        }
+
+        private void RemoveBlurEffect()
+        {
+            gridcombos.Effect = null;
+        }
+
+        //private void MinusButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Button button = (Button)sender;
+        //    Border parentBorder = (Border)button.Parent;
+        //    Grid innerGrid = (Grid)parentBorder.Parent;
+        //    Label countLabel = (Label)innerGrid.Children[1];
+        //    var result = new List<Producto>();
+        //    int currentValue = int.Parse(countLabel.Content.ToString());
+        //    if (currentValue >= 0)
+        //    {
+        //        currentValue--;
+        //        countLabel.Content = currentValue.ToString();
+
+        //        var precio = SelPrecio(SelectProd, Convert.ToDecimal(countLabel.Name.Substring(3)), "");
+
+        //        var codigoProducto = Convert.ToDecimal(countLabel.Name.Substring(3));
+        //        var productoAEliminar = App.ProductosSeleccionados.FirstOrDefault(producto => producto.Codigo == codigoProducto);
+
+        //        if (productoAEliminar != null)
+        //        {
+        //            string totalString = totalLabel.Content.ToString().Replace("$", "").Replace("€", "").Replace(".", "").Replace(",", "").Trim();
+        //            decimal totalAnterior = decimal.Parse(totalString);
+        //            decimal nuevoTotal = totalAnterior - precio;
+        //            totalLabel.Content = nuevoTotal.ToString("C0");
+
+
+        //            var productos = App.ProductosSeleccionados;
+
+
+        //            bool eliminado = false;
+
+        //            foreach (var item in productos)
+        //            {
+        //                if (item.Codigo == codigoProducto && !eliminado)
+        //                {
+        //                    eliminado = true; // Marcar que ya hemos eliminado un producto con el código especificado
+        //                }
+        //                else
+        //                {
+        //                    result.Add(item); // Añadir el producto a la nueva lista
+        //                }
+        //            }
+
+        //            App.ProductosSeleccionados = result; // Actualizar la lista de productos seleccionados
+
+        //        }
+
+        //        if (currentValue < 0)
+        //        {
+        //            countLabel.Content = "0";
+        //        }
+        //    }
+        //}
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
+            DecrementProductCount(button);
+        }
+
+        private void DecrementProductCount(Button button)
+        {
             Border parentBorder = (Border)button.Parent;
             Grid innerGrid = (Grid)parentBorder.Parent;
             Label countLabel = (Label)innerGrid.Children[1];
+            ActualizarConteoProducto(countLabel);
+        }
+
+        private void ActualizarConteoProducto(Label countLabel)
+        {
             var result = new List<Producto>();
             int currentValue = int.Parse(countLabel.Content.ToString());
             if (currentValue >= 0)
@@ -837,9 +1093,7 @@ namespace Portal.Kiosco.Properties.Views
                     decimal nuevoTotal = totalAnterior - precio;
                     totalLabel.Content = nuevoTotal.ToString("C0");
 
-
                     var productos = App.ProductosSeleccionados;
-
 
                     bool eliminado = false;
 
@@ -847,16 +1101,16 @@ namespace Portal.Kiosco.Properties.Views
                     {
                         if (item.Codigo == codigoProducto && !eliminado)
                         {
-                            eliminado = true; // Marcar que ya hemos eliminado un producto con el código especificado
+                            eliminado = true;
                         }
                         else
                         {
-                            result.Add(item); // Añadir el producto a la nueva lista
+                            result.Add(item);
                         }
                     }
 
-                    App.ProductosSeleccionados = result; // Actualizar la lista de productos seleccionados
-
+                    App.ProductosSeleccionados = result;
+                    App.EliminarRetailSales(Convert.ToDecimal(App.Secuencia), codigoProducto);
                 }
 
                 if (currentValue < 0)
@@ -865,6 +1119,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
         }
+
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
@@ -888,20 +1143,15 @@ namespace Portal.Kiosco.Properties.Views
 
                 // Verifica si existen combinaciones seleccionadas
                 var ProductosSeleccionados = productos.FirstOrDefault(tip => tip.Tipo == "C");
-                if (ProductosSeleccionados != null)
-                {
-                    isThreadActive = false;
-                    Combodeluxe1 openWindows = new Combodeluxe1();
-                    openWindows.Show();
-                    this.Close();
-                }
-                else
-                {
-                    isThreadActive = false;
-                    ResumenCompra openWindows = new ResumenCompra(config);
-                    openWindows.Show();
-                    this.Close();
-                }
+
+                var transicion = new transicion();
+                transicion.Show();
+                this.Close();
+                ResumenCompra openWindows = new ResumenCompra(config);
+                await openWindows.LoadDataAsync();
+                openWindows.Show();
+                transicion.Close();
+
             }
             else
             {
@@ -916,26 +1166,44 @@ namespace Portal.Kiosco.Properties.Views
             {
                 isThreadActive = false;
                 App.IsCinefans = true;
-                AlgoParaComer openWindows = new AlgoParaComer();
-                openWindows.Show();
+
+                var transicion = new transicion();
+                transicion.Show();
                 this.Close();
+                var openWindows = new AlgoParaComer();
+                await openWindows.LoadDataAsync();
+                openWindows.Show();
+                transicion.Close();
             }
             else
             {
                 isThreadActive = false;
                 App.IsCinefans = true;
-                ComoCompra openWindows = new ComoCompra();
-                openWindows.Show();
+
+
+                var transicion = new transicion();
+                transicion.Show();
                 this.Close();
+                var openWindows = new ComoCompra();
+                await openWindows.LoadDataAsync();
+                openWindows.Show();
+                transicion.Close();
             }
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Principal openWindows = new Principal();
-            openWindows.Show();
+
+
+
+            var transicion = new transicion();
+            transicion.Show();
             this.Close();
+            var openWindows = new Principal();
+            await openWindows.LoadDataAsync();
+            openWindows.Show();
+            transicion.Close();
         }
     }
 }

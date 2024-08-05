@@ -5,31 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="CorreoTecladoFlotante"  Height="1080" Width="1920"
-        WindowStyle="None" 
-        WindowState="Maximized"  
+        Title="CorreoTecladoFlotante"     
+        Height="1920"
+        Width="1080"
+        Background="White"
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
         >
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Background" Value="White" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="border" BorderThickness="0" BorderBrush="Black" >
+                        <Border Name="border" BorderThickness="0" BorderBrush="Transparent" CornerRadius="10" Background="White">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
-
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="false">
-                                <Setter Property="Opacity" Value="0.8" />
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter   Property="Opacity" Value="0.8" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style x:Key="CustomScrollViewerStyle" TargetType="ScrollViewer">
             <Setter Property="Template">
                 <Setter.Value>
@@ -58,10 +61,10 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="140" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
 
-                <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
+                </Grid.RowDefinitions>
+                <Border Background="#ED1C24" Height="140" VerticalAlignment="Center" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="247" />
@@ -93,151 +96,225 @@
                                 <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding TiempoRestanteGlobal}" FontSize="24" FontFamily="Inter Regular" />
                             </Grid>
                         </Border>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
 
-                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        </Grid.RowDefinitions>
 
-                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button x:Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
-                                <TextBlock TextAlignment="Center">
-                                    <Run Text="SALIR"/>
-                                </TextBlock>
+                        <Border  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Escribe tu correo" FontSize="48" FontFamily="Myanmar Khyay" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
 
+                        <Border Grid.Row="1" CornerRadius="20" Width="600" Height="76" Margin="30" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" BorderThickness="2 2 2 2">
+                            <TextBox Background="Transparent" BorderThickness="0" x:Name="TextCorreoElectronico" FontFamily="Myanmar Khyay" FontSize="32" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  CornerRadius="30" Background="LightGray" Width="900"  Height="auto"  >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"  ></RowDefinition>
+                                    <RowDefinition Height="*"   ></RowDefinition>
+                                </Grid.RowDefinitions>
+                               
+
+                                <Border Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <WrapPanel Width="auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                            <Border Margin="5">
+                                                <Button Content="" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5" >
+                                                <Button Content="1" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="2" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="3" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="4" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="5" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="6" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="7" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="8" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="9" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="0" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal"  Margin="10,0,0,0">
+                                            <Border Margin="5">
+                                                <Button Content="Q" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="W" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="E" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="R" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="T" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="Y" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="U" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="I" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="O" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="P" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="Del" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal"  Margin="10,0,0,0">
+                                            <Border Margin="5">
+                                                <Button Content=" " Width="40" Height="70" FontSize="24" Background="Transparent" BorderThickness="1" BorderBrush="Transparent" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="A" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="S" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="D" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="F" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="G" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="H" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="J" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="K" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="L" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="Enter" Width="100" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal"  Margin="10,0,0,0">
+                                            <Border Margin="5">
+                                                <Button Content="Shift" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="Z" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="X" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="C" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="V" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="B" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="N" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="M" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="@" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="." Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="Shift" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="10,0,10,10">
+                                          
+                                            <Border Margin="5">
+                                                <Button Content="Space" Width="630" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="_" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5">
+                                                <Button Content="-" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                            <Border Margin="5" CornerRadius="10">
+                                                <Button Content=".com" Width="70" Height="70" FontSize="24" Click="KeyButton_Click" />
+                                            </Border>
+                                        </StackPanel>
+                                    </WrapPanel>
+                                </Border>
+
+
+                            </Grid>
+                        </Border>
+
+
+
+                    </Grid>
+                </Border>
+                <Border  Grid.Row="3" Height="197"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="30" >
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="Button"/>
+                        </Grid.Resources>
+                        <Border Width="180" Height="80" Background="#F30613" VerticalAlignment="Bottom" HorizontalAlignment="Right" CornerRadius="10">
+                            <Button Content="ENVIAR" Click="btnObtenerDatos_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"   Margin="0,0,10,0">
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
-
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-                    </Grid>
-                </Border>
-
-                <Border Grid.Row="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="187"/>
-                            <RowDefinition Height="124"/>
-                            <RowDefinition Height="574"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Border>
-                            <Label Content="Escribe tu correo" FontSize="48" FontFamily="Myanmar Khyay" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </Border>
-                        
-                        <Border Grid.Row="1" CornerRadius="20" Width="1140" Height="76" HorizontalAlignment="Center" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="2 2 2 2">
-                            <TextBox Background="Transparent" BorderThickness="0" x:Name="TextCorreoElectronico" FontFamily="Myanmar Khyay" FontSize="32" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
-
-                        <Border Grid.Row="2">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="238"/>
-                                    <ColumnDefinition Width="1426.51"/>
-                                    <ColumnDefinition Width="21.49"/>
-                                    <ColumnDefinition Width="180"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.Resources>
-                                    <Style TargetType="Button"/>
-                                </Grid.Resources>
-
-                                <Border Grid.Column="1">
-                                    <WrapPanel Width="800" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="@" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="-" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="_" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="." Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Button Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Button Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Button Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Button Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <Button Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="1" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="2" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="3" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="4" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="5" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="6" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="7" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="8" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="9" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="0" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                        </StackPanel>
-                                        
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="Q" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="W" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="E" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="R" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="T" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="Y" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="U" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="I" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="O" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="P" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                        </StackPanel>
-                                        
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="A" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="S" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="D" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="F" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="G" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="H" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="J" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="K" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="L" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="Z" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="X" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="C" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="V" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="B" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="N" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="M" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content=".com" Width="70" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="Del" Width="150" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                        </StackPanel>
-                                        <!-- Sexta fila -->
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="Space" Width="630" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                            <Button Content="Enter" Width="150" Height="70" Margin="5" FontSize="24" Background="#EEEEEE" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Click="KeyButton_Click" />
-                                        </StackPanel>
-                                    </WrapPanel>
-
-                                </Border>
-
-                                <Border Grid.Column="3" Height="197" VerticalAlignment="Bottom">
-                                    <Grid>
-                                        <Border Width="180" Height="80" Background="#F30613" VerticalAlignment="Bottom" HorizontalAlignment="Right" CornerRadius="10">
-                                            <Button Content="ENVIAR" Click="btnObtenerDatos_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="20"   Margin="0,0,10,0">
-                                                <Button.Effect>
-                                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                                </Button.Effect>
-                                            </Button>
-
-                                            <Border.Effect>
-                                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                            </Border.Effect>
-                                        </Border>
-
-                                        <Image Width="99" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,37,0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\telefonoEnviar.png"/>
-                                        
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </Border>
+                        <Image Width="99" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,37,0" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\telefonoEnviar.png"/>
                     </Grid>
                 </Border>
             </Grid>

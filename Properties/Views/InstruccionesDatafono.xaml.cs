@@ -3,9 +3,11 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 
 namespace Portal.Kiosco.Properties.Views
 {
@@ -19,7 +21,7 @@ namespace Portal.Kiosco.Properties.Views
         public InstruccionesDatafono()
         {
             InitializeComponent();
-
+            botones.Visibility = Visibility.Hidden;
             DataContext = ((App)Application.Current);
             if (App.ob_diclst.Count > 0)
             {
@@ -57,85 +59,75 @@ namespace Portal.Kiosco.Properties.Views
             timer.Start();
         }
 
-
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(async () =>
             {
-                LLamadoDatafono();
+               await LLamadoDatafonoAsync();
             });
         }
 
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
+        }
 
         public void LLamadoDatafono()
         {
-            
-                Producto producto = new Producto
-                {
-                    TipoCompra = App.TipoCompra,
-                    KeySecuencia = App.Secuencia,
-                    SwtVenta = "V",
-                    SwitchCashback = "N",
-                    Valor = App.TotalPagar,
-                };
+
+            Producto producto = new Producto
+            {
+                TipoCompra = App.TipoCompra,
+                KeySecuencia = App.Secuencia,
+                SwtVenta = "V",
+                SwitchCashback = "N",
+                Valor = App.TotalPagar,
+            };
 
 
-                App.Payment(producto);
-                App.validadorVenta = 1;
-            
+            App.Payment(producto);
+            App.validadorVenta = 1;
+
             if (App.EstadoScore == "0")
             {
                 var subtotal = 0;
                 var IAC = 0;
                 var total = Convert.ToInt64(App.TotalPagar);
                 var subtotalString = "";
-            ;
-                // Si App.IVA es null, se utiliza "0"
                 string ivaString = App.IVA ?? "0";
-
                 string icaString = App.IVC ?? "0";
-                // Convertir el valor a decimal
                 decimal ivaDecimal;
                 if (decimal.TryParse(ivaString, out ivaDecimal))
                 {
-                    // Redondear el valor
-                     subtotal = Convert.ToInt32(Math.Round(ivaDecimal));
-
-                    // Convertir a string si es necesario
-                     subtotalString = subtotal.ToString();
+                    subtotal = Convert.ToInt32(Math.Round(ivaDecimal));
+                    subtotalString = subtotal.ToString();
                     App.IVA = subtotalString;
                 }
                 else
                 {
-                    // Manejar el caso en que la conversión falle
                     throw new FormatException("El valor de IVA no tiene un formato correcto.");
                 }
                 decimal icaDecimal;
                 if (decimal.TryParse(icaString, out icaDecimal))
                 {
-                    // Redondear el valor
                     IAC = Convert.ToInt32(Math.Round(icaDecimal));
-
-                    // Convertir a string si es necesario
                     icaString = IAC.ToString();
                     App.IVC = icaString;
                 }
                 else
                 {
-                    // Manejar el caso en que la conversión falle
                     throw new FormatException("El valor de IVA no tiene un formato correcto.");
                 }
-
-
-              
-
 
                 var responseSection = "";
 
 
-                String Trama = "01," + total.ToString() + "," + subtotalString + "," + App.PuntoVenta + ","+ App.Secuencia.ToString() +", 0 ," + icaString + ",KIOSCO,0,0,";
+                String Trama = "01," + total.ToString() + "," + subtotalString + "," + App.PuntoVenta + "," + App.Secuencia.ToString() + ", 0 ," + icaString + ",KIOSCO,0,0,";
 
-                var respuesta =  App.RunProgramAndWait(Trama);
+                var respuesta = App.RunProgramAndWait(Trama);
 
                 int start = respuesta.IndexOf("Response:");
 
@@ -155,11 +147,11 @@ namespace Portal.Kiosco.Properties.Views
 
                 if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
                 {
-                    MessageBox.Show("Error al procesar el pago " + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    var openWindows = new ResumenCompra(config);
-                    openWindows.Show();
-                    this.Close();
+                    imgdatafono.Source = new BitmapImage(new Uri("C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Resources\\ErrorDatafono.png"));
+                    borderInstrucciones.Visibility = Visibility.Hidden;
+                    TextTitulo.Text = "¡Ups! La transación no se pudo realizar";
+                    botones.Visibility = Visibility.Visible; 
                 }
                 else
                 {
@@ -168,17 +160,102 @@ namespace Portal.Kiosco.Properties.Views
                     openWindows.Show();
                     this.Close();
                 }
-
             }
             else
             {
-                MessageBox.Show("Error al procesar el pago en SCORE" + App.Secuencia + "-PUNTOVTA: " + App.PuntoVenta, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                var openWindows = new ResumenCompra(config);
-                openWindows.Show();
-                this.Close();
 
+                imgdatafono.Source = new BitmapImage(new Uri("C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Resources\\ErrorDatafono.png"));
+                borderInstrucciones.Visibility = Visibility.Hidden;
+                TextTitulo.Text = "¡Ups! La transación no se pudo realizar";
+                botones.Visibility = Visibility.Visible;
             }
 
+        }
+        public async Task LLamadoDatafonoAsync()
+        {
+            Producto producto = new Producto
+            {
+                TipoCompra = App.TipoCompra,
+                KeySecuencia = App.Secuencia,
+                SwtVenta = "V",
+                SwitchCashback = "N",
+                Valor = App.TotalPagar,
+            };
+
+            await Task.Run(() => App.Payment(producto));
+            App.validadorVenta = 1;
+
+            if (App.EstadoScore == "0")
+            {
+                int subtotal = 0;
+                int IAC = 0;
+                long total = Convert.ToInt64(App.TotalPagar);
+                string subtotalString = "";
+                string ivaString = App.IVA ?? "0";
+                string icaString = App.IVC ?? "0";
+                if (decimal.TryParse(ivaString, out decimal ivaDecimal))
+                {
+                    subtotal = Convert.ToInt32(Math.Round(ivaDecimal));
+                    subtotalString = subtotal.ToString();
+                    App.IVA = subtotalString;
+                }
+                else
+                {
+                    throw new FormatException("El valor de IVA no tiene un formato correcto.");
+                }
+                if (decimal.TryParse(icaString, out decimal icaDecimal))
+                {
+                    IAC = Convert.ToInt32(Math.Round(icaDecimal));
+                    icaString = IAC.ToString();
+                    App.IVC = icaString;
+                }
+                else
+                {
+                    throw new FormatException("El valor de IVA no tiene un formato correcto.");
+                }
+
+                string responseSection = "";
+
+                string Trama = $"01,{total},{subtotalString},{App.PuntoVenta},{App.Secuencia},0,{icaString},KIOSCO,0,0,";
+                string respuesta = await Task.Run(() => App.RunProgramAndWait(Trama));
+
+                int start = respuesta.IndexOf("Response:");
+                int end = respuesta.IndexOf("*", start);
+
+                if (start != -1 && end != -1)
+                {
+                    responseSection = respuesta.Substring(start, end - start);
+
+                    App.respuestagenerica = responseSection.Contains("Response:00") ? "00" : "Error";
+                    Console.WriteLine(responseSection);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró la sección de respuesta en el texto proporcionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                if (App.respuestagenerica == "Error" || App.respuestagenerica == "")
+                {
+                    imgdatafono.Source = new BitmapImage(new Uri("C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Resources\\ErrorDatafono.png"));
+                    borderInstrucciones.Visibility = Visibility.Hidden;
+                    TextTitulo.Text = "¡Ups! La transación no se pudo realizar";
+                    botones.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    App.ResponseDatafono = responseSection.Substring(0, 3).Replace(",", "");
+                    var openWindows = new BoletasGafasAlimentos();
+                    openWindows.Show();
+                    this.Close();
+                }
+            }
+            else
+            {
+                imgdatafono.Source = new BitmapImage(new Uri("C:\\FALCROSOFT\\PROCINAL\\Portal.Kiosco\\Properties\\Resources\\ErrorDatafono.png"));
+                borderInstrucciones.Visibility = Visibility.Hidden;
+                TextTitulo.Text = "¡Ups! La transación no se pudo realizar";
+                botones.Visibility = Visibility.Visible;
+            }
         }
 
         private bool ComprobarTiempo()
@@ -238,6 +315,14 @@ namespace Portal.Kiosco.Properties.Views
             Principal openWindows = new Principal();
             this.Close();
             openWindows.Show();
+        }
+
+        private void btnReintentar_Click(object sender, RoutedEventArgs e)
+        {
+            timer = new System.Timers.Timer(3000);
+            timer.Elapsed += Timer_Elapsed;
+            timer.AutoReset = false;
+            timer.Start();
         }
     }
 }

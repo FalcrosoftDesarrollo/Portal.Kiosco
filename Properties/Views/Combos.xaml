@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="Combos" Height="1080" Width="1920"
+        Title="Combos" Height="1920" Width="1080"
         Background="White"
         WindowStyle="None" 
         WindowState="Maximized" 
@@ -62,7 +62,9 @@
                     <RowDefinition Height="140" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -98,115 +100,115 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button x:Name="btnSalir" Click="btnSalir_Click"  Background="Transparent" BorderThickness="0" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159">
+                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left" Background="#FFFFFF" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-                                    <Run Text="SALIR"/>
+          <Run Text="SALIR"/>
                                 </TextBlock>
-
                                 <Button.Effect>
                                     <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
                                 </Button.Effect>
                             </Button>
-
                             <Border.Effect>
                                 <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
                     </Grid>
                 </Border>
-
-                <Border Grid.Row="1">
+                <Border Grid.Row="1" HorizontalAlignment="Center" Name="gridcombos">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="199"/>
-                            <RowDefinition Height="567"/>
-                            <RowDefinition Height="174"/>
+                            <RowDefinition Height="170"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
+                        <Border Grid.Row="0" HorizontalAlignment="Center">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="63"/>
+                                    <ColumnDefinition Width="229"/>
+                                    <ColumnDefinition Width="14"/>
+                                    <ColumnDefinition Width="229"/>
+                                    <ColumnDefinition Width="14"/>
+                                    <ColumnDefinition Width="229"/>
+                                    <ColumnDefinition Width="14"/>
+                                    <ColumnDefinition Width="229"/>
+                                    <ColumnDefinition Width="14"/>
+                                    <ColumnDefinition Width="64"/>
+                                </Grid.ColumnDefinitions>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="390"/>
-                                <ColumnDefinition Width="274"/>
-                                <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="275"/>
-                                <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="274"/>
-                                <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="274"/>
-                                <ColumnDefinition Width="14"/>
-                                <ColumnDefinition Width="391"/>
-                            </Grid.ColumnDefinitions>
+                                <Border Grid.Column="1">
+                                    <Border x:Name="combosBorder" Height="69" CornerRadius="10" Background="#f30613">
+                                        <Button x:Name="tabcombos" Content="COMBOS" FontFamily="Myanmar Khyay" FontSize="32" Foreground="White" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
+                                            <Button.Effect>
+                                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                            </Button.Effect>
+                                        </Button>
 
-                            <Border Grid.Column="1">
-                                <Border x:Name="combosBorder" Height="69" CornerRadius="10" Background="#f30613">
-                                    <Button x:Name="tabcombos" Content="COMBOS" FontFamily="Myanmar Khyay" FontSize="32" Foreground="White" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
-                                        <Button.Effect>
-                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                        </Button.Effect>
-                                    </Button>
-
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                    </Border.Effect>
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                        </Border.Effect>
+                                    </Border>
                                 </Border>
-                            </Border>
 
-                            <Border Grid.Column="3">
-                                <Border x:Name="alimentosBorder" Height="69" CornerRadius="10" Background="#f5f5f5">
-                                    <Button x:Name="tabalimentos" Content="ALIMENTOS" FontFamily="Myanmar Khyay" FontSize="32" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
-                                        <Button.Effect>
-                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                        </Button.Effect>
-                                    </Button>
+                                <Border Grid.Column="3">
+                                    <Border x:Name="alimentosBorder" Height="69" CornerRadius="10" Background="#f5f5f5">
+                                        <Button x:Name="tabalimentos" Content="ALIMENTOS" FontFamily="Myanmar Khyay" FontSize="32" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
+                                            <Button.Effect>
+                                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                            </Button.Effect>
+                                        </Button>
 
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                    </Border.Effect>
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                        </Border.Effect>
+                                    </Border>
                                 </Border>
-                            </Border>
 
-                            <Border Grid.Column="5">
-                                <Border x:Name="bebidasBorder" Height="69" CornerRadius="10" Background="#f5f5f5">
-                                    <Button x:Name="tabbebidas" Content="BEBIDAS" FontFamily="Myanmar Khyay" FontSize="32" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
-                                        <Button.Effect>
-                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                        </Button.Effect>
-                                    </Button>
+                                <Border Grid.Column="5">
+                                    <Border x:Name="bebidasBorder" Height="69" CornerRadius="10" Background="#f5f5f5">
+                                        <Button x:Name="tabbebidas" Content="BEBIDAS" FontFamily="Myanmar Khyay" FontSize="32" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
+                                            <Button.Effect>
+                                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                            </Button.Effect>
+                                        </Button>
 
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                    </Border.Effect>
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                        </Border.Effect>
+                                    </Border>
                                 </Border>
-                            </Border>
 
-                            <Border Grid.Column="7">
-                                <Border x:Name="snacksBorder" Height="69" CornerRadius="10" Background="#f5f5f5">
-                                    <Button x:Name="tabsnacks" Content="SNACKS" FontFamily="Myanmar Khyay" FontSize="32" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
-                                        <Button.Effect>
-                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                        </Button.Effect>
-                                    </Button>
+                                <Border Grid.Column="7">
+                                    <Border x:Name="snacksBorder" Height="69" CornerRadius="10" Background="#f5f5f5">
+                                        <Button x:Name="tabsnacks" Content="SNACKS" FontFamily="Myanmar Khyay" FontSize="32" Background="Transparent" BorderThickness="0" Click="tapAlimentos_Click">
+                                            <Button.Effect>
+                                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                            </Button.Effect>
+                                        </Button>
 
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                    </Border.Effect>
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                        </Border.Effect>
+                                    </Border>
                                 </Border>
-                            </Border>
-                        </Grid>
 
+                            </Grid>
+                        </Border>
                         <Border Grid.Row="1">
                             <Grid>
-                                <ScrollViewer PanningMode="Both" HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Width="1645" >
-                                    <WrapPanel x:Name="imagenes" Grid.Column="1" Grid.ColumnSpan="2" Width="1786"/>
+                                <ScrollViewer PanningMode="Both" HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto"   >
+                                    <WrapPanel x:Name="imagenes" Grid.Column="1" Grid.ColumnSpan="2"  />
                                 </ScrollViewer>
                             </Grid>
                         </Border>
 
-                        <Border Grid.Row="2">
+                        <Border Grid.Row="2" Margin="0,0,0,30">
                             <Grid>
                                 <Border Width="830" Height="80" HorizontalAlignment="Right" Margin="0,0,54,0">
                                     <Grid>
+
                                         <Border Width="350" HorizontalAlignment="Left">
                                             <Grid>
                                                 <Border Width="350" HorizontalAlignment="Left" CornerRadius="10" Background="#D9D9D9">

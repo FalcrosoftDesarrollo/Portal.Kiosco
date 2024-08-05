@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
@@ -20,7 +21,7 @@ namespace Portal.Kiosco.Properties.Views
             App.IsFecha = false;
             App.ProductosSeleccionados = new List<Producto>();
             App.Secuencia = "0";
-            App.validadorVenta = 0;
+            //App.validadorVenta = 0;
             App.ProductosCambiados = new List<Producto>();
             App.Pelicula = new Pelicula();
             App.CantidadBoletas = 0;
@@ -42,6 +43,14 @@ namespace Portal.Kiosco.Properties.Views
             });
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
         }
 
         private bool isMainWindowOpen = false;
@@ -106,19 +115,29 @@ namespace Portal.Kiosco.Properties.Views
                 {
                     isThreadActive = false;
                     App.IsCinefans = true;
-                    Cartelera openWindows = new Cartelera();
-
-                    openWindows.Show();
+                    var transicion = new transicion();
+                    transicion.Show();
                     this.Close();
+                    var openWindows = new Cartelera();
+                    await openWindows.LoadDataAsync();
+                    openWindows.Show();
+                    transicion.Close();
                 }
                 else
                 {
                     isThreadActive = false;
                     App.IsCinefans = true;
-                    Combos openWindows = new Combos();
+                   
 
+                    var transicion = new transicion();
+                    transicion.Show();
+                    this.Close(); 
+                    var openWindows = new Combos();
+                    await openWindows.LoadDataAsync();
                     openWindows.Show();
-                    this.Close();
+                    transicion.Close();
+                   
+
                 }
             }
             finally

@@ -8,14 +8,67 @@
         Title="Cartelera" Height="1080" Width="1920"
         WindowStyle="None" 
         WindowState="Maximized"
-        Background="Red">
-    <Grid>
-        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png"
-               Height="82"
-               Width="204"
-               Stretch="Fill"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"/>
+        Background="Red"
+        Loaded="Window_Loaded"
+        >
+    <Window.Resources>
+        <!-- Define the animation for the dots -->
+        <Storyboard x:Key="DotsAnimation">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DotsTextBlock" Storyboard.TargetProperty="Text">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="Procesando."/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="Procesando.."/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.5" Value="Procesando..."/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid Name="gridPrincipal">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" VerticalAlignment="Bottom">
+                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png"
+         Height="82"
+         Width="204"
+         Stretch="Fill"
+         HorizontalAlignment="Center"
+         VerticalAlignment="Center"/>
+
+            </Border>
+            <Border Margin="30" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <TextBlock x:Name="DotsTextBlock"
+            Text="Procesando."
+            FontSize="32"
+            FontFamily="Myanmar Khyay"
+            Foreground="White"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Margin="0,0,0,50"/>
+            </Border>
+            <Border Grid.Row="2" VerticalAlignment="Top">
+                <Canvas Width="100" Height="100" x:Name="SpinnerCanvas" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Canvas.RenderTransform>
+                        <RotateTransform x:Name="SpinnerRotateTransform" CenterX="50" CenterY="50"/>
+                    </Canvas.RenderTransform>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="45" Canvas.Top="10"/>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="70" Canvas.Top="20"/>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="85" Canvas.Top="45"/>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="70" Canvas.Top="70"/>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="45" Canvas.Top="85"/>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="20" Canvas.Top="70"/>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="10" Canvas.Top="45"/>
+                    <Ellipse Width="10" Height="10" Fill="Gray" Canvas.Left="20" Canvas.Top="20"/>
+                </Canvas>
+            </Border>
+        </Grid>
+      
+   
     </Grid>
 </Window>
+
+
+
 

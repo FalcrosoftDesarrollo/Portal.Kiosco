@@ -36,25 +36,25 @@
                     <ControlTemplate TargetType="RadioButton">
                         <Grid>
                             <Ellipse x:Name="RadioEllipse"
-                                 Width="40"
-                                 Height="40"
+                                 Width="30"
+                                 Height="30"
                                  Fill="White"
                                  Stroke="LightGray"
                                  StrokeThickness="1" 
                                  HorizontalAlignment="Left"/>
-                            
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="70,15,0,20"/>
+
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,5,0,10"/>
                         </Grid>
-                        
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="RadioEllipse" Property="Fill" Value="Red"/>
                             </Trigger>
-                            
+
                             <Trigger Property="IsChecked" Value="False">
                                 <Setter TargetName="RadioEllipse" Property="Fill" Value="LightGray"/>
                             </Trigger>
-                            
+
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="RadioEllipse" Property="Stroke" Value="Red"/>
                             </Trigger>
@@ -88,14 +88,18 @@
         </Style>
     </Window.Resources>
 
-    <Grid Name="gridPrincipal">
+    <Grid Name="gridPrincipal" Background="Transparent"  >
+
         <Border>
-            <Grid RenderTransformOrigin="0.108,0.669">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="140" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+          
                 <Border Background="#ED1C24" Height="140" VerticalAlignment="Center">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -104,7 +108,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -132,9 +136,9 @@
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
                         <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button x:Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
+                            <Button x:Name="btnSalir" Click="btnSalir_Click"  Background="Transparent" BorderThickness="0" Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159">
                                 <TextBlock TextAlignment="Center">
-                                    <Run Text="SALIR"/>
+                                 <Run Text="SALIR"/>
                                 </TextBlock>
 
                                 <Button.Effect>
@@ -148,147 +152,127 @@
                         </Border>
                     </Grid>
                 </Border>
-                
-                <Border Grid.Row="1">
+
+                <!-- Fondo general transparente -->
+                <Border Background="Transparent" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"  >
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="125"/>
-                            <RowDefinition Height="626"/>
-                            <RowDefinition/>
+                            <RowDefinition  Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
+                        <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\FondoDegradado.png" Name="imgfondo"  HorizontalAlignment="Left"  Stretch="Uniform" />
 
-                        <Border Grid.Row="0">
-                            <Label Height="65" Name="lblCombo" Content="Titulo" FontFamily="Myanmar Khyay" FontSize="48" HorizontalContentAlignment="Center" Margin="580,30,485,30"/>
-                        </Border>
-
-                        <Border Grid.Row="1">
+                        <!-- El Grid principal que permite ver el contenido detrás del popup -->
+                        <Border Grid.Row="0" Grid.Column="0" Name="popup" Background="White" CornerRadius="10" BorderBrush="White" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="141"/>
-                                    <ColumnDefinition Width="415.69"/>
-                                    <ColumnDefinition Width="158.31"/>
-                                    <ColumnDefinition Width="573"/>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="508"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
 
-                                <Border Grid.Column="1">
-                                    <Image Name="ImgCombo" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\rectangle241.png"></Image>
+                                <Border Grid.Row="0" HorizontalAlignment="Center" Margin="0,30,30,30">
+                                    <Label Height="65" Name="lblCombo" Content="Titulo"  FontFamily="Myanmar Khyay" FontSize="48" HorizontalContentAlignment="Center"  />
                                 </Border>
-                                
-                                <Border Grid.Column="3">
+
+                                <Border Grid.Row="1" Margin="60,0,30,0"  >
                                     <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="60"/>
-                                            <RowDefinition Height="160"/>
-                                            <RowDefinition Height="60"/>
-                                            <RowDefinition Height="300"/>
-                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Row="0">
-                                            <Label Height="46" VerticalAlignment="Top" Content="Elige Perro o Sánduche" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" Margin="0,0,-66,0"/>
-                                        </Border>
-                                        <Border Grid.Row="1"  >
-                                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,16">
-                                                <StackPanel Orientation="Vertical" Name="radioComidas" Margin="0,0,17,0">
-                                                    <!--<RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                    <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>-->
-                                                    <!-- Agrega más RadioButtons si es necesario -->
-                                                </StackPanel>
-                                            </ScrollViewer>
-
-                                        </Border>
-
-                                        <Border Grid.Row="2">
-                                            <Label Width="367" Height="46" VerticalAlignment="Top" Content="Elige la bebida" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
-                                        </Border>
-                                        
-                                        <Border Grid.Row="3">
+                                        <Border Grid.Column="0" Margin="0,30,30,30"  VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <Grid>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="197*"/>
-                                                    <RowDefinition Height="3*"/>
+                                                    <RowDefinition Height="60"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="60"/>
+                                                    <RowDefinition Height="auto"/>
                                                 </Grid.RowDefinitions>
 
-                                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,18"  >
-                                                    <StackPanel Orientation="Vertical"  Name="radiobebidas" Grid.RowSpan="2" >
-                                                        <!--<RadioButton Content="Option 1" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                        <RadioButton Content="Option 2" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                        <RadioButton Content="Option 3" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>
-                                                        <RadioButton Content="Option 4" FontSize="24"  HorizontalAlignment="Left"   GroupName="Options"/>-->
+                                                <Border Grid.Row="0">
+                                                    <Label Height="46" VerticalAlignment="Top" Content="Cambia tu producto" FontFamily="Myanmar Khyay" FontSize="20" HorizontalContentAlignment="Left" Margin="0,0,-66,0"/>
+                                                </Border>
+                                                <Border Grid.Row="1">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,16">
+                                                        <StackPanel Orientation="Vertical" Name="radioComidas" Margin="0,0,17,0">
+                                                        </StackPanel>
+                                                    </ScrollViewer>
+                                                </Border>
 
-                                                    </StackPanel>
-                                                </ScrollViewer>
+                                                <Border Grid.Row="2">
+                                                    <Label Height="46" VerticalAlignment="Top" Content="Elige la bebida" FontFamily="Myanmar Khyay" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
+                                                </Border>
 
+                                                <Border Grid.Row="3">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="197*"/>
+                                                            <RowDefinition Height="3*"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                            <StackPanel Orientation="Vertical" Name="radiobebidas" Grid.RowSpan="2">
+                                                            </StackPanel>
+                                                        </ScrollViewer>
+                                                    </Grid>
+                                                </Border>
                                             </Grid>
                                         </Border>
-                                    </Grid>
-                                </Border>
-                                <Border Grid.Column="5">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="78"/>
-                                            <RowDefinition Height="400"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
 
-                                        <Border Grid.Row="0">
-                                            <Label Width="391" Height="43" VerticalAlignment="Top" Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="32" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
-                                        </Border>
-
-                                        <Border Grid.Row="1">
-                                            <ScrollViewer VerticalScrollBarVisibility="Auto"  >
-                                                <StackPanel Orientation="Vertical" Name="checkBoxAdicionales" >
-                                                    <!--<RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
-                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
-                                                <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
-                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
-                                                <RadioButton Content="Option 1" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>
-                                                <RadioButton Content="Option 2" FontSize="24" HorizontalAlignment="Left" GroupName="Options"/>-->
-                                                </StackPanel>
-                                            </ScrollViewer>
-                                        </Border>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                            
-                        </Border>
-                        
-                        <Border Grid.Row="2">
-                            <Grid>
-                                <Border Width="830" Height="80" HorizontalAlignment="Right" Margin="0,0,54,0">
-                                    <Grid>
-                                        <Border Width="350" HorizontalAlignment="Left">
+                                        <Border Grid.Column="1"  Margin="0,30,30,30" >
                                             <Grid>
-                                                <Border Width="350" HorizontalAlignment="Left" CornerRadius="10" Background="#D9D9D9">
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <Label Content="TOTAL:" FontFamily="Myanmar Khyay" FontSize="32" Margin="0,0,10,0"/>
-                                                        <Label x:Name="totalLabel" Content="0" FontFamily="Myanmar Khyay" FontSize="32" FontWeight="Bold"/>
-                                                    </StackPanel>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="60"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+
+                                                <Border Grid.Row="0" HorizontalAlignment="Center">
+                                                    <Label Height="43" VerticalAlignment="Top" Content="Adiciones" FontFamily="Myanmar Khyay" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
+                                                </Border>
+
+                                                <Border Grid.Row="1" HorizontalAlignment="Center">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                        <StackPanel Orientation="Vertical" Name="checkBoxAdicionales">
+                                                        </StackPanel>
+                                                    </ScrollViewer>
                                                 </Border>
                                             </Grid>
                                         </Border>
+                                    </Grid>
+                                </Border>
 
-                                        <Border>
-                                            <Grid Width="374" HorizontalAlignment="Right">
-                                                <Border Width="180" Height="80"  HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
-                                                    <Button Background="Transparent" Click="btnVolver_Click" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28"/>
-                                                </Border>
+                                <Border Grid.Row="2" Margin="0,0,30,0" >
+                                    <Grid>
+                                        <Border Height="80" HorizontalAlignment="Right" Margin="0,0,54,0">
+                                            <Grid>
+                                                <Border>
+                                                    <Grid Width="260" HorizontalAlignment="Right">
+                                                        <Border Width="124" Height="36" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
+                                                            <Button Background="Transparent" Click="btnVolver_Click" BorderThickness="0" Content="CANCELAR" Foreground="White" FontSize="16"/>
+                                                        </Border>
 
-                                                <Border Width="180" Height="80" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                                    <Button Background="Transparent" BorderThickness="0" Click="btnSiguiente_Click" Content="SIGUIENTE" Foreground="White" FontSize="28"/>
+                                                        <Border Width="124" Height="36" HorizontalAlignment="Right" Background="#00B012" CornerRadius="10">
+                                                            <Button Background="Transparent" BorderThickness="0" Click="btnSiguiente_Click" Content="SIGUIENTE" Foreground="White" FontSize="16"/>
+                                                        </Border>
+                                                    </Grid>
                                                 </Border>
                                             </Grid>
                                         </Border>
                                     </Grid>
                                 </Border>
                             </Grid>
-
                         </Border>
                     </Grid>
                 </Border>
+                <Image Margin="1455,171,465,769" Grid.Row="1" Source="/Properties/Resources/FondoDegradado.png" Stretch="Fill"/>
             </Grid>
         </Border>
     </Grid>
+
+
 </Window>

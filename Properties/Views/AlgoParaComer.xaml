@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="AlgoParaComer" Height="1080" Width="1920"
+        Title="AlgoParaComer" Height="1920" Width="1080"
         Background="White"
         WindowStyle="None" 
         WindowState="Maximized" 
@@ -100,8 +100,8 @@
 
                         <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
+                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left" Background="#FFFFFF" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
                                     <Run Text="SALIR"/>
                                 </TextBlock>
@@ -115,52 +115,57 @@
                         </Border>
                     </Grid>
                 </Border>
-                
+
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="77*"/>
-                            <ColumnDefinition Width="43*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="129"/>
-                            <RowDefinition Height="354"/>
-                            <RowDefinition Height="130"/>
-                            <RowDefinition Height="104"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+                        <Border  Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <Label FontFamily="Myanmar Khyay" Content="¿Quieres algo para comer?"    FontSize="48" ></Label>
+                        </Border>
 
-                        <Border Grid.Row="1" Grid.ColumnSpan="2">
+                        <Border Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" >
                             <Grid>
-                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\group4.png" Width="329" Height="260" VerticalAlignment="Bottom"></Image>
-                                <Label FontFamily="Myanmar Khyay" Content="¿Quieres algo para comer?" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+                                <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\group4.png" Width="329"  VerticalAlignment="Bottom"></Image>
                             </Grid>
                         </Border>
-                        
-                        <Border Grid.Row="2" CornerRadius="10" Grid.ColumnSpan="2">
-                            <Border Width="350" Height="80" VerticalAlignment="Bottom" CornerRadius="10" Background="#f30613">
-                                <Button Click="btnCombos_Click" Name="btnCombos"   Foreground="White" Content="SI, QUIERO COMPRAR" FontFamily="Myanmar Khyay" FontSize="28">
-                                    <Button.Effect>
-                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                    </Button.Effect>
-                                </Button>
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                </Border.Effect>
-                            </Border>
 
+                        <Border Grid.Row="2" Height="300" CornerRadius="10" Grid.ColumnSpan="2"  VerticalAlignment="Top">
+                            <Grid>
+                                <Border Width="350" Height="80" VerticalAlignment="Top" CornerRadius="10" Background="#f30613">
+                                    <Button Click="btnCombos_Click" Name="btnCombos"   Foreground="White" Content="SI, QUIERO COMPRAR" FontFamily="Myanmar Khyay" FontSize="28">
+                                        <Button.Effect>
+                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                        </Button.Effect>
+                                    </Button>
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border Width="304" Height="80"   CornerRadius="10">
+                                    <Button Click="btnResumen_Click" Name="btnResumen" Foreground="#f30613" Content="No, omitir" FontFamily="Myanmar Khyay" FontSize="24" >
+                                        <Button.Effect>
+                                            <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                        </Button.Effect>
+                                    </Button>
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
                         </Border>
-                        
-                        <Border Grid.Row="3" Grid.ColumnSpan="2">
-                            <Border Width="304" Height="80" VerticalAlignment="Bottom" CornerRadius="10" Background="LightGray">
-                                <Button Click="btnResumen_Click" Name="btnResumen" Background="#d9d9d9" Foreground=" White" Content="No, omitir" FontFamily="Myanmar Khyay" FontSize="24" >
-                                    <Button.Effect>
-                                        <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
-                                    </Button.Effect>
-                                </Button>
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
-                                </Border.Effect>
-                            </Border>
+
+                        <Border Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top">
+
                         </Border>
                     </Grid>
                 </Border>

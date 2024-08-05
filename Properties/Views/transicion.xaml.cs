@@ -1,34 +1,67 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Portal.Kiosco.Properties.Views
 {
-    /// <summary>
-    /// Interaction logic for transicion.xaml
-    /// </summary>
     public partial class transicion : Window
     {
-        public transicion()
+        public     transicion()
         {
-            InitializeComponent();
-            // Asociar evento Loaded para iniciar la animación
-            Loaded += Transicion_Loaded;
+            InitializeComponent(); 
+
         }
 
-        private async void Transicion_Loaded(object sender, RoutedEventArgs e)
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Animación de desvanecimiento
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-
-            // Esperar un breve momento antes de cerrar la ventana
-            await Task.Delay(500);
-
-            // Cerrar la ventana de transición
-            Close();
+            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(2));
+            gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+            await ShowProcessingAsync();
         }
+
+        private void CreateSpinnerAnimation()
+        {
+            DoubleAnimation rotateAnimation = new DoubleAnimation
+            {
+                From = 0,
+                To = 360,
+                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+
+            RotateTransform rotateTransform = new RotateTransform();
+            SpinnerCanvas.RenderTransform = rotateTransform;
+            SpinnerCanvas.RenderTransformOrigin = new Point(0.5, 0.5);
+            rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
+        }
+
+        private async Task ShowProcessingAsync()
+        {
+            SpinnerCanvas.Visibility = Visibility.Visible;
+            DotsTextBlock.Visibility = Visibility.Visible;
+            var dotsStoryboard = (Storyboard)FindResource("DotsAnimation");
+            CreateSpinnerAnimation();
+            dotsStoryboard.Begin();
+
+            // Simular una operación asíncrona, si es necesario
+            await Task.Delay(100);
+        }
+
+        private async Task HideProcessingAsync()
+        {
+            SpinnerCanvas.Visibility = Visibility.Collapsed;
+            DotsTextBlock.Visibility = Visibility.Collapsed;
+            var dotsStoryboard = (Storyboard)FindResource("DotsAnimation");
+            dotsStoryboard.Stop();
+
+            // Simular una operación asíncrona, si es necesario
+            await Task.Delay(100);
+        }
+
+
+
     }
-
 }

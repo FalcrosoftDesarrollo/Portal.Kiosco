@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal.Kiosco.Properties.Views"
         mc:Ignorable="d"
-        Title="ResumenCompra" Height="1080" Width="1920"
+        Title="ResumenCompra"    MinHeight="600" MinWidth="800"
+          Height="Auto"
+  Width="Auto"
         Background="White"
         WindowStyle="None" 
         WindowState="Maximized" 
@@ -37,16 +39,16 @@
                         <Grid>
                             <ScrollContentPresenter/>
                             <ScrollBar x:Name="PART_VerticalScrollBar" 
-                               Width="20" 
-                               Background="Red"
-                               BorderBrush="Transparent" 
-                               BorderThickness="0"
-                               HorizontalAlignment="Right" 
-                               Margin="0,2,0,2" 
-                               IsTabStop="False" 
-                               Minimum="0" 
-                               Orientation="Vertical" 
-                            />
+                              Width="20" 
+                              Background="Red"
+                              BorderBrush="Transparent" 
+                              BorderThickness="0"
+                              HorizontalAlignment="Right" 
+                              Margin="0,2,0,2" 
+                              IsTabStop="False" 
+                              Minimum="0" 
+                              Orientation="Vertical" 
+                           />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -70,7 +72,7 @@
                             <ColumnDefinition Width="87"/>
                             <ColumnDefinition Width="212"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Image Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\logoS.png" Height="82" Width="204" HorizontalAlignment="Left" Margin="51,0,0,0" Stretch="Fill" />
 
                         <Border Grid.Column="1" Margin="71,0,0,0" Width="104" Height="104" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent">
@@ -95,16 +97,20 @@
                             </Grid>
                         </Border>
 
-                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                        <Label VerticalAlignment="Center" HorizontalAlignment="Right" Name="lblnombre" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="Myanmar Khyay" Content="¡HOLA INVITADO¡!" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
 
-                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left"  Background="#F30613" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
-                            <Button x:Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="White" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
+                        <Border Grid.Column="3" Width="159" Height="80" HorizontalAlignment="Left" Background="#FFFFFF" CornerRadius="10"  BorderBrush="White" BorderThickness="2">
+                            <Button  Name="btnSalir" Click="btnSalir_Click" Background="Transparent" BorderThickness="0"  Foreground="#F30613" FontFamily="Myanmar Khyay" FontSize="24" Width="159"  >
                                 <TextBlock TextAlignment="Center">
-                                    <Run Text="SALIR"/>
+                     <Run Text="SALIR"/>
                                 </TextBlock>
+                                <Button.Effect>
+                                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="3" Opacity="0.5"/>
+                                </Button.Effect>
                             </Button>
-
-                         
+                            <Border.Effect>
+                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                            </Border.Effect>
                         </Border>
                     </Grid>
                 </Border>
@@ -113,78 +119,102 @@
                 <Border Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="140"/>
-                            <RowDefinition Height="15"/>
-                            <RowDefinition Height="550"/>
-                            <RowDefinition  Height="60"/>
-                            <RowDefinition  Height="30"/>
-                            <RowDefinition Height="90"/>
-                            <RowDefinition Height="72"/>
+                            <RowDefinition Height="118"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        
-                        <Border Height="65" VerticalAlignment="Bottom" Margin="647,0,633,0">
+
+                        <Border Height="65" VerticalAlignment="Bottom">
                             <Label Grid.Row="0" FontSize="48" FontFamily="Myanmar Khyay" Content="Resumen de tu compra" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                         </Border>
 
-                        <Border Grid.Row="2" Width="1600" Margin="160,4,160,7">
-                            <Grid>
+                        <Border Grid.Row="2" Margin="60">
+                            <Grid >
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-
-                                <Border Grid.Row="0">
-                                    <Grid>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <Grid x:Name="mainGrid">
+                                        <!-- Define las filas y columnas -->
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="245*" />
-                                            <ColumnDefinition Width="33*"/>
-                                            <ColumnDefinition Width="233"/>
-                                            <ColumnDefinition Width="12" />
-                                            <ColumnDefinition Width="234"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="232"/>
-                                            <ColumnDefinition Width="43"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="2" Height="59" CornerRadius="10" Background="#F5F5F5" Margin="0,20,0,20">
-                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                        <!-- Encabezados de columna -->
+                                        <Border Grid.Row="0" Grid.Column="2" Height="59" CornerRadius="10" BorderBrush="Black" Background="#F5F5F5">
+                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="PRECIO" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Row="0" Grid.Column="3" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Row="0" Grid.Column="4" Height="59" CornerRadius="10" Background="#F5F5F5">
+                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="TOTAL" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                         </Border>
 
-                                        <Border Grid.Column="4" Height="59" CornerRadius="10" Background="#F5F5F5" Margin="0,20,0,20">
-                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="CANTIDAD" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                        <!-- Fila 1 -->
+                                        <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,0,1"  Name="contenedorImagen"   BorderBrush="Gray" Background="Transparent"  >
+                                            <!-- Imagen de contenido -->
+                                            <Image Width="120" Height="120" Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         </Border>
 
-                                        <Border Grid.Column="6" Height="59" CornerRadius="10" Background="#F5F5F5" Margin="0,20,0,20">
-                                            <Label FontFamily="Myanmar Khyay" FontSize="24" Content="TOTAL" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                                        <!-- Fila 2 -->
+                                        <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,0,1" Name="borderimagengafas" BorderBrush="Gray" Background="Transparent"  >
+                                            <!-- Imagen de contenido -->
+                                            <Image Width="120" Height="120" Stretch="Fill" Source="C:\FALCROSOFT\PROCINAL\Portal.Kiosco\Properties\Resources\frame.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                         </Border>
-                                    </Grid>
-                                </Border>
 
-                                <Border Grid.Row="1">
-                                    <Grid Grid.Row="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="80"/>
-                                            <RowDefinition Height="80"/>
-                                            <RowDefinition Height="310"/>
-                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,0,1"   BorderBrush="Gray" Background="Transparent" Grid.ColumnSpan="5">
+                                            <!-- Imagen de contenido -->
+                                        </Border>
 
-                                        <WrapPanel Grid.Row="0" x:Name="ContenedorBoletas" Height="50" ></WrapPanel>
-                                        <WrapPanel Grid.Row="1" x:Name="ContenedorGafas"  Height="50" ></WrapPanel>
+                                        <!-- Fila 2 -->
+                                        <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,0,1" BorderBrush="Gray" Background="Transparent" Grid.ColumnSpan="5">
+                                            <!-- Imagen de contenido -->
+                                        </Border>
+                                        <!-- WrapPanels para los datos -->
+                                        <WrapPanel Grid.Row="1" Grid.Column="1" x:Name="ContenedorBoletas" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
+                                        <WrapPanel Grid.Row="1" Grid.Column="2" x:Name="ContenedorBoletasPrecio" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
+                                        <WrapPanel Grid.Row="1" Grid.Column="3" x:Name="ContenedorBoletasCantidad" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
+                                        <WrapPanel Grid.Row="1" Grid.Column="4" x:Name="ContenedorBoletasTotal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
+                                        <WrapPanel Grid.Row="2" Grid.Column="1" x:Name="ContenedorGafas" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
+                                        <WrapPanel Grid.Row="2" Grid.Column="2" x:Name="ContenedorGafasPrecio" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
+                                        <WrapPanel Grid.Row="2" Grid.Column="3" x:Name="ContenedorGafasCantidad" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
+                                        <Border  Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center"  >
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"></RowDefinition>
+                                                    <RowDefinition Height="auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <WrapPanel x:Name="ContenedorGafasTotal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"/>
 
-                                        <ScrollViewer Grid.Row="2" PanningMode="Both" Margin="0,0,0,33">
-                                            <WrapPanel x:Name="ContenedorResumen"/>
-                                        </ScrollViewer>
-                                    </Grid>
-                                </Border>
+                                                <Border Height="15" Width="80" Grid.Row="1" Name="borderEliminarGafas" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#F30613" CornerRadius="5"  >
+                                                    <Button Background="Transparent"  Name="btnEliminarGafas" Click="btnEliminar_Click" BorderThickness="0" Content="Eliminar" FontSize="10" FontFamily="Myanmar Khyay" Foreground="White"/>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+            </Grid>
+                                </ScrollViewer>
+
                             </Grid>
                         </Border>
+
                         <Border Grid.Row="3">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1800"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Width="700" HorizontalAlignment="Right" CornerRadius="10" Background="White" Margin="0,0,0,0">
+                                <Border Width="700" HorizontalAlignment="Right" VerticalAlignment="Bottom" CornerRadius="10" Background="White">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Label Content="TOTAL A PAGAR:" FontFamily="Myanmar Khyay" FontSize="32" Margin="0,0,10,0"/>
                                         <Label  Name="TotalResumen" Content="0" FontFamily="Myanmar Khyay" FontSize="32" FontWeight="Bold"/>
@@ -192,27 +222,25 @@
                                 </Border>
                             </Grid>
                         </Border>
+
                         <Border Grid.Row="5">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="354"/>
-                                    <ColumnDefinition Width="154"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="80"/>
-                                </Grid.RowDefinitions>
-
-                                <Border Grid.Column="1" Grid.Row="0" Width="350" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10" Margin="0,0">
+                                <Border Grid.Column="1" Grid.Row="0" Width="350" Height="80" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10" Margin="0,0,56,0">
                                     <Button Background="Transparent"  Name="btnPagoTarjeta" Click="btnPagoTarjeta_Click" BorderThickness="0" Content="PAGAR CON TARJETA" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>
                                 </Border>
-                                
-                                
 
-                                <Border  Width="350" Height="80" VerticalAlignment="Bottom" Name="borderPagarCash" HorizontalAlignment="Right" Background="#F30613" CornerRadius="10">
-                                    <Button Background="Transparent" Name="btnPagarCash" Click="btnPagarCash_Click" BorderThickness="0" Content="PAGAR CON CASHBACK" FontSize="24" FontFamily="Myanmar Khyay" Foreground="White"/>
+                                <Border Width="350" Height="80" VerticalAlignment="Bottom" Name="borderPagarCash" HorizontalAlignment="Right" Background="White" CornerRadius="10" BorderThickness="1" BorderBrush="#F30613" Margin="0,0,56,0">
+                                    <Button Background="Transparent" Name="btnPagarCash" Click="btnPagarCash_Click" BorderThickness="0" Content="PAGAR CON CASHBACK" FontSize="24" FontFamily="Myanmar Khyay" Foreground="#F30613"/>
                                 </Border>
+
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="6" Margin="30">
+                            <Grid Width="374" HorizontalAlignment="Right">
+                                <Border Width="180" Height="80" HorizontalAlignment="Left" Background="#F30613" CornerRadius="10">
+                                    <Button x:Name="btnVolver" Background="Transparent" BorderThickness="0" Content="VOLVER" Foreground="White" FontSize="28" Click="btnVolver_Click" Height="80" VerticalAlignment="Bottom"/>
+                                </Border>
+ 
                             </Grid>
                         </Border>
                     </Grid>

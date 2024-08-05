@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -37,7 +38,13 @@ namespace Portal.Kiosco.Properties.Views
         private decimal productoactual = 0;
 
         private decimal precioAntesAdicionales = 0;
-
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
+        }
         public class Bebida
         {
             public decimal CodigoCombo { get; set; }
@@ -200,10 +207,10 @@ namespace Portal.Kiosco.Properties.Views
                             string lc_auxcod = item.Codigo.ToString();
                             string lc_auximg = string.Concat(urlRetailImg, lc_auxcod.Substring(0, lc_auxcod.Length - 2), ".jpg");
 
-                            ImgCombo.Source = new BitmapImage(new Uri(lc_auximg));
+                            //ImgCombo.Source = new BitmapImage(new Uri(lc_auximg));
                             var precio = buscarprecio(productos, Convert.ToDecimal(item.Codigo));
 
-                            totalLabel.Content = precio.ToString("C0");
+                            //totalLabel.Content = precio.ToString("C0");
                             precioAntesAdicionales = precio;
                             lblCombo.Content = item.Descripcion + " #" + ContadorProductos.ToString();
 
@@ -358,7 +365,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-            totalLabel.Content = (precioAdicionales + precioAntesAdicionales).ToString("C0");
+            //totalLabel.Content = (precioAdicionales + precioAntesAdicionales).ToString("C0");
 
         }
 
@@ -397,7 +404,7 @@ namespace Portal.Kiosco.Properties.Views
                             }
 
 
-                            
+
 
                             adicionales.GetType().GetProperty(cantidadProp)?.SetValue(adicionales, 1m);
 
@@ -408,10 +415,10 @@ namespace Portal.Kiosco.Properties.Views
                     }
                 }
 
-               
+
             }
 
-           
+
         }
 
 
@@ -472,7 +479,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
 
-            totalLabel.Content = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString("C0");
+            //totalLabel.Content = (preciodefault + preciocomida + preciobebida + precioAdicionales).ToString("C0");
         }
 
         public async void ProductosModificados()
@@ -569,10 +576,10 @@ namespace Portal.Kiosco.Properties.Views
                         var bebidaDetalle1 = opcionSeleccionadabebidasDetalle[0];
                         var bebidaDetalle2 = opcionSeleccionadabebidasDetalle[1];
                         var comidaDetalle1 = opcionSeleccionadacomidasDetalle[0];
-                         
+
                         productonew = UpdateProduct(productocambiado, datosFinalesComidaRadio
                     .Where(x => x.frecuenciaComida == "default")
-                    .Sum(x => x.PrecioFinalComida) + bebidaDetalle1.PrecioFinalBotella + bebidaDetalle2.PrecioFinalBotella + comidaDetalle1.PrecioFinalComida , 2, bebidaDetalle1, comidaDetalle1, bebidaDetalle2);
+                    .Sum(x => x.PrecioFinalComida) + bebidaDetalle1.PrecioFinalBotella + bebidaDetalle2.PrecioFinalBotella + comidaDetalle1.PrecioFinalComida, 2, bebidaDetalle1, comidaDetalle1, bebidaDetalle2);
                     }
 
                     productonew.KeySecuencia = App.Secuencia;
@@ -916,9 +923,15 @@ namespace Portal.Kiosco.Properties.Views
                 if (ContadorProductosPantallas == contadorPantallas)
                 {
                     isThreadActive = false;
-                    ResumenCompra openWindows = new ResumenCompra(config);
-                    openWindows.Show();
+                
+                    var transicion = new transicion();
+                    transicion.Show();
                     this.Close();
+                    var openWindows = new ResumenCompra(config);
+                    await openWindows.LoadDataAsync();
+                    openWindows.Show();
+                    transicion.Close();
+
                 }
                 else
                 {
@@ -933,18 +946,29 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            App.ProductosSeleccionados.Clear();
-            Combos openWindows = new Combos();
-            openWindows.Show();
+          
+            var transicion = new transicion();
+            transicion.Show();
             this.Close();
+            var openWindows = new Combos();
+            await openWindows.LoadDataAsync();
+            openWindows.Show();
+            transicion.Close();
+
         }
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Principal openWindows = new Principal();
-            openWindows.Show();
+            
+
+            var transicion = new transicion();
+            transicion.Show();
             this.Close();
+            var openWindows = new Principal();
+            await openWindows.LoadDataAsync();
+            openWindows.Show();
+            transicion.Close();
         }
     }
 }

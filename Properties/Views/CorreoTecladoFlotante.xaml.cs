@@ -97,6 +97,10 @@ namespace Portal.Kiosco.Properties.Views
                     EnvioCorreo(email);
                 }
 
+                var gracias = new GraciasXcomprar();
+                gracias.Show();
+                this.Close();
+
             }
             catch (Exception ex)
             {

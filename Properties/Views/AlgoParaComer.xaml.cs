@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
@@ -36,6 +37,13 @@ namespace Portal.Kiosco.Properties.Views
             });
             thread.IsBackground = true;
             thread.Start();
+        }
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
         }
         private bool ComprobarTiempo()
         {
@@ -85,18 +93,31 @@ namespace Portal.Kiosco.Properties.Views
         {
             App.TipoCompra = "M";
             isThreadActive = false;
-            Combos openWindows = new Combos();
-            openWindows.Show();
+        
+
+            var transicion = new transicion();
+            transicion.Show();
             this.Close();
+            var openWindows = new Combos();
+            await openWindows.LoadDataAsync();
+            openWindows.Show();
+            transicion.Close();
         }
 
         private async void btnResumen_Click(object sender, RoutedEventArgs e)
         {
             App.TipoCompra = "B";
             isThreadActive = false;
-            ResumenCompra openWindows = new ResumenCompra(config);
-            openWindows.Show();
+           
+            var transicion = new transicion();
+            transicion.Show();
             this.Close();
+            var   openWindows = new ResumenCompra(config);
+            await openWindows.LoadDataAsync();
+            openWindows.Show();
+            transicion.Close();
+
+
         }
     }
 }

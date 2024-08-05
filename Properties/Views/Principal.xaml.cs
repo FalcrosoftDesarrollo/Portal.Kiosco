@@ -1,9 +1,11 @@
 ﻿using APIPortalKiosco.Entities;
 using APIPortalWebMed.Entities;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -14,7 +16,7 @@ namespace Portal.Kiosco.Properties.Views
     {
         private bool isThreadActive = true;
         private static Principal instance;
-
+        private readonly IOptions<MyConfig> config;
         public Principal()
         {
             InitializeComponent();
@@ -22,6 +24,7 @@ namespace Portal.Kiosco.Properties.Views
             App.IsFecha = false;
             this.KeyDown += Principal_KeyDown;
             App.Pelicula = new Pelicula();
+            App.ProductosSeleccionados.Clear();
             App.ProductosSeleccionados = new List<Producto>();
             DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
@@ -36,7 +39,6 @@ namespace Portal.Kiosco.Properties.Views
             }
             return instance;
         }
-
         private void Principal_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
@@ -47,13 +49,12 @@ namespace Portal.Kiosco.Properties.Views
                 }
             }
         }
-
         private async void btnBoleteria_Click(object sender, RoutedEventArgs e)
         {
             App.TipoCompra = "B";
             isThreadActive = false;
             App.IsBoleteriaConfiteria = false;
-            ComoCompra openWindows = new ComoCompra();
+            var openWindows = new ComoCompra();
             openWindows.Show();
             this.Close();
         }
@@ -66,6 +67,14 @@ namespace Portal.Kiosco.Properties.Views
             ComoCompra openWindows = new ComoCompra();
             openWindows.Show();
             this.Close();
+        }
+
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
         }
     }
 }

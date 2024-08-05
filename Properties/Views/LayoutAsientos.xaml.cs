@@ -8,10 +8,13 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Xml;
 
 namespace Portal.Kiosco.Properties.Views
@@ -36,8 +39,16 @@ namespace Portal.Kiosco.Properties.Views
                 ContenedorSala.Children.Clear();
                 sillasSeleccionadas = 0;
                 GenerarSala();
+
+                lblGenero.Text = "Genero: " + App.Pelicula.Genero;
+                lblDuracion.Text = "Duración: " + App.Pelicula.Duracion;
+                lblClasificacion.Text = "Clasificación: " + App.Pelicula.Censura;
+                lblGenero.Text ="Genero: " + App.Pelicula.Genero;
+                lblIdioma.Text = "Idioma: " + App.Pelicula.Idioma;
+
                 DataContext = ((App)Application.Current);
                 btnSiguiente.Visibility = Visibility.Hidden;
+                imgPelicula.Child = CargarImagen();
                 App.IsFecha = false;
                 if (App.ob_diclst.Count > 0)
                 {
@@ -49,12 +60,7 @@ namespace Portal.Kiosco.Properties.Views
                 }
 
 
-
-                lblSala.Content = App.Pelicula.numeroSala;
-                lblNombrePelicula.Content = App.Pelicula.TituloOriginal;
-                FechaImpresion(App.Pelicula.FechaSel);
-                lblFecha.Content = FormatearFecha(App.Pelicula.FechaSel.Substring(3));
-                lblHora.Content = App.Pelicula.HoraUsuario;
+                FechaImpresion(App.Pelicula.FechaSel); 
 
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3));
                 gridPrincipal.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
@@ -515,7 +521,7 @@ namespace Portal.Kiosco.Properties.Views
                     button.Style = (Style)FindResource("AvailableSeat");
 
                     Border border = new Border();
-                    border.CornerRadius = new CornerRadius(5);
+                    border.CornerRadius = new CornerRadius(8);
                     border.Margin = new Thickness(0, 0, 1, 1);
                     border.BorderThickness = new Thickness(1);
 
@@ -556,6 +562,7 @@ namespace Portal.Kiosco.Properties.Views
                                         button.Background = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
                                         button.BorderBrush = new SolidColorBrush(ColorConverter.ConvertFromString("#D9D9D9") as Color? ?? Colors.LightGray);
                                         button.Foreground = Brushes.Black;
+                                        
                                         border.Child = button;
                                     }
 
@@ -689,22 +696,35 @@ namespace Portal.Kiosco.Properties.Views
 
                 if (silla != null)
                 {
+                    Border borderSilla = new Border();
+                    borderSilla.BorderBrush = Brushes.Black;
+                    borderSilla.BorderThickness = new Thickness(0, 0, 0, 1);
+                    borderSilla.Padding = new Thickness(5);
+
                     Label labelSilla = new Label();
                     labelSilla.Content = silla;
                     labelSilla.FontFamily = new FontFamily("Myanmar Khyay");
-                    labelSilla.FontSize = 16;
+                    labelSilla.FontSize = 12;
                     labelSilla.VerticalAlignment = VerticalAlignment.Center;
                     labelSilla.HorizontalAlignment = HorizontalAlignment.Center;
+
+                    borderSilla.Child = labelSilla;
+                    ContenedorBoletas.Children.Add(borderSilla);
+
+                    Border borderCantidad = new Border();
+                    borderCantidad.BorderBrush = Brushes.Black;
+                    borderCantidad.BorderThickness = new Thickness(0, 0, 0, 1);
+                    borderCantidad.Padding = new Thickness(5);
 
                     Label labelCantidad = new Label();
                     labelCantidad.Content = App.ValorTarifa.ToString("C0");
                     labelCantidad.FontFamily = new FontFamily("Myanmar Khyay");
-                    labelCantidad.FontSize = 16;
+                    labelCantidad.FontSize = 12;
                     labelCantidad.VerticalAlignment = VerticalAlignment.Center;
                     labelCantidad.HorizontalAlignment = HorizontalAlignment.Center;
 
-                    ContenedorBoletas.Children.Add(labelSilla);
-                    ContenedorBoletas.Children.Add(labelCantidad);
+                    borderCantidad.Child = labelCantidad;
+                    ContenedorBoletas.Children.Add(borderCantidad);
                 }
             }
 
@@ -720,6 +740,15 @@ namespace Portal.Kiosco.Properties.Views
                 App.CantidadBoletas = Convert.ToDecimal(sillasSeleccionadas);
             }
         }
+
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
+        }
+
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
@@ -1039,5 +1068,47 @@ namespace Portal.Kiosco.Properties.Views
 
             }
         }
+
+        public StackPanel CargarImagen()
+        {
+
+            var stackPanel = new StackPanel
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            var imagenBorde = new Border
+            {
+                Width = 273,
+                Height = 360,
+                CornerRadius = new CornerRadius(5), // Esquinas redondeadas para la imagen
+                ClipToBounds = true,
+                OpacityMask = new VisualBrush
+                {
+                    Stretch = Stretch.Fill,
+                    Visual = new Rectangle
+                    {
+                        RadiusX = 0.1,
+                        RadiusY = 0.1,
+                        Width = 1,
+                        Height = 1,
+                        Fill = Brushes.Black
+                    }
+                },
+                Child = new Image
+                {
+                    Width = 273, Height = 360,
+                    Stretch = Stretch.Fill,
+                    Source = new BitmapImage(new Uri(App.Pelicula.Imagen))
+                }
+            };
+
+            stackPanel.Children.Add(imagenBorde);
+
+            return stackPanel;
+
+        }
+
     }
 }

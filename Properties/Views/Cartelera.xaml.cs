@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -48,6 +49,14 @@ namespace Portal.Kiosco.Properties.Views
             });
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
         }
 
         private bool ComprobarTiempo()
@@ -108,17 +117,16 @@ namespace Portal.Kiosco.Properties.Views
                         var nuevoBorde = new Border
                         {
                             Name = "P" + pelicula.Id.ToString(),
-                            Margin = new Thickness(40),
+                            Margin = new Thickness(30), // Margen de 30 en todos los lados
                             BorderThickness = new Thickness(0),
                             VerticalAlignment = VerticalAlignment.Center,
                             HorizontalAlignment = HorizontalAlignment.Right,
+                            CornerRadius = new CornerRadius(10), // Esquinas redondeadas con un radio de 10
                             OpacityMask = new VisualBrush
                             {
                                 Stretch = Stretch.Fill,
                                 Visual = new Rectangle
-                                {
-                                    RadiusX = 0,
-                                    RadiusY = 0,
+                                { 
                                     Width = 1,
                                     Height = 1,
                                     Fill = Brushes.Black
@@ -126,16 +134,55 @@ namespace Portal.Kiosco.Properties.Views
                             }
                         };
 
-                        var grid = new Grid();
-
-                        Image nuevaImagen = new Image
+                        var stackPanel = new StackPanel
                         {
-                            Width = 360,
-                            Height = 444,
-                            Stretch = Stretch.Fill,
-                            Source = new BitmapImage(new Uri(pelicula.Imagen))
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
                         };
-                        grid.Children.Add(nuevaImagen);
+
+                        // Añadir el título de la película encima de la imagen
+                        TextBlock tituloPelicula = new TextBlock
+                        {
+                            Text = pelicula.TituloOriginal, // Usar la propiedad Description para el título
+                            Foreground = Brushes.Black,
+                            Background = Brushes.White,
+                            FontSize = 12,
+                            FontWeight = FontWeights.Bold, // Make the text bold
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            TextAlignment = TextAlignment.Center,
+                            Margin = new Thickness(0, 0, 0, 10) // Margen inferior para separación
+                        };
+                        stackPanel.Children.Add(tituloPelicula);
+
+                      
+                        var imagenBorde = new Border
+                        {
+                            Width = 260,
+                            Height = 344,
+                            CornerRadius = new CornerRadius(10), // Esquinas redondeadas para la imagen
+                            ClipToBounds = true,
+                            OpacityMask = new VisualBrush
+                            {
+                                Stretch = Stretch.Fill,
+                                Visual = new Rectangle
+                                {
+                                    RadiusX = 0.1,
+                                    RadiusY = 0.1,
+                                    Width = 1,
+                                    Height = 1,
+                                    Fill = Brushes.Black
+                                }
+                            },
+                            Child = new Image
+                            {
+                                Width = 260,
+                                Height = 344,
+                                Stretch = Stretch.Fill,
+                                Source = new BitmapImage(new Uri(pelicula.Imagen))
+                            }
+                        };
+
+                        stackPanel.Children.Add(imagenBorde);
 
                         if (pelicula.Tipo == "Preventa")
                         {
@@ -143,7 +190,8 @@ namespace Portal.Kiosco.Properties.Views
                             {
                                 Height = 56,
                                 VerticalAlignment = VerticalAlignment.Top,
-                                Background = Brushes.Red
+                                Background = Brushes.Red,
+                                CornerRadius = new CornerRadius(10) // Esquinas redondeadas para el borde de preventa
                             };
 
                             Label preventaLabel = new Label
@@ -157,10 +205,10 @@ namespace Portal.Kiosco.Properties.Views
                             };
 
                             preventaBorder.Child = preventaLabel;
-                            grid.Children.Add(preventaBorder);
+                            stackPanel.Children.Add(preventaBorder);
                         }
 
-                        nuevoBorde.Child = grid;
+                        nuevoBorde.Child = stackPanel;
 
                         nuevoBorde.MouseLeftButtonUp += async (sender, e) =>
                         {
@@ -172,8 +220,28 @@ namespace Portal.Kiosco.Properties.Views
                             App.Pelicula.Genero = pelicula.Genero;
                             App.Pelicula.Censura = pelicula.Censura;
 
-                            var openWindow = new SeleccionarFuncion();
-                            openWindow.Show();
+                            if (this.ActualWidth > this.ActualHeight) // Pantalla en horizontal
+                            {
+                             var transicion = new transicion();
+                                transicion.Show();
+                                this.Close();
+                                var openWindows = new SeleccionarFuncionH();
+                                await openWindows.LoadDataAsync();
+                                openWindows.Show();
+                                transicion.Close();
+                            }
+                            else
+                            {
+                           
+                                var transicion = new transicion();
+                                transicion.Show();
+                                this.Close();
+                                var openWindows = new SeleccionarFuncion();
+                                await openWindows.LoadDataAsync();
+                                openWindows.Show();
+                                transicion.Close();
+                            }
+
                             this.Close();
                         };
 
@@ -197,6 +265,7 @@ namespace Portal.Kiosco.Properties.Views
                 Console.WriteLine("Error al cargar películas desde el archivo XML: " + ex.Message);
             }
         }
+
 
         private async void btnSalir_Click(object sender, RoutedEventArgs e)
         {
@@ -245,17 +314,47 @@ namespace Portal.Kiosco.Properties.Views
         private async void btnVolver_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            Scanear_documento openWindows = new Scanear_documento();
-            openWindows.Show();
+        
+
+
+            var transicion = new transicion();
+            transicion.Show();
             this.Close();
+            var openWindows = new Scanear_documento();
+            await openWindows.LoadDataAsync();
+            openWindows.Show();
+            transicion.Close();
+
         }
 
         private async void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
             isThreadActive = false;
-            SeleccionarFuncion openWindows = new SeleccionarFuncion();
-            openWindows.Show();
+
+            if (this.ActualWidth > this.ActualHeight) // Pantalla en horizontal
+            { 
+                var transicion = new transicion();
+                transicion.Show();
+                this.Close();
+                var openWindows = new SeleccionarFuncionH();
+                await openWindows.LoadDataAsync();
+                openWindows.Show();
+                transicion.Close();
+
+            }
+            else  
+            {
+                var transicion = new transicion();
+                transicion.Show();
+                this.Close();
+                var openWindows = new SeleccionarFuncion();
+                await openWindows.LoadDataAsync();
+                openWindows.Show();
+                transicion.Close();
+            }
+
             this.Close();
         }
+
     }
 }

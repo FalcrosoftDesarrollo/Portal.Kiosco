@@ -46,7 +46,13 @@ namespace Portal.Kiosco
             thread.Start();
         }
 
-       
+        public async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+            });
+        }
         private bool ComprobarTiempo()
         {
             bool isMainWindowOpen = false;
@@ -92,16 +98,28 @@ namespace Portal.Kiosco
             if (App.IsBoleteriaConfiteria == false)
             {
                 isThreadActive = false;
-                Cartelera openWindows = new Cartelera();
-                openWindows.Show();
+            
+
+                var transicion = new transicion();
+                transicion.Show();
                 this.Close();
+                var openWindows = new Cartelera();
+                await openWindows.LoadDataAsync();
+                openWindows.Show();
+                transicion.Close();
             }
             else
             {
                 isThreadActive = false;
-                Combos openWindows = new Combos();
-                openWindows.Show();
+           
+
+                var transicion = new transicion();
+                transicion.Show();
                 this.Close();
+                var openWindows = new Combos();
+                await openWindows.LoadDataAsync();
+                openWindows.Show();
+                transicion.Close();
             }
         }
 
@@ -140,6 +158,9 @@ namespace Portal.Kiosco
                     Combos openWindows = new Combos();
                     openWindows.Show();
                     this.Close();
+
+
+
                 }
             });
         }

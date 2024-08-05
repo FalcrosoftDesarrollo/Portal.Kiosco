@@ -18,16 +18,31 @@
     <Compile Update="Properties\Views\CorreoTecladoFlotante.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Properties\Views\Entradas.xaml.cs">
+    <Compile Update="Properties\Views\GraciasXcomprar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Views\InstruccionesDatafonoRechazo.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Views\LayoutAsientos.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Views\LayoutAsientosH.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Views\PopUpComboDeluxe.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Views\PopUpCombos.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Views\Principal.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Views\Scanear_documento.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Views\SeleccionarFuncionH.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Views\transicion.xaml.cs">
@@ -38,22 +53,43 @@
     <Page Update="Properties\Views\BoletaFactura.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Properties\Views\Combopopup.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Properties\Views\ComoCompra.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\CorreoTecladoFlotante.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Properties\Views\Entradas.xaml">
+    <Page Update="Properties\Views\GraciasXcomprar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\InstruccionesDatafonoRechazo.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\LayoutAsientos.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Properties\Views\LayoutAsientosH.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\PopUpComboDeluxe.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\PopUpCombos.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Properties\Views\Principal.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Properties\Views\ResumenCompraEliminar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Properties\Views\Scanear_documento.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties\Views\SeleccionarFuncionH.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Properties\Views\transicion.xaml">
